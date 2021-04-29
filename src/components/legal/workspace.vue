@@ -3,7 +3,7 @@
       <div style="background-color:#f0f0f0;width:100%;height:auto;">
       <a-menu mode="horizontal">
         <a-sub-menu>
-            <span slot="title" class="submenu-title-wrapper" ><a-icon type="user" />{{ 'username' }} </span>
+            <span slot="title" class="submenu-title-wrapper" ><a-icon type="user" />{{ userinfo.realname || userinfo.name || userinfo.lastname }} </span>
             <a-menu-item-group title="应用中心">
             <a-menu-item key="setting:1" :to="`/legal/message`"  @click="redirectView('/legal/message')" >
                 审批
@@ -136,12 +136,10 @@ export default {
       }
     },
     // 企业微信登录处理函数
-    async weworkLogin(){
-      try {
-        return await query.queryWeworkUser();
-      } catch (error) {
-        console.log(error);
-      }
+    async  weworkLogin  (codeType = 'search', systemType = 'search')  {
+        const userinfo_work = await Betools.query.queryWeworkUser(codeType, systemType,'v5');
+        const userinfo = await Betools.storage.getStore('system_userinfo');
+        return userinfo;
     },
     // 执行页面跳转
     async redirectView(path) {

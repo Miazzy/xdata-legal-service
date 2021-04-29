@@ -3,7 +3,7 @@
     <div style="background-color:#f0f0f0; height:auto;">
       <a-menu mode="horizontal">
         <a-sub-menu>
-            <span slot="title" class="submenu-title-wrapper" ><a-icon type="user" />{{ 'username' }} </span>
+            <span slot="title" class="submenu-title-wrapper" ><a-icon type="user" />{{ userinfo.realname || userinfo.name || userinfo.lastname }} </span>
             <a-menu-item-group title="应用中心">
             <a-menu-item key="setting:1" :to="`/legal/message`"  @click="redirectView('/legal/message')" >
                 审批
@@ -187,6 +187,7 @@ export default {
       bpm_status:{1:'待提交',2:'审核中',3:'审批中',4:'已完成',5:'已完成',6:'已确认',10:'已作废' , 100:'已驳回',}, //流程状态 1：待提交  2：审核中  3：审批中  4：已完成  5：已完成  10：已作废
       business_code: '000000000',
       typename:'',
+      userinfo:'',
     };
   },
   activated() {
@@ -218,6 +219,7 @@ export default {
       this.paneflows.map((item) => {item.css = item.ename == this.panename ? "background:#f9f9f9;" : '';});
       Betools.storage.setStore(`reward_message_typename` , this.typename , 3600 );
       Betools.storage.setStore(`reward_message_panename` , this.panename , 3600 );
+      this.userinfo = await Betools.storage.getStore('system_userinfo');
     },
     // 执行页面跳转
     async redirectView(path) {
