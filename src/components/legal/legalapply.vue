@@ -1,6 +1,19 @@
 <template>
   <div id="reward-home">
       <div style="background-color:#f0f0f0;">
+      <a-menu mode="horizontal">
+        <a-sub-menu>
+            <span slot="title" class="submenu-title-wrapper" ><a-icon type="user" />{{ 'username' }} </span>
+            <a-menu-item-group title="应用中心">
+            <a-menu-item key="setting:1" :to="`/legal/message`"  @click="redirectView('/legal/message')" >
+                审批
+            </a-menu-item>
+            <a-menu-item key="setting:2" :to="`/legal/workspace`" @click="redirectView('/legal/workspace')" >
+                工作台
+            </a-menu-item>
+            </a-menu-item-group>
+        </a-sub-menu>
+      </a-menu>
       <a-row :gutter="24">
 
         <keep-alive>
@@ -612,6 +625,10 @@ export default {
   methods: {
       onDelete(){
         console.log('delete');
+      },
+      // 执行页面跳转
+      async redirectView(path) {
+          this.$router.push(path);
       },
       async onUpdate(records){
 
