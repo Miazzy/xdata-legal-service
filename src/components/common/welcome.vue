@@ -10,9 +10,9 @@ export default {
     data() {
         return {
             hide: false,
-            src:`http://oa.leading-group.com:90/page/resource/userfile/image/ecology8/leading.jpg`,
-            msrc:`http://oa.leading-group.com:90/page/resource/userfile/image/ecology8/leading.jpg`,
-            psrc:`http://oa.leading-group.com:90/page/resource/userfile/image/ecology8/leading.jpg`,
+            src:`https://wechat.yunwisdom.club:30443/static/img/leading.jpeg`,
+            msrc:`https://wechat.yunwisdom.club:30443/static/img/leading.jpeg`,
+            psrc:`https://wechat.yunwisdom.club:30443/static/img/leading.jpeg`,
         }
     },
     async mounted() {

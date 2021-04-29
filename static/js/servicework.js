@@ -5,6 +5,7 @@ self.addEventListener('install', function(event) {
             return cache.addAll([
                 "/index.html",
                 "https://cdn.jsdelivr.net/npm/vant@2.9/lib/index.css",
+                "https://wechat.yunwisdom.club:30443/static/img/leading.jpeg",
                 "https://cdn.jsdelivr.net/gh/Miazzy/yunwisdoms@r1.0.0/request/keeplocation.js",
                 "https://cdn.jsdelivr.net/gh/Miazzy/yunwisdoms@v8.0.0/cdn/vue/vue.min.js",
                 "https://cdn.jsdelivr.net/gh/Miazzy/yunwisdoms@v8.0.0/cdn/common/vuex.min.js",
