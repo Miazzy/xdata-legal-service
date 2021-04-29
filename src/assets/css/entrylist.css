@@ -1,0 +1,108 @@
+.header-drop-menu .van-dropdown-menu__title:after {
+    position: absolute;
+    top: 50%;
+    right: -4px;
+    margin-top: -5px;
+    border: 3px solid;
+    border-color: transparent transparent #dcdee0 #dcdee0;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    opacity: .8;
+    content: '';
+    display: none;
+}
+
+.header-drop-menu .van-dropdown-menu__bar {
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    height: 48px;
+    background-color: #1b1b1b;
+    box-shadow: 0 2px 12px rgba(100, 101, 102, .08);
+}
+
+.header-drop-menu .van-popup--top {
+    top: 0;
+    left: auto;
+    width: 38%;
+    right: 0;
+    text-align: center;
+}
+
+.van-address-list__bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 999;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 16px;
+    padding-bottom: constant(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom);
+    background-color: #fff;
+    display: none;
+}
+
+.van-radio__icon {
+    -webkit-box-flex: 0;
+    -webkit-flex: none;
+    flex: none;
+    height: 1em;
+    font-size: 20px;
+    line-height: 1em;
+    cursor: pointer;
+    display: none;
+}
+
+.van-address-item__edit {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    color: #969799;
+    font-size: 20px;
+    -webkit-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    display: none;
+}
+
+.wechat-list {
+    background-color: #fafafa;
+}
+
+.van-address-list {
+    box-sizing: border-box;
+    height: 100%;
+    padding: 1px 1px 1px 1px;
+}
+
+.van-address-item:not(:last-child) {
+    margin-bottom: 1px;
+    border-bottom: 1px solid #f9f9f9;
+}
+
+.van-address-item__value {
+    padding-right: 0px;
+}
+
+.van-address-list__bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 999;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 16px;
+    padding-bottom: constant(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom);
+    background-color: #fff;
+    display: none;
+}
+
+#van-cell-export .van-cell__title span {
+    float: left;
+}
+
+#van-cell-export .van-cell__title span {
+    float: left;
+}

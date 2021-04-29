@@ -1,0 +1,82 @@
+.van-cell-upload .van-cell__title>span {
+    font-size: 14px;
+}
+
+.van-cell-upload .nut-uploader,
+.excel-import {
+    background-image: linear-gradient(to right, #f96033, red);
+    margin: 5px 10px;
+    padding: 1px 20px;
+    border-radius: 8px;
+    color: #f0f0f0;
+    font-size: 12px;
+    height: 27px;
+}
+
+#van-files-download .van-button[name="file"] {
+    background-image: linear-gradient(to right, #f96033, red);
+    margin: 5px 10px;
+    padding: 1px 20px;
+    border-radius: 8px;
+    color: #f0f0f0;
+    font-size: 12px;
+    height: 27px;
+}
+
+.reward-apply-content-title {
+    margin-top: 15px;
+    margin-bottom: 5px;
+    margin-right: 10px;
+}
+
+.reward-apply-content-title-text {
+    font-weight: 600;
+    font-size: 1.0rem;
+    margin-top: 5px;
+    text-align: center;
+}
+
+.van-button[name="file"] {
+    background-image: linear-gradient(to right, #f96033, red);
+    margin: 5px 10px;
+    padding: 1px 20px;
+    border-radius: 8px;
+    color: #f0f0f0;
+    font-size: 12px;
+    height: 27px;
+}
+
+#van-user-list .van-address-item__edit {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    color: #969799;
+    font-size: 20px;
+    -webkit-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    display: none;
+}
+
+#van-user-list .van-address-list__add {
+    height: 40px;
+    margin: 5px 0;
+    line-height: 38px;
+    display: none;
+}
+
+#van-user-list .van-radio__icon {
+    -webkit-box-flex: 0;
+    -webkit-flex: none;
+    flex: none;
+    height: 1em;
+    font-size: 20px;
+    line-height: 1em;
+    cursor: pointer;
+    display: block;
+}
+
+#van-user-list .van-address-list {
+    box-sizing: border-box;
+    height: 100%;
+    padding: 12px 10px 12px 10px;
+}

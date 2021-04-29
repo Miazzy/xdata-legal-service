@@ -1,0 +1,18 @@
+.pane-flow-contact-grid {
+    float: left;
+    width: 100%;
+    padding: 1.0rem 12px 1.0rem 24px;
+    border: 0;
+    border-radius: 0;
+    box-shadow: 0 0 0 0 #e8e8e8, 0 0 0 0 #e8e8e8, 0 0 0 0 #e8e8e8, inset 0 0 0 0 #e8e8e8, inset 0 0 0 0 #e8e8e8;
+    transition: all .3s;
+    border-bottom: 1px solid #fcfcfc;
+}
+
+.pane-flow-card-meta-uname {
+    float: left;
+    width: 65%;
+    margin-top: 0.28rem;
+    font-weight: 300;
+    font-family: '微软雅黑 monospace';
+}

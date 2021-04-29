@@ -1,0 +1,54 @@
+.pane-flow-card-meta-icon {
+    float: left;
+    width: auto;
+}
+
+.pane-flow-card-grid {
+    width: 100%;
+}
+
+.ant-avatar-lg {
+    width: 48px;
+    height: 48px;
+    line-height: 48px;
+}
+
+.list-content-item {
+    color: rgba(0, 0, 0, .45);
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 14px;
+    margin-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.list-content-item span {
+    line-height: 20px;
+}
+
+.list-content-item p {
+    margin-top: 4px;
+    margin-bottom: 0;
+    line-height: 22px;
+}
+
+#reward-list-item .ant-list-item {
+    display: flex;
+    align-items: center;
+    padding: 0px 0;
+}
+
+#reward-message .ant-card-grid {
+    float: left;
+    width: 100%;
+    padding: 15px 10px 15px 10px;
+    border: 0;
+    border-radius: 0;
+    box-shadow: 0 0 0 0 #e8e8e8, 0 0 0 0 #e8e8e8, 0 0 0 0 #e8e8e8, inset 0 0 0 0 #e8e8e8, inset 0 0 0 0 #e8e8e8;
+    transition: all .3s;
+}
+
+#van-reward-content .ant-card-wider-padding .ant-card-body {
+    padding: 24px 2px 24px 12px;
+}

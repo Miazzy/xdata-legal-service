@@ -1,0 +1,103 @@
+.mod-logo a {
+    display: block;
+    width: 160px;
+    height: 36px;
+    margin: 0 0 0 24px;
+    background-image: url(https://qzonestyle.gtimg.cn/qz-proj/wy-pc-v3/static/img/svg/logo-v2.svg);
+    background-repeat: no-repeat;
+    line-height: 100px;
+    overflow: hidden;
+}
+
+.mod-list-group .item-tit .thumb .icon {
+    vertical-align: top;
+}
+
+.icon {
+    display: inline-block;
+}
+
+.icon-doc-m {
+    background-image: url(https://qzonestyle.gtimg.cn/qz-proj/wy-pc-v3/static/img/svg/doctype/icon-doc-m.svg);
+}
+
+.icon-ppt-m {
+    background-image: url(https://qzonestyle.gtimg.cn/qz-proj/wy-pc-v3/static/img/svg/doctype/icon-ppt-m.svg);
+}
+
+.icon-pdf-m {
+    background-image: url(https://qzonestyle.gtimg.cn/qz-proj/wy-pc-v3/static/img/svg/doctype/icon-pdf-m.svg);
+}
+
+.icon-code-m {
+    background-image: url(https://qzonestyle.gtimg.cn/qz-proj/wy-pc-v3/static/img/svg/doctype/icon-code-m.svg);
+}
+
+.icon-zip-m {
+    background-image: url(https://qzonestyle.gtimg.cn/qz-proj/wy-pc-v3/static/img/svg/doctype/icon-zip-m.svg);
+}
+
+.icon-pic-m {
+    background-image: url(https://qzonestyle.gtimg.cn/qz-proj/wy-pc-v3/static/img/svg/doctype/icon-pic-m.svg);
+}
+
+.icon-xls-m {
+    background-image: url(https://qzonestyle.gtimg.cn/qz-proj/wy-pc-v3/static/img/svg/doctype/icon-xls-m.svg);
+}
+
+.icon-file-m {
+    background-image: url(https://qzonestyle.gtimg.cn/qz-proj/wy-pc-v3/static/img/svg/doctype/icon-file-m.svg);
+}
+
+.icon-nor-m {
+    background-image: url(https://qzonestyle.gtimg.cn/qz-proj/wy-pc-v3/static/img/svg/doctype/icon-nor-m.svg);
+}
+
+.icon-txt-m {
+    background-image: url(https://qzonestyle.gtimg.cn/qz-proj/wy-pc-v3/static/img/svg/doctype/icon-txt-m.svg);
+}
+
+.icon-shared-link-m {
+    background-image: url(https://qzonestyle.gtimg.cn/qz-proj/wy-pc-v3/static/img/svg/doctype/icon-txt-m.svg);
+}
+
+.pan-file-row-element {
+    border-bottom: 1px solid #f0f0f0;
+    margin: 24px 12px 16px 12px;
+    padding: 0 0 4px 0;
+    background-color: #fefefe;
+}
+
+.pan-file-row-element i {
+    width: 40px;
+    height: 40px;
+    margin-top: -10px;
+}
+
+.pan-file-row-element .txt-name {
+    margin-top: 20px;
+    margin-left: 5px;
+}
+
+.pan-file-row-element .checkbox {
+    margin-top: -30px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.pan-file-row-header {
+    border-bottom: 1px solid #f0f0f0;
+    margin: 24px 12px;
+    padding: 0 0 12px 0;
+}
+
+.pan-file-row-header .txt-name {
+    margin-left: 5px;
+}
+
+.pan-file-row-element:hover {
+    background-color: #fcfcfc;
+    cursor: pointer;
+    opacity: 0.9;
+    color: #000;
+}
