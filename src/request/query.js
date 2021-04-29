@@ -1,5 +1,3 @@
-import * as storage from '@/request/storage';
-
 import * as contact from '@/vuex/contacts';
 import * as constant from '@/request/constant';
 
@@ -12,7 +10,7 @@ export async function queryUserInfoByView(username) {
 
     try {
         //先检测缓存中，是否有数据，如果没有数据，则从数据库中查询
-        result = storage.getStore(`system_v_user_info@username$${username}`);
+        result = Betools.storage.getStore(`system_v_user_info@username$${username}`);
 
         if (!(typeof result != 'undefined' && result != null && result != '')) {
             //发送HTTP请求，获取返回值后，设置数据
@@ -21,7 +19,7 @@ export async function queryUserInfoByView(username) {
             result = res.body;
 
             //设置缓存数据，缓存时间，暂定为5秒钟
-            storage.setStore(
+            Betools.storage.setStore(
                 `system_v_user_info@username$${username}`,
                 result,
                 3600 * 24
@@ -144,7 +142,7 @@ export async function queryTableData(tableName, id) {
 
     try {
         //获取缓存中的数据
-        var cache = storage.getStore(`sys_user_cache@${tableName}&id${id}`);
+        var cache = Betools.storage.getStore(`sys_user_cache@${tableName}&id${id}`);
 
         //返回缓存值
         if (typeof cache != 'undefined' && cache != null && cache != '') {
@@ -154,7 +152,7 @@ export async function queryTableData(tableName, id) {
         var res = await superagent.get(queryURL).set('accept', 'json');
 
         if (res.body != null && res.body.length > 0) {
-            storage.setStore(`sys_user_cache@${tableName}&id${id}`, res.body[0], 2);
+            Betools.storage.setStore(`sys_user_cache@${tableName}&id${id}`, res.body[0], 2);
         }
 
         return res.body[0];
@@ -177,7 +175,7 @@ export async function queryTableDataByPid(tableName, id) {
 
     try {
         //获取缓存中的数据
-        var cache = storage.getStore(`sys_user_cache@${tableName}&pid${id}`);
+        var cache = Betools.storage.getStore(`sys_user_cache@${tableName}&pid${id}`);
 
         //返回缓存值
         if (typeof cache != 'undefined' && cache != null && cache != '') {
@@ -187,7 +185,7 @@ export async function queryTableDataByPid(tableName, id) {
         var res = await superagent.get(queryURL).set('accept', 'json');
 
         if (res.body != null && res.body.length > 0) {
-            storage.setStore(`sys_user_cache@${tableName}&pid${id}`, res.body, 2);
+            Betools.storage.setStore(`sys_user_cache@${tableName}&pid${id}`, res.body, 2);
         }
 
         return res.body;
@@ -210,7 +208,7 @@ export async function queryRoleGroupList(name, username = '') {
 
     try {
         //获取缓存中的数据
-        var cache = storage.getStore(`sys_user_cache@${tableName}&groupname${name}`);
+        var cache = Betools.storage.getStore(`sys_user_cache@${tableName}&groupname${name}`);
 
         //返回缓存值
         if (typeof cache != 'undefined' && cache != null && cache != '') {
@@ -220,7 +218,7 @@ export async function queryRoleGroupList(name, username = '') {
         var res = await superagent.get(queryURL).set('accept', 'json');
 
         if (res.body != null && res.body.length > 0) {
-            storage.setStore(`sys_user_cache@${tableName}&groupname${name}`, res.body, 2);
+            Betools.storage.setStore(`sys_user_cache@${tableName}&groupname${name}`, res.body, 2);
         }
 
         return res.body;
@@ -240,7 +238,7 @@ export async function queryUserInfoByMobile(mobile) {
 
     try {
         //获取缓存中的数据
-        var cache = storage.getStore(`sys_user_cache_mobile_userinfo${mobile}`);
+        var cache = Betools.storage.getStore(`sys_user_cache_mobile_userinfo${mobile}`);
 
         //返回缓存值
         if (typeof cache != 'undefined' && cache != null && cache != '') {
@@ -254,7 +252,7 @@ export async function queryUserInfoByMobile(mobile) {
         if (res.body != null && res.body.length > 0) {
             console.log(`mobile: ${JSON.stringify(res.body)}`);
             debugger;
-            storage.setStore(`sys_user_cache_mobile_userinfo${mobile}`, res.body, 3600 * 24 * 7);
+            Betools.storage.setStore(`sys_user_cache_mobile_userinfo${mobile}`, res.body, 3600 * 24 * 7);
         }
 
         return res.body;
@@ -277,7 +275,7 @@ export async function queryMessages(wxid, wxid_, maxId = 0) {
 
     try {
         //获取缓存中的数据
-        var cache = storage.getStore(`sys_message_cache##v1@${tableName}&wxid${wxid}_wxid_${wxid_}_maxid${maxId}`);
+        var cache = Betools.storage.getStore(`sys_message_cache##v1@${tableName}&wxid${wxid}_wxid_${wxid_}_maxid${maxId}`);
 
         //返回缓存值
         if (typeof cache != 'undefined' && cache != null && cache != '') {
@@ -287,7 +285,7 @@ export async function queryMessages(wxid, wxid_, maxId = 0) {
         var res = await superagent.get(queryURL).set('accept', 'json');
 
         if (res.body != null && res.body.length > 0) {
-            storage.setStore(`sys_message_cache##v1@${tableName}&wxid${wxid}_wxid_${wxid_}_maxid${maxId}`, res.body, 1);
+            Betools.storage.setStore(`sys_message_cache##v1@${tableName}&wxid${wxid}_wxid_${wxid_}_maxid${maxId}`, res.body, 1);
         }
 
         return res.body;
@@ -309,7 +307,7 @@ export async function queryVMessages(wxid, username, maxId = 0) {
         //更新URL PATCH	/api/tableName/:id	Updates row element by primary key
         var queryURL = `${window.requestAPIConfig.restapi}/api/${tableName}?_where=(team,like,~${wxid}~)&_sort=-id&_p=0&_size=100`;
         //获取缓存中的数据
-        var cache = storage.getStore(`sys_message_cache##v2@${tableName}&wxid${wxid}}&maxid${maxId}`);
+        var cache = Betools.storage.getStore(`sys_message_cache##v2@${tableName}&wxid${wxid}}&maxid${maxId}`);
 
         //返回缓存值
         if (typeof cache != 'undefined' && cache != null && cache != '') {
@@ -337,7 +335,7 @@ export async function queryVMessages(wxid, username, maxId = 0) {
 
             };
 
-            storage.setStore(`sys_message_cache##v2@${tableName}&wxid${wxid}}&maxid${maxId}`, res.body, 1);
+            Betools.storage.setStore(`sys_message_cache##v2@${tableName}&wxid${wxid}}&maxid${maxId}`, res.body, 1);
         }
 
         return res.body;
@@ -424,7 +422,7 @@ export async function queryUserInfoByAccount(userid) {
     var queryURL = `${window.requestAPIConfig.restapi}/api/v2/queryemployee/${userid}`;
 
     //获取缓存中的数据
-    var cache = storage.getStore(`sys_user_cache_account#queryemployee#@${userid}`);
+    var cache = Betools.storage.getStore(`sys_user_cache_account#queryemployee#@${userid}`);
 
     //返回缓存值
     if (typeof cache != 'undefined' && cache != null && cache != '') {
@@ -436,10 +434,10 @@ export async function queryUserInfoByAccount(userid) {
         var res = await queryTableDataByField('bs_hrmresource', 'loginid', userid); // await superagent.get(queryURL).set('accept', 'json');
 
         if (res != null && res.length > 0) {
-            storage.setStore(`sys_user_cache_account#queryemployee#@${userid}`, res[0], 3600 * 24 * 31);
+            Betools.storage.setStore(`sys_user_cache_account#queryemployee#@${userid}`, res[0], 3600 * 24 * 31);
             return res[0];
         } else if (!Betools.tools.isNull(res.text)) {
-            storage.setStore(`sys_user_cache_account#queryemployee#@${userid}`, res.text, 3600 * 24 * 31);
+            Betools.storage.setStore(`sys_user_cache_account#queryemployee#@${userid}`, res.text, 3600 * 24 * 31);
             return JSON.parse(res.text);
         }
 
@@ -465,7 +463,7 @@ export async function queryWeworkUser() {
         if (code) {
 
             //获取缓存中的数据
-            var cache = storage.getStore(`sys_wework_user_code#wework_user_code#@${code}`);
+            var cache = Betools.storage.getStore(`sys_wework_user_code#wework_user_code#@${code}`);
 
             //返回缓存值
             if (typeof cache != 'undefined' && cache != null && cache != '') {
@@ -480,15 +478,15 @@ export async function queryWeworkUser() {
             }
 
             //设置system_userinfo
-            storage.setStore('system_linfo', JSON.stringify({ username: response.body.userinfo.userid, password: '************' }), 3600 * 24 * 30);
-            storage.setStore('system_userinfo', JSON.stringify(response.body.userinfo), 3600 * 24 * 30);
-            storage.setStore('system_token', JSON.stringify(code), 3600 * 24 * 30);
-            storage.setStore('system_department', JSON.stringify(response.body.userinfo.department), 3600 * 24 * 30);
-            storage.setStore('system_login_time', dayjs().format('YYYY-MM-DD HH:mm:ss'), 3600 * 24 * 30);
-            storage.setStore(`sys_wework_user_code#wework_user_code#@${code}`, JSON.stringify(userinfo), 3600 * 24 * 30);
+            Betools.storage.setStore('system_linfo', JSON.stringify({ username: response.body.userinfo.userid, password: '************' }), 3600 * 24 * 30);
+            Betools.storage.setStore('system_userinfo', JSON.stringify(response.body.userinfo), 3600 * 24 * 30);
+            Betools.storage.setStore('system_token', JSON.stringify(code), 3600 * 24 * 30);
+            Betools.storage.setStore('system_department', JSON.stringify(response.body.userinfo.department), 3600 * 24 * 30);
+            Betools.storage.setStore('system_login_time', dayjs().format('YYYY-MM-DD HH:mm:ss'), 3600 * 24 * 30);
+            Betools.storage.setStore(`sys_wework_user_code#wework_user_code#@${code}`, JSON.stringify(userinfo), 3600 * 24 * 30);
 
         } else {
-            userinfo = storage.getStore('system_userinfo');
+            userinfo = Betools.storage.getStore('system_userinfo');
         }
 
         return userinfo;
@@ -563,7 +561,7 @@ export async function queryRewardDataByID(period) {
     var queryURL = `${constant.REQUEST_API_CONFIG.restapi}/api/v_reward_data?_where=(period,like,${period})&_sort=amount&_p=0&_size=1000`;
 
     //获取缓存中的数据
-    var cache = storage.getStore(`sys_v_reward_data&id${period}`);
+    var cache = Betools.storage.getStore(`sys_v_reward_data&id${period}`);
 
     //返回缓存值
     if (typeof cache != 'undefined' && cache != null && cache != '') {
@@ -576,7 +574,7 @@ export async function queryRewardDataByID(period) {
         console.log(res);
 
         if (res.body != null && res.body.length > 0) {
-            storage.setStore(`sys_v_reward_data&id${period}`, res.body, 60);
+            Betools.storage.setStore(`sys_v_reward_data&id${period}`, res.body, 60);
         }
 
         return res.body;

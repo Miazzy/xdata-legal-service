@@ -1,5 +1,3 @@
-import * as storage from '@/request/storage';
-
 /**
  * @function 查询当前自由流程业务
  * @param {*} id
@@ -47,7 +45,7 @@ export async function queryUserName() {
 
     try {
         //从缓存中获取用户数据
-        var userlist = storage.getStore('cache_all_user_name');
+        var userlist = Betools.storage.getStore('cache_all_user_name');
 
         if (
             typeof userlist == 'undefined' ||
@@ -67,7 +65,7 @@ export async function queryUserName() {
             }
 
             //将用户数据设置到缓存中
-            storage.setStore('cache_all_user_name', result, 3600 * 2);
+            Betools.storage.setStore('cache_all_user_name', result, 3600 * 2);
         } else {
             result = userlist;
         }
@@ -133,7 +131,7 @@ export async function handleUserInfo(userInfo) {
         //     content: "用户登录信息过期，请重新登录！",
         //     onOk: async() => {
         //         //清空缓存信息
-        //         Betools.storage.clearAll();
+        //         Betools.Betools.storage.clearAll();
         //         //跳转到登录页面
         //         that.$router.push(`/user/login`);
         //     }

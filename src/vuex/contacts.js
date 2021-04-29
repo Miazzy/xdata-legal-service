@@ -1,24 +1,7 @@
-import * as storage from '@/request/storage';
-
-
-/**
- * wxid-微信id
- * initial-姓名首字母
- * headerUrl-头像地址
- * nickname-昵称
- * sex-性别 男1女0
- * remark-备注
- * signature-个性签名
- * telphone-电话号码
- * album-相册
- * area-地区
- * from-来源
- * desc-描述
- */
+/** * wxid-微信id * initial-姓名首字母 * headerUrl-头像地址 * nickname-昵称 * sex-性别 男1女0 * remark-备注 * signature-个性签名 * telphone-电话号码 * album-相册 * area-地区 * from-来源 * desc-描述 */
 const contact = { contacts: null };
 
 export default contact;
-
 export const ALL_USER_CACHE_KEY = 'ALL_USER_CACHE_KEY_V10';
 export const ALL_USER_CACHE_WORK_KEY = 'ALL_USER_CACHE_WORK_KEY_V10';
 export const ALL_USER_CACHE_DEPART_KEY = 'ALL_USER_CACHE_DEPART_KEY_V10';
@@ -29,7 +12,7 @@ export const ALL_USER_CACHE_DEPART_KEY = 'ALL_USER_CACHE_DEPART_KEY_V10';
 export const queryDepartUserList = async() => {
 
     //获取当前登录用户信息
-    const userinfo = await storage.getStore('system_userinfo');
+    const userinfo = await Betools.storage.getStore('system_userinfo');
     const system_type = Betools.tools.queryUrlString('system_type', 'history');
 
     //如果没有获取到用户数据，则无法获取部门信息
@@ -40,7 +23,7 @@ export const queryDepartUserList = async() => {
     //获取部门信息
     const departID = userinfo.main_department;
 
-    const cache = await storage.getStoreDB(ALL_USER_CACHE_DEPART_KEY + '#depart_id#' + departID);
+    const cache = await Betools.storage.getStoreDB(ALL_USER_CACHE_DEPART_KEY + '#depart_id#' + departID);
 
     if (!Betools.tools.isNull(cache)) {
         return cache;
@@ -127,7 +110,7 @@ export const queryDepartUserList = async() => {
         result.records = res.body.userlist;
         result.total = res.body.userlist.length;
 
-        storage.setStoreDB(ALL_USER_CACHE_DEPART_KEY + '#depart_id#' + departID, result, 3600 * 24 * 3);
+        Betools.storage.setStoreDB(ALL_USER_CACHE_DEPART_KEY + '#depart_id#' + departID, result, 3600 * 24 * 3);
 
         return result;
 
@@ -146,7 +129,7 @@ export const queryWorkUserList = async() => {
     var queryURL = `${window.requestAPIConfig.restapi}/api/v3/employee`;
     var result = {};
 
-    const cache = await storage.getStoreDB(ALL_USER_CACHE_WORK_KEY);
+    const cache = await Betools.storage.getStoreDB(ALL_USER_CACHE_WORK_KEY);
 
     if (!Betools.tools.isNull(cache)) {
         return cache;
@@ -217,7 +200,7 @@ export const queryWorkUserList = async() => {
         result.records = res.body;
         result.total = res.body.length;
 
-        storage.setStoreDB(ALL_USER_CACHE_WORK_KEY, result, 3600 * 24 * 3);
+        Betools.storage.setStoreDB(ALL_USER_CACHE_WORK_KEY, result, 3600 * 24 * 3);
 
         return result;
 
@@ -329,11 +312,11 @@ export const queryUserList = async(params) => {
 
 export const queryContacts = async() => {
     //获取当前登录用户信息
-    const userinfo = await storage.getStore('system_userinfo');
+    const userinfo = await Betools.storage.getStore('system_userinfo');
 
     var all = [];
     var count = 0;
-    var cache = await storage.getStoreDB(ALL_USER_CACHE_KEY + '#depart#' + userinfo.main_department);
+    var cache = await Betools.storage.getStoreDB(ALL_USER_CACHE_KEY + '#depart#' + userinfo.main_department);
 
     if (Betools.tools.isNull(cache) || cache.length <= 0) {
         let userlist = await queryDepartUserList();
@@ -342,7 +325,7 @@ export const queryContacts = async() => {
         if (!(Betools.tools.isNull(userlist) || userlist.length <= 0)) {
             all = [...all, ...userlist];
         }
-        storage.setStoreDB(ALL_USER_CACHE_KEY + '#depart#' + userinfo.main_department, all, 3600 * 24);
+        Betools.storage.setStoreDB(ALL_USER_CACHE_KEY + '#depart#' + userinfo.main_department, all, 3600 * 24);
     } else {
         all = cache;
     }
@@ -353,14 +336,14 @@ export const queryContacts = async() => {
 export const getUserInfo = async(wxid) => {
 
     //获取当前登录用户信息
-    const userinfo = await storage.getStore('system_userinfo');
+    const userinfo = await Betools.storage.getStore('system_userinfo');
 
     if (!wxid || !userinfo) {
         return;
     } else {
 
         //从缓存中查询数据
-        var contacts = await storage.getStoreDB(ALL_USER_CACHE_KEY + '#depart#' + userinfo.main_department);
+        var contacts = await Betools.storage.getStoreDB(ALL_USER_CACHE_KEY + '#depart#' + userinfo.main_department);
         for (var index in contacts) {
             if (contacts[index].wxid == wxid) {
                 return contacts[index]
@@ -393,7 +376,7 @@ export async function getUserInfoByWxid(wxid) {
 
     try {
         //获取缓存中的数据
-        var cache = (await storage.getStoreDB(`contacts_cache_wxid${wxid}`)) || window.userMap.get(key);
+        var cache = (await Betools.storage.getStoreDB(`contacts_cache_wxid${wxid}`)) || window.userMap.get(key);
 
         //返回缓存值
         if (typeof cache != 'undefined' && cache != null && cache != '') {
@@ -404,7 +387,7 @@ export async function getUserInfoByWxid(wxid) {
 
         if (res.body != null) {
             window.userMap.set(key, res.body);
-            await storage.setStoreDB(key, res.body, 3600 * 24);
+            await Betools.storage.setStoreDB(key, res.body, 3600 * 24);
         }
 
         return res.body;

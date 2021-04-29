@@ -4,16 +4,11 @@ const mutations = {
         state.currentLang = lang
         Vue.config.lang = lang
         document.cookie = "VR_LANG=" + lang + "; path=/;domain=.snail.com"
-            // location.reload()
     },
     //设置当前页面名字
     setPageName(state, name) {
         state.currentPageName = name
     },
-    //设置前一页名字 已遗弃
-    // setBackPageName(state, name) {
-    //     state.backPageName = name
-    // },
     //当 search 组件全屏/非全屏时 切换公共头部状态
     toggleHeaderStatus(state, status) {
         state.headerStatus = status
