@@ -6,7 +6,7 @@
         <keep-alive>
           <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
 
-            <!-- 奖罚申请 -->
+            <!-- 案件申请 -->
             <div style="background-color:#f0f0f0;">
 
               <div class="reward-apply-content" style="height:auto; background-color:#fefefe; margin-top:0px; margin-left: 5rem; margin-right: 5rem; margin-bottom: 5rem; border: 1px solid #f0f0f0; front-size: 1rem;" >
@@ -23,19 +23,19 @@
                    </a-row>
                 </div>
 
-                <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px;">
+                <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>流程标题</span>
                     </a-col>
                     <a-col :span="8">
-                       <a-input v-model="item.title" placeholder="请输入案件发起申请标题！" @blur="validFieldToast('title')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="item.reward_type" readonly placeholder="请填写本案件流程标题！" @blur="validFieldToast('reward_type')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                     </a-col>
-                    <a-col v-show="item.serialid" :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>流程序号</span>
+                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>案件编号</span>
                     </a-col>
-                    <a-col v-show="item.serialid" :span="8">
-                       <a-input v-model="item.serialid" placeholder="" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                    <a-col :span="8">
+                      <a-input v-model="item.create_time" readonly placeholder="请输入案件编号！" @blur="validFieldToast('create_time')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                     </a-col>
                   </a-row>
                 </div>
@@ -43,16 +43,33 @@
                 <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>奖罚类别</span>
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>填报日期</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="item.reward_type" readonly placeholder="请填写奖罚类别！" @blur="validFieldToast('reward_type')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      <a-input v-model="item.reward_type" readonly placeholder="请填写填报日期！" @blur="validFieldToast('reward_type')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>申请时间</span>
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>填报人员</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="item.create_time" readonly placeholder="请输入申请时间！" @blur="validFieldToast('create_time')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      <a-input v-model="item.create_time" readonly placeholder="请输入填报人员！" @blur="validFieldToast('create_time')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                    </a-col>
+                  </a-row>
+                </div>
+
+                <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                  <a-row>
+                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>案件类别</span>
+                    </a-col>
+                    <a-col :span="8">
+                      <a-input v-model="item.reward_type" readonly placeholder="请选择案件类别！" @blur="validFieldToast('reward_type')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                    </a-col>
+                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>业务板块</span>
+                    </a-col>
+                    <a-col :span="8">
+                      <a-input v-model="item.create_time" readonly placeholder="请选择业务板块！" @blur="validFieldToast('create_time')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                     </a-col>
                   </a-row>
                 </div>
@@ -60,7 +77,7 @@
                 <div class="reward-apply-content-item reward-apply-content-title" style="">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
                     <a-col class="reward-apply-content-title-text" :span="4" style="">
-                      人员信息
+                      区域信息
                     </a-col>
                    </a-row>
                 </div>
@@ -68,27 +85,16 @@
                 <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>申请人员</span>
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>所属区域</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="item.apply_realname" :readonly="!!item.apply_realname" placeholder="请输入申请人员姓名！" @blur="validFieldToast('apply_realname');" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
-                    </a-col>
-                  </a-row>
-                </div>
-
-                <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
-                  <a-row>
-                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>所属公司</span>
-                    </a-col>
-                    <a-col :span="8">
-                      <a-input v-model="item.company" placeholder="请输入申请人员所属公司！" @blur="validFieldToast('company')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="item.reward_type" readonly placeholder="请选择所属区域" @blur="validFieldToast('reward_type')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>所属部门</span>
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>所属项目</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="item.department" placeholder="请输入申请人员所属部门！" @blur="validFieldToast('department')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="item.create_time" readonly placeholder="请选择所属项目！" @blur="validFieldToast('create_time')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                     </a-col>
                   </a-row>
                 </div>
@@ -96,7 +102,32 @@
                 <div class="reward-apply-content-item reward-apply-content-title" style="">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
                     <a-col class="reward-apply-content-title-text" :span="4" style="">
-                      知会信息
+                      案由信息
+                    </a-col>
+                   </a-row>
+                </div>
+
+                <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                  <a-row>
+                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>一级案由</span>
+                    </a-col>
+                    <a-col :span="8">
+                      <a-input v-model="item.company" placeholder="请选择一级案由！" @blur="validFieldToast('company')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                    </a-col>
+                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>二级案由</span>
+                    </a-col>
+                    <a-col :span="8">
+                      <a-input v-model="item.department" placeholder="请选择一级案由！" @blur="validFieldToast('department')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                    </a-col>
+                  </a-row>
+                </div>
+
+                <div class="reward-apply-content-item reward-apply-content-title" style="">
+                   <a-row style="border-top: 1px dash #f0f0f0;" >
+                    <a-col class="reward-apply-content-title-text" :span="4" style="">
+                      诉讼信息
                     </a-col>
                    </a-row>
                 </div>
@@ -104,10 +135,10 @@
                 <div id="van-user-list" class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>人力经理</span>
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>程序阶段</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="item.hr_name" placeholder="请输入案件发起申请需要知会的人力职能人员！" @blur="validFieldToast('hr_name');queryNotifyMan();" @click="queryNotifyMan();" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="item.hr_name" placeholder="请选择当前案件程序阶段（一审/二审/执行/再审）！" @blur="validFieldToast('hr_name');queryNotifyMan();" @click="queryNotifyMan();" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                   <a-row>
@@ -121,10 +152,27 @@
                   </a-row>
                 </div>
 
+                <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                  <a-row>
+                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>业务接收</span>
+                    </a-col>
+                    <a-col :span="8">
+                      <a-input v-model="item.company" placeholder="请输入业务部门接收时间！" @blur="validFieldToast('company')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                    </a-col>
+                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>法律接收</span>
+                    </a-col>
+                    <a-col :span="8">
+                      <a-input v-model="item.department" placeholder="请输入法律部门接收时间！" @blur="validFieldToast('department')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                    </a-col>
+                  </a-row>
+                </div>
+
                 <div class="reward-apply-content-item reward-apply-content-title" style="">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
                     <a-col class="reward-apply-content-title-text" :span="4" style="">
-                      奖罚信息
+                      案件信息
                     </a-col>
                    </a-row>
                 </div>
@@ -135,7 +183,7 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>申请奖金</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="item.amount"  placeholder="请输入本次奖罚申请的单项奖金总额！" @blur="validFieldToast('amount')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="item.amount"  placeholder="请输入本次案件申请的单项奖金总额！" @blur="validFieldToast('amount')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
@@ -146,13 +194,13 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>发放周期</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="item.reward_release_period"  placeholder="请输入本次奖罚/激励申请的发放周期，注意是发放周期！" @blur="validFieldToast('reward_release_period')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="item.reward_release_period"  placeholder="请输入本次案件/激励申请的发放周期，注意是发放周期！" @blur="validFieldToast('reward_release_period')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>发放性质</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="item.reward_release_feature"  placeholder="请输入本次奖罚/激励申请的发放性质，如当期分配/延期分配！" @blur="validFieldToast('reward_release_feature')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="item.reward_release_feature"  placeholder="请输入本次案件/激励申请的发放性质，如当期分配/延期分配！" @blur="validFieldToast('reward_release_feature')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
@@ -163,13 +211,13 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>所属周期</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="item.reward_period"  placeholder="请输入本次奖罚/激励申请的所属周期，注意不是发放周期！" @blur="validFieldToast('reward_period')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="item.reward_period"  placeholder="请输入本次案件/激励申请的所属周期，注意不是发放周期！" @blur="validFieldToast('reward_period')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>奖罚名称</span>
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>案件名称</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="item.reward_name" placeholder="请输入本次奖罚申请的奖罚名称！" @blur="validFieldToast('reward_name')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="item.reward_name" placeholder="请输入本次案件申请的案件名称！" @blur="validFieldToast('reward_name')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
@@ -231,8 +279,8 @@
                       :data="datas"
                       :fields="fields"
                       style="position:absolute;top:7px;right: -160px;z-index:100;"
-                      worksheet="奖罚明细模板"
-                      name="奖罚明细模板.xls"
+                      worksheet="案件明细模板"
+                      name="案件明细模板.xls"
                     >
                       下载模板
                     </download-excel>
@@ -240,13 +288,13 @@
                       :data="data"
                       :fields="fields"
                       style="position:absolute;top:7px;right: -300px;z-index:100;"
-                      worksheet="奖罚明细"
-                      name="奖罚明细.xls"
+                      worksheet="案件明细"
+                      name="案件明细.xls"
                     >
                       下载明细
                     </download-excel>
 
-                    <van-cell title="奖罚明细" class="van-cell-upload" :label="item.files.slice(0,30)">
+                    <van-cell title="案件明细" class="van-cell-upload" :label="item.files.slice(0,30)">
 
                       <template #right-icon>
                         <excel-import :on-success="onSuccess">
@@ -309,13 +357,13 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;"></span>分配人员</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="release_username" placeholder="请输入奖罚明细中的分配人员！" @blur="queryReleaseMan();" @click="queryReleaseMan();" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="release_username" placeholder="请输入案件明细中的分配人员！" @blur="queryReleaseMan();" @click="queryReleaseMan();" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;"></span>分配金额</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="release_amount" placeholder="请输入奖罚明细中的奖罚金额！" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0; width: 320px; " />
+                      <a-input v-model="release_amount" placeholder="请输入案件明细中的案件金额！" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0; width: 320px; " />
                       <span style="color:red;font-size:0.6rem;display:block;margin-top:15px;">奖项金额，正数表示为奖励、激励，负数表示为罚款！</span>
                     </a-col>
                     <div style="position:absolute; right: 5px; top: -2px;">
@@ -336,7 +384,7 @@
                 <div class="reward-apply-content-item reward-apply-content-title" style="">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
                     <a-col class="reward-apply-content-title-text" :span="4" style="">
-                      奖罚明细
+                      案件明细
                     </a-col>
                    </a-row>
                 </div>
@@ -446,7 +494,7 @@ export default {
     return {
       iswechat:false,
       iswework:false,
-      pageName: "奖罚管理",
+      pageName: "案件管理",
       momentNewMsg: true,
       activeTabKey: 3,
       acceptType:'*/*',
@@ -456,7 +504,7 @@ export default {
       item:{
               id: '',
               serialid:'',
-              create_time: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+              create_time: '',
               create_by: '',
               apply_date: dayjs().format('YYYY-MM-DD'),
               title: '',
@@ -614,10 +662,10 @@ export default {
           return this.$toast.fail('请先输入申请奖金总额！');
         }
         if(!this.item.reward_release_feature){
-          return this.$toast.fail('请输入奖罚申请的分配性质！');
+          return this.$toast.fail('请输入案件申请的分配性质！');
         }
         if(!this.item.reward_release_period){
-          return this.$toast.fail('请输入奖罚申请的发放周期！');
+          return this.$toast.fail('请输入案件申请的发放周期！');
         }
         try {
           let trows = data[0].data;
@@ -1116,7 +1164,7 @@ export default {
           }
 
           try {
-            //查询奖罚类型
+            //查询案件类型
             this.item.reward_type = workconfig.rewardtype[type];
           } catch (error) {
             console.log(error);
@@ -1181,7 +1229,7 @@ export default {
           return false;
         }
 
-        // 如果奖罚明细数据为空，且不存在上传附件，提示请上传附件
+        // 如果案件明细数据为空，且不存在上传附件，提示请上传附件
         if((this.data == null || this.data.length == 0) && !this.item.files ){
           await vant.Dialog.alert({
             title: '温馨提示',
@@ -1197,7 +1245,7 @@ export default {
         if( orgValue != sumValue){
           await vant.Dialog.alert({
             title: '温馨提示',
-            message: `奖罚申请金额(${orgValue})和奖罚明细金额合计${sumValue}不一致，请仔细检查后在提交！`,
+            message: `案件申请金额(${orgValue})和案件明细金额合计${sumValue}不一致，请仔细检查后在提交！`,
           });
           return false;
         }
@@ -1225,7 +1273,7 @@ export default {
             content: "是否确认提交此案件发起申请?",
             onOk: async() => {
 
-                  //查询直接所在工作组，注意此处是奖罚人力经理管理员
+                  //查询直接所在工作组，注意此处是案件人力经理管理员
                   const response = await query.queryRoleGroupList('COMMON_REWARD_HR_ADMIN' , this.item.hr_id);
 
                   //获取到印章管理员组信息
@@ -1279,7 +1327,7 @@ export default {
                   //第二步，向表单提交form对象数据
                   const result = await Betools.manage.postTableData(this.tablename , elem);
 
-                  //提交此表单对应的奖罚明细数据
+                  //提交此表单对应的案件明细数据
                   for(let item of this.data){
                     item.id = `${item.key}`;
                     item.unique_key = `${item.key}`;
@@ -1462,10 +1510,10 @@ export default {
               employee       : userinfo.realname ,//varchar(1000) null comment '操作职员',
               approve_user   : userinfo.username ,//varchar(100)  null comment '审批人员',
               action         : '保存'    ,//varchar(100)  null comment '操作动作',
-              action_opinion : '保存奖罚申请',//text          null comment '操作意见',
+              action_opinion : '保存案件申请',//text          null comment '操作意见',
               operate_time   : dayjs().subtract(100,'second').format('YYYY-MM-DD HH:mm:ss')   ,//datetime      null comment '操作时间',
               functions_station : userinfo.position, //varchar(100)  null comment '职能岗位',
-              process_station   : '奖罚申请', //varchar(100) null comment '流程岗位',
+              process_station   : '案件申请', //varchar(100) null comment '流程岗位',
               business_data     : JSON.stringify(elem), //text null comment '业务数据',
               content           : `${elem.content}`,//text          null comment '业务内容',
               process_audit     : elem.id, //varchar(100)  null comment '流程编码',
@@ -1522,7 +1570,7 @@ export default {
           return false;
         }
 
-        // 如果奖罚明细数据为空，且不存在上传附件，提示请上传附件
+        // 如果案件明细数据为空，且不存在上传附件，提示请上传附件
         if((this.data == null || this.data.length == 0) && !this.item.files ){
             await vant.Dialog.alert({
             title: '温馨提示',
@@ -1538,7 +1586,7 @@ export default {
         if( orgValue != sumValue){
           await vant.Dialog.alert({
             title: '温馨提示',
-            message: `奖罚申请金额(${orgValue})和奖罚明细金额合计${sumValue}不一致，请仔细检查后在提交！`,
+            message: `案件申请金额(${orgValue})和案件明细金额合计${sumValue}不一致，请仔细检查后在提交！`,
           });
           return false;
         }
@@ -1565,7 +1613,7 @@ export default {
             title: "确认操作",
             content: "是否确认保存此申请单?",
             onOk: async() => {
-                  //查询直接所在工作组，注意此处是奖罚人力经理管理员
+                  //查询直接所在工作组，注意此处是案件人力经理管理员
                   const response = await query.queryRoleGroupList('COMMON_REWARD_HR_ADMIN' , this.item.hr_id);
                   //获取到印章管理员组信息
                   let user_group_ids = response && response.length > 0 ? response[0].userlist : '';
@@ -1616,7 +1664,7 @@ export default {
                   //第二步，向表单提交form对象数据
                   const result = await Betools.manage.postTableData(this.tablename , elem);
 
-                  //提交此表单对应的奖罚明细数据
+                  //提交此表单对应的案件明细数据
                   for(let item of this.data){
                     item.id = `${item.key}`;
                     item.unique_key = `${item.key}`;
@@ -1661,20 +1709,20 @@ export default {
 
       },
 
-      // 执行奖罚明细分配函数
+      // 执行案件明细分配函数
       async rewardRelease(){
 
         if(!this.item.amount){
           return this.$toast.fail('请先输入申请奖金总额！');
         }
         if(!this.release_amount){
-          return this.$toast.fail('请输入奖罚明细的分配金额！');
+          return this.$toast.fail('请输入案件明细的分配金额！');
         }
         if(!this.item.reward_release_feature){
-          return this.$toast.fail('请输入奖罚申请的分配性质！');
+          return this.$toast.fail('请输入案件申请的分配性质！');
         }
         if(!this.item.reward_release_period){
-          return this.$toast.fail('请输入奖罚申请的发放周期！');
+          return this.$toast.fail('请输入案件申请的发放周期！');
         }
         if(!/^[0-9]+.{0,1}[0-9]{0,2}$/g.test(this.release_amount)){
           return this.$toast.fail('请在分配金额处输入数字！');
@@ -1702,7 +1750,7 @@ export default {
               return this.$toast.fail('未找到此分配人员，请确认分配人员是否为公司员工！');
             }
             if(!this.release_username || !this.release_userid){
-              return this.$toast.fail('请输入奖罚明细的分配人员，并选择下拉列表中人员！');
+              return this.$toast.fail('请输入案件明细的分配人员，并选择下拉列表中人员！');
             }
             await this.rewardAddUser(this.release_username , this.release_userid , this.release_company , this.release_department , this.release_zone , this.release_project , this.release_position , this.release_amount);
           } catch (error) {
