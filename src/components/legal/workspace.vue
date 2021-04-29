@@ -3,7 +3,7 @@
       <div style="background-color:#f0f0f0;width:100%;height:auto;">
       <a-menu mode="horizontal">
         <a-sub-menu>
-            <span slot="title" class="submenu-title-wrapper" ><a-icon type="user" />{{ userinfo.realname || userinfo.name || userinfo.lastname }} </span>
+            <span slot="title" class="submenu-title-wrapper" ><a-icon type="user" />{{ usertitle }} </span>
             <a-menu-item-group title="应用中心">
             <a-menu-item key="setting:1" :to="`/legal/message`"  @click="redirectView('/legal/message')" >
                 审批
@@ -116,7 +116,8 @@ export default {
       paneflows: workconfig.reward($router),
       wflows: workconfig.getRewardWflow($router),
       quicktags: workconfig.getRewardQuickTag($router),
-      userinfo:null,
+      userinfo: '',
+      usertitle:'',
     };
   },
   activated() {
@@ -131,14 +132,16 @@ export default {
       try {
         this.iswechat = Betools.tools.isWechat(); //查询当前是否微信端
         this.userinfo = await this.weworkLogin(); //查询当前登录用户
+
       } catch (error) {
         console.log(error);
       }
     },
     // 企业微信登录处理函数
     async  weworkLogin  (codeType = 'search', systemType = 'search')  {
-        const userinfo_work = await Betools.query.queryWeworkUser(codeType, systemType,'v5');
+      const userinfo_work = await Betools.query.queryWeworkUser(codeType, systemType,'v5');
         const userinfo = await Betools.storage.getStore('system_userinfo');
+        this.usertitle = (userinfo && userinfo.parent_company && userinfo.parent_company.name ? userinfo.parent_company.name + ' > ' :'')  + (userinfo ? userinfo.realname || userinfo.name || userinfo.lastname : '');
         return userinfo;
     },
     // 执行页面跳转

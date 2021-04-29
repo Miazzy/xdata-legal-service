@@ -3,7 +3,7 @@
     <div style="background-color:#f0f0f0; height:auto;">
       <a-menu mode="horizontal">
         <a-sub-menu>
-            <span slot="title" class="submenu-title-wrapper" ><a-icon type="user" />{{ userinfo.realname || userinfo.name || userinfo.lastname }} </span>
+            <span slot="title" class="submenu-title-wrapper" ><a-icon type="user" />{{ usertitle }} </span>
             <a-menu-item-group title="应用中心">
             <a-menu-item key="setting:1" :to="`/legal/message`"  @click="redirectView('/legal/message')" >
                 审批
@@ -188,6 +188,7 @@ export default {
       business_code: '000000000',
       typename:'',
       userinfo:'',
+      usertitle:'',
     };
   },
   activated() {
@@ -219,7 +220,8 @@ export default {
       this.paneflows.map((item) => {item.css = item.ename == this.panename ? "background:#f9f9f9;" : '';});
       Betools.storage.setStore(`reward_message_typename` , this.typename , 3600 );
       Betools.storage.setStore(`reward_message_panename` , this.panename , 3600 );
-      this.userinfo = await Betools.storage.getStore('system_userinfo');
+      const userinfo = this.userinfo = await Betools.storage.getStore('system_userinfo');
+      this.usertitle = (userinfo && userinfo.parent_company && userinfo.parent_company.name ? userinfo.parent_company.name + ' > ' :'')  + (userinfo ? userinfo.realname || userinfo.name || userinfo.lastname : '');
     },
     // 执行页面跳转
     async redirectView(path) {
