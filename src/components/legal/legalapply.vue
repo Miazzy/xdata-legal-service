@@ -1,6 +1,9 @@
 <template>
+  
   <div id="reward-home">
+
       <div style="background-color:#f0f0f0;">
+
       <a-menu mode="horizontal">
         <a-sub-menu>
             <span slot="title" class="submenu-title-wrapper" ><a-icon type="user" />{{ usertitle }} </span>
@@ -14,8 +17,8 @@
             </a-menu-item-group>
         </a-sub-menu>
       </a-menu>
-      <a-row :gutter="24">
 
+      <a-row :gutter="24">
         <keep-alive>
           <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
 
@@ -1770,32 +1773,28 @@ export default {
 <style scoped >
     @import "../../assets/css/reward.home.css";
     @import "../../assets/css/reward.apply.css";
-
-
-#reward-download-excel-button {
-    background-image: linear-gradient(to right, #f96033, red);
-    margin: 10px 10px 10px 10px;
-    padding: 1px 20px;
-    border-radius: 8px;
-    color: #f0f0f0;
-    font-size: 12px;
-    text-align: center;
-    vertical-align: middle;
-    height: 27px;
-    line-height: 27px;
-}
-
-#reward-items-download-excel-button {
-    background-image: linear-gradient(to right, #f96033, red);
-    margin: 10px 10px 10px 10px;
-    padding: 1px 20px;
-    border-radius: 8px;
-    color: #f0f0f0;
-    font-size: 12px;
-    text-align: center;
-    vertical-align: middle;
-    height: 27px;
-    line-height: 27px;
-}
-
+    #reward-download-excel-button {
+        background-image: linear-gradient(to right, #f96033, red);
+        margin: 10px 10px 10px 10px;
+        padding: 1px 20px;
+        border-radius: 8px;
+        color: #f0f0f0;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle;
+        height: 27px;
+        line-height: 27px;
+    }
+    #reward-items-download-excel-button {
+        background-image: linear-gradient(to right, #f96033, red);
+        margin: 10px 10px 10px 10px;
+        padding: 1px 20px;
+        border-radius: 8px;
+        color: #f0f0f0;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle;
+        height: 27px;
+        line-height: 27px;
+    }
 </style>
