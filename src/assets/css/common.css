@@ -228,17 +228,3 @@ a:hover {
     margin-left: 4px;
     margin-top: -5px;
 }
-
-.gender-male {
-    background: url("../../assets/images/contact_male.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: 50%;
-}
-
-.gender-female {
-    background: url("../../assets/images/contact_female.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: 50%;
-}
