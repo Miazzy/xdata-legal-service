@@ -11,8 +11,6 @@ export default {
         return {
             hide: false,
             src:`https://wechat.yunwisdom.club:30443/static/img/leading.jpeg`,
-            msrc:`https://wechat.yunwisdom.club:30443/static/img/leading.jpeg`,
-            psrc:`https://wechat.yunwisdom.club:30443/static/img/leading.jpeg`,
         }
     },
     async mounted() {
@@ -35,7 +33,7 @@ export default {
     height: 100%;
     z-index: 6;
     background: #000b17;
-    animation: welcome 0.5s;
+    animation: welcome 0.75s;
     transition: 0.3s;
     -webkit-transition: 0.3s;
 }

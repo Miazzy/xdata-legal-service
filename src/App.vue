@@ -10,7 +10,7 @@
 </template>
 
 <script>
-    import welcome from './components/common/welcome.vue'
+    import welcome from '@/components/common/welcome.vue'
     import mixin from "./vuex/mixin.js" // 混合被单独放在 mixin.js 中管理
     window.mixin = mixin // 将 混合/mixin 暴露在窗口对象中，某些组件需要时，直接提取 window.mixin
     export default {

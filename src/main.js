@@ -6,17 +6,11 @@ import filters from './filters'; //将全部过滤器放在 filters/index.js 中
 import '@/reservice'; //注册service worker服务
 
 try {
-    Vue.use(VueAxios, axios, Vue); //技巧 同时 use 多个插件 被依赖的插件应放在偏后方
-    Vue.use(VueExcelComponent.default); //设置VueExcelEditor编辑器
-} catch (error) {
-    console.log(`regist vue axios excel.component error:`, error);
-}
-
-try {
     Vue.use(vant.Empty);
     Vue.use(vant.Lazyload);
     Vue.use(vant.Icon);
     Vue.use(vant.Dialog);
+    Vue.use(VueAxios, axios, Vue); //技巧 同时 use 多个插件 被依赖的插件应放在偏后方
     filters(Vue); // 注册全局过滤器
 } catch (error) {
     console.log(`regist vant component error:`, error);

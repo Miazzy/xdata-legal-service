@@ -1,17 +1,17 @@
 <template>
   <div id="reward-home" style="background-color:#f0f0f0;width:100%;height:auto;">
       <div style="background-color:#f0f0f0;width:100%;height:auto;">
-      <a-menu v-model="current" mode="horizontal">
+      <a-menu mode="horizontal">
         <a-sub-menu>
-          <span slot="title" class="submenu-title-wrapper" ><a-icon type="user" />{{ 'username' }} </span>
-          <a-menu-item-group title="应用中心">
-            <a-menu-item key="setting:1">
-              审批
+            <span slot="title" class="submenu-title-wrapper" ><a-icon type="user" />{{ 'username' }} </span>
+            <a-menu-item-group title="应用中心">
+            <a-menu-item key="setting:1" :to="`/legal/message`"  @click="redirectView('/legal/message')" >
+                审批
             </a-menu-item>
-            <a-menu-item key="setting:2">
-              工作台
+            <a-menu-item key="setting:2" :to="`/legal/workspace`" @click="redirectView('/legal/workspace')" >
+                工作台
             </a-menu-item>
-          </a-menu-item-group>
+            </a-menu-item-group>
         </a-sub-menu>
       </a-menu>
       <a-row :gutter="24">
@@ -96,17 +96,16 @@
   </div>
 </template>
 <script>
+import header from '@/components/legal/header.vue';
 
-import * as task from '@/request/task';
 import * as query from '@/request/query';
-import * as constant from '@/request/constant';
-import * as workflow from '@/request/workflow';
-import * as manageAPI from '@/request/manage';
-import * as wflowprocess from '@/request/wflow.process';
 import * as workconfig from '@/request/workconfig';
 
 export default {
   mixins: [window.mixin],
+  components: {
+      header
+  },
   data() {
     const { $router } = this;
     return {
@@ -143,6 +142,10 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+    // 执行页面跳转
+    async redirectView(path) {
+        this.$router.push(path);
     },
   },
 };
