@@ -1,6 +1,19 @@
 <template>
   <div id="reward-home" style="background-color:#f0f0f0;width:100%;height:auto;">
       <div style="background-color:#f0f0f0;width:100%;height:auto;">
+      <a-menu v-model="current" mode="horizontal">
+        <a-sub-menu>
+          <span slot="title" class="submenu-title-wrapper" ><a-icon type="user" />{{ 'username' }} </span>
+          <a-menu-item-group title="应用中心">
+            <a-menu-item key="setting:1">
+              审批
+            </a-menu-item>
+            <a-menu-item key="setting:2">
+              工作台
+            </a-menu-item>
+          </a-menu-item-group>
+        </a-sub-menu>
+      </a-menu>
       <a-row :gutter="24">
 
         <keep-alive>
