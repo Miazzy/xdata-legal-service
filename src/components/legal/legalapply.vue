@@ -473,13 +473,6 @@
                   </a-row>
                 </div>
 
-                <div class="reward-apply-content-item reward-apply-content-title" style="">
-                  <a-row style="border-top: 1px dash #f0f0f0;margin:0px 5rem;" >
-                    <a-table :columns="wfcolumns" :data-source="approve_executelist">
-                    </a-table>
-                   </a-row>
-                </div>
-
                 <div v-show="role != 'view' " class="reward-apply-content-item" style="margin-top:35px;margin-bottom:5px; margin-right:10px;">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
                     <a-col :span="8">
