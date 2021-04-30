@@ -169,7 +169,7 @@ export const reward = ($router) => {
             href: "/account/todolist",
             description: '公司主动起诉案件发起申请',
             click: () => {
-                $router.push(`/legal/legalapply?type=0&reward_name=业绩考核`, '_blank');
+                $router.push(`/legal/legalapply?type=0&reward_name=起诉`, '_blank');
             }
         }, {
             name: "应诉案件发起",
@@ -177,7 +177,7 @@ export const reward = ($router) => {
             href: "/account/donelist",
             description: '公司应诉案件发起申请',
             click: () => {
-                $router.push(`/legal/legalapply?type=1&reward_name=总裁专项`, '_blank');
+                $router.push(`/legal/legalapply?type=1&reward_name=应诉`, '_blank');
             }
         }, {
             name: "案件列表",
@@ -185,7 +185,7 @@ export const reward = ($router) => {
             href: "/account/donelist",
             description: '查看已发起案件列表信息',
             click: () => {
-                $router.push(`/legal/legalapply?type=2&reward_name=总经理专项`, '_blank');
+                // $router.push(`/legal/legalapply?type=2&reward_name=总经理专项`, '_blank');
             }
         }, {
             name: "结案记录",
@@ -193,7 +193,7 @@ export const reward = ($router) => {
             href: "/account/myanalyse",
             description: '查看已结案案件列表信息',
             click: () => {
-                $router.push(`/legal/message?panename=myrewardlist&type=7&back=/legal/workspace`, '_blank');
+                // $router.push(`/legal/message?panename=myrewardlist&type=7&back=/legal/workspace`, '_blank');
             },
         }, {
             name: "一审管理",
@@ -201,7 +201,7 @@ export const reward = ($router) => {
             href: "/account/myrewards",
             description: '对案件进展处于一审阶段的案件进行管理',
             click: () => {
-                $router.push(`/legal/legalapply?type=3&reward_name=特殊贡献`, '_blank');
+                // $router.push(`/legal/legalapply?type=3&reward_name=特殊贡献`, '_blank');
             },
         }, {
             name: "二审管理",
@@ -209,7 +209,7 @@ export const reward = ($router) => {
             href: "/account/myanalyse",
             description: '对案件进展处于二审阶段的案件进行管理',
             click: () => {
-                $router.push(`/legal/legalapply?type=4&reward_name=其他奖罚`, '_blank');
+                // $router.push(`/legal/legalapply?type=4&reward_name=其他奖罚`, '_blank');
             },
         }, {
             name: "执行管理",
@@ -217,7 +217,7 @@ export const reward = ($router) => {
             href: "/account/myanalyse",
             description: '对案件进展处于执行阶段的案件进行管理',
             click: () => {
-                $router.push(`/legal/legalmonth?type=month`);
+                // $router.push(`/legal/legalmonth?type=month`);
             },
         }, {
             name: "再审管理",
@@ -225,7 +225,7 @@ export const reward = ($router) => {
             href: "/account/myanalyse",
             description: '对案件进展处于再审阶段的案件进行管理',
             click: () => {
-                $router.push(`/legal/legalmonth?type=quarter`);
+                // $router.push(`/legal/legalmonth?type=quarter`);
             },
         }],
     }, {
