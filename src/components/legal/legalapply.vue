@@ -1454,16 +1454,14 @@ export default {
             content: "是否确认保存此案件发起申请单?",
             onOk: async() => {
 
-                  const {legal} = this;
+                  const { legal } = this;
                   legal.id = id;
                   legal.zone = JSON.stringify(legal.zone);
                   legal.caseType = JSON.stringify(legal.caseType);
 
-                  //向表单提交form对象数据
-                  const result = await Betools.manage.postTableData(this.tablename , this.legal);
+                  const result = await Betools.manage.postTableData(this.tablename , this.legal); // 向表单提交form对象数据
                   
-                  //设置状态
-                  this.loading = false;
+                  this.loading = false; //设置状态
                   this.readonly = true;
                   this.role = 'view';
                   this.$toast.success('保存案件发起申请成功！');
@@ -1483,7 +1481,7 @@ export default {
           return item.userid == this.approve_userid;
         })
 
-        if(index>=0){
+        if(index >= 0){
           return this.$toast.success('该审批人员已经添加，请重新输入！');
         }
 
