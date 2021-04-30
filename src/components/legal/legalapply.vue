@@ -1075,7 +1075,6 @@ export default {
               this.legal.remark = legal.remark || this.legal.remark;
               this.legal.status = legal.status || this.legal.status;
             }
-
             if(userinfo.department && userinfo.department.name){
               this.legal.department = userinfo.department.name;
               this.legal.company = userinfo.parent_company.name;
@@ -1085,22 +1084,15 @@ export default {
               temp = userinfo.systemuserinfo.textfield1.split('||')[1];
               this.legal.department = temp.split('>')[temp.split('>').length - 1];
             }
+
+            //查询当前应诉案件、起诉案件状态
+            
           } catch (error) {
             console.log(error);
           }
-
-          try {
-            //查询案件类型
-            this.legal.reward_type = workconfig.rewardtype[type];
-          } catch (error) {
-            console.log(error);
-          }
-
-
         } catch (error) {
           console.log(error);
         }
-
       },
       // 计算案件涉案金额
       caculateSum(){
@@ -1108,149 +1100,8 @@ export default {
       },
       // 用户提交入职登记表函数
       async handleApply() {
-
-        //显示加载状态
-        this.loading = true;
-
-        //获取用户基础信息
-        const userinfo = await Betools.storage.getStore('system_userinfo');
-
-        //表单ID
-        const id = Betools.tools.queryUniqueID();
-        const type = Betools.tools.getUrlParam('type');
-
-        //流程审批人员
-        let wfUsers = '';  //流程审批人员
-        let approver = ''; //最终审批人员
-
-        //验证数据是否已经填写
-        const keys = Object.keys({ title: '', company: '', department: '', content: '', amount: '', reward_type: '', reward_name: '', reward_period: '', hr_name: '', apply_realname: '' })
-
-        const invalidKey =  keys.find(key => {
-          const flag = this.validField(key);
-          return !flag;
-        });
-
-        if(invalidKey != '' && invalidKey != null){
-          await vant.Dialog.alert({
-            title: '温馨提示',
-            message: `请确认内容是否填写完整，错误：${this.message[invalidKey]}！`,
-          });
-          return false;
-        }
-
-        // 如果案件明细数据为空，且不存在上传附件，提示请上传附件
-        if((this.data == null || this.data.length == 0) && !this.legal.files ){
-          await vant.Dialog.alert({
-            title: '温馨提示',
-            message: `请确认内容是否填写完整，错误：${this.message['files']}！`,
-          });
-          return false;
-        }
-
-        // 校验奖惩明细金额总额是否和申请奖金总额一致
-        const sumValue = this.caculateSum().sumValue;
-        const orgValue = this.caculateSum().orgValue;
-
-        if( orgValue != sumValue){
-          await vant.Dialog.alert({
-            title: '温馨提示',
-            message: `案件申请金额(${orgValue})和案件明细金额合计${sumValue}不一致，请仔细检查后在提交！`,
-          });
-          return false;
-        }
-
-        if(!this.approve_executelist || this.approve_executelist.length <= 0){
-          await vant.Dialog.alert({
-            title: '温馨提示',
-            message: `请在流程设置处，添加审批人员！`,
-          });
-          return false;
-        } else {
-          if(this.approve_executelist.length == 1){
-            approver = this.approve_executelist[0].userid;
-          } else {
-            const tempIndex = this.approve_executelist.length - 1;
-            const templist = this.approve_executelist.slice(0,tempIndex);
-            approver = this.approve_executelist[tempIndex].userid;
-            wfUsers = (templist.map(obj => {return obj.userid})).toString();
-          }
-        }
-
-        //是否确认提交此自由流程?
-        this.$confirm({
-            title: "确认操作",
-            content: "是否确认提交此案件发起申请?",
-            onOk: async() => {
-
-                  //查询直接所在工作组，注意此处是案件人力经理管理员
-                  const response = await query.queryRoleGroupList('COMMON_REWARD_HR_ADMIN' , this.legal.hr_id);
-
-                  //获取到印章管理员组信息
-                  let user_group_ids = response && response.length > 0 ? response[0].userlist : '';
-                  let user_group_names = response && response.length > 0 ? response[0].enuserlist : '';
-
-                  //如果未获取用户名称，则直接设置用印人为分组成员
-                  if(Betools.tools.isNull(user_group_ids)){
-                    user_group_ids = this.legal.hr_id;
-                    user_group_names = this.legal.hr_name;
-                  }
-                  // 返回预览URL
-                  const receiveURL = encodeURIComponent(`${window.requestAPIConfig.vuechatdomain}/#/legal/legalview?id=${id}&pid=&tname=bs_reward_apply&panename=myrewardlist&typename=hr_admin_ids&bpm_status=4&proponents=${user_group_ids}&role=hr`);
-
-                  //第一步 保存用户数据到数据库中
-                  const elem = {
-                    id,
-                    status: '待审批',
-                  }; // 待处理元素
-
-                  //第二步，向表单提交form对象数据
-                  const result = await Betools.manage.postTableData(this.tablename , elem);
-
-                  //提交此表单对应的案件明细数据
-                  for(let item of this.data){
-                    item.id = `${item.key}`;
-                    item.unique_key = `${item.key}`;
-                    item.create_by = userinfo.username;
-                    item.create_time = dayjs(item.create_time).format('YYYY-MM-DD HH:mm:ss');
-                    item.pid = id;
-                    delete item.$id;
-                    delete item.key;
-                    delete item.v_status;
-                    await Betools.manage.postTableData('bs_reward_items' , item);
-                  }
-
-                  //发送自动设置排序号请求
-                  const patchResp = await superagent.get(workconfig.queryAPI.tableSerialAPI.replace('{table_name}', this.tablename)).set('accept', 'json');
-
-                  //查询数据
-                  const value = await query.queryTableData(this.tablename , id);
-
-                  //显示序列号
-                  this.legal.serialid = value.serialid;
-                  elem.serialid = value.serialid;
-
-                  /************************  工作流程日志(开始)  ************************/
-                  //向HR推送，HR确认后
-                  await this.handleNotifyHR(user_group_ids , userinfo ,  value , receiveURL);
-
-                  //记录 审批人 经办人 审批表单 表单编号 记录编号 操作(同意/驳回) 意见 内容 表单数据
-                  await this.handleStartWFLog(this.tablename , elem , userinfo);
-
-                  //记录 审批人 经办人 审批表单 表单编号 记录编号 操作(同意/驳回) 意见 内容 表单数据
-                  await this.handleSubmitWF(userinfo , wfUsers , '' , approver , this.tablename , id , elem  , dayjs().format('YYYY-MM-DD HH:mm:ss'));
-
-                  /************************  工作流程日志(结束)  ************************/
-
-                  //设置状态
-                  this.loading = false;
-                  this.status = elem.status;
-                  this.readonly = true;
-                  this.role = 'view';
-
-                  this.$toast.success('提交案件发起申请成功，请等待审批完成！');
-               }
-          });
+        
+        await this.handleSave(); //先执行保存操作，保存完毕后执行流程跳转功能
 
       },
 
@@ -1408,7 +1259,7 @@ export default {
 
       },
 
-      // 通知HR（人力薪资相关专职人员查看数据）
+      // 执行知会操作
       async handleNotifyHR(user_group_ids , userinfo ,  value , receiveURL){
         try {
           await superagent.get(`${window.requestAPIConfig.restapi}/api/v1/weappms/${user_group_ids}/亲爱的同事，员工‘${userinfo.realname}(${userinfo.department.name})’提交了案件发起申请，请在流程审批完成后及时进行知会确认操作！?type=reward&rurl=${receiveURL}`)
