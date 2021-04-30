@@ -31,9 +31,9 @@
                   案件发起申请
                 </div>
 
-                <div class="reward-apply-content-item reward-apply-content-title" style="">
+                <div class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
-                    <a-col class="reward-apply-content-title-text" :span="4" style="">
+                    <a-col class="reward-apply-content-title-text" :span="4" style="font-size:1.1rem;">
                       基础信息
                     </a-col>
                    </a-row>
@@ -45,13 +45,13 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>流程标题</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.title" readonly placeholder="请填写本案件流程标题！" @blur="validFieldToast('reward_type')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      <a-input v-model="legal.title" :readonly='false' placeholder="请填写本案件流程标题！" @blur="validFieldToast('title')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>案件编号</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.create_time" readonly placeholder="请输入案件编号！" @blur="validFieldToast('create_time')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      <a-input v-model="legal.caseID" :readonly='false' placeholder="请输入案件编号！" @blur="validFieldToast('caseID')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                     </a-col>
                   </a-row>
                 </div>
@@ -79,20 +79,49 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>案件类别</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.legalType" readonly placeholder="请选择案件类别！" @blur="validFieldToast('legalType')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      <a-select  v-model="legal.legalType" default-value="一般案件" @blur="validFieldToast('legalType')"  placeholder="请选择案件类别！" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                        <a-select-option value="一般案件">
+                          一般案件
+                        </a-select-option>
+                        <a-select-option value="重大案件">
+                          重大案件
+                        </a-select-option>
+                      </a-select>
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>业务板块</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.plate" readonly placeholder="请选择业务板块！" @blur="validFieldToast('plate')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      <a-select  v-model="legal.plate" default-value="地产板块" @blur="validFieldToast('plate')"  placeholder="请选择业务板块！" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                        <a-select-option value="融量集团总部">
+                          融量集团总部
+                        </a-select-option>
+                        <a-select-option value="地产板块">
+                          地产板块
+                        </a-select-option>
+                        <a-select-option value="金融板块">
+                          金融板块
+                        </a-select-option>
+                        <a-select-option value="物业板块">
+                          物业板块
+                        </a-select-option>
+                        <a-select-option value="医疗健康板块">
+                          医疗健康板块
+                        </a-select-option>
+                        <a-select-option value="商业板块">
+                          商业板块
+                        </a-select-option>
+                        <a-select-option value="合作方财务公司">
+                          合作方财务公司
+                        </a-select-option>
+                      </a-select>
                     </a-col>
                   </a-row>
                 </div>
 
-                <div class="reward-apply-content-item reward-apply-content-title" style="">
+                <div class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
-                    <a-col class="reward-apply-content-title-text" :span="4" style="">
+                    <a-col class="reward-apply-content-title-text" :span="4" style="font-size:1.1rem;">
                       区域信息
                     </a-col>
                    </a-row>
@@ -104,45 +133,20 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>所属区域</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.zone" readonly placeholder="请选择所属区域" @blur="validFieldToast('reward_type')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      <a-cascader v-model="legal.zone" :options="options.zoneOptions" placeholder="请选择所属区域" @blur="validFieldToast('zone')"  style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>所属项目</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.zoneProject" readonly placeholder="请选择所属项目！" @blur="validFieldToast('create_time')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      <a-input v-model="legal.zoneProject" :readonly='false' placeholder="请选择所属项目！" @blur="validFieldToast('zoneProject')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                     </a-col>
                   </a-row>
                 </div>
 
-                <div class="reward-apply-content-item reward-apply-content-title" style="">
+                <div class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
-                    <a-col class="reward-apply-content-title-text" :span="4" style="">
-                      案由信息
-                    </a-col>
-                   </a-row>
-                </div>
-
-                <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
-                  <a-row>
-                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>一级案由</span>
-                    </a-col>
-                    <a-col :span="8">
-                      <a-input v-model="legal.caseType" placeholder="请选择一级案由！" @blur="validFieldToast('company')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
-                    </a-col>
-                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>二级案由</span>
-                    </a-col>
-                    <a-col :span="8">
-                      <a-input v-model="legal.caseSType" placeholder="请选择一级案由！" @blur="validFieldToast('department')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
-                    </a-col>
-                  </a-row>
-                </div>
-
-                <div class="reward-apply-content-item reward-apply-content-title" style="">
-                   <a-row style="border-top: 1px dash #f0f0f0;" >
-                    <a-col class="reward-apply-content-title-text" :span="4" style="">
+                    <a-col class="reward-apply-content-title-text" :span="4" style="font-size:1.1rem;">
                       诉讼信息
                     </a-col>
                    </a-row>
@@ -151,10 +155,29 @@
                 <div id="van-user-list" class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>案由信息</span>
+                    </a-col>
+                    <a-col :span="8">
+                      <a-cascader v-model="legal.caseType" :options="options.causeOptions" placeholder="请选择一级案由/二级案由信息！" @blur="validFieldToast('caseType')"  style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                    </a-col>
+                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>程序阶段</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.stage" placeholder="请选择当前案件程序阶段（一审/二审/执行/再审）！" @blur="validFieldToast('hr_name');queryNotifyMan();" @click="queryNotifyMan();" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-select  v-model="legal.stage" default-value="一审阶段" @blur="validFieldToast('stage')"  placeholder="请选择当前案件程序阶段（一审/二审/执行/再审）！" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                        <a-select-option value="一审阶段">
+                          一审阶段
+                        </a-select-option>
+                        <a-select-option value="二审阶段">
+                          二审阶段
+                        </a-select-option>
+                        <a-select-option value="执行阶段">
+                          执行阶段
+                        </a-select-option>
+                        <a-select-option value="再审阶段">
+                          再审阶段
+                        </a-select-option>
+                      </a-select>
                     </a-col>
                   </a-row>
                 </div>
@@ -165,13 +188,13 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>业务接收时间</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.receiveTime" placeholder="请输入业务部门接收时间！" @blur="validFieldToast('company')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-date-picker v-model="legal.receiveTime" :default-value="options.datetime" placeholder="请输入业务部门接收时间！" @blur="validFieldToast('receiveTime')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>法律接收时间</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.lawRTime" placeholder="请输入法律部门接收时间！" @blur="validFieldToast('department')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-date-picker v-model="legal.lawRTime" :default-value="options.datetime" placeholder="请输入法律部门接收时间！" @blur="validFieldToast('lawRTime')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
@@ -184,13 +207,13 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>诉讼发起人</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.accuser" placeholder="请输入诉讼发起人(原告/上诉人)！" @blur="validFieldToast('company')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.accuser" placeholder="请输入诉讼发起人(原告/上诉人)！" @blur="validFieldToast('accuser')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>应诉人</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.defendant" placeholder="请输入应诉人(被告/被上诉人)！" @blur="validFieldToast('department')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.defendant" placeholder="请输入应诉人(被告/被上诉人)！" @blur="validFieldToast('defendant')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
@@ -198,39 +221,39 @@
                 <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>第三人</span>
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;"></span>第三人</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.thirdParty" placeholder="请输入第三人！" @blur="validFieldToast('company')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.thirdParty" placeholder="请输入第三人！" @blur="validFieldToast('thirdParty')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>受理时间</span>
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;"></span>受理时间</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.handledTime" placeholder="请输入法院受理时间！" @blur="validFieldToast('department')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.handledTime" placeholder="请输入法院受理时间！" @blur="validFieldToast('handledTime')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
 
                 <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
-                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                      诉讼请求
+                    <a-col :span="4" style="height:auto; font-size:1.0rem; margin-top:5px; text-align: center;">
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>诉讼请求</span>
                     </a-col>
                     <a-col :span="20">
                       <a-textarea
                         v-model="legal.remark"
                         placeholder="请输入案件的诉讼请求！"
-                        :auto-size="{ minRows: 10, maxRows: 50 }"
-                        style="height:80px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"
+                        :auto-size="{ minRows: 10, maxRows: 100 }"
+                        style="height:120px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"
                       />
                     </a-col>
                   </a-row>
                 </div>
 
-                <div class="reward-apply-content-item reward-apply-content-title" style="">
+                <div class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
-                    <a-col class="reward-apply-content-title-text" :span="4" style="">
+                    <a-col class="reward-apply-content-title-text" :span="4" style="font-size:1.1rem;">
                       涉案金额
                     </a-col>
                    </a-row>
@@ -242,7 +265,7 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>诉讼本金</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.claimsCapital" placeholder="请输入诉讼本金！" @blur="validFieldToast('company')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.claimsCapital" placeholder="请输入诉讼本金！" @blur="validFieldToast('claimsCapital')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
@@ -253,20 +276,20 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>诉讼违约金</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.claimsDedit" placeholder="请输入诉讼违约金！" @blur="validFieldToast('company')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.claimsDedit" placeholder="请输入诉讼违约金！" @blur="validFieldToast('claimsDedit')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>诉讼标的额</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.claimsBidSum" placeholder="请输入诉讼标的额！" @blur="validFieldToast('department')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.claimsBidSum" placeholder="请输入诉讼标的额！" @blur="validFieldToast('claimsBidSum')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
 
-                <div class="reward-apply-content-item reward-apply-content-title" style="">
+                <div class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
-                    <a-col class="reward-apply-content-title-text" :span="4" style="">
+                    <a-col class="reward-apply-content-title-text" :span="4" style="font-size:1.1rem;">
                       律师信息
                     </a-col>
                    </a-row>
@@ -278,7 +301,7 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>外部律所</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.externalFlag" placeholder="请选择是否聘用外部律所" @blur="validFieldToast('company')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.externalFlag" placeholder="请选择是否聘用外部律所" @blur="validFieldToast('externalFlag')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
@@ -289,13 +312,13 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>律师事务所</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.lawOffice" placeholder="请输入外聘律师事务所！" @blur="validFieldToast('company')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.lawOffice" placeholder="请输入外聘律师事务所！" @blur="validFieldToast('lawOffice')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>委托时间</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.lawOfficeTime" placeholder="请选择外聘律所委托时间！" @blur="validFieldToast('department')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.lawOfficeTime" placeholder="请选择外聘律所委托时间！" @blur="validFieldToast('lawOfficeTime')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
@@ -306,20 +329,20 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>外聘律师</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.lawyer" placeholder="请输入外聘律师！" @blur="validFieldToast('company')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.lawyer" placeholder="请输入外聘律师！" @blur="validFieldToast('lawyer')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>联系电话</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.lawyerMobile" placeholder="请输入律师联系电话！" @blur="validFieldToast('department')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.lawyerMobile" placeholder="请输入律师联系电话！" @blur="validFieldToast('lawyerMobile')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
 
-                <div class="reward-apply-content-item reward-apply-content-title" style="">
+                <div class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
-                    <a-col class="reward-apply-content-title-text" :span="4" style="">
+                    <a-col class="reward-apply-content-title-text" :span="4" style="font-size:1.1rem;">
                       法院信息
                     </a-col>
                    </a-row>
@@ -331,7 +354,7 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>受理法院</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.court"  placeholder="请输入受理法院！" @blur="validFieldToast('reward_release_period')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.court"  placeholder="请输入受理法院！" @blur="validFieldToast('court')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
@@ -342,13 +365,13 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>承办法官</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.judge"  placeholder="请输入承办法官！" @blur="validFieldToast('reward_release_period')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.judge"  placeholder="请输入承办法官！" @blur="validFieldToast('judge')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>法官联系方式</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.judgeMobile"  placeholder="请输入承办法官联系方式！" @blur="validFieldToast('reward_release_feature')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.judgeMobile"  placeholder="请输入承办法官联系方式！" @blur="validFieldToast('judgeMobile')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
@@ -359,20 +382,20 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>内部律师</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.inHouseLawyers"  placeholder="请输入内部律师！" @blur="validFieldToast('reward_release_period')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.inHouseLawyers"  placeholder="请输入内部律师！" @blur="validFieldToast('inHouseLawyers')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>外部律师</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.outHouseLawyers"  placeholder="请输入外部律师！" @blur="validFieldToast('reward_release_feature')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.outHouseLawyers"  placeholder="请输入外部律师！" @blur="validFieldToast('outHouseLawyers')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>                
 
-                <div class="reward-apply-content-item reward-apply-content-title" style="">
+                <div class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
-                    <a-col class="reward-apply-content-title-text" :span="4" style="">
+                    <a-col class="reward-apply-content-title-text" :span="4" style="font-size:1.1rem;">
                       事项披露
                     </a-col>
                    </a-row>
@@ -386,7 +409,7 @@
                     <a-col :span="20" style="height:auto;">
                       <a-textarea
                         v-model="legal.disclosure"
-                        @blur="validFieldToast('content')"
+                        @blur="validFieldToast('disclosure')"
                         placeholder="请输入本诉讼案件中的重大事项披露！"
                         :auto-size="{ minRows: 10, maxRows: 50 }"
                         style="height:120px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"
@@ -395,9 +418,9 @@
                   </a-row>
                 </div>
 
-                <div class="reward-apply-content-item reward-apply-content-title" style="">
+                <div class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
-                    <a-col class="reward-apply-content-title-text" :span="4" style="">
+                    <a-col class="reward-apply-content-title-text" :span="4" style="font-size:1.1rem;">
                       案件进展
                     </a-col>
                    </a-row>
@@ -406,7 +429,7 @@
                 <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                      案件进展
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>案件进展</span>
                     </a-col>
                     <a-col :span="20">
                       <a-textarea
@@ -419,9 +442,9 @@
                   </a-row>
                 </div>
 
-                <div class="reward-apply-content-item reward-apply-content-title" style="margin-top: 35px;">
+                <div class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
-                    <a-col class="reward-apply-content-title-text" :span="4" style="">
+                    <a-col class="reward-apply-content-title-text" :span="4" style="font-size:1.1rem;">
                       流程设置
                     </a-col>
                    </a-row>
@@ -511,41 +534,46 @@ export default {
       uploadURL:'',
       tablename:'bs_legal',
       size: 0,
+      options:{
+        datetime:moment(dayjs().format('YYYY-MM-DD'),'YYYY-MM-DD'),
+        zoneOptions:JSON.parse(`[{"label":"融量集团","value":"融量集团","children":[{"label":"融量集团总部","value":"融量集团总部"},{"label":"地产板块","value":"地产板块","children":[{"label":"领地集团总部","value":"领地集团总部"},{"label":"重庆区域","value":"重庆区域"},{"label":"两湖区域","value":"两湖区域"},{"label":"川北区域","value":"川北区域"},{"label":"成都区域","value":"成都区域"},{"label":"川南区域","value":"川南区域"},{"label":"中原区域","value":"中原区域"},{"label":"攀西区域","value":"攀西区域"},{"label":"新疆区域","value":"新疆区域"},{"label":"大湾区域","value":"大湾区域"},{"label":"北京区域","value":"北京区域"},{"label":"园林公司","value":"园林公司"}]},{"label":"金融板块","value":"金融板块","children":[{"label":"量石投资","value":"量石投资"}]},{"label":"物业板块","value":"物业板块","children":[{"label":"领悦集团总部","value":"领悦集团总部"},{"label":"川南区域","value":"川南区域"},{"label":"商写事业部","value":"商写事业部"},{"label":"川北区域","value":"川北区域"},{"label":"新疆区域","value":"新疆区域"},{"label":"攀西区域","value":"攀西区域"},{"label":"长春区域","value":"长春区域"},{"label":"大湾区域","value":"大湾区域"},{"label":"郑州荆州区域","value":"郑州荆州区域"},{"label":"贵阳区域","value":"贵阳区域"},{"label":"佳美物业公司","value":"佳美物业公司"}]},{"label":"医疗健康板块","value":"医疗健康板块","children":[{"label":"健康事业部","value":"健康事业部"},{"label":"至诚和爱健管中心","value":"至诚和爱健管中心"},{"label":"高康国际医院","value":"高康国际医院"}]},{"label":"商业板块","value":"商业板块","children":[{"label":"宝瑞商管","value":"宝瑞商管"}]},{"label":"合作方财务公司","value":"合作方财务公司","children":[{"label":"共享财务中心","value":"共享财务中心"}]}]}]`),
+        causeOptions:JSON.parse(`[{"label":"人格权纠纷","value":"人格权纠纷","children":[{"label":"名誉权纠纷","value":"名誉权纠纷"},{"label":"其他人格权纠纷","value":"其他人格权纠纷"}]},{"label":"物权纠纷","value":"物权纠纷","children":[{"label":"物权确认纠纷","value":"物权确认纠纷"},{"label":"排除妨害纠纷","value":"排除妨害纠纷"},{"label":"恢复原状纠纷","value":"恢复原状纠纷"},{"label":"返还原物纠纷","value":"返还原物纠纷"},{"label":"业主知情权纠纷","value":"业主知情权纠纷"},{"label":"相邻关系纠纷","value":"相邻关系纠纷"},{"label":"业主共有权纠纷","value":"业主共有权纠纷"},{"label":"建设用地使用权纠纷","value":"建设用地使用权纠纷"},{"label":"抵押权纠纷","value":"抵押权纠纷"}]},{"label":"合同纠纷、准合同纠纷","value":"合同纠纷、准合同纠纷","children":[{"label":"确认合同效力纠纷","value":"确认合同效力纠纷"},{"label":"房屋买卖合同纠纷","value":"房屋买卖合同纠纷"},{"label":"其他买卖合同纠纷","value":"其他买卖合同纠纷"},{"label":"租赁合同纠纷","value":"租赁合同纠纷"},{"label":"建设工程合同纠纷","value":"建设工程合同纠纷"},{"label":"物业服务合同纠纷-公共收益返还","value":"物业服务合同纠纷-公共收益返还"},{"label":"物业服务合同纠纷-返水纠纷","value":"物业服务合同纠纷-返水纠纷"},{"label":"物业服务合同纠纷-进退场纠纷","value":"物业服务合同纠纷-进退场纠纷"},{"label":"物业服务合同纠纷-物业服务费纠纷","value":"物业服务合同纠纷-物业服务费纠纷"},{"label":"物业服务合同纠纷-其他","value":"物业服务合同纠纷-其他"},{"label":"中介合同纠纷","value":"中介合同纠纷"},{"label":"劳务合同纠纷","value":"劳务合同纠纷"},{"label":"无因管理、不当得利纠纷","value":"无因管理、不当得利纠纷"},{"label":"追偿权纠纷","value":"追偿权纠纷"},{"label":"其他合同纠纷","value":"其他合同纠纷"},{"label":"缔约过失责任纠纷","value":"缔约过失责任纠纷"},{"label":"预约合同纠纷","value":"预约合同纠纷"},{"label":"建设用地使用权合同纠纷","value":"建设用地使用权合同纠纷"},{"label":"股权合作合同纠纷","value":"股权合作合同纠纷"},{"label":"委托开发合同纠纷","value":"委托开发合同纠纷"},{"label":"其他投资合同纠纷","value":"其他投资合同纠纷"},{"label":"商品房预约合同纠纷","value":"商品房预约合同纠纷"},{"label":"商品房销/预售合同纠纷-逾期交房纠纷","value":"商品房销/预售合同纠纷-逾期交房纠纷"},{"label":"商品房销/预售合同纠纷-逾期整改纠纷","value":"商品房销/预售合同纠纷-逾期整改纠纷"},{"label":"商品房销/预售合同纠纷-逾期办证纠纷","value":"商品房销/预售合同纠纷-逾期办证纠纷"},{"label":"商品房销/预售合同纠纷-退房纠纷","value":"商品房销/预售合同纠纷-退房纠纷"},{"label":"商品房销/预售合同纠纷-交付不符纠纷","value":"商品房销/预售合同纠纷-交付不符纠纷"},{"label":"商品房销/预售合同纠纷-房屋质量纠纷","value":"商品房销/预售合同纠纷-房屋质量纠纷"},{"label":"商品房销/预售合同纠纷-分包销合同纠纷","value":"商品房销/预售合同纠纷-分包销合同纠纷"},{"label":"商品房销/预售合同纠纷-用益物权纠纷（使用权转让）","value":"商品房销/预售合同纠纷-用益物权纠纷（使用权转让）"},{"label":"商品房销/预售合同纠纷-断供纠纷","value":"商品房销/预售合同纠纷-断供纠纷"},{"label":"商品房销/预售合同纠纷-其他纠纷","value":"商品房销/预售合同纠纷-其他纠纷"},{"label":"销售代理（中介)合同纠纷","value":"销售代理（中介)合同纠纷"},{"label":"营销广告合同纠纷","value":"营销广告合同纠纷"},{"label":"借款（民间借贷）/金融贷款合同纠纷","value":"借款（民间借贷）/金融贷款合同纠纷"},{"label":"建设工程合同纠纷-工程质量纠纷","value":"建设工程合同纠纷-工程质量纠纷"},{"label":"建设工程合同纠纷-欠付工程款纠纷","value":"建设工程合同纠纷-欠付工程款纠纷"},{"label":"建设工程合同纠纷-工程结算纠纷","value":"建设工程合同纠纷-工程结算纠纷"},{"label":"建设工程合同纠纷-质保金纠纷","value":"建设工程合同纠纷-质保金纠纷"},{"label":"建设工程合同纠纷-其他纠纷","value":"建设工程合同纠纷-其他纠纷"},{"label":"演出合同纠纷","value":"演出合同纠纷"},{"label":"无因管理纠纷","value":"无因管理纠纷"},{"label":"不当得利纠纷","value":"不当得利纠纷"}]},{"label":"劳动争议","value":"劳动争议","children":[{"label":"解除劳动合同纠纷","value":"解除劳动合同纠纷"},{"label":"确认劳动关系纠纷","value":"确认劳动关系纠纷"},{"label":"追索劳动报酬纠纷","value":"追索劳动报酬纠纷"},{"label":"竞业限制纠纷","value":"竞业限制纠纷"},{"label":"社会保险纠纷","value":"社会保险纠纷"},{"label":"工伤工亡纠纷","value":"工伤工亡纠纷"},{"label":"劳务派遣合同纠纷","value":"劳务派遣合同纠纷"},{"label":"其他劳动争议","value":"其他劳动争议"}]},{"label":"与公司、证券、保险、票据等有关的民事纠纷","value":"与公司、证券、保险、票据等有关的民事纠纷","children":[{"label":"请求变更公司登记纠纷","value":"请求变更公司登记纠纷"},{"label":"股权转让纠纷","value":"股权转让纠纷"},{"label":"股东知情权纠纷","value":"股东知情权纠纷"},{"label":"公司决议纠纷","value":"公司决议纠纷"},{"label":"公司盈余分配纠纷","value":"公司盈余分配纠纷"},{"label":"损害股东利益责任纠纷","value":"损害股东利益责任纠纷"},{"label":"损害公司利益责任纠纷","value":"损害公司利益责任纠纷"},{"label":"股东出资纠纷","value":"股东出资纠纷"},{"label":"股权激励纠纷","value":"股权激励纠纷"},{"label":"公司解散纠纷","value":"公司解散纠纷"},{"label":"其他与公司有关的纠纷","value":"其他与公司有关的纠纷"},{"label":"证券纠纷","value":"证券纠纷"},{"label":"保险合同纠纷","value":"保险合同纠纷"},{"label":"保险人代位求偿权纠纷","value":"保险人代位求偿权纠纷"}]},{"label":"著作权侵权纠纷","value":"著作权侵权纠纷","children":[{"label":"著作权侵权纠纷","value":"著作权侵权纠纷"}]},{"label":"侵权责任纠纷","value":"侵权责任纠纷","children":[{"label":"提供劳务致侵权纠纷","value":"提供劳务致侵权纠纷"},{"label":"网络侵权责任纠纷","value":"网络侵权责任纠纷"},{"label":"违反安全保障义务责任纠纷","value":"违反安全保障义务责任纠纷"},{"label":"生命权、身体权、健康权纠纷","value":"生命权、身体权、健康权纠纷"},{"label":"高空抛物、坠物致人身或财产损害责任纠纷","value":"高空抛物、坠物致人身或财产损害责任纠纷"},{"label":"其他致人或致财物损害的侵权责任纠纷","value":"其他致人或致财物损害的侵权责任纠纷"}]},{"label":"知识产权与竞争纠纷","value":"知识产权与竞争纠纷","children":[{"label":"知识产权与竞争纠纷","value":"知识产权与竞争纠纷"}]},{"label":"非讼程序案件案由","value":"非讼程序案件案由","children":[{"label":"公司清算案件","value":"公司清算案件"},{"label":"第三人撤销之诉","value":"第三人撤销之诉"},{"label":"执行程序中的异议之诉","value":"执行程序中的异议之诉"}]}]`),
+      },
       legal:{
         id :'', // varchar(36) not null comment '系统编号' primary key,
         title :'', // varchar(64) not null comment '流程标题',
         xid :'', // varchar(36) default '' not null comment '更新ID',
-        create_time:'', // timestamp    default CURRENT_TIMESTAMP not null comment '填报日期',
+        create_time: dayjs().format('YYYY-MM-DD'), // timestamp    default CURRENT_TIMESTAMP not null comment '填报日期',
         create_by :'', // varchar(32)  default '' not null comment '填报人员',
-        legalType :'', // varchar(36)  default '一般案件' not null comment '案件类别 100 一般案件 200 重大案件',
-        plate :'', // varchar(32)  default '' not null comment '所属板块',
+        legalType :'一般案件', // varchar(36)  default '一般案件' not null comment '案件类别 100 一般案件 200 重大案件',
+        plate :'地产板块', // varchar(32)  default '' not null comment '所属板块',
         firm :'', // varchar(128) default '' not null comment '公司名称',
         zone :'', // varchar(128) default '' not null comment '所属区域',
         zoneProject :'', // varchar(128) default '' not null comment '区域项目名称',
-        caseID :'', //   varchar(64)  default '' not null comment '案件编号',
-        caseType :'', //   varchar(64)  default '' not null comment '一级案由',
-        caseSType :'', //   varchar(64)  default '' not null comment '二级案由',
-        stage :'', //   varchar(64)  default '' not null comment '程序阶段',
-        receiveTime:'', // timestamp    default CURRENT_TIMESTAMP not null comment '业务部门接收时间',
-        lawRTime:'', // timestamp    default CURRENT_TIMESTAMP not null comment '法律部门接收时间',
-        accuser :'', //   varchar(64)  default '' not null comment '诉讼发起人(原告/上诉人)',
-        defendant :'', //   varchar(64)  default '' not null comment '应诉人(被告/被上诉人)',
-        thirdParty :'', //   varchar(64)  default '' not null comment '第三人 third_party',
-        handledTime :'', //   varchar(32)  default '' not null comment '法院受理时间',
-        externalFlag :'', //   varchar(2)   default 'N' not null comment '是否聘用外部律所',
-        lawOffice :'', //   varchar(64)  default '' not null comment '外聘律师',
-        lawOfficeTime :'', //   varchar(16)  default '' not null comment '外聘律所委托时间',
-        lawyer :'', //   varchar(64)  default '' not null comment '外聘律师',
-        lawyerMobile :'', //   varchar(16)  default '' not null comment '律师联系电话',
+        caseID :'', // varchar(64)  default '' not null comment '案件编号',
+        caseType :'', // varchar(64)  default '' not null comment '一级案由',
+        caseSType :'', // varchar(64)  default '' not null comment '二级案由',
+        stage :'一审阶段', // varchar(64)  default '' not null comment '程序阶段',
+        receiveTime: '', // timestamp    default CURRENT_TIMESTAMP not null comment '业务部门接收时间',
+        lawRTime: '', // timestamp    default CURRENT_TIMESTAMP not null comment '法律部门接收时间',
+        accuser :'', // varchar(64)  default '' not null comment '诉讼发起人(原告/上诉人)',
+        defendant :'', // varchar(64)  default '' not null comment '应诉人(被告/被上诉人)',
+        thirdParty :'', // varchar(64)  default '' not null comment '第三人 third_party',
+        handledTime :'', // varchar(32)  default '' not null comment '法院受理时间',
+        externalFlag :'', // varchar(2)   default 'N' not null comment '是否聘用外部律所',
+        lawOffice :'', // varchar(64)  default '' not null comment '外聘律师',
+        lawOfficeTime :'', // varchar(16)  default '' not null comment '外聘律所委托时间',
+        lawyer :'', // varchar(64)  default '' not null comment '外聘律师',
+        lawyerMobile :'', // varchar(16)  default '' not null comment '律师联系电话',
         claims :'' , // text not null comment '诉讼请求',
-        claimsCapital :'', //   varchar(32)  default '' not null comment '诉讼本金',
-        claimsDedit :'', //   varchar(32)  default '' not null comment '诉讼违约金',
-        claimsBidSum :'', //   varchar(32)  default '' not null comment '诉讼标的额',
-        court :'', //   varchar(64)  default '' not null comment '受理法院',
-        judge :'', //   varchar(64)  default '' not null comment '承办法官',
-        judgeMobile :'', //   varchar(16)  default '' not null comment '承办法官联系方式',
-        inHouseLawyers :'', //   varchar(64)  default '' not null comment '承办人员 内部律师',
-        outHouseLawyers :'', //   varchar(64)  default '' not null comment '承办人员 外部律师',
+        claimsCapital :'', // varchar(32)  default '' not null comment '诉讼本金',
+        claimsDedit :'', // varchar(32)  default '' not null comment '诉讼违约金',
+        claimsBidSum :'', // varchar(32)  default '' not null comment '诉讼标的额',
+        court :'', // varchar(64)  default '' not null comment '受理法院',
+        judge :'', // varchar(64)  default '' not null comment '承办法官',
+        judgeMobile :'', // varchar(16)  default '' not null comment '承办法官联系方式',
+        inHouseLawyers :'', // varchar(64)  default '' not null comment '承办人员 内部律师',
+        outHouseLawyers :'', // varchar(64)  default '' not null comment '承办人员 外部律师',
         disclosure :'', // text not null comment '诉讼中重大事项披露',
         lawcase :'' ,// text not null comment '案件进展',
         lastTime :'' , // timestamp default CURRENT_TIMESTAMP not null comment '最后修改时间',
@@ -592,7 +620,6 @@ export default {
       columns: workconfig.columns.reward.items,
       wfcolumns: workconfig.columns.reward.wfcolumns,
       data: [],
-      tablename:'bs_reward_apply',
       readonly: false,
       userList:[],
       release_userid:'',
@@ -664,10 +691,12 @@ export default {
     this.queryInfo();
   },
   methods: {
+      moment,
       // 企业微信登录处理函数
       async  weworkLogin  (codeType = 'search', systemType = 'search')  {
         const userinfo_work = await Betools.query.queryWeworkUser(codeType, systemType,'v5');
           const userinfo = await Betools.storage.getStore('system_userinfo');
+          this.legal.create_by = (userinfo ? userinfo.realname || userinfo.name || userinfo.lastname : '');
           this.usertitle = (userinfo && userinfo.parent_company && userinfo.parent_company.name ? userinfo.parent_company.name + ' > ' :'')  + (userinfo ? userinfo.realname || userinfo.name || userinfo.lastname : '');
           return userinfo;
       },
@@ -740,11 +769,11 @@ export default {
       validField(fieldName){
         const userinfo = Betools.storage.getStore('system_userinfo'); // 获取用户基础信息
         const regMail = workconfig.system.config.regexp.mail; // 邮箱验证正则表达式
-        this.message[fieldName] = Betools.tools.isNull(this.item[fieldName]) ? this.valid[fieldName] : '';
+        this.message[fieldName] = Betools.tools.isNull(this.legal[fieldName]) ? this.valid[fieldName] : '';
         if(fieldName.toLocaleLowerCase().includes('mail')) {
-          this.message[fieldName] = regMail.test(this.item[fieldName]) ? '' : '请输入正确的邮箱地址！';
+          this.message[fieldName] = regMail.test(this.legal[fieldName]) ? '' : '请输入正确的邮箱地址！';
         }
-        Betools.storage.setStore(`system_${this.tablename}_item#${this.legal.type}#@${userinfo.realname}` , JSON.stringify(this.item) , 3600 * 2 );
+        Betools.storage.setStore(`system_${this.tablename}_item#${this.legal.type}#@${userinfo.realname}` , JSON.stringify(this.legal) , 3600 * 2 );
         return Betools.tools.isNull(this.message[fieldName]);
       },
       validFieldToast(fieldName){
@@ -1179,36 +1208,6 @@ export default {
                   //第一步 保存用户数据到数据库中
                   const elem = {
                     id,
-                    serialid:'',
-                    create_time: dayjs().format('YYYY-MM-DD HH:mm:ss'),
-                    create_by: userinfo.username,
-                    apply_date: dayjs().format('YYYY-MM-DD'),
-                    title: this.legal.title,
-                    company: this.legal.company,
-                    department: this.legal.department,
-                    content: this.legal.content,
-                    remark: this.legal.remark, //备注
-                    amount: this.legal.amount,
-                    wflowid: '',
-                    bpm_status: '', //流程状态 1：待提交  2：审核中  3：审批中  4：已完成  5：已完成  10：已作废
-                    reward_type: this.item.reward_type,
-                    reward_name: this.item.reward_name,
-                    reward_period: this.item.reward_period,
-                    reward_release_period: this.item.reward_release_period,
-                    reward_release_feature: this.item.reward_release_feature,
-                    hr_admin_ids: user_group_ids,
-                    hr_admin_names: user_group_names,
-                    hr_id: this.item.hr_id,
-                    hr_name: this.item.hr_name,
-                    apply_username: userinfo.username,
-                    apply_realname: userinfo.realname,
-                    files: this.item.files,
-                    files_00: this.item.files_00,
-                    files_01: this.item.files_01,
-                    files_02: this.item.files_02,
-                    files_03: this.item.files_03,
-                    files_04: this.item.files_04,
-                    files_05: this.item.files_05,
                     status: '待审批',
                   }; // 待处理元素
 
@@ -1235,7 +1234,7 @@ export default {
                   const value = await query.queryTableData(this.tablename , id);
 
                   //显示序列号
-                  this.item.serialid = value.serialid;
+                  this.legal.serialid = value.serialid;
                   elem.serialid = value.serialid;
 
                   /************************  工作流程日志(开始)  ************************/
@@ -1459,7 +1458,7 @@ export default {
         }
 
         // 如果案件明细数据为空，且不存在上传附件，提示请上传附件
-        if((this.data == null || this.data.length == 0) && !this.item.files ){
+        if((this.data == null || this.data.length == 0) && !this.legal.files ){
             await vant.Dialog.alert({
             title: '温馨提示',
             message: `请确认内容是否填写完整，错误：${this.message['files']}！`,
@@ -1502,14 +1501,14 @@ export default {
             content: "是否确认保存此申请单?",
             onOk: async() => {
                   //查询直接所在工作组，注意此处是案件人力经理管理员
-                  const response = await query.queryRoleGroupList('COMMON_REWARD_HR_ADMIN' , this.item.hr_id);
+                  const response = await query.queryRoleGroupList('COMMON_REWARD_HR_ADMIN' , this.legal.hr_id);
                   //获取到印章管理员组信息
                   let user_group_ids = response && response.length > 0 ? response[0].userlist : '';
                   let user_group_names = response && response.length > 0 ? response[0].enuserlist : '';
                   //如果未获取用户名称，则直接设置用印人为分组成员
                   if(Betools.tools.isNull(user_group_ids)){
-                    user_group_ids = this.item.hr_id;
-                    user_group_names = this.item.hr_name;
+                    user_group_ids = this.legal.hr_id;
+                    user_group_names = this.legal.hr_name;
                   }
                   // 返回预览URL
                   const receiveURL = encodeURIComponent(`${window.requestAPIConfig.vuechatdomain}/#/app/reward?id=${id}&statustype=office&type=${type}&role=hr`);
@@ -1520,32 +1519,32 @@ export default {
                     create_time: dayjs().format('YYYY-MM-DD HH:mm:ss'),
                     create_by: userinfo.username,
                     apply_date: dayjs().format('YYYY-MM-DD'),
-                    title: this.item.title,
-                    company: this.item.company,
-                    department: this.item.department,
-                    content: this.item.content,
-                    remark: this.item.remark, //备注
-                    amount: this.item.amount,
+                    title: this.legal.title,
+                    company: this.legal.company,
+                    department: this.legal.department,
+                    content: this.legal.content,
+                    remark: this.legal.remark, //备注
+                    amount: this.legal.amount,
                     wflowid: '',
                     bpm_status: '1', //流程状态 1：待提交  2：审核中  3：审批中  4：已完成  5：已完成  10：已作废 100：已驳回
-                    reward_type: this.item.reward_type,
-                    reward_name: this.item.reward_name,
-                    reward_period: this.item.reward_period,
-                    reward_release_period: this.item.reward_release_period,
-                    reward_release_feature: this.item.reward_release_feature,
+                    reward_type: this.legal.reward_type,
+                    reward_name: this.legal.reward_name,
+                    reward_period: this.legal.reward_period,
+                    reward_release_period: this.legal.reward_release_period,
+                    reward_release_feature: this.legal.reward_release_feature,
                     hr_admin_ids: user_group_ids,
                     hr_admin_names: user_group_names,
-                    hr_id: this.item.hr_id,
-                    hr_name: this.item.hr_name,
+                    hr_id: this.legal.hr_id,
+                    hr_name: this.legal.hr_name,
                     apply_username: userinfo.username,
                     apply_realname: userinfo.realname,
-                    files: this.item.files,
-                    files_00: this.item.files_00,
-                    files_01: this.item.files_01,
-                    files_02: this.item.files_02,
-                    files_03: this.item.files_03,
-                    files_04: this.item.files_04,
-                    files_05: this.item.files_05,
+                    files: this.legal.files,
+                    files_00: this.legal.files_00,
+                    files_01: this.legal.files_01,
+                    files_02: this.legal.files_02,
+                    files_03: this.legal.files_03,
+                    files_04: this.legal.files_04,
+                    files_05: this.legal.files_05,
                     status: '待审批',
                   }; // 待处理元素
 
@@ -1572,7 +1571,7 @@ export default {
                   const value = await query.queryTableData(this.tablename , id);
 
                   //显示序列号
-                  this.item.serialid = value.serialid;
+                  this.legal.serialid = value.serialid;
                   elem.serialid = value.serialid;
 
                   //第三步 向HR推送，HR确认后 保存数据，不推送HR知晓
@@ -1600,16 +1599,16 @@ export default {
       // 执行案件明细分配函数
       async rewardRelease(){
 
-        if(!this.item.amount){
+        if(!this.legal.amount){
           return this.$toast.fail('请先输入申请奖金总额！');
         }
         if(!this.release_amount){
           return this.$toast.fail('请输入案件明细的分配金额！');
         }
-        if(!this.item.reward_release_feature){
+        if(!this.legal.reward_release_feature){
           return this.$toast.fail('请输入案件申请的分配性质！');
         }
-        if(!this.item.reward_release_period){
+        if(!this.legal.reward_release_period){
           return this.$toast.fail('请输入案件申请的发放周期！');
         }
         if(!/^[0-9]+.{0,1}[0-9]{0,2}$/g.test(this.release_amount)){
@@ -1674,11 +1673,11 @@ export default {
                 title: '温馨提示',
                 message: `用户(${username})已经在奖惩分配列表中，请确认添加奖惩明细！`,
               });
-              let ratio = Betools.tools.divisionPercentage(amount , this.item.amount);
+              let ratio = Betools.tools.divisionPercentage(amount , this.legal.amount);
               return this.data.push({
                 key: Betools.tools.queryUniqueID(),
-                type: this.item.reward_release_feature,
-                period: this.item.reward_release_period,
+                type: this.legal.reward_release_feature,
+                period: this.legal.reward_release_period,
                 username: username,
                 account: userid,
                 company: company,
@@ -1698,11 +1697,11 @@ export default {
           }
 
           try {
-            let ratio = Betools.tools.divisionPercentage(amount , this.item.amount);
+            let ratio = Betools.tools.divisionPercentage(amount , this.legal.amount);
             this.data.push({
               key: Betools.tools.queryUniqueID(),
-              type: this.item.reward_release_feature,
-              period: this.item.reward_release_period,
+              type: this.legal.reward_release_feature,
+              period: this.legal.reward_release_period,
               username: username,
               account: userid,
               company: company,
@@ -1758,6 +1757,10 @@ export default {
 <style scoped >
     @import "../../assets/css/reward.home.css";
     @import "../../assets/css/reward.apply.css";
+    .reward-apply-content-item {
+      padding-top:5px;
+      padding-bottom: 5px;
+    }
     #reward-download-excel-button {
         background-image: linear-gradient(to right, #f96033, red);
         margin: 10px 10px 10px 10px;
