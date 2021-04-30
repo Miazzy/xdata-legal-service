@@ -72,7 +72,7 @@
                     </div>
                   </div>
                 </a-card>
-                <a-card :loading="loading" title="奖罚流程" :bordered="false" style="margin-top:20px;">
+                <a-card :loading="loading" title="诉讼案件流程" :bordered="false" style="margin-top:20px;">
                   <a-tag
                     color="blue"
                     @click="handleWriteBlog()"

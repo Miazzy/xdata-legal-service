@@ -10,7 +10,7 @@
               <div class="reward-apply-content" style="height:auto; background-color:#fefefe; margin-top:0px; margin-left: 5rem; margin-right: 5rem; margin-bottom: 5rem; border: 1px solid #f0f0f0; front-size: 1rem;" >
 
                 <div class="reward-apply-header" style="height:80px; width:100%; text-align:center; margin-top:20px; font-size: 1.5rem; ">
-                  奖罚月度报表
+                  诉讼案件月度报表
                 </div>
 
                 <div class="reward-apply-content-item reward-apply-content-title" style="">
@@ -113,7 +113,7 @@ export default {
   mixins: [window.mixin],
   data() {
     return {
-      pageName: "奖罚月度报表",
+      pageName: "诉讼案件月度报表",
       momentNewMsg: true,
       activeTabKey: 3,
       acceptType:'*/*',
@@ -244,7 +244,7 @@ export default {
 
       },
 
-      // 获取奖罚月度报表数据
+      // 获取诉讼案件月度报表数据
       async querylegalmonthInfo(){
         if(!this.period){
           return this.$toast.fail('请输入报表月份！');

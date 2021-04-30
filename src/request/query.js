@@ -553,7 +553,7 @@ export async function deleteTableData(tableName, id) {
 }
 
 /**
- * 获取奖罚月度/季度报表
+ * 获取诉讼案件月度/季度报表
  */
 export async function queryRewardDataByID(period) {
 

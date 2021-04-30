@@ -169,7 +169,7 @@ export default {
   data() {
     return {
       activeTabKey: 0,
-      pageName: "奖罚消息",
+      pageName: "诉讼案件消息",
       momentNewMsg: true,
       paneflowcard: "",
       paneflowcardGrid: "",
@@ -277,7 +277,7 @@ export default {
         } else if(panename == 'mydonelist'){ //我的已办
           this.typename = 'wflow_done';
           this.queryRewardDoneListByType(0 , 'wflow_done' , panename);
-        } else if(panename == 'myapplylist'){ //我的奖罚申请
+        } else if(panename == 'myapplylist'){ //我的诉讼案件申请
           this.typename = 'create_by';
           this.queryRewardListByType(0 , 'create_by' , panename);
         }
@@ -350,7 +350,7 @@ export default {
           this.confirmList = await manageAPI.queryTableData(this.tablename , `_where=(bpm_status,in,2,3)~and(${typename},like,~${userinfo.username}~)~and(create_time,gt,${month})${searchSql}&_sort=-id`);
 
           this.confirmList.map((item , index) => {
-            item.name = `#${item.serialid} ` + ` ${titlePrefix} ` + item.reward_type + '奖罚申请: ' + item.title ,
+            item.name = `#${item.serialid} ` + ` ${titlePrefix} ` + item.reward_type + '诉讼案件申请: ' + item.title ,
             item.title = item.name;
             item.avatar = '',
             item.description = '';
@@ -372,7 +372,7 @@ export default {
           this.doneList = await manageAPI.queryTableData(this.tablename , `_where=(bpm_status,in,4,5,6)~and(${typename},like,~${userinfo.username}~)~and(create_time,gt,${month})${searchSql}&_sort=-id`);
 
           this.doneList.map((item , index) => {
-            item.name = `#${item.serialid} `  + ` ${titlePrefix} ` +  item.reward_type + '奖罚申请: ' + item.title ,
+            item.name = `#${item.serialid} `  + ` ${titlePrefix} ` +  item.reward_type + '诉讼案件申请: ' + item.title ,
             item.title = item.name;
             item.avatar = '',
             item.description = '';
@@ -394,7 +394,7 @@ export default {
           this.rejectList = await manageAPI.queryTableData(this.tablename , `_where=(bpm_status,in,10,100)~and(${typename},like,~${userinfo.username}~)~and(create_time,gt,${month})${searchSql}&_sort=-id`);
 
           this.rejectList.map((item , index) => {
-            item.name = `#${item.serialid} ` + ` ${titlePrefix} ` + item.reward_type + '奖罚申请: ' + item.title ,
+            item.name = `#${item.serialid} ` + ` ${titlePrefix} ` + item.reward_type + '诉讼案件申请: ' + item.title ,
             item.title = item.name;
             item.avatar = '',
             item.description = '';

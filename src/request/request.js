@@ -3072,7 +3072,7 @@ try {
 
 try {
     /**
-     * 获取奖罚通报数据
+     * 获取诉讼案件通报数据
      */
     var queryNoticeList = async(page = 0, size = 50, tools = window.tools) => {
         //提交URL
@@ -3197,8 +3197,8 @@ try {
                 result = result.concat(temp);
             }
 
-            //如果为奖罚通报，则合并数据
-            if (type == 'all' || type == '奖罚通报') {
+            //如果为诉讼案件通报，则合并数据
+            if (type == 'all' || type == '诉讼案件通报') {
                 temp = await queryNoticeList(i, size, starttime, endtime);
                 result = result.concat(temp);
             }

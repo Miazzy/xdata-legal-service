@@ -117,11 +117,11 @@ export const rewardtype = {
     '1': '总裁专项奖',
     '2': '总经理专项奖',
     '3': '特殊贡献奖',
-    '4': '其他奖罚',
+    '4': '其他诉讼案件',
 };
 
 /**
- * @description 奖罚界面默认配置
+ * @description 诉讼案件界面默认配置
  */
 export const reward = ($router) => {
     return [{
@@ -209,7 +209,7 @@ export const reward = ($router) => {
             href: "/account/myanalyse",
             description: '对案件进展处于二审阶段的案件进行管理',
             click: () => {
-                // $router.push(`/legal/legalapply?type=4&reward_name=其他奖罚`, '_blank');
+                // $router.push(`/legal/legalapply?type=4&reward_name=其他诉讼案件`, '_blank');
             },
         }, {
             name: "执行管理",
@@ -322,7 +322,7 @@ export const getRewardWflow = ($router) => {
 }
 
 /**
- * @description 奖罚明细默认配置
+ * @description 诉讼案件明细默认配置
  */
 export const columns = {
     reward: {
@@ -794,11 +794,11 @@ export const compValidation = {
             content: '请输入案件审批流程的申请事由！',
             remark: '请输入备注信息！', //备注
             amount: '请输入本次案件审批的单项奖金总额！',
-            reward_type: '请输入奖罚类型！',
-            reward_name: '请输入奖罚名称！',
-            reward_period: '请输入奖罚所属周期！',
+            reward_type: '请输入诉讼案件类型！',
+            reward_name: '请输入诉讼案件名称！',
+            reward_period: '请输入诉讼案件所属周期！',
             hr_name: '请输入负责薪资管理的人力经理！',
-            files: '请上传奖罚明细的Excel文档！',
+            files: '请上传诉讼案件明细的Excel文档！',
             apply_realname: '请输入申请人姓名！',
         }
     }
