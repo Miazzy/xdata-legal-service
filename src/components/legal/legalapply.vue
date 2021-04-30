@@ -6,7 +6,10 @@
 
       <a-menu mode="horizontal">
         <a-sub-menu>
-            <span slot="title" class="submenu-title-wrapper" ><a-icon type="user" />{{ usertitle }} </span>
+            <span slot="title" class="submenu-title-wrapper" >
+              <a-avatar :src="userinfo.avatar" style="margin-left:0.25rem; margin-right:0.55rem;" />
+              {{ usertitle }} 
+            </span>
             <a-menu-item-group title="应用中心">
             <a-menu-item key="setting:1" :to="`/legal/message`"  @click="redirectView('/legal/message')" >
                 审批
