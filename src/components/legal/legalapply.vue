@@ -1456,6 +1456,8 @@ export default {
 
                   const {legal} = this;
                   legal.id = id;
+                  legal.zone = JSON.stringify(legal.zone);
+                  legal.caseType = JSON.stringify(legal.caseType);
 
                   //向表单提交form对象数据
                   const result = await Betools.manage.postTableData(this.tablename , this.legal);
