@@ -80,3 +80,34 @@
     height: 100%;
     padding: 12px 10px 12px 10px;
 }
+
+#legal-apply-content .reward-apply-content-item {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#reward-download-excel-button {
+    background-image: linear-gradient(to right, #f96033, red);
+    margin: 10px 10px 10px 10px;
+    padding: 1px 20px;
+    border-radius: 8px;
+    color: #f0f0f0;
+    font-size: 12px;
+    text-align: center;
+    vertical-align: middle;
+    height: 27px;
+    line-height: 27px;
+}
+
+#reward-items-download-excel-button {
+    background-image: linear-gradient(to right, #f96033, red);
+    margin: 10px 10px 10px 10px;
+    padding: 1px 20px;
+    border-radius: 8px;
+    color: #f0f0f0;
+    font-size: 12px;
+    text-align: center;
+    vertical-align: middle;
+    height: 27px;
+    line-height: 27px;
+}
