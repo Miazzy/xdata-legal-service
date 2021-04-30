@@ -705,13 +705,6 @@ export default {
         await Betools.tools.sleep(0);
         this.$toast.success('上传成功');
       },
-      // 上传文件成功后回调函数
-      async uploadSuccess(file , res){
-        vant.Toast.clear();
-        this.legal.files_00 = JSON.parse(res).message;
-        await Betools.tools.sleep(0);
-        this.$toast.success('上传成功');
-      },
       // 获取处理日志
       async queryProcessLog(){
         const id = Betools.tools.getUrlParam('id');
@@ -763,7 +756,6 @@ export default {
       },
       //用户选择知会人员
       async queryNotifyMan(){
-
         //获取盖章人信息
         const user_admin_name = this.legal.hr_name;
         if(!user_admin_name || user_admin_name.length <= 1){
@@ -822,8 +814,8 @@ export default {
         } catch (error) {
           console.log(error);
         }
-
       },
+
       //选中当前知会人员
       async selectNotifyUser(value){
         const user = this.userList.find((item,index) => {return this.legal.hr_id == legal.id});
@@ -839,15 +831,11 @@ export default {
         if(!user_admin_name || user_admin_name.length <= 1){
           return;
         }
-
         try {
           if(!!user_admin_name){
-
             //从用户表数据中获取填报人资料
             let user = await Betools.manage.queryUserByNameReward(user_admin_name.trim(),200);
-
             if(!!user){
-
               //如果是用户数组列表，则展示列表，让用户自己选择
               if(Array.isArray(user)){
                 try {
@@ -878,7 +866,6 @@ export default {
                   console.log(error);
                 }
               }
-
               //遍历去重
               try {
                 this.release_userlist = this.release_userlist.filter((item,index) => {
@@ -889,13 +876,11 @@ export default {
               } catch (error) {
                 console.log(error);
               }
-
             }
           }
         } catch (error) {
           console.log(error);
         }
-
       },
 
       //选中当前知会人员
