@@ -1427,22 +1427,13 @@ export default {
 
       // 保存用户数据但是不提交
       async handleSave(){
-        // 显示加载状态
-        this.loading = true;
-
-        // 获取用户基础信息
-        const userinfo = await Betools.storage.getStore('system_userinfo');
-
-        // 表单ID
-        const id = Betools.tools.queryUniqueID();
-        const type = Betools.tools.getUrlParam('type');
-
-        // 流程审批人员
-        let wfUsers = '';  //流程审批人员
-        let approver = ''; //最终审批人员
+        
+        this.loading = true; // 显示加载状态
+        const userinfo = await Betools.storage.getStore('system_userinfo'); // 获取用户基础信息
+        const id = Betools.tools.queryUniqueID(); // 表单ID
 
         // 验证数据是否已经填写
-        const keys = Object.keys({ title: '', company: '', department: '', content: '', amount: '', reward_type: '', reward_name: '', reward_period: '', hr_name: '', apply_realname: ''})
+        const keys = Object.keys({ title: '' })
 
         const invalidKey =  keys.find(key => {
           const flag = this.validField(key);
@@ -1452,272 +1443,30 @@ export default {
         if(invalidKey != '' && invalidKey != null){
           await vant.Dialog.alert({
             title: '温馨提示',
-            message: `请确认内容是否填写完整，错误：${this.message[invalidKey]}！`,
+            message: `请确认内容是否填写完整，错误：请输入[${invalidKey}]信息！`,
           });
           return false;
-        }
-
-        // 如果案件明细数据为空，且不存在上传附件，提示请上传附件
-        if((this.data == null || this.data.length == 0) && !this.legal.files ){
-            await vant.Dialog.alert({
-            title: '温馨提示',
-            message: `请确认内容是否填写完整，错误：${this.message['files']}！`,
-          });
-          return false;
-        }
-
-        // 校验奖惩明细金额总额是否和申请奖金总额一致
-        const sumValue = this.caculateSum().sumValue;
-        const orgValue = this.caculateSum().orgValue;
-
-        if( orgValue != sumValue){
-          await vant.Dialog.alert({
-            title: '温馨提示',
-            message: `案件申请金额(${orgValue})和案件明细金额合计${sumValue}不一致，请仔细检查后在提交！`,
-          });
-          return false;
-        }
-
-        if(!this.approve_executelist || this.approve_executelist.length <= 0){
-          await vant.Dialog.alert({
-            title: '温馨提示',
-            message: `请在流程设置处，添加审批人员！`,
-          });
-          return false;
-        } else {
-          if(this.approve_executelist.length == 1){
-            approver = this.approve_executelist[0].userid;
-          } else {
-            const tempIndex = this.approve_executelist.length - 1;
-            const templist = this.approve_executelist.slice(0,tempIndex);
-            approver = this.approve_executelist[tempIndex].userid;
-            wfUsers = (templist.map(obj => {return obj.userid})).toString();
-          }
         }
 
         //是否确认提交此自由流程?
         this.$confirm({
             title: "确认操作",
-            content: "是否确认保存此申请单?",
+            content: "是否确认保存此案件发起申请单?",
             onOk: async() => {
-                  //查询直接所在工作组，注意此处是案件人力经理管理员
-                  const response = await query.queryRoleGroupList('COMMON_REWARD_HR_ADMIN' , this.legal.hr_id);
-                  //获取到印章管理员组信息
-                  let user_group_ids = response && response.length > 0 ? response[0].userlist : '';
-                  let user_group_names = response && response.length > 0 ? response[0].enuserlist : '';
-                  //如果未获取用户名称，则直接设置用印人为分组成员
-                  if(Betools.tools.isNull(user_group_ids)){
-                    user_group_ids = this.legal.hr_id;
-                    user_group_names = this.legal.hr_name;
-                  }
-                  // 返回预览URL
-                  const receiveURL = encodeURIComponent(`${window.requestAPIConfig.vuechatdomain}/#/app/reward?id=${id}&statustype=office&type=${type}&role=hr`);
-                  //第一步 保存用户数据到数据库中
-                  const elem = {
-                    id,
-                    serialid:'',
-                    create_time: dayjs().format('YYYY-MM-DD HH:mm:ss'),
-                    create_by: userinfo.username,
-                    apply_date: dayjs().format('YYYY-MM-DD'),
-                    title: this.legal.title,
-                    company: this.legal.company,
-                    department: this.legal.department,
-                    content: this.legal.content,
-                    remark: this.legal.remark, //备注
-                    amount: this.legal.amount,
-                    wflowid: '',
-                    bpm_status: '1', //流程状态 1：待提交  2：审核中  3：审批中  4：已完成  5：已完成  10：已作废 100：已驳回
-                    reward_type: this.legal.reward_type,
-                    reward_name: this.legal.reward_name,
-                    reward_period: this.legal.reward_period,
-                    reward_release_period: this.legal.reward_release_period,
-                    reward_release_feature: this.legal.reward_release_feature,
-                    hr_admin_ids: user_group_ids,
-                    hr_admin_names: user_group_names,
-                    hr_id: this.legal.hr_id,
-                    hr_name: this.legal.hr_name,
-                    apply_username: userinfo.username,
-                    apply_realname: userinfo.realname,
-                    files: this.legal.files,
-                    files_00: this.legal.files_00,
-                    files_01: this.legal.files_01,
-                    files_02: this.legal.files_02,
-                    files_03: this.legal.files_03,
-                    files_04: this.legal.files_04,
-                    files_05: this.legal.files_05,
-                    status: '待审批',
-                  }; // 待处理元素
 
-                  //第二步，向表单提交form对象数据
-                  const result = await Betools.manage.postTableData(this.tablename , elem);
+                  const {legal} = this;
+                  legal.id = id;
 
-                  //提交此表单对应的案件明细数据
-                  for(let item of this.data){
-                    item.id = `${item.key}`;
-                    item.unique_key = `${item.key}`;
-                    item.create_by = userinfo.username;
-                    item.create_time = dayjs(item.create_time).format('YYYY-MM-DD HH:mm:ss');
-                    item.pid = id;
-                    delete item.$id;
-                    delete item.key;
-                    delete item.v_status;
-                    await Betools.manage.postTableData('bs_reward_items' , item);
-                  }
-
-                  //发送自动设置排序号请求
-                  const patchResp = await superagent.get(workconfig.queryAPI.tableSerialAPI.replace('{table_name}', this.tablename)).set('accept', 'json');
-
-                  //查询数据
-                  const value = await query.queryTableData(this.tablename , id);
-
-                  //显示序列号
-                  this.legal.serialid = value.serialid;
-                  elem.serialid = value.serialid;
-
-                  //第三步 向HR推送，HR确认后 保存数据，不推送HR知晓
-                  //await this.handleNotifyHR(user_group_ids , userinfo ,  value , receiveURL);
-
-                  /************************  工作流程日志(开始)  ************************/
-
-                  //记录 审批人 经办人 审批表单 表单编号 记录编号 操作(同意/驳回) 意见 内容 表单数据
-                  await this.handleStartWFLog(this.tablename , elem , userinfo);
-
-                  /************************  工作流程日志(结束)  ************************/
-
+                  //向表单提交form对象数据
+                  const result = await Betools.manage.postTableData(this.tablename , this.legal);
+                  
                   //设置状态
                   this.loading = false;
-                  this.status = elem.status;
                   this.readonly = true;
                   this.role = 'view';
-
-                  this.$toast.success('保存奖惩申请成功！');
+                  this.$toast.success('保存案件发起申请成功！');
                }
           });
-
-      },
-
-      // 执行案件明细分配函数
-      async rewardRelease(){
-
-        if(!this.legal.amount){
-          return this.$toast.fail('请先输入申请奖金总额！');
-        }
-        if(!this.release_amount){
-          return this.$toast.fail('请输入案件明细的分配金额！');
-        }
-        if(!this.legal.reward_release_feature){
-          return this.$toast.fail('请输入案件申请的分配性质！');
-        }
-        if(!this.legal.reward_release_period){
-          return this.$toast.fail('请输入案件申请的发放周期！');
-        }
-        if(!/^[0-9]+.{0,1}[0-9]{0,2}$/g.test(this.release_amount)){
-          return this.$toast.fail('请在分配金额处输入数字！');
-        }
-
-        if(/[,|，]/.test(this.release_username)){ //如果包含逗号，则表示批量添加
-
-          const list = this.release_username.split(/[,|，]/);
-
-          for(const username of list){
-            try {
-              let user = await Betools.manage.queryUserByNameReward(username.trim(),200);
-              user = user[0];
-              const temp = Betools.tools.queryZoneProjectAll(user.textfield1.split('||')[0], ['领地集团有限公司','领悦服务','宝瑞商管','医疗健康板块', '金融板块' ,'邛崃创达公司'], user.textfield1.split('||')[1]);
-              const temp_ = await query.queryUserInfoByMobile(user.mobile); //查询员工职务
-              await this.rewardAddUser(username , user.loginid , temp.company , temp.department , temp.zone , temp.project , temp_.position , this.release_amount);
-            } catch (error) {
-              console.log(error);
-            }
-          }
-
-        } else {//如果不包含逗号，则使用默认方式
-          try {
-            if(this.release_username && !this.release_userid){
-              return this.$toast.fail('未找到此分配人员，请确认分配人员是否为公司员工！');
-            }
-            if(!this.release_username || !this.release_userid){
-              return this.$toast.fail('请输入案件明细的分配人员，并选择下拉列表中人员！');
-            }
-            await this.rewardAddUser(this.release_username , this.release_userid , this.release_company , this.release_department , this.release_zone , this.release_project , this.release_position , this.release_amount);
-          } catch (error) {
-            console.log(error);
-          }
-        }
-
-        try {
-          this.release_userlist = [];
-          this.release_username = '';
-          this.release_amount = '';
-          this.release_company = '';
-          this.release_department = '';
-          this.release_position = '';
-          this.release_userid = '';
-          this.release_mobile = '';
-        } catch (error) {
-          console.log(error);
-        }
-
-      },
-
-      async rewardAddUser(username = this.release_username, userid = this.release_userid , company = this.release_company , department = this.release_department , zone , project , position = this.release_position , amount = this.release_amount){
-
-          try {
-            //查询用户数据是否已经被分配过
-            const findElem = this.data.find( item => {
-              return item.username == username && item.account == userid;
-            })
-            //用户数据已经被分配过，无法再次分配
-            if(findElem && findElem.username == username && findElem.account == userid){
-              await vant.Dialog.confirm({
-                title: '温馨提示',
-                message: `用户(${username})已经在奖惩分配列表中，请确认添加奖惩明细！`,
-              });
-              let ratio = Betools.tools.divisionPercentage(amount , this.legal.amount);
-              return this.data.push({
-                key: Betools.tools.queryUniqueID(),
-                type: this.legal.reward_release_feature,
-                period: this.legal.reward_release_period,
-                username: username,
-                account: userid,
-                company: company,
-                department: department,
-                position: position,
-                mobile: '',
-                amount: `${parseFloat(amount).toFixed(2)}`,
-                ratio,
-                zone,
-                project,
-                message:'',
-                v_status: 'valid',
-              });
-            }
-          } catch (error) {
-            console.log(error);
-          }
-
-          try {
-            let ratio = Betools.tools.divisionPercentage(amount , this.legal.amount);
-            this.data.push({
-              key: Betools.tools.queryUniqueID(),
-              type: this.legal.reward_release_feature,
-              period: this.legal.reward_release_period,
-              username: username,
-              account: userid,
-              company: company,
-              department: department,
-              position: position,
-              mobile: '',
-              amount: `${parseFloat(amount).toFixed(2)}`,
-              ratio,
-              zone,
-              project,
-              message:'',
-              v_status: 'valid',
-            });
-          } catch (error) {
-            console.log(error);
-          }
 
       },
 
