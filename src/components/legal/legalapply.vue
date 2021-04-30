@@ -31,7 +31,7 @@
               <div id="legal-apply-content" class="reward-apply-content" style="height:auto; background-color:#fefefe; margin-top:0px; margin-left: 5rem; margin-right: 5rem; margin-bottom: 5rem; border: 1px solid #f0f0f0; front-size: 1rem;" >
 
                 <div class="reward-apply-header" style="height:80px; width:100%; text-align:center; margin-top:20px; font-size: 1.5rem; ">
-                  案件发起申请
+                  {{ legal.legalTname }}案件发起申请
                 </div>
 
                 <div class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
@@ -544,6 +544,7 @@ export default {
         legalType :'一般案件', // varchar(36)  default '一般案件' not null comment '案件类别 100 一般案件 200 重大案件',
         plate :'地产板块', // varchar(32)  default '' not null comment '所属板块',
         firm :'', // varchar(128) default '' not null comment '公司名称',
+        legalTname:'', // comment '案件类型 起诉/应诉',
         zone :'', // varchar(128) default '' not null comment '所属区域',
         zoneProject :'', // varchar(128) default '' not null comment '区域项目名称',
         caseID :'', // varchar(64)  default '' not null comment '案件编号',
@@ -1056,14 +1057,10 @@ export default {
           this.iswechat = Betools.tools.isWechat(); //查询当前是否微信端
           this.iswework = Betools.tools.isWework(); //查询是否为企业微信
           this.userinfo = await this.weworkLogin(); //查询当前登录用户
-
-          //查询上一页
-          this.back = Betools.tools.getUrlParam('back') || '/app';
-          //查询type
-          const type = Betools.tools.getUrlParam('type') || '0';
-
-          //获取用户基础信息
-          const userinfo = await Betools.storage.getStore('system_userinfo');
+          this.back = Betools.tools.getUrlParam('back') || '/legal/workspace'; //查询上一页
+          this.legal.legalTname = (Betools.tools.getUrlParam('type') || '0') == '0' ? '起诉' : '应诉';  //查询type
+          debugger;
+          const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
 
           this.legal.apply_realname = userinfo.realname;
           this.legal.apply_username = userinfo.username;
