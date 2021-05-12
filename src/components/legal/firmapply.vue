@@ -48,13 +48,7 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>流程标题</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.title" :readonly='false' placeholder="请填写本案件流程标题！" @blur="validFieldToast('title')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
-                    </a-col>
-                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>案件编号</span>
-                    </a-col>
-                    <a-col :span="8">
-                      <a-input v-model="legal.caseID" :readonly='false' placeholder="请输入案件编号！" @blur="validFieldToast('caseID')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      <a-input v-model="legal.title" :readonly='false' placeholder="请填写申请流程标题！" @blur="validFieldToast('title')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                     </a-col>
                   </a-row>
                 </div>
@@ -79,15 +73,44 @@
                 <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>案件类别</span>
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>律所名称</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-select  v-model="legal.legalType" default-value="一般案件" @blur="validFieldToast('legalType')"  placeholder="请选择案件类别！" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                      <a-input v-model="legal.firm_name" :readonly="false" placeholder="请输入律所名称！" @blur="validFieldToast('firm_name')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                    </a-col>
+                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>入库区域</span>
+                    </a-col>
+                    <a-col :span="8">
+                      <a-input v-model="legal.in_zone" :readonly="false" placeholder="请填写入库区域！" @blur="validFieldToast('in_zone')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                    </a-col>
+                  </a-row>
+                </div>
+
+                <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                  <a-row>
+                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>业务标签</span>
+                    </a-col>
+                    <a-col :span="8">
+                      <a-select mode="multiple" v-model="legal.legalType" default-value="一般案件" @blur="validFieldToast('legalType')"  placeholder="请选择业务标签！" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                        <a-select-option value="常年法律顾问">
+                          常年法律顾问
+                        </a-select-option>
                         <a-select-option value="一般案件">
                           一般案件
                         </a-select-option>
                         <a-select-option value="重大案件">
                           重大案件
+                        </a-select-option>
+                        <a-select-option value="尽调专项">
+                          尽调专项
+                        </a-select-option>
+                        <a-select-option value="发函专项">
+                          发函专项
+                        </a-select-option>
+                        <a-select-option value="刑事">
+                          刑事
                         </a-select-option>
                       </a-select>
                     </a-col>
@@ -121,6 +144,8 @@
                     </a-col>
                   </a-row>
                 </div>
+
+                
 
                 <div class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
@@ -212,7 +237,7 @@ export default {
       },
       legal:{
         id:'', // varchar(36)  default ''  not null comment '律所编号' primary key,
-        title:'', // 申请流程标题,
+        title:'录入律师申请', // 申请流程标题,
         serialID:'', // varchar(16)  default ''  not null comment '律所序号',
         create_time: dayjs().format('YYYY-MM-DD'), // timestamp    default CURRENT_TIMESTAMP not null comment '填报日期',
         create_by :'', // varchar(32)  default '' not null comment '填报人员',
