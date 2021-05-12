@@ -232,18 +232,26 @@ export const reward = ($router) => {
         id: 'common-pane',
         title: '律所律师',
         taskflows: [{
-            name: "律所管理",
+            name: "律所录入",
             avatar: `//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/leave.png`,
             href: "/account/todolist",
-            description: '律师事务所管理',
+            description: '律师事务所录入申请',
+            click: () => {
+                $router.push(`/legal/firmapply?type=1&tname=律所录入&apply=申请`, '_blank');
+            }
+        }, {
+            name: "律师录入",
+            avatar: `//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/position.png`,
+            href: "/account/donelist",
+            description: '律师事务所下律师录入申请',
             click: () => {
 
             }
         }, {
-            name: "律师管理",
-            avatar: `//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/position.png`,
-            href: "/account/donelist",
-            description: '律师事务所下律师管理',
+            name: "律所管理",
+            avatar: `//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/leave.png`,
+            href: "/account/todolist",
+            description: '律师事务所管理',
             click: () => {
 
             }
