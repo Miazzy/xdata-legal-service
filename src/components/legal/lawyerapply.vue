@@ -293,6 +293,7 @@ export default {
       },
       legal:{
         id: '', // varchar(36)  default ''  not null
+        title: 'XX律师申请流程',
         create_time: dayjs().format('YYYY-MM-DD'),
         firmID: '', // varchar(36)  default ''  not null comment '所属律所ID',
         college: 'XX大学', // varchar(32)  default ''  not null comment '大学名称',
