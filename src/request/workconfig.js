@@ -245,7 +245,7 @@ export const reward = ($router) => {
             href: "/account/donelist",
             description: '律师事务所下律师录入申请',
             click: () => {
-
+                $router.push(`/legal/lawyerapply?type=1&tname=律师录入&apply=申请`, '_blank');
             }
         }, {
             name: "律所管理",
