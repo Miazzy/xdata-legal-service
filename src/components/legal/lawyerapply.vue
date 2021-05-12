@@ -165,6 +165,9 @@
                     </a-col>
                     <a-col :span="8">
                       <a-radio-group  v-model="legal.out_flag" placeholder="请选择此律所是否出库！" @blur="validFieldToast('out_flag')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 0px solid #f0f0f0;">
+                        <a-radio-button value="已入库">
+                          已入库
+                        </a-radio-button>
                         <a-radio-button value="未出库">
                           未出库
                         </a-radio-button>
