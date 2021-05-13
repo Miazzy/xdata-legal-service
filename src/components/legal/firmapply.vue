@@ -619,6 +619,7 @@ export default {
             onOk: async() => {
                   const { legal } = this;
                   legal.id = id;
+                  legal.tags = JSON.stringify(legal.tags); //进行序列化
                   const result = await Betools.manage.postTableData(this.tablename , this.legal); // 向表单提交form对象数据
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });

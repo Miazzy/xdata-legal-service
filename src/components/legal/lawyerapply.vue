@@ -270,10 +270,10 @@ export default {
         degree: '本科', // varchar(32)  default ''  not null comment '学位',
         brief: '无', // varchar(256) default ''  not null,
         years: 'N年', // varchar(16)  default ''  not null comment '执业年限',
-        start_time: '', // varchar(32)  default ''  not null comment '开始执业时间',
+        start_time: dayjs().format('YYYY-MM-DD'), // varchar(32)  default ''  not null comment '开始执业时间',
         mobile: '18XXXXXXXXX', // varchar(16)  default ''  not null,
         xid: '', // varchar(36)  default ''  not null,
-        out_time: '', // varchar(32)  default ''  not null,
+        out_time: dayjs().format('YYYY-MM-DD'), // varchar(32)  default ''  not null,
         out_flag: '未出库', // varchar(1)   default 'N' not null,
         out_reason: '无', // varchar(256) default ''  not null
       },
