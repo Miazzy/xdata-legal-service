@@ -265,7 +265,7 @@ export default {
         title: 'XX律师申请流程',
         create_time: dayjs().format('YYYY-MM-DD'),
         firmID: '', // varchar(36)  default ''  not null comment '所属律所ID',
-        lawyer_name:'',
+        lawyer_name:'', // 律师姓名
         college: 'XX大学', // varchar(32)  default ''  not null comment '大学名称',
         degree: '本科', // varchar(32)  default ''  not null comment '学位',
         brief: '无', // varchar(256) default ''  not null,
