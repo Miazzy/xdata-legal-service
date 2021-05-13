@@ -50,6 +50,12 @@
                     <a-col :span="8">
                       <a-input v-model="legal.title" :readonly='false' placeholder="请填写申请流程标题！" @blur="validFieldToast('title')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                     </a-col>
+                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>律师姓名</span>
+                    </a-col>
+                    <a-col :span="8">
+                      <a-input v-model="legal.lawyer_name" readonly placeholder="请输入律师姓名！" @blur="validFieldToast('lawyer_name')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                    </a-col>
                   </a-row>
                 </div>
 
@@ -349,6 +355,7 @@ export default {
         }
       },
 
+      // 验证字段
       validField(fieldName){
         const userinfo = Betools.storage.getStore('system_userinfo'); // 获取用户基础信息
         const regMail = workconfig.system.config.regexp.mail; // 邮箱验证正则表达式
@@ -360,6 +367,7 @@ export default {
         return Betools.tools.isNull(this.message[fieldName]);
       },
 
+      // 验证字段信息
       validFieldToast(fieldName){
         const flag = !this.validField(fieldName);
         if(flag){
