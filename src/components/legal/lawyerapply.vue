@@ -54,7 +54,7 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>律师姓名</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.lawyer_name" readonly placeholder="请输入律师姓名！" @blur="validFieldToast('lawyer_name')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      <a-input v-model="legal.lawyer_name" :readonly="false" placeholder="请输入律师姓名！" @blur="validFieldToast('lawyer_name')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                     </a-col>
                   </a-row>
                 </div>
