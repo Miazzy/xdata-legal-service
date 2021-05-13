@@ -336,42 +336,14 @@ export default {
      
       // 获取URL或者二维码信息
       async queryInfo() {
-
         try {
-
           this.iswechat = Betools.tools.isWechat(); //查询当前是否微信端
           this.iswework = Betools.tools.isWework(); //查询是否为企业微信
           this.userinfo = await this.weworkLogin(); //查询当前登录用户
           this.back = Betools.tools.getUrlParam('back') || '/legal/workspace'; //查询上一页
-          this.legal.legalTname = (Betools.tools.getUrlParam('type') || '0') == '0' ? '起诉' : '应诉';  //查询type
           const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
           this.legal.apply_realname = userinfo.realname;
           this.legal.apply_username = userinfo.username;
-
-          //获取缓存信息
-          const item = Betools.storage.getStore(`system_${this.tablename}_item#${this.legal.type}#@${userinfo.realname}`);
-
-          try {
-            //自动回显刚才填写的用户基础信息
-            if(item){
-              this.legal.create_by = legal.create_by || this.legal.create_by;
-              this.legal.remark = legal.remark || this.legal.remark;
-              this.legal.status = legal.status || this.legal.status;
-            }
-            if(userinfo.department && userinfo.department.name){
-              this.legal.department = userinfo.department.name;
-              this.legal.company = userinfo.parent_company.name;
-            } else if(userinfo.systemuserinfo && userinfo.systemuserinfo.textfield1){
-              let temp = userinfo.systemuserinfo.textfield1.split('||')[0];
-              this.legal.company = temp.split('>')[temp.split('>').length - 1];
-              temp = userinfo.systemuserinfo.textfield1.split('||')[1];
-              this.legal.department = temp.split('>')[temp.split('>').length - 1];
-            }
-
-            //查询当前应诉案件、起诉案件状态
-          } catch (error) {
-            console.log(error);
-          }
         } catch (error) {
           console.log(error);
         }
@@ -387,7 +359,7 @@ export default {
         Betools.storage.setStore(`system_${this.tablename}_item#${this.legal.type}#@${userinfo.realname}` , JSON.stringify(this.legal) , 3600 * 2 );
         return Betools.tools.isNull(this.message[fieldName]);
       },
-      
+
       validFieldToast(fieldName){
         const flag = !this.validField(fieldName);
         if(flag){

@@ -531,7 +531,6 @@ export default {
           this.iswework = Betools.tools.isWework(); //查询是否为企业微信
           this.userinfo = await this.weworkLogin(); //查询当前登录用户
           this.back = Betools.tools.getUrlParam('back') || '/legal/workspace'; //查询上一页
-          this.legal.legalTname = (Betools.tools.getUrlParam('type') || '0') == '0' ? '起诉' : '应诉';  //查询type
           const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
           this.legal.apply_realname = userinfo.realname;
           this.legal.apply_username = userinfo.username;
@@ -563,6 +562,25 @@ export default {
           }
         } catch (error) {
           console.log(error);
+        }
+      },
+
+      validField(fieldName){
+        const userinfo = Betools.storage.getStore('system_userinfo'); // 获取用户基础信息
+        const regMail = workconfig.system.config.regexp.mail; // 邮箱验证正则表达式
+        this.message[fieldName] = Betools.tools.isNull(this.legal[fieldName]) ? this.valid[fieldName] : '';
+        if(fieldName.toLocaleLowerCase().includes('mail')) {
+          this.message[fieldName] = regMail.test(this.legal[fieldName]) ? '' : '请输入正确的邮箱地址！';
+        }
+        Betools.storage.setStore(`system_${this.tablename}_item#${this.legal.type}#@${userinfo.realname}` , JSON.stringify(this.legal) , 3600 * 2 );
+        return Betools.tools.isNull(this.message[fieldName]);
+      },
+
+      validFieldToast(fieldName){
+        const flag = !this.validField(fieldName);
+        if(flag){
+          this.$toast.fail(`${this.message[fieldName]}！` );
+          return false;
         }
       },
 
