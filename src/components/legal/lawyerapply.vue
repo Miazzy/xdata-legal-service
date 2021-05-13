@@ -244,7 +244,7 @@ export default {
       activeTabKey: 3,
       acceptType:'*/*',
       uploadURL:'',
-      tablename:'bs_legal',
+      tablename:'bs_lawyer',
       size: 0,
       options:{
         create_time:moment(dayjs().format('YYYY-MM-DD'),'YYYY-MM-DD'),
