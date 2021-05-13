@@ -1059,7 +1059,7 @@ export default {
           this.userinfo = await this.weworkLogin(); //查询当前登录用户
           this.back = Betools.tools.getUrlParam('back') || '/legal/workspace'; //查询上一页
           this.legal.legalTname = (Betools.tools.getUrlParam('type') || '0') == '0' ? '起诉' : '应诉';  //查询type
-          debugger;
+
           const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
 
           this.legal.apply_realname = userinfo.realname;
