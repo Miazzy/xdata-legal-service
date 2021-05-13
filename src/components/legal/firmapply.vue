@@ -373,37 +373,6 @@
                   </a-row>
                 </div>
 
-                <div class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
-                   <a-row style="border-top: 1px dash #f0f0f0;" >
-                    <a-col class="reward-apply-content-title-text" :span="4" style="font-size:1.1rem;">
-                      流程设置
-                    </a-col>
-                   </a-row>
-                </div>
-
-                <div id="van-user-list" class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
-                  <a-row style="position:relative;">
-                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;"></span>审批人员</span>
-                    </a-col>
-                    <a-col :span="8">
-                      <a-input v-model="approve_username" placeholder="请输入申请流程的审批人员！" @blur="queryApproveMan();" @click="queryApproveMan();" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0; width:320px;" />
-                      <div style="position:absolute; right: 5px; top: -2px;">
-                        <van-button name="file" @click="rewardApproveAdd();"  >添加</van-button>
-                      </div>
-                    </a-col>
-                  </a-row>
-                  <a-row>
-                    <a-col :span="3" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                    </a-col>
-                    <a-col :span="9">
-                      <div style="margin-left: 10px;">
-                        <van-address-list v-show="approve_userlist.length > 0" v-model="approve_userid" :list="approve_userlist" default-tag-text="默认" edit-disabled @select="selectApproveUser();" />
-                      </div>
-                    </a-col>
-                  </a-row>
-                </div>
-
                 <div v-show="role != 'view' " class="reward-apply-content-item" style="margin-top:35px;margin-bottom:5px; margin-right:10px;">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
                     <a-col :span="8">
