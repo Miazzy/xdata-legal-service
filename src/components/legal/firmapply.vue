@@ -624,6 +624,7 @@ export default {
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
+                  legal.tags = JSON.parse(legal.tags); //进行解析
                   this.$toast.success('律所录入申请发起成功！');
                   this.loading = false; //设置状态
                   this.readonly = true;
