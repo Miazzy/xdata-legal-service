@@ -410,15 +410,12 @@ export default {
             title: "确认操作",
             content: "是否确认保存此案件发起申请单?",
             onOk: async() => {
-
                   const { legal } = this;
                   legal.id = id;
                   const result = await Betools.manage.postTableData(this.tablename , this.legal); // 向表单提交form对象数据
-
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
-
                   this.$toast.success('案件发起申请成功！');
                   this.loading = false; //设置状态
                   this.readonly = true;
@@ -426,32 +423,6 @@ export default {
                   vant.Dialog.alert({  title: '温馨提示',  message: `案件发起申请成功！`, });
                }
           });
-
-      },
-
-      // 审批人员添加函数
-      async rewardApproveAdd(){
-        if(!this.approve_userid){
-          return this.$toast.success('请选择审批人员处下拉列表中的待选审批人员！');
-        }
-        const index = this.approve_executelist.findIndex( item => {
-          return item.userid == this.approve_userid;
-        })
-        if(index >= 0){
-          return this.$toast.success('该审批人员已经添加，请重新输入！');
-        }
-        try {
-          const mobile = this.approve_mobile ? `${this.approve_mobile.slice(0,3)}****${this.approve_mobile.slice(-4)}` : '';
-          const user = {key: this.approve_executelist.length + 1 , id:Betools.tools.queryUniqueID(),username:this.approve_username , userid: this.approve_userid , mobile , company: this.approve_company , department : this.approve_department , position : this.approve_position};
-          this.approve_executelist.push(JSON.parse(JSON.stringify(user)));
-          this.approve_userid = '';
-          this.approve_username = '';
-          this.approve_mobile = '';
-          this.approve_position = '';
-          this.approve_userlist = [];
-        } catch (error) {
-          console.log(error);
-        }
       },
 
   },
