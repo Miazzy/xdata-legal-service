@@ -1,5 +1,3 @@
-//import Vue from 'vue'
-//import Vuex from 'vuex'
 import contact from './contacts' //存放所有联系人的数据
 import mutations from "./mutations"
 import actions from "./actions"
@@ -16,8 +14,7 @@ const state = {
     currentPageName: "消息", //用于在wx-header组件中显示当前页标题
     headerStatus: true, //显示（true）/隐藏（false）wx-header组件
     tipsStatus: false, //控制首页右上角菜单的显示(true)/隐藏(false)
-    // 所有接口地址 后期需要
-    apiUrl: {},
+    apiUrl: {}, // 所有接口地址 后期需要
     msgList: {
         stickMsg: [], //置顶消息列表 后期需要
         baseMsg: []
