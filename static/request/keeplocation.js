@@ -1,6 +1,9 @@
-//设置别名
-var wstorage = localStorage;
-//查询位置信息
+const wstorage = localStorage; //设置别名
+
+/**
+ * 查询位置信息
+ * @param {*} info 
+ */
 function queryLocationInfo(info) {
     if (info != '' && typeof info != 'undefined' && info != null) {
         window.ip_location = info;
