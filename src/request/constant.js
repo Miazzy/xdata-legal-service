@@ -8,10 +8,4 @@ export const LEAVE_TYPE = { 'affairs_leave': '事假', 'sick_leave': '病假', '
 export const REQUEST_API_CONFIG = {
     domain: window._CONFIG['domain'],
     restapi: window._CONFIG['restAPI'],
-    token: `${window._CONFIG['domain']}/jeecg-boot/sys/common/token`,
-    user: `${window._CONFIG['domain']}/jeecg-boot/api/user`,
-    role: `${window._CONFIG['domain']}/jeecg-boot/api/role`,
-    service: `${window._CONFIG['domain']}/jeecg-boot/api/service`,
-    permission: `${window._CONFIG['domain']}/jeecg-boot/api/permission`,
-    permissionNoPager: `${window._CONFIG['domain']}/jeecg-boot/api/permission/no-pager`,
 };
