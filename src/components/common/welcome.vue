@@ -13,9 +13,9 @@ export default {
         }
     },
     async mounted() {
-        const timestamp = Betools.tools.isPCWeb() ? 300 : 300;
-        await Betools.tools.sleep(timestamp);
-        this.hide = true;
+        const timestamp = Betools.tools.isPCWeb() ? 300 : 300; 
+        await Betools.tools.sleep(timestamp); //背景图片显示毫秒数
+        this.hide = true; //隐藏背景图片
     },
     created(){
       // 加载预览页面图片 首页背景图片 首页图片
