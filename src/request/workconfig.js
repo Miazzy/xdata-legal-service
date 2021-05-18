@@ -255,6 +255,14 @@ export const reward = ($router) => {
             click: () => {
 
             }
+        }, {
+            name: "律师管理",
+            avatar: `//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/hire.png`,
+            href: "/account/todolist",
+            description: '律师管理',
+            click: () => {
+
+            }
         }],
     }]
 };
