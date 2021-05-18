@@ -129,7 +129,7 @@ export const reward = ($router) => {
         title: '任务面板',
         taskflows: [{
             name: "我的知会",
-            avatar: `//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/shenpi.png`,
+            avatar: `//cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/liebiao_jy.png`,
             href: "/account/myrewardlist",
             description: '查看我的案件知会信息',
             click: () => {
@@ -233,7 +233,7 @@ export const reward = ($router) => {
         title: '律所律师',
         taskflows: [{
             name: "律所录入",
-            avatar: `//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/leave.png`,
+            avatar: `//cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/xinwen_jy.png`,
             href: "/account/todolist",
             description: '律师事务所录入申请',
             click: () => {
@@ -241,7 +241,7 @@ export const reward = ($router) => {
             }
         }, {
             name: "律师录入",
-            avatar: `//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/position.png`,
+            avatar: `//cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/xiangmuxinxi_jy.png`,
             href: "/account/donelist",
             description: '律师事务所下律师录入申请',
             click: () => {
@@ -249,7 +249,7 @@ export const reward = ($router) => {
             }
         }, {
             name: "律所管理",
-            avatar: `//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/leave.png`,
+            avatar: `//cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/xiezuowendangku_jy.png`,
             href: "/account/todolist",
             description: '律师事务所管理',
             click: () => {
@@ -257,7 +257,7 @@ export const reward = ($router) => {
             }
         }, {
             name: "律师管理",
-            avatar: `//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/hire.png`,
+            avatar: `//cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/baomingfei.png`,
             href: "/account/todolist",
             description: '律师管理',
             click: () => {
