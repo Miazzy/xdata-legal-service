@@ -31,7 +31,7 @@ const routes = [{
     }
 }, {
     path: '/legal/legalview',
-    name: "案件列表",
+    name: "案件管理",
     components: {
         "default": resolve => require(["../components/legal/home.vue"], resolve),
         "subPage": resolve => require(["../components/legal/legalview.vue"], resolve)

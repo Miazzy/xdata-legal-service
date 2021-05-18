@@ -180,10 +180,10 @@ export const reward = ($router) => {
                 $router.push(`/legal/legalapply?type=1&legalTname=应诉`, '_blank');
             }
         }, {
-            name: "案件列表",
+            name: "案件管理",
             avatar: `//cdn.jsdelivr.net/gh/Miazzy/yunwisdoms@r3.0.0/images/pay02.png`,
             href: "/account/donelist",
-            description: '查看已发起案件列表信息',
+            description: '查看/管理案件列表信息',
             click: () => {
                 // $router.push(`/legal/legalapply?type=2&reward_name=总经理专项`, '_blank');
             }
