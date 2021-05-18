@@ -143,23 +143,23 @@ export default {
         return list;
       },
 
-      // 律所录入申请
+      // 律师录入申请
       async execApply(){
           const { $router } = this;
-          $router.push(`/legal/firmapply?type=1&tname=律所录入&apply=申请`);
+          $router.push(`/legal/lawyerapply?type=1&tname=律师录入&apply=申请`);
       },
 
-      // 律所删除申请
+      // 律师删除申请
       async execDelete(){
           const { $router } = this;
       },
 
-      // 律所修改申请
+      // 律师修改申请
       async execPatch(){
           const { $router } = this;
       },
 
-      // 律所修改申请
+      // 律师修改申请
       async execView(){
           const { $router } = this;
       },
