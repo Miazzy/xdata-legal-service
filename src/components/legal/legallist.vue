@@ -154,6 +154,25 @@ export default {
         }
       },
 
+      //查询不同状态的领用数据
+      async handleList(tableName , status = '待处理', userinfo, searchSql , page = 0 , size = 10000){
+        if(Betools.tools.isNull(userinfo) || Betools.tools.isNull(userinfo.username)){
+            return [];
+        }
+        let list = await Betools.manage.queryTableData(tableName , `_where=(status,in,${status})${searchSql}&_sort=-id&_p=${page}&_size=${size}`);
+        list.map((item)=>{ 
+            item.create_time = dayjs(item.create_time).format('YYYY-MM-DD'); 
+            item.establish_time = dayjs(item.establish_time).format('YYYY-MM-DD') == 'Invalid Date' ? '/' : dayjs(item.establish_time).format('YYYY');
+            item.address = item.address.slice(0,10) + '...';
+            item.brief = item.brief.slice(0,25) + '...';
+            item.team_brief = item.team_brief.slice(0,25) + '...';
+            item.firm_count = parseInt(item.firm_count);
+            item.coop_flag = 'YN'.includes(item.coop_flag) ? {'Y':'已合作','N':'未合作'}[item.coop_flag] : item.coop_flag;
+            item.out_flag = 'YN'.includes(item.out_flag) ? {'Y':'已出库','N':'未出库'}[item.out_flag] : item.out_flag;
+        });
+        return list;
+      },
+
   },
 };
 </script>
