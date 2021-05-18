@@ -25,8 +25,8 @@
                 <div style="width:100%;margin-left:0px;margin-right:0px;background:#fbf9fe;">
 
                     <div class="reward-top-button" style="margin-top:20px;margin-bottom:20px; margin-left:20px; width:100%;">
-                        <a-button type="primary">查看</a-button>
-                        <a-button type="primary">新增</a-button>
+                        <a-button type="primary" >查看</a-button>
+                        <a-button type="primary" @click="firmapply">新增</a-button>
                         <a-button type="primary">修改</a-button>
                         <a-button type="primary">删除</a-button>
                     </div>
@@ -129,7 +129,7 @@ export default {
         }
       },
 
-      //查询不同状态的领用数据
+      // 查询不同状态的领用数据
       async handleList(tableName , status = '待处理', userinfo, searchSql , page = 0 , size = 10000){
         if(Betools.tools.isNull(userinfo) || Betools.tools.isNull(userinfo.username)){
             return [];
@@ -146,6 +146,22 @@ export default {
             item.out_flag = 'YN'.includes(item.out_flag) ? {'Y':'已出库','N':'未出库'}[item.out_flag] : item.out_flag;
         });
         return list;
+      },
+
+      // 律所录入申请
+      async firmapply(){
+          const { $router } = this;
+          $router.push(`/legal/firmapply?type=1&tname=律所录入&apply=申请`);
+      },
+
+      // 律所删除申请
+      async firmdelete(){
+          const { $router } = this;
+      },
+
+      // 律所修改申请
+      async firmpatch(){
+          const { $router } = this;
       },
 
   },
