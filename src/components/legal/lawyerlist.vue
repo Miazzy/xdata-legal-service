@@ -25,10 +25,10 @@
               <div style="width:100%;margin-left:0px;margin-right:0px;background:#fbf9fe;">
 
                   <div class="reward-top-button" style="margin-top:20px;margin-bottom:20px; margin-left:20px;">
-                      <a-button type="primary">查看</a-button>
-                      <a-button type="primary">新增</a-button>
-                      <a-button type="primary">修改</a-button>
-                      <a-button type="primary">删除</a-button>
+                      <a-button type="primary" @click="execView" >查看</a-button>
+                      <a-button type="primary" @click="execApply" >新增</a-button>
+                      <a-button type="primary" @click="execPatch" >修改</a-button>
+                      <a-button type="primary" @click="execDelete">删除</a-button>
                   </div>
 
                   <div class="reward-content-table" style="margin-left:20px;">
@@ -141,6 +141,27 @@ export default {
             item.out_flag = 'YN'.includes(item.out_flag) ? {'Y':'已出库','N':'未出库'}[item.out_flag] : item.out_flag;
         });
         return list;
+      },
+
+      // 律所录入申请
+      async execApply(){
+          const { $router } = this;
+          $router.push(`/legal/firmapply?type=1&tname=律所录入&apply=申请`);
+      },
+
+      // 律所删除申请
+      async execDelete(){
+          const { $router } = this;
+      },
+
+      // 律所修改申请
+      async execPatch(){
+          const { $router } = this;
+      },
+
+      // 律所修改申请
+      async execView(){
+          const { $router } = this;
       },
 
   },
