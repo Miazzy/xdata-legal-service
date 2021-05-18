@@ -24,14 +24,14 @@
             <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
                 <div style="width:100%;margin-left:0px;margin-right:0px;background:#fbf9fe;">
 
-                    <div class="reward-top-button" style="margin-top:20px;margin-bottom:20px; margin-left:20px;">
+                    <div class="reward-top-button" style="margin-top:20px;margin-bottom:20px; margin-left:20px; width:100%;">
                         <a-button type="primary">查看</a-button>
                         <a-button type="primary">新增</a-button>
                         <a-button type="primary">修改</a-button>
                         <a-button type="primary">删除</a-button>
                     </div>
 
-                    <div class="reward-content-table" style="margin-left:20px;">
+                    <div class="reward-content-table" style="margin-left:20px; width:100%;">
                         <a-table style="width:100%;" size="middle" tableLayout="column.ellipsis" :bordered="false" :columns="columns" :data-source="data" :row-selection="rowSelection" />
                     </div>
 
@@ -71,20 +71,20 @@ export default {
       usertitle:'',
       columns:[
         { width: '2%', title: '', dataIndex: 'serialID', key: 'serialID', },
-        // { title: '区域', dataIndex: 'in_zone', key: 'in_zone', },
         { width: '15%', title: '律所名称', dataIndex: 'firm_name', key: 'firm_name', },
-        // { title: '入库时间', dataIndex: 'in_time', key: 'in_time', },
-        // { title: '成立时间', dataIndex: 'establish_time', key: 'establish_time', },
-        { width: '13%', title: '地址', dataIndex: 'address', key: 'address', },
+        { width: '12%', title: '地址', dataIndex: 'address', key: 'address', },
         { width: '10%', title: '电话', dataIndex: 'phone', key: 'phone', },
         { width: '5%', title: '规模', dataIndex: 'scale', key: 'scale', },
         { width: '20%', title: '简介', dataIndex: 'brief', key: 'brief', },
-        { width: '5%', title: '人数', dataIndex: 'firm_count', key: 'firm_count', },
-        { width: '20%', title: '团队介绍', dataIndex: 'team_brief', key: 'team_brief', },
+        { width: '4%', title: '人数', dataIndex: 'firm_count', key: 'firm_count', },
+        { width: '18%', title: '团队介绍', dataIndex: 'team_brief', key: 'team_brief', },
         { width: '5%', title: '合作', dataIndex: 'coop_flag', key: 'coop_flag', },
         { width: '5%', title: '出库', dataIndex: 'out_flag', key: 'out_flag', },
-        // { title: '合作时间', dataIndex: 'start_time', key: 'start_time', },
-        // { title: '合作期间', dataIndex: 'coop_time', key: 'coop_time', },
+        { width: '5%', title: '成立', dataIndex: 'establish_time', key: 'establish_time', },
+        // { width: '5%', title: '区域', dataIndex: 'in_zone', key: 'in_zone', },
+        // { width: '5%', title: '入库时间', dataIndex: 'in_time', key: 'in_time', },
+        // { width: '5%', title: '合作时间', dataIndex: 'start_time', key: 'start_time', },
+        // { width: '5%', title: '合作期间', dataIndex: 'coop_time', key: 'coop_time', },
       ],
       data:[],
       rowSelection:[],
@@ -137,9 +137,11 @@ export default {
         let list = await Betools.manage.queryTableData(tableName , `_where=(status,in,${status})${searchSql}&_sort=-id&_p=${page}&_size=${size}`);
         list.map((item)=>{ 
             item.create_time = dayjs(item.create_time).format('YYYY-MM-DD'); 
+            item.establish_time = dayjs(item.establish_time).format('YYYY-MM-DD') == 'Invalid Date' ? '/' : dayjs(item.establish_time).format('YYYY');
             item.address = item.address.slice(0,10) + '...';
             item.brief = item.brief.slice(0,25) + '...';
             item.team_brief = item.team_brief.slice(0,25) + '...';
+            item.firm_count = parseInt(item.firm_count);
             item.coop_flag = 'YN'.includes(item.coop_flag) ? {'Y':'已合作','N':'未合作'}[item.coop_flag] : item.coop_flag;
             item.out_flag = 'YN'.includes(item.out_flag) ? {'Y':'已出库','N':'未出库'}[item.out_flag] : item.out_flag;
         });
