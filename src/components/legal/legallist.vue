@@ -35,7 +35,7 @@ export default {
     return {
       iswechat:false,
       iswework:false,
-      pageName: "律所管理",
+      pageName: "案件管理",
       momentNewMsg: true,
       activeTabKey: 3,
       acceptType:'*/*',
@@ -44,15 +44,7 @@ export default {
       size: 0,
       options:{},
       legal:{},
-      data: [],
-      readonly: false,
-      userList:[],
-      selectedSheet: null,
-      sheetName: null,
-      sheets: [{ name: "Sheet1", data: [{}] }],
       collection: [{ }],
-      userinfo: '',
-      usertitle:'',
       statusType:{'valid':'有效','invalid':'删除'},
       zoneType:{'领地集团总部':'领地集团总部','重庆区域':'重庆区域','两湖区域':'两湖区域','川北区域':'川北区域','成都区域':'成都区域','乐眉区域':'乐眉区域','中原区域':'中原区域','攀西区域':'攀西区域','新疆区域':'新疆区域','大湾区域':'大湾区域','北京区域':'北京区域'},
     };
@@ -82,7 +74,7 @@ export default {
       // 获取基础信息
       async queryInfo() {
         try {
-          
+         
         } catch (error) {
           console.log(error);
         }
