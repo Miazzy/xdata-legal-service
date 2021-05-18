@@ -35,7 +35,7 @@ export default {
     return {
       iswechat:false,
       iswework:false,
-      pageName: "律所管理",
+      pageName: "案件管理",
       momentNewMsg: true,
       activeTabKey: 3,
       acceptType:'*/*',
@@ -82,7 +82,11 @@ export default {
       // 获取基础信息
       async queryInfo() {
         try {
-          
+          this.iswechat = Betools.tools.isWechat(); //查询当前是否微信端
+          this.iswework = Betools.tools.isWework(); //查询是否为企业微信
+          this.userinfo = await this.weworkLogin(); //查询当前登录用户
+          this.back = Betools.tools.getUrlParam('back') || '/legal/workspace'; //查询上一页
+          const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
         } catch (error) {
           console.log(error);
         }
