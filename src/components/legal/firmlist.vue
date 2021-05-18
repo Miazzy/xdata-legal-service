@@ -21,6 +21,7 @@
 
       <a-row :gutter="24">
         <keep-alive>
+            <a-table :columns="columns" :data-source="data" :row-selection="rowSelection" />
         </keep-alive>
       </a-row>
     </div>
