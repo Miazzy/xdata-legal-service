@@ -253,7 +253,7 @@ export const reward = ($router) => {
             href: "/account/todolist",
             description: '律师事务所管理',
             click: () => {
-
+                $router.push(`/legal/firmlist?type=1&tname=律所管理&apply=管理`, '_blank');
             }
         }, {
             name: "律师管理",
