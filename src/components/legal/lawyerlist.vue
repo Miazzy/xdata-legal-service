@@ -19,7 +19,7 @@
         </a-sub-menu>
       </a-menu>
 
-      <a-row :gutter="24">
+      <a-row :gutter="24" style="background:#fbf9fe;">
         <keep-alive>
           <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
               <div style="width:100%;margin-left:0px;margin-right:0px;background:#fbf9fe;">
@@ -56,7 +56,7 @@ export default {
       activeTabKey: 3,
       acceptType:'*/*',
       uploadURL:'',
-      tablename:'bs_law_firm',
+      tablename:'bs_lawyer',
       size: 0,
       options:{},
       legal:{},
@@ -114,14 +114,33 @@ export default {
       // 获取基础信息
       async queryInfo() {
         try {
+          const tableName = this.tablename;
           this.iswechat = Betools.tools.isWechat(); //查询当前是否微信端
           this.iswework = Betools.tools.isWework(); //查询是否为企业微信
           this.userinfo = await this.weworkLogin(); //查询当前登录用户
           this.back = Betools.tools.getUrlParam('back') || '/legal/workspace'; //查询上一页
           const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
+          this.data = await this.handleList(tableName , '待处理,处理中,审批中,已完成', userinfo, '' , 0 , 10000);
         } catch (error) {
           console.log(error);
         }
+      },
+
+      //查询不同状态的领用数据
+      async handleList(tableName , status = '已完成', userinfo, searchSql , page = 0 , size = 10000){
+        if(Betools.tools.isNull(userinfo) || Betools.tools.isNull(userinfo.username)){
+            return [];
+        }
+        let list = await Betools.manage.queryTableData(tableName , `_where=(status,in,${status})${searchSql}&_sort=-id&_p=${page}&_size=${size}`);
+        list.map((item, index)=>{ 
+            item.serialID = Betools.tools.isNull(item.serialID) ? index : item.serialID;
+            item.brief = item.brief.slice(0,25) + '...';
+            item.out_reason = item.out_reason.slice(0,25) + '...';
+            item.out_time = dayjs(item.out_time).format('YYYY-MM-DD') == 'Invalid Date' ? '/' : dayjs(item.out_time).format('YYYY-MM-DD'); 
+            item.start_time = dayjs(item.start_time).format('YYYY-MM-DD') == 'Invalid Date' ? '/' : dayjs(item.start_time).format('YYYY-MM-DD'); 
+            item.out_flag = 'YN'.includes(item.out_flag) ? {'Y':'已出库','N':'未出库'}[item.out_flag] : item.out_flag;
+        });
+        return list;
       },
 
   },

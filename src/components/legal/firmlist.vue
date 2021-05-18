@@ -123,23 +123,25 @@ export default {
           this.userinfo = await this.weworkLogin(); //查询当前登录用户
           this.back = Betools.tools.getUrlParam('back') || '/legal/workspace'; //查询上一页
           const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
-          this.data = await this.handleList(tableName , '待处理,处理中,审批中,已完成,已驳回', userinfo, '' , 0 , 150);
+          this.data = await this.handleList(tableName , '待处理,处理中,审批中,已完成,已驳回', userinfo, '' , 0 , 10000);
         } catch (error) {
           console.log(error);
         }
       },
 
       //查询不同状态的领用数据
-      async handleList(tableName , status = '待处理', userinfo, searchSql , page = 0 , size = 150){
+      async handleList(tableName , status = '待处理', userinfo, searchSql , page = 0 , size = 10000){
         if(Betools.tools.isNull(userinfo) || Betools.tools.isNull(userinfo.username)){
-        return [];
+            return [];
         }
-        let list = await Betools.manage.queryTableData(tableName , `_where=(status,in,${status})~and(user_group_ids,like,~${userinfo.username}~)${searchSql}&_sort=-id&_p=${page}&_size=${size}`);
+        let list = await Betools.manage.queryTableData(tableName , `_where=(status,in,${status})${searchSql}&_sort=-id&_p=${page}&_size=${size}`);
         list.map((item)=>{ 
             item.create_time = dayjs(item.create_time).format('YYYY-MM-DD'); 
             item.address = item.address.slice(0,10) + '...';
             item.brief = item.brief.slice(0,25) + '...';
             item.team_brief = item.team_brief.slice(0,25) + '...';
+            item.coop_flag = 'YN'.includes(item.coop_flag) ? {'Y':'已合作','N':'未合作'}[item.coop_flag] : item.coop_flag;
+            item.out_flag = 'YN'.includes(item.out_flag) ? {'Y':'已出库','N':'未出库'}[item.out_flag] : item.out_flag;
         });
         return list;
       },
