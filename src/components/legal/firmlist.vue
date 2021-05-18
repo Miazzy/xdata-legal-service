@@ -29,6 +29,7 @@
                         <a-button type="primary" @click="execApply" >新增</a-button>
                         <a-button type="primary" @click="execPatch" >修改</a-button>
                         <a-button type="primary" @click="execDelete" >删除</a-button>
+                        <a-button type="primary" @click="execExport" >导出</a-button>
                     </div>
 
                     <div class="reward-content-table" style="margin-left:20px; width:100%;">
@@ -166,6 +167,11 @@ export default {
 
       // 律所修改申请
       async execView(){
+          const { $router } = this;
+      },
+
+      // 律所导出功能
+      async execExport(){
           const { $router } = this;
       },
 
