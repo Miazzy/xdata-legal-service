@@ -19,8 +19,24 @@
         </a-sub-menu>
       </a-menu>
 
-      <a-row :gutter="24">
+      <a-row :gutter="24" style="background:#fbf9fe;">
         <keep-alive>
+            <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
+                <div style="width:100%;margin-left:0px;margin-right:0px;background:#fbf9fe;">
+
+                    <div class="reward-top-button" style="margin-top:20px;margin-bottom:20px; margin-left:20px;">
+                        <a-button type="primary">查看</a-button>
+                        <a-button type="primary">新增</a-button>
+                        <a-button type="primary">修改</a-button>
+                        <a-button type="primary">删除</a-button>
+                    </div>
+
+                    <div class="reward-content-table" style="margin-left:20px;">
+                        <a-table style="width:100%;" size="middle" tableLayout="column.ellipsis" :bordered="false" :columns="columns" :data-source="data" :row-selection="rowSelection" />
+                    </div>
+
+                </div>
+            </a-col>
         </keep-alive>
       </a-row>
     </div>
@@ -53,6 +69,52 @@ export default {
       collection: [{ }],
       userinfo: '',
       usertitle:'',
+      columns:[
+        // { title: '流程标题', dataIndex: 'title', key: 'title', },
+        // { title: '填报日期', dataIndex: 'create_time', key: 'create_time', },
+        // { title: '填报人员', dataIndex: 'create_by', key: 'create_by', },
+        // { title: '案件类别', dataIndex: 'legalType', key: 'legalType', },
+        // { title: '所属板块', dataIndex: 'plate', key: 'plate', },
+        // { title: '公司名称', dataIndex: 'firm', key: 'firm', },
+        // { title: '所属区域', dataIndex: 'zone', key: 'zone', },
+        // { title: '项目名称', dataIndex: 'zoneProject', key: 'zoneProject', },
+        { title: '案件编号', dataIndex: 'caseID', key: 'caseID', },
+        { title: '案件案由', dataIndex: 'caseType', key: 'caseType', },
+        { title: '程序阶段', dataIndex: 'stage', key: 'stage', },
+        { title: '接收时间(业务)', dataIndex: 'receiveTime', key: 'receiveTime', },
+        { title: '接收时间(法律)', dataIndex: 'lawRTime', key: 'lawRTime', },
+        { title: '诉讼发起人(原告)', dataIndex: 'accuser', key: 'accuser', },
+        { title: '应诉人(被告)', dataIndex: 'defendant', key: 'defendant', },
+        // { title: '第三人', dataIndex: 'thirdParty', key: 'thirdParty', },
+        { title: '法院受理时间', dataIndex: 'handledTime', key: 'handledTime', },
+        // { title: '外聘律所', dataIndex: 'externalFlag', key: 'externalFlag', },
+        // { title: '外聘律所名称', dataIndex: 'lawOffice', key: 'lawOffice', },
+        // { title: '委托时间', dataIndex: 'lawOfficeTime', key: 'lawOfficeTime', },
+        // { title: '外聘律师', dataIndex: 'lawyer', key: 'lawyer', },
+        // { title: '律师电话', dataIndex: 'lawyerMobile', key: 'lawyerMobile', },
+        // { title: '诉讼请求', dataIndex: 'claims', key: 'claims', },
+        // { title: '诉讼本金', dataIndex: 'claimsCapital', key: 'claimsCapital', },
+        // { title: '诉讼违约金', dataIndex: 'claimsDedit', key: 'claimsDedit', },
+        // { title: '诉讼标的额', dataIndex: 'claimsBidSum', key: 'claimsBidSum', },
+        { title: '受理法院', dataIndex: 'court', key: 'court', },
+        { title: '承办法官', dataIndex: 'judge', key: 'judge', },
+        // { title: '法官电话', dataIndex: 'judgeMobile', key: 'judgeMobile', },
+        { title: '内部律师(承办)', dataIndex: 'inHouseLawyers', key: 'inHouseLawyers', },
+        // { title: '外部律师(承办)', dataIndex: 'outHouseLawyers', key: 'outHouseLawyers', },
+        // { title: '事项披露', dataIndex: 'disclosure', key: 'disclosure', },
+        // { title: '案件进展', dataIndex: 'lawcase', key: 'lawcase', },
+        // { title: '最后修改时间', dataIndex: 'lastTime', key: 'lastTime', },
+        // { title: '最后修改人员', dataIndex: 'lastModifier', key: 'lastModifier', },
+        { title: '案件状态', dataIndex: 'legalStatus', key: 'legalStatus', },
+        // { title: '结案日期', dataIndex: 'closeDate', key: 'closeDate', },
+        // { title: '归档日期', dataIndex: 'archiveDate', key: 'archiveDate', },
+        // { title: '办理进展', dataIndex: 'progress', key: 'progress', },
+        // { title: '申请人姓名', dataIndex: 'apply_realname', key: 'apply_realname', },
+        // { title: '申请人账号', dataIndex: 'apply_username', key: 'apply_username', },
+        // { title: '案件类型', dataIndex: 'legalTname', key: 'legalTname', },
+      ],
+      data:[],
+      rowSelection:[],
       statusType:{'valid':'有效','invalid':'删除'},
       zoneType:{'领地集团总部':'领地集团总部','重庆区域':'重庆区域','两湖区域':'两湖区域','川北区域':'川北区域','成都区域':'成都区域','乐眉区域':'乐眉区域','中原区域':'中原区域','攀西区域':'攀西区域','新疆区域':'新疆区域','大湾区域':'大湾区域','北京区域':'北京区域'},
     };
