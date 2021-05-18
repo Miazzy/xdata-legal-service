@@ -21,6 +21,22 @@
 
       <a-row :gutter="24">
         <keep-alive>
+          <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
+              <div style="width:100%;margin-left:0px;margin-right:0px;background:#fbf9fe;">
+
+                  <div class="reward-top-button" style="margin-top:20px;margin-bottom:20px; margin-left:20px;">
+                      <a-button type="primary">查看</a-button>
+                      <a-button type="primary">新增</a-button>
+                      <a-button type="primary">修改</a-button>
+                      <a-button type="primary">删除</a-button>
+                  </div>
+
+                  <div class="reward-content-table" style="margin-left:20px;">
+                      <a-table style="width:100%;" size="middle" tableLayout="column.ellipsis" :bordered="false" :columns="columns" :data-source="data" :row-selection="rowSelection" />
+                  </div>
+
+              </div>
+          </a-col>
         </keep-alive>
       </a-row>
     </div>
@@ -51,6 +67,22 @@ export default {
       sheetName: null,
       sheets: [{ name: "Sheet1", data: [{}] }],
       collection: [{ }],
+      columns:[
+        { title: '序号', dataIndex: 'serialID', key: 'serialID', },
+        { title: '律师名称', dataIndex: 'lawyer_name', key: 'lawyer_name', },
+        { title: '所属律所', dataIndex: 'firmID', key: 'firmID', },
+        { title: '大学', dataIndex: 'college', key: 'college', },
+        { title: '学位', dataIndex: 'degree', key: 'degree', },
+        { title: '执业简介', dataIndex: 'brief', key: 'brief', },
+        { title: '执业年限', dataIndex: 'years', key: 'years', },
+        { title: '开始执业时间', dataIndex: 'start_time', key: 'start_time', },
+        { title: '联系电话', dataIndex: 'mobile', key: 'mobile', },
+        { title: '是否出库', dataIndex: 'out_flag', key: 'out_flag', },
+        { title: '出库时间', dataIndex: 'out_time', key: 'out_time', },
+        { title: '出库原因', dataIndex: 'out_reason', key: 'out_reason', },
+      ],
+      data:[],
+      rowSelection:[],
       userinfo: '',
       usertitle:'',
       statusType:{'valid':'有效','invalid':'删除'},

@@ -70,48 +70,21 @@ export default {
       userinfo: '',
       usertitle:'',
       columns:[
-        // { title: '流程标题', dataIndex: 'title', key: 'title', },
-        // { title: '填报日期', dataIndex: 'create_time', key: 'create_time', },
-        // { title: '填报人员', dataIndex: 'create_by', key: 'create_by', },
-        // { title: '案件类别', dataIndex: 'legalType', key: 'legalType', },
-        // { title: '所属板块', dataIndex: 'plate', key: 'plate', },
-        // { title: '公司名称', dataIndex: 'firm', key: 'firm', },
-        // { title: '所属区域', dataIndex: 'zone', key: 'zone', },
-        // { title: '项目名称', dataIndex: 'zoneProject', key: 'zoneProject', },
-        { title: '案件编号', dataIndex: 'caseID', key: 'caseID', },
-        { title: '案件案由', dataIndex: 'caseType', key: 'caseType', },
-        { title: '程序阶段', dataIndex: 'stage', key: 'stage', },
-        { title: '接收时间(业务)', dataIndex: 'receiveTime', key: 'receiveTime', },
-        { title: '接收时间(法律)', dataIndex: 'lawRTime', key: 'lawRTime', },
-        { title: '诉讼发起人(原告)', dataIndex: 'accuser', key: 'accuser', },
-        { title: '应诉人(被告)', dataIndex: 'defendant', key: 'defendant', },
-        // { title: '第三人', dataIndex: 'thirdParty', key: 'thirdParty', },
-        { title: '法院受理时间', dataIndex: 'handledTime', key: 'handledTime', },
-        // { title: '外聘律所', dataIndex: 'externalFlag', key: 'externalFlag', },
-        // { title: '外聘律所名称', dataIndex: 'lawOffice', key: 'lawOffice', },
-        // { title: '委托时间', dataIndex: 'lawOfficeTime', key: 'lawOfficeTime', },
-        // { title: '外聘律师', dataIndex: 'lawyer', key: 'lawyer', },
-        // { title: '律师电话', dataIndex: 'lawyerMobile', key: 'lawyerMobile', },
-        // { title: '诉讼请求', dataIndex: 'claims', key: 'claims', },
-        // { title: '诉讼本金', dataIndex: 'claimsCapital', key: 'claimsCapital', },
-        // { title: '诉讼违约金', dataIndex: 'claimsDedit', key: 'claimsDedit', },
-        // { title: '诉讼标的额', dataIndex: 'claimsBidSum', key: 'claimsBidSum', },
-        { title: '受理法院', dataIndex: 'court', key: 'court', },
-        { title: '承办法官', dataIndex: 'judge', key: 'judge', },
-        // { title: '法官电话', dataIndex: 'judgeMobile', key: 'judgeMobile', },
-        { title: '内部律师(承办)', dataIndex: 'inHouseLawyers', key: 'inHouseLawyers', },
-        // { title: '外部律师(承办)', dataIndex: 'outHouseLawyers', key: 'outHouseLawyers', },
-        // { title: '事项披露', dataIndex: 'disclosure', key: 'disclosure', },
-        // { title: '案件进展', dataIndex: 'lawcase', key: 'lawcase', },
-        // { title: '最后修改时间', dataIndex: 'lastTime', key: 'lastTime', },
-        // { title: '最后修改人员', dataIndex: 'lastModifier', key: 'lastModifier', },
-        { title: '案件状态', dataIndex: 'legalStatus', key: 'legalStatus', },
-        // { title: '结案日期', dataIndex: 'closeDate', key: 'closeDate', },
-        // { title: '归档日期', dataIndex: 'archiveDate', key: 'archiveDate', },
-        // { title: '办理进展', dataIndex: 'progress', key: 'progress', },
-        // { title: '申请人姓名', dataIndex: 'apply_realname', key: 'apply_realname', },
-        // { title: '申请人账号', dataIndex: 'apply_username', key: 'apply_username', },
-        // { title: '案件类型', dataIndex: 'legalTname', key: 'legalTname', },
+        { width: '2%', title: '', dataIndex: 'serialID', key: 'serialID', },
+        // { title: '区域', dataIndex: 'in_zone', key: 'in_zone', },
+        { width: '15%', title: '律所名称', dataIndex: 'firm_name', key: 'firm_name', },
+        // { title: '入库时间', dataIndex: 'in_time', key: 'in_time', },
+        // { title: '成立时间', dataIndex: 'establish_time', key: 'establish_time', },
+        { width: '13%', title: '地址', dataIndex: 'address', key: 'address', },
+        { width: '10%', title: '电话', dataIndex: 'phone', key: 'phone', },
+        { width: '5%', title: '规模', dataIndex: 'scale', key: 'scale', },
+        { width: '20%', title: '简介', dataIndex: 'brief', key: 'brief', },
+        { width: '5%', title: '人数', dataIndex: 'firm_count', key: 'firm_count', },
+        { width: '20%', title: '团队介绍', dataIndex: 'team_brief', key: 'team_brief', },
+        { width: '5%', title: '合作', dataIndex: 'coop_flag', key: 'coop_flag', },
+        { width: '5%', title: '出库', dataIndex: 'out_flag', key: 'out_flag', },
+        // { title: '合作时间', dataIndex: 'start_time', key: 'start_time', },
+        // { title: '合作期间', dataIndex: 'coop_time', key: 'coop_time', },
       ],
       data:[],
       rowSelection:[],
@@ -144,14 +117,31 @@ export default {
       // 获取基础信息
       async queryInfo() {
         try {
+          const tableName = this.tablename;
           this.iswechat = Betools.tools.isWechat(); //查询当前是否微信端
           this.iswework = Betools.tools.isWework(); //查询是否为企业微信
           this.userinfo = await this.weworkLogin(); //查询当前登录用户
           this.back = Betools.tools.getUrlParam('back') || '/legal/workspace'; //查询上一页
           const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
+          this.data = await this.handleList(tableName , '待处理,处理中,审批中,已完成,已驳回', userinfo, '' , 0 , 150);
         } catch (error) {
           console.log(error);
         }
+      },
+
+      //查询不同状态的领用数据
+      async handleList(tableName , status = '待处理', userinfo, searchSql , page = 0 , size = 150){
+        if(Betools.tools.isNull(userinfo) || Betools.tools.isNull(userinfo.username)){
+        return [];
+        }
+        let list = await Betools.manage.queryTableData(tableName , `_where=(status,in,${status})~and(user_group_ids,like,~${userinfo.username}~)${searchSql}&_sort=-id&_p=${page}&_size=${size}`);
+        list.map((item)=>{ 
+            item.create_time = dayjs(item.create_time).format('YYYY-MM-DD'); 
+            item.address = item.address.slice(0,10) + '...';
+            item.brief = item.brief.slice(0,25) + '...';
+            item.team_brief = item.team_brief.slice(0,25) + '...';
+        });
+        return list;
       },
 
   },
