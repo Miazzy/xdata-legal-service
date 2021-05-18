@@ -49,38 +49,7 @@ export default {
         start_time:moment(dayjs().format('YYYY-MM-DD'),'YYYY-MM-DD'),
         coop_time:moment(dayjs().format('YYYY-MM-DD'),'YYYY-MM-DD'),
       },
-      legal:{
-        id:'', // varchar(36)  default ''  not null comment '律所编号' primary key,
-        title:'录入律师申请', // 申请流程标题,
-        serialID:'', // varchar(16)  default ''  not null comment '律所序号',
-        create_time: dayjs().format('YYYY-MM-DD'), // timestamp    default CURRENT_TIMESTAMP not null comment '填报日期',
-        create_by :'', // varchar(32)  default '' not null comment '填报人员',
-        xid :'', // varchar(36) default '' not null comment '更新ID',
-        in_zone:'', // varchar(32)  default ''  not null comment '入库区域',
-        firm_name:'', // varchar(64)  default ''  not null comment '律所名称',
-        in_time:'', // varchar(32)  default ''  not null comment '入库时间',
-        tags:'常年法律顾问',
-        plate:'地产板块',
-        establish_time:'', // varchar(32)  default ''  not null comment '成立时间',
-        address:'', // varchar(64)  default ''  not null comment '地址',
-        phone:'', // varchar(16)  default ''  not null comment '电话',
-        scale:'1-10人', // varchar(16)  default ''  not null comment '律所规模（人数）',
-        brief:'', // varchar(256) default ''  not null comment '律所简要介绍',
-        firm_count:'N人', // varchar(16)  default ''  not null comment '服务团队人数',
-        team_brief:'', // varchar(256) default ''  not null comment '团队介绍',
-        fee:'￥N万/年', // varchar(64)  default ''  not null comment '费用',
-        major_fee:'一事一议', // varchar(64)  default ''  not null comment '重大诉讼费用',
-        common_fee: '商品房纠纷案件：￥N/件', // varchar(64)  default ''  not null comment '一般诉讼费用',
-        diligence_fee:'￥N万/项目', // varchar(64)  default ''  not null comment '尽调专项费用',
-        notice_fee: '￥N万/年', // varchar(64)  default ''  not null comment '发函专项费用',
-        penal_fee: '一事一议', // varchar(64)  default ''  not null comment '刑事专项费用',
-        coop_flag:'已合作', // varchar(1)   default 'Y' not null comment '是否已合作',
-        start_time:'', // varchar(32)  default ''  not null comment '开始合作时间',
-        coop_time:'', // varchar(32)  default ''  not null comment '最近合作期间',
-        coop_stime:'', // varchar(32)  default ''  not null comment '最近合作期间(开始时间)',
-        coop_etime:'', // varchar(32)  default ''  not null comment '最近合作期间(结束时间)',
-        out_flag:'未出库', // varchar(32)  default 'N' not null comment '是否出库',
-      },
+      legal:{ },
       columns: workconfig.columns.reward.items,
       wfcolumns: workconfig.columns.reward.wfcolumns,
       data: [],
@@ -136,15 +105,15 @@ export default {
       // 企业微信登录处理函数
       async  weworkLogin  (codeType = 'search', systemType = 'search')  {
         const userinfo_work = await Betools.query.queryWeworkUser(codeType, systemType,'v5');
-          const userinfo = await Betools.storage.getStore('system_userinfo');
-          this.legal.create_by = (userinfo ? userinfo.realname || userinfo.name || userinfo.lastname : '');
-          this.usertitle = (userinfo && userinfo.parent_company && userinfo.parent_company.name ? userinfo.parent_company.name + ' > ' :'')  + (userinfo ? userinfo.realname || userinfo.name || userinfo.lastname : '');
-          return userinfo;
+        const userinfo = await Betools.storage.getStore('system_userinfo');
+        this.legal.create_by = (userinfo ? userinfo.realname || userinfo.name || userinfo.lastname : '');
+        this.usertitle = (userinfo && userinfo.parent_company && userinfo.parent_company.name ? userinfo.parent_company.name + ' > ' :'')  + (userinfo ? userinfo.realname || userinfo.name || userinfo.lastname : '');
+        return userinfo;
       },
 
       // 执行页面跳转
       async redirectView(path) {
-          this.$router.push(path);
+        this.$router.push(path);
       },
      
       // 获取基础信息
