@@ -185,7 +185,7 @@ export const reward = ($router) => {
             href: "/account/donelist",
             description: '查看/管理案件列表信息',
             click: () => {
-                // $router.push(`/legal/legalapply?type=2&reward_name=总经理专项`, '_blank');
+                $router.push(`/legal/legallist?type=99&&status=all&legalTname=all`, '_blank');
             }
         }, {
             name: "结案记录",
@@ -193,7 +193,7 @@ export const reward = ($router) => {
             href: "/account/myanalyse",
             description: '查看已结案案件列表信息',
             click: () => {
-                // $router.push(`/legal/message?panename=myrewardlist&type=7&back=/legal/workspace`, '_blank');
+                $router.push(`/legal/lawsuitlist?&type=99&status=finish&legalTname=all`, '_blank');
             },
         }, {
             name: "一审管理",

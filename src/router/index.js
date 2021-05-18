@@ -65,6 +65,20 @@ const routes = [{
         "subPage": resolve => require(["../components/legal/lawyerlist.vue"], resolve)
     }
 }, {
+    path: '/legal/legallist',
+    name: "案件管理",
+    components: {
+        "default": resolve => require(["../components/legal/home.vue"], resolve),
+        "subPage": resolve => require(["../components/legal/legallist.vue"], resolve)
+    }
+}, {
+    path: '/legal/lawsuitlist',
+    name: "结案记录",
+    components: {
+        "default": resolve => require(["../components/legal/home.vue"], resolve),
+        "subPage": resolve => require(["../components/legal/lawsuitlist.vue"], resolve)
+    }
+}, {
     path: '/legal/netdisk',
     name: "云文件",
     components: {
