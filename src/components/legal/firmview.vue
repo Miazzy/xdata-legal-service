@@ -373,25 +373,6 @@
                   </a-row>
                 </div>
 
-                <div v-show="role != 'view' " class="reward-apply-content-item" style="margin-top:35px;margin-bottom:5px; margin-right:10px;">
-                   <a-row style="border-top: 1px dash #f0f0f0;" >
-                    <a-col :span="8">
-                    </a-col>
-                    <a-col class="reward-apply-content-title-text" :span="4" style="">
-                      <a-button type="primary" style="width: 120px;color:c0c0c0;" @click="handleSave();"  >
-                        保存
-                      </a-button>
-                    </a-col>
-                    <a-col class="reward-apply-content-title-text" :span="4" style="">
-                      <a-button type="primary" style="width: 120px;" @click="handleApply();"  >
-                        提交
-                      </a-button>
-                    </a-col>
-                    <a-col :span="8">
-                    </a-col>
-                   </a-row>
-                </div>
-
                 <div style="height:100px;">
                 </div>
               </div>
