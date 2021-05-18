@@ -25,10 +25,10 @@
                 <div style="width:100%;margin-left:0px;margin-right:0px;background:#fbf9fe;">
 
                     <div class="reward-top-button" style="margin-top:20px;margin-bottom:20px; margin-left:20px; width:100%;">
-                        <a-button type="primary" >查看</a-button>
-                        <a-button type="primary" @click="firmapply">新增</a-button>
-                        <a-button type="primary">修改</a-button>
-                        <a-button type="primary">删除</a-button>
+                        <a-button type="primary" @click="execView" >查看</a-button>
+                        <a-button type="primary" @click="execApply" >新增</a-button>
+                        <a-button type="primary" @click="execPatch" >修改</a-button>
+                        <a-button type="primary" @click="execDelete" >删除</a-button>
                     </div>
 
                     <div class="reward-content-table" style="margin-left:20px; width:100%;">
@@ -149,18 +149,23 @@ export default {
       },
 
       // 律所录入申请
-      async firmapply(){
+      async execApply(){
           const { $router } = this;
           $router.push(`/legal/firmapply?type=1&tname=律所录入&apply=申请`);
       },
 
       // 律所删除申请
-      async firmdelete(){
+      async execDelete(){
           const { $router } = this;
       },
 
       // 律所修改申请
-      async firmpatch(){
+      async execPatch(){
+          const { $router } = this;
+      },
+
+      // 律所修改申请
+      async execView(){
           const { $router } = this;
       },
 
