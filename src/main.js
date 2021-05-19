@@ -11,6 +11,7 @@ try {
     Vue.use(vant.Icon);
     Vue.use(vant.Dialog);
     Vue.use(VueAxios, axios, Vue); //技巧 同时 use 多个插件 被依赖的插件应放在偏后方
+    Vue.use(xediter.default); // Vue.component("downloadExcel", JsonExcel || null);
     filters(Vue); // 注册全局过滤器
 } catch (error) {
     console.log(`regist vant component error:`, error);

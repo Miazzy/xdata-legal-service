@@ -39,7 +39,7 @@
                                 <a-list-item slot="renderItem" slot-scope="item, index">
                                   <a slot="actions" @click="execView(item)">查看</a>
                                   <a slot="actions" @click="execPatch(item)">修改</a>
-                                  <a-list-item-meta :index="index" :description="`${item.firm_name} 简介：${item.brief}，团队简介：${item.team_brief}`" >
+                                  <a-list-item-meta :index="index" :description="`${item.firm_name} 简介：${item.brief_min}，团队简介：${item.team_brief_min}`" >
                                     <a slot="title" >{{ `${item.firm_name} ${item.phone} 规模:${item.scale}，位于${item.address}，服务团队:${item.firm_count}人` }}</a>
                                   </a-list-item-meta>
                                 </a-list-item>
@@ -49,7 +49,7 @@
 
                         <a-tab-pane key="2" tab="表格" force-render>
                           <a-empty v-if="data.length == 0" style="margin-top:10%;height:580px;"/>
-                          <a-table v-if="data.length > 0 " style="width:100%;" size="middle" tableLayout="column.ellipsis" :bordered="false" :columns="columns" :data-source="data"  />
+                          <a-table v-if="data.length > 0 " style="width:105%;" size="middle" tableLayout="column.ellipsis" :bordered="false" :columns="columns" :data-source="data"  />
                         </a-tab-pane>
 
                         <a-tab-pane key="3" tab="表单">
@@ -57,15 +57,19 @@
                           <vue-excel-editor v-if="data.length > 0" v-model="data" ref="grid" width="100%" filter-row autocomplete >
                                 <vue-excel-column field="serialID"      label="序号"          width="60px" />
                                 <vue-excel-column field="firm_name"     label="律所名称"       width="100px" />
-                                <vue-excel-column field="address"       label="地址"          width="100px" />
+                                <vue-excel-column field="address"       label="地址"          width="200px" />
                                 <vue-excel-column field="phone"         label="电话"          width="120px" />
                                 <vue-excel-column field="scale"         label="规模"          width="120px" />
-                                <vue-excel-column field="brief"         label="简介"          width="120px" />
+                                <vue-excel-column field="brief"         label="简介"          width="300px" />
                                 <vue-excel-column field="firm_count"    label="人数"          width="120px" />
-                                <vue-excel-column field="team_brief"    label="团队介绍"       width="120px" />
+                                <vue-excel-column field="team_brief"    label="团队介绍"       width="300px" />
                                 <vue-excel-column field="coop_flag"     label="合作"          width="120px" />
                                 <vue-excel-column field="out_flag"      label="出库"          width="120px" />
-                                <vue-excel-column field="establish_time" label="成立时间"      width="180px" />
+                                <vue-excel-column field="establish_time" label="成立时间"      width="120px" />
+                                <vue-excel-column field="in_zone"        label="区域"         width="120px" />
+                                <vue-excel-column field="in_time"        label="入库时间"      width="120px" />
+                                <vue-excel-column field="start_time"     label="最近合作时间"   width="120px" />
+                                <vue-excel-column field="coop_time"      label="合作期间"      width="180px" />
                           </vue-excel-editor>
                         </a-tab-pane>
 
@@ -109,12 +113,13 @@ export default {
         { width: '12%', title: '地址', dataIndex: 'address', key: 'address', },
         { width: '10%', title: '电话', dataIndex: 'phone', key: 'phone', },
         { width: '5%', title: '规模', dataIndex: 'scale', key: 'scale', },
-        { width: '20%', title: '简介', dataIndex: 'brief', key: 'brief', },
+        { width: '20%', title: '简介', dataIndex: 'brief_min', key: 'brief_min', },
         { width: '4%', title: '人数', dataIndex: 'firm_count', key: 'firm_count', },
-        { width: '18%', title: '团队介绍', dataIndex: 'team_brief', key: 'team_brief', },
+        { width: '18%', title: '团队介绍', dataIndex: 'team_brief_min', key: 'team_brief_min', },
         { width: '5%', title: '合作', dataIndex: 'coop_flag', key: 'coop_flag', },
         { width: '5%', title: '出库', dataIndex: 'out_flag', key: 'out_flag', },
-        { width: '5%', title: '成立', dataIndex: 'establish_time', key: 'establish_time', }, // { width: '5%', title: '区域', dataIndex: 'in_zone', key: 'in_zone', }, // { width: '5%', title: '入库时间', dataIndex: 'in_time', key: 'in_time', }, // { width: '5%', title: '合作时间', dataIndex: 'start_time', key: 'start_time', }, // { width: '5%', title: '合作期间', dataIndex: 'coop_time', key: 'coop_time', },
+        { width: '5%', title: '成立', dataIndex: 'establish_time', key: 'establish_time', }, 
+        // { width: '5%', title: '区域', dataIndex: 'in_zone', key: 'in_zone', }, // { width: '5%', title: '入库时间', dataIndex: 'in_time', key: 'in_time', }, // { width: '5%', title: '合作时间', dataIndex: 'start_time', key: 'start_time', }, // { width: '5%', title: '合作期间', dataIndex: 'coop_time', key: 'coop_time', },
       ],
       data:[],
       statusType:{'valid':'有效','invalid':'删除'},
@@ -166,10 +171,9 @@ export default {
         let list = await Betools.manage.queryTableData(tableName , `_where=(status,in,${status})${searchSql}&_sort=-id&_p=${page}&_size=${size}`);
         list.map((item)=>{ 
             item.create_time = dayjs(item.create_time).format('YYYY-MM-DD'); 
-            item.establish_time = dayjs(item.establish_time).format('YYYY-MM-DD') == 'Invalid Date' ? '/' : dayjs(item.establish_time).format('YYYY');
-            item.address = item.address.length > 35 ? item.address.slice(0,35) + '...' :  item.address;
-            item.brief = item.brief.length > 35 ? item.brief.slice(0,35) + '...' : item.brief;
-            item.team_brief = item.team_brief.length > 35 ? item.team_brief.slice(0,35) + '...' : item.team_brief;
+            item.establish_time = dayjs(item.establish_time).format('YYYY-MM-DD') == 'Invalid Date' ? '/' : dayjs(item.establish_time).format('YYYY-MM-DD');
+            item.brief_min = item.brief.length > 35 ? item.brief.slice(0,35) + '...' : item.brief;
+            item.team_brief_min = item.team_brief.length > 35 ? item.team_brief.slice(0,35) + '...' : item.team_brief;
             item.firm_count = parseInt(item.firm_count);
             item.coop_flag = 'YN'.includes(item.coop_flag) ? {'Y':'已合作','N':'未合作'}[item.coop_flag] : item.coop_flag;
             item.out_flag = 'YN'.includes(item.out_flag) ? {'Y':'已出库','N':'未出库'}[item.out_flag] : item.out_flag;
@@ -201,7 +205,7 @@ export default {
       // 律所导出功能
       async execExport(){
         const { $router } = this;
-        this.$refs.grid.exportTable('xlsx', true, '律所台账数据');
+        this.$refs.grid.exportTable('xlsx', false, '律所台账数据');
       },
 
       // 律所执行搜索功能
