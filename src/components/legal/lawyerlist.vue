@@ -203,6 +203,7 @@ export default {
       // 律师导出功能
       async execExport(){
           const { $router } = this;
+          this.$refs.grid.exportTable('xlsx', false, '律师台账数据');
       },
 
       // 律所执行搜索功能
