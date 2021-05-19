@@ -49,8 +49,6 @@
   </div>
 </template>
 <script>
-import * as workconfig from '@/request/workconfig';
-
 export default {
   mixins: [window.mixin],
   data() {
