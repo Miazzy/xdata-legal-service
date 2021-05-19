@@ -492,7 +492,7 @@ export default {
 
       // 企业微信登录处理函数
       async  weworkLogin  (codeType = 'search', systemType = 'search')  {
-        const userinfo_work = await Betools.query.queryWeworkUser(codeType, systemType,'v5');
+          const userinfo_work = await Betools.query.queryWeworkUser(codeType, systemType,'v5');
           const userinfo = await Betools.storage.getStore('system_userinfo');
           this.legal.create_by = (userinfo ? userinfo.realname || userinfo.name || userinfo.lastname : '');
           this.usertitle = (userinfo && userinfo.parent_company && userinfo.parent_company.name ? userinfo.parent_company.name + ' > ' :'')  + (userinfo ? userinfo.realname || userinfo.name || userinfo.lastname : '');
@@ -512,11 +512,23 @@ export default {
           this.userinfo = await this.weworkLogin(); //查询当前登录用户
           this.back = Betools.tools.getUrlParam('back') || '/legal/workspace'; //查询上一页
           const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
-          this.legal.apply_realname = userinfo.realname;
-          this.legal.apply_username = userinfo.username;
+          this.legal = await this.handleList(this.tablename , Betools.tools.getUrlParam('id'));
         } catch (error) {
           console.log(error);
         }
+      },
+
+      // 查询不同状态的领用数据
+      async handleList(tableName , id){
+        let list = await Betools.manage.queryTableData(tableName , `_where=(id,eq,${id})&_sort=-id&_p=0&_size=1`);
+        list.map((item)=>{ 
+            item.create_time = dayjs(item.create_time).format('YYYY-MM-DD'); 
+            item.establish_time = dayjs(item.establish_time).format('YYYY-MM-DD') == 'Invalid Date' ? '/' : dayjs(item.establish_time).format('YYYY-MM-DD');
+            item.firm_count = parseInt(item.firm_count);
+            item.coop_flag = 'YN'.includes(item.coop_flag) ? {'Y':'已合作','N':'未合作'}[item.coop_flag] : item.coop_flag;
+            item.out_flag = 'YN'.includes(item.out_flag) ? {'Y':'已出库','N':'未出库'}[item.out_flag] : item.out_flag;
+        });
+        return list && list.length > 0 ? list[0] : {};
       },
 
   },
