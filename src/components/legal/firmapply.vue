@@ -373,7 +373,7 @@
                   </a-row>
                 </div>
 
-                <div v-show="role != 'view' " class="reward-apply-content-item" style="margin-top:35px;margin-bottom:5px; margin-right:10px;">
+                <div v-show="role != 'view' && isNull(id) " class="reward-apply-content-item" style="margin-top:35px;margin-bottom:5px; margin-right:10px;">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
                     <a-col :span="8">
                     </a-col>
@@ -385,6 +385,20 @@
                     <a-col class="reward-apply-content-title-text" :span="4" style="">
                       <a-button type="primary" style="width: 120px;" @click="handleApply();"  >
                         提交
+                      </a-button>
+                    </a-col>
+                    <a-col :span="8">
+                    </a-col>
+                   </a-row>
+                </div>
+
+                <div v-show="role != 'view' && !isNull(id)  " class="reward-apply-content-item" style="margin-top:35px;margin-bottom:5px; margin-right:10px;">
+                   <a-row style="border-top: 1px dash #f0f0f0;" >
+                    <a-col :span="8">
+                    </a-col>
+                    <a-col class="reward-apply-content-title-text" :span="4" style="margin-left:100px;">
+                      <a-button type="primary" style="width: 120px;color:c0c0c0;" @click="handlePatch();"  >
+                        修改
                       </a-button>
                     </a-col>
                     <a-col :span="8">
@@ -425,6 +439,7 @@ export default {
         start_time:moment(dayjs().format('YYYY-MM-DD'),'YYYY-MM-DD'),
         coop_time:moment(dayjs().format('YYYY-MM-DD'),'YYYY-MM-DD'),
       },
+      id:'',
       legal:{
         id:'', // varchar(36)  default ''  not null comment '律所编号' primary key,
         title:'录入律师申请', // 申请流程标题,
@@ -508,6 +523,7 @@ export default {
   },
   methods: {
       moment,
+      isNull:Betools.tools.isNull,
       // 企业微信登录处理函数
       async  weworkLogin  (codeType = 'search', systemType = 'search')  {
         const userinfo_work = await Betools.query.queryWeworkUser(codeType, systemType,'v5');
@@ -524,9 +540,7 @@ export default {
      
       // 获取URL或者二维码信息
       async queryInfo() {
-
         try {
-
           this.iswechat = Betools.tools.isWechat(); //查询当前是否微信端
           this.iswework = Betools.tools.isWework(); //查询是否为企业微信
           this.userinfo = await this.weworkLogin(); //查询当前登录用户
@@ -534,35 +548,51 @@ export default {
           const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
           this.legal.apply_realname = userinfo.realname;
           this.legal.apply_username = userinfo.username;
-
-          //获取缓存信息
-          const item = Betools.storage.getStore(`system_${this.tablename}_item#${this.legal.type}#@${userinfo.realname}`);
-
-          try {
-            //自动回显刚才填写的用户基础信息
-            if(item){
-              this.legal.create_by = legal.create_by || this.legal.create_by;
-              this.legal.remark = legal.remark || this.legal.remark;
-              this.legal.status = legal.status || this.legal.status;
+          const legal = Betools.storage.getStore(`system_${this.tablename}_item#${this.legal.type}#@${userinfo.realname}`); //获取缓存信息
+          const id = this.id = Betools.tools.getUrlParam('id');
+          if(!Betools.tools.isNull(id)){
+            return this.legal = await this.handleList(this.tablename , id);
+          } else {
+            try {
+              if(legal){ //自动回显刚才填写的用户基础信息
+                this.legal.create_by = legal.create_by || this.legal.create_by;
+                this.legal.remark = legal.remark || this.legal.remark;
+                this.legal.status = legal.status || this.legal.status;
+              }
+              if(userinfo.department && userinfo.department.name){
+                this.legal.department = userinfo.department.name;
+                this.legal.company = userinfo.parent_company.name;
+              } else if(userinfo.systemuserinfo && userinfo.systemuserinfo.textfield1){
+                let temp = userinfo.systemuserinfo.textfield1.split('||')[0];
+                this.legal.company = temp.split('>')[temp.split('>').length - 1];
+                temp = userinfo.systemuserinfo.textfield1.split('||')[1];
+                this.legal.department = temp.split('>')[temp.split('>').length - 1];
+              }
+            } catch (error) {
+              console.log(error);
             }
-            if(userinfo.department && userinfo.department.name){
-              this.legal.department = userinfo.department.name;
-              this.legal.company = userinfo.parent_company.name;
-            } else if(userinfo.systemuserinfo && userinfo.systemuserinfo.textfield1){
-              let temp = userinfo.systemuserinfo.textfield1.split('||')[0];
-              this.legal.company = temp.split('>')[temp.split('>').length - 1];
-              temp = userinfo.systemuserinfo.textfield1.split('||')[1];
-              this.legal.department = temp.split('>')[temp.split('>').length - 1];
-            }
-
-            //查询当前应诉案件、起诉案件状态
-
-          } catch (error) {
-            console.log(error);
           }
         } catch (error) {
           console.log(error);
         }
+      },
+
+      // 查询不同状态的律所数据
+      async handleList(tableName , id){
+        let list = await Betools.manage.queryTableData(tableName , `_where=(id,eq,${id})&_sort=-id&_p=0&_size=1`);
+        list.map((item)=>{ 
+          try {
+            item.create_time = dayjs(item.create_time).format('YYYY-MM-DD'); 
+            item.establish_time = dayjs(item.establish_time).format('YYYY-MM-DD') == 'Invalid Date' ? '/' : dayjs(item.establish_time).format('YYYY-MM-DD');
+            item.firm_count = parseInt(item.firm_count);
+            item.coop_flag = 'YN'.includes(item.coop_flag) ? {'Y':'已合作','N':'未合作'}[item.coop_flag] : item.coop_flag;
+            item.out_flag = 'YN'.includes(item.out_flag) ? {'Y':'已出库','N':'未出库'}[item.out_flag] : item.out_flag;
+            item.tags = JSON.parse(item.tags);
+          } catch (error) {
+            console.log(`error:`, error);
+          }
+        });
+        return list && list.length > 0 ? list[0] : {};
       },
 
       validField(fieldName){
@@ -597,12 +627,14 @@ export default {
         const id = Betools.tools.queryUniqueID(); // 表单ID
 
         // 验证数据是否已经填写
-        const keys = Object.keys({ title: '' })
+        const keys = Object.keys({ title: '' , brief:'', team_brief:'' })
 
         const invalidKey =  keys.find(key => {
           const flag = this.validField(key);
           return !flag;
         });
+
+        debugger;
 
         if(invalidKey != '' && invalidKey != null){
           await vant.Dialog.alert({
@@ -632,7 +664,51 @@ export default {
                   vant.Dialog.alert({  title: '温馨提示',  message: `律所录入申请发起成功！`, });
                }
           });
+      },
 
+      // 修改用户数据但是不提交
+      async handlePatch(){
+        
+        this.loading = true; // 显示加载状态
+        const userinfo = await Betools.storage.getStore('system_userinfo'); // 获取用户基础信息
+        const id = Betools.tools.getUrlParam('id'); // 表单ID
+
+        // 验证数据是否已经填写
+        const keys = Object.keys({ title: '' })
+
+        const invalidKey =  keys.find(key => {
+          const flag = this.validField(key);
+          return !flag;
+        });
+
+        if(invalidKey != '' && invalidKey != null){
+          await vant.Dialog.alert({
+            title: '温馨提示',
+            message: `请确认内容是否填写完整，错误：请输入[${invalidKey}]信息！`,
+          });
+          return false;
+        }
+
+        //是否确认提交此自由流程?
+        this.$confirm({
+            title: "确认操作",
+            content: "是否确认修改此律所的信息?",
+            onOk: async() => {
+                  const { legal } = this;
+                  legal.id = id;
+                  legal.tags = JSON.stringify(legal.tags); //进行序列化
+                  const result = await Betools.manage.patchTableData(this.tablename , id , this.legal); // 向表单提交form对象数据
+                  if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
+                      return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
+                  }
+                  legal.tags = JSON.parse(legal.tags); //进行解析
+                  this.$toast.success('律所修改申请提交成功！');
+                  this.loading = false; //设置状态
+                  this.readonly = true;
+                  this.role = 'view';
+                  vant.Dialog.alert({  title: '温馨提示',  message: `律所修改申请提交成功！`, });
+               }
+          });
       },
 
   },
