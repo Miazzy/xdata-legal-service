@@ -25,15 +25,20 @@
                 <div style="width:100%;margin-left:0px;margin-right:0px;background:#fbf9fe;">
 
                     <div class="reward-top-button" style="margin-top:20px;margin-bottom:20px; margin-left:20px; width:100%;">
-                        <a-button type="primary" @click="execView" >查看</a-button>
                         <a-button type="primary" @click="execApply" >新增</a-button>
-                        <a-button type="primary" @click="execPatch" >修改</a-button>
-                        <a-button type="primary" @click="execDelete" >删除</a-button>
                         <a-button type="primary" @click="execExport" >导出</a-button>
                     </div>
 
-                    <div class="reward-content-table" style="margin-left:20px; width:100%;">
-                        <a-table style="width:100%;" size="middle" tableLayout="column.ellipsis" :bordered="false" :columns="columns" :data-source="data" :row-selection="rowSelection" />
+                    <div class="reward-content-table" style="margin-left:20px; width:98%;"> <!-- <a-table style="width:100%;" size="middle" tableLayout="column.ellipsis" :bordered="false" :columns="columns" :data-source="data" :row-selection="rowSelection" /> -->
+                        <a-list item-layout="horizontal" :data-source="data">
+                          <a-list-item slot="renderItem" slot-scope="item, index">
+                            <a slot="actions" @click="execView(item)">查看</a>
+                            <a slot="actions" @click="execPatch(item)">修改</a>
+                            <a-list-item-meta :index="index" :description="`${item.firm_name} 简介：${item.brief}，服务团队人员:${item.firm_count}人，服务团队简介：${item.team_brief}`" >
+                               <a slot="title" >{{ `${item.firm_name} ${item.phone} 规模:${item.scale}，位于${item.address}` }}</a>
+                            </a-list-item-meta>
+                          </a-list-item>
+                        </a-list>
                     </div>
 
                 </div>
@@ -81,11 +86,7 @@ export default {
         { width: '18%', title: '团队介绍', dataIndex: 'team_brief', key: 'team_brief', },
         { width: '5%', title: '合作', dataIndex: 'coop_flag', key: 'coop_flag', },
         { width: '5%', title: '出库', dataIndex: 'out_flag', key: 'out_flag', },
-        { width: '5%', title: '成立', dataIndex: 'establish_time', key: 'establish_time', },
-        // { width: '5%', title: '区域', dataIndex: 'in_zone', key: 'in_zone', },
-        // { width: '5%', title: '入库时间', dataIndex: 'in_time', key: 'in_time', },
-        // { width: '5%', title: '合作时间', dataIndex: 'start_time', key: 'start_time', },
-        // { width: '5%', title: '合作期间', dataIndex: 'coop_time', key: 'coop_time', },
+        { width: '5%', title: '成立', dataIndex: 'establish_time', key: 'establish_time', }, // { width: '5%', title: '区域', dataIndex: 'in_zone', key: 'in_zone', }, // { width: '5%', title: '入库时间', dataIndex: 'in_time', key: 'in_time', }, // { width: '5%', title: '合作时间', dataIndex: 'start_time', key: 'start_time', }, // { width: '5%', title: '合作期间', dataIndex: 'coop_time', key: 'coop_time', },
       ],
       data:[],
       rowSelection:[],
@@ -139,9 +140,9 @@ export default {
         list.map((item)=>{ 
             item.create_time = dayjs(item.create_time).format('YYYY-MM-DD'); 
             item.establish_time = dayjs(item.establish_time).format('YYYY-MM-DD') == 'Invalid Date' ? '/' : dayjs(item.establish_time).format('YYYY');
-            item.address = item.address.slice(0,10) + '...';
-            item.brief = item.brief.slice(0,25) + '...';
-            item.team_brief = item.team_brief.slice(0,25) + '...';
+            item.address = item.address.length > 50 ? item.address.slice(0,50) + '...' :  item.address;
+            item.brief = item.brief.length > 50 ? item.brief.slice(0,50) + '...' : item.brief;
+            item.team_brief = item.team_brief.length > 50 ? item.team_brief.slice(0,50) + '...' : item.team_brief;
             item.firm_count = parseInt(item.firm_count);
             item.coop_flag = 'YN'.includes(item.coop_flag) ? {'Y':'已合作','N':'未合作'}[item.coop_flag] : item.coop_flag;
             item.out_flag = 'YN'.includes(item.out_flag) ? {'Y':'已出库','N':'未出库'}[item.out_flag] : item.out_flag;
@@ -156,17 +157,17 @@ export default {
       },
 
       // 律所删除申请
-      async execDelete(){
+      async execDelete(elem){
           const { $router } = this;
       },
 
       // 律所修改申请
-      async execPatch(){
+      async execPatch(elem){
           const { $router } = this;
       },
 
-      // 律所修改申请
-      async execView(){
+      // 律所查看申请
+      async execView(elem){
           const { $router } = this;
       },
 
