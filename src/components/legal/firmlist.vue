@@ -51,6 +51,10 @@
                           <a-table style="width:100%;" size="middle" tableLayout="column.ellipsis" :bordered="false" :columns="columns" :data-source="data"  />
                         </a-tab-pane>
 
+                        <a-tab-pane key="3" tab="表单">
+                          Content of Tab Pane 3
+                        </a-tab-pane>
+
                       </a-tabs>
                     </div>
                 </div>
