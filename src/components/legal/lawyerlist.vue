@@ -27,6 +27,7 @@
                   <div class="reward-top-button" style="margin-top:20px;margin-bottom:20px; margin-left:20px;">
                       <a-input-search placeholder="输入搜索关键字、律师名称、大学、学历、电话、地址等" style="width:450px;" enter-button @search="execSearch" />
                       <a-button type="primary" @click="execApply" >新增</a-button>
+                      <a-button type="primary" @click="execFresh">刷新</a-button>
                       <a-button type="primary" @click="execExport" >导出</a-button>
                   </div>
 
@@ -204,6 +205,13 @@ export default {
       async execExport(){
           const { $router } = this;
           this.$refs.grid.exportTable('xlsx', false, '律师台账数据');
+      },
+
+      // 律师执行刷新操作
+      async execFresh(){
+        const tableName = this.tablename;
+        const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
+        this.data = await this.handleList(tableName , '待处理,处理中,审批中,已完成', userinfo, '' , 0 , 10000);
       },
 
       // 律所执行搜索功能
