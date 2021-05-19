@@ -34,7 +34,6 @@
                       <a-tabs default-active-key="1" @change="callback">
                         <a-tab-pane key="1" tab="列表">
                           <div class="reward-content-table" style="margin-left:0px; width:98%;"> 
-                          
                               <a-list item-layout="horizontal" :data-source="data">
                                 <a-list-item slot="renderItem" slot-scope="item, index">
                                   <a slot="actions" @click="execView(item)">查看</a>
