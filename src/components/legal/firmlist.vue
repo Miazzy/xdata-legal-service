@@ -178,7 +178,7 @@ export default {
       async execSearch(value){
         const tableName = this.tablename;
         const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
-        const searchSql = `~and((firm_name,like,~${value}~)~or(address,like,~${value}~)~or(brief,like,~${value}~)~or(team_brief,like,~${value}~)~or(phone,like,~${value}~))`;
+        const searchSql = `~and((firm_name,like,~${value}~)~or(address,like,~${value}~)~or(brief,like,~${value}~)~or(team_brief,like,~${value}~)~or(phone,like,~${value}~)~or(scale,like,~${value}~))`;
         this.data = await this.handleList(tableName , '待处理,处理中,审批中,已完成,已驳回', userinfo, searchSql , 0 , 10000);
       },
 
