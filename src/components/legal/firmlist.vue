@@ -196,6 +196,7 @@ export default {
       // 律所修改申请
       async execPatch(elem){
           const { $router } = this;
+          $router.push(`/legal/firmapply?id=${elem.id}&type=1&tname=律所修改&apply=修改`);
       },
 
       // 律所查看申请
@@ -210,7 +211,7 @@ export default {
         this.$refs.grid.exportTable('xlsx', false, '律所台账数据');
       },
 
-      // 律所执行刷新操作
+      // 律所执行刷新操作45
       async execFresh(){
         const tableName = this.tablename;
         const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
