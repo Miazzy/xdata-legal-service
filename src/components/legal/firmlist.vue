@@ -25,7 +25,7 @@
                 <div style="width:100%;margin-left:0px;margin-right:0px;background:#fbf9fe;">
 
                     <div class="reward-top-button" style="margin-top:20px;margin-bottom:20px; margin-left:20px; width:100%;">
-                        <a-input-search placeholder="输入搜索关键字、律所名称、地址" style="width:350px;" enter-button @search="execSearch" />
+                        <a-input-search placeholder="输入搜索关键字、律所名称、地址" style="width:450px;" enter-button @search="execSearch" />
                         <a-button type="primary" @click="execApply" >新增</a-button>
                         <a-button type="primary" @click="execExport" >导出</a-button>
                     </div>

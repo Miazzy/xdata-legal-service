@@ -25,16 +25,53 @@
               <div style="width:100%;margin-left:0px;margin-right:0px;background:#fbf9fe;">
 
                   <div class="reward-top-button" style="margin-top:20px;margin-bottom:20px; margin-left:20px;">
-                      <a-button type="primary" @click="execView" >查看</a-button>
+                      <a-input-search placeholder="输入搜索关键字、律师名称、大学、学历、电话、地址等" style="width:450px;" enter-button @search="execSearch" />
                       <a-button type="primary" @click="execApply" >新增</a-button>
-                      <a-button type="primary" @click="execPatch" >修改</a-button>
-                      <a-button type="primary" @click="execDelete">删除</a-button>
                       <a-button type="primary" @click="execExport" >导出</a-button>
                   </div>
 
-                  <div class="reward-content-table" style="margin-left:20px;">
-                      <a-table style="width:100%;" size="middle" tableLayout="column.ellipsis" :bordered="false" :columns="columns" :data-source="data" :row-selection="rowSelection" />
-                  </div>
+                  <div style="margin-left:20px;">
+                      <a-tabs default-active-key="1" @change="callback">
+                        <a-tab-pane key="1" tab="列表">
+                          <a-empty v-if="data.length == 0" style="margin-top:10%;height:580px;"/>
+                          <div v-if="data.length > 0" class="reward-content-table" style="margin-left:0px; width:98%;"> 
+                              <a-list item-layout="horizontal" :data-source="data">
+                                <a-list-item slot="renderItem" slot-scope="item, index">
+                                  <a slot="actions" @click="execView(item)">查看</a>
+                                  <a slot="actions" @click="execPatch(item)">修改</a>
+                                  <a-list-item-meta :index="index" :description="`${item.lawyer_name} 所属律所：${item.firmID}，执业简介：${item.brief}，执业年限：${item.years}，开始执业时间：${item.start_time} ${ item.out_flag == '已出库' ? `，出库时间:${item.out_time}，出库原因：${item.out_reason}`:''}`" >
+                                    <a slot="title" >{{ `${item.lawyer_name} ${item.mobile}，大学就读于${item.college}，学历：${item.degree}` }}</a>
+                                  </a-list-item-meta>
+                                </a-list-item>
+                              </a-list>
+                          </div>
+                        </a-tab-pane>
+
+                        <a-tab-pane key="2" tab="表格" force-render>
+                          <a-empty v-if="data.length == 0" style="margin-top:10%;height:580px;"/>
+                          <a-table v-if="data.length > 0 " style="width:105%;" size="middle" tableLayout="column.ellipsis" :bordered="false" :columns="columns" :data-source="data" />
+                        </a-tab-pane>
+
+                        <a-tab-pane key="3" tab="表单">
+                          <a-empty v-if="data.length == 0" style="margin-top:10%;height:580px;"/>
+                          <vue-excel-editor v-if="data.length > 0" v-model="data" ref="grid" width="100%" filter-row autocomplete >
+                                <vue-excel-column field="serialID"      label="序号"          width="60px" />
+                                <vue-excel-column field="lawyer_name"   label="律师姓名"       width="100px" />
+                                <vue-excel-column field="firmID"        label="所属律所"       width="200px" />
+                                <vue-excel-column field="college"       label="大学名称"       width="120px" />
+                                <vue-excel-column field="degree"        label="学历"          width="120px" />
+                                <vue-excel-column field="brief"         label="简介"          width="120px" />
+                                <vue-excel-column field="years"         label="执业年限"       width="120px" />
+                                <vue-excel-column field="start_time"    label="开始执业时间"    width="120px" />
+                                <vue-excel-column field="mobile"        label="联系电话"       width="120px" />
+                                <vue-excel-column field="out_flag"      label="是否出库"       width="120px" />
+                                <vue-excel-column field="out_time"      label="出库时间"       width="120px" />
+                                <vue-excel-column field="out_reason"    label="出库原因"       width="120px" />
+                          </vue-excel-editor>
+                        </a-tab-pane>
+
+                      </a-tabs>
+                    </div>
 
               </div>
           </a-col>
@@ -44,8 +81,6 @@
   </div>
 </template>
 <script>
-import * as workconfig from '@/request/workconfig';
-
 export default {
   mixins: [window.mixin],
   data() {
@@ -135,11 +170,11 @@ export default {
         let list = await Betools.manage.queryTableData(tableName , `_where=(status,in,${status})${searchSql}&_sort=-id&_p=${page}&_size=${size}`);
         list.map((item, index)=>{ 
             item.serialID = Betools.tools.isNull(item.serialID) ? index : item.serialID;
-            item.brief = item.brief.slice(0,25) + '...';
-            item.out_reason = item.out_reason.slice(0,25) + '...';
+            item.brief = item.brief.length > 30 ? item.brief.slice(0,30) + '...' : item.brief;
+            item.out_reason =  item.out_reason.length > 30 ? item.out_reason.slice(0,30) + '...' :  item.out_reason;
             item.out_time = dayjs(item.out_time).format('YYYY-MM-DD') == 'Invalid Date' ? '/' : dayjs(item.out_time).format('YYYY-MM-DD'); 
-            item.start_time = dayjs(item.start_time).format('YYYY-MM-DD') == 'Invalid Date' ? '/' : dayjs(item.start_time).format('YYYY-MM-DD'); 
             item.out_flag = 'YN'.includes(item.out_flag) ? {'Y':'已出库','N':'未出库'}[item.out_flag] : item.out_flag;
+            item.start_time = dayjs(item.start_time).format('YYYY-MM-DD') == 'Invalid Date' ? '/' : dayjs(item.start_time).format('YYYY-MM-DD'); 
         });
         return list;
       },
@@ -168,6 +203,14 @@ export default {
       // 律师导出功能
       async execExport(){
           const { $router } = this;
+      },
+
+      // 律所执行搜索功能
+      async execSearch(value){
+        const tableName = this.tablename;
+        const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
+        const searchSql = `~and((lawyer_name,like,~${value}~)~or(firmID,like,~${value}~)~or(college,like,~${value}~)~or(degree,like,~${value}~)~or(brief,like,~${value}~)~or(years,like,~${value}~)~or(mobile,like,~${value}~)~or(out_reason,like,~${value}~))`;
+        this.data = await this.handleList(tableName , '待处理,处理中,审批中,已完成', userinfo, searchSql , 0 , 10000);
       },
 
   },
