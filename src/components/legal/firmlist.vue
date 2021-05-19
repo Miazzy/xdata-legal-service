@@ -54,6 +54,19 @@
 
                         <a-tab-pane key="3" tab="表单">
                           <a-empty v-if="data.length == 0" style="margin-top:10%;height:580px;"/>
+                          <vue-excel-editor v-if="data.length > 0" v-model="data" ref="grid" width="100%" filter-row autocomplete >
+                                <vue-excel-column field="serialID"      label="序号"          width="60px" />
+                                <vue-excel-column field="firm_name"     label="律所名称"       width="100px" />
+                                <vue-excel-column field="address"       label="地址"          width="100px" />
+                                <vue-excel-column field="phone"         label="电话"          width="120px" />
+                                <vue-excel-column field="scale"         label="规模"          width="120px" />
+                                <vue-excel-column field="brief"         label="简介"          width="120px" />
+                                <vue-excel-column field="firm_count"    label="人数"          width="120px" />
+                                <vue-excel-column field="team_brief"    label="团队介绍"       width="120px" />
+                                <vue-excel-column field="coop_flag"     label="合作"          width="120px" />
+                                <vue-excel-column field="out_flag"      label="出库"          width="120px" />
+                                <vue-excel-column field="establish_time" label="成立时间"      width="180px" />
+                          </vue-excel-editor>
                         </a-tab-pane>
 
                       </a-tabs>
@@ -187,7 +200,8 @@ export default {
 
       // 律所导出功能
       async execExport(){
-          const { $router } = this;
+        const { $router } = this;
+        this.$refs.grid.exportTable('xlsx', true, '律所台账数据');
       },
 
       // 律所执行搜索功能
