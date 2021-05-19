@@ -25,21 +25,33 @@
                 <div style="width:100%;margin-left:0px;margin-right:0px;background:#fbf9fe;">
 
                     <div class="reward-top-button" style="margin-top:20px;margin-bottom:20px; margin-left:20px; width:100%;">
-                        <a-input-search placeholder="input search text" style="width:300px;" enter-button @search="execSearch" />
+                        <a-input-search placeholder="输入搜索关键字、律所名称、地址" style="width:350px;" enter-button @search="execSearch" />
                         <a-button type="primary" @click="execApply" >新增</a-button>
                         <a-button type="primary" @click="execExport" >导出</a-button>
                     </div>
 
-                    <div class="reward-content-table" style="margin-left:20px; width:98%;"> <!-- <a-table style="width:100%;" size="middle" tableLayout="column.ellipsis" :bordered="false" :columns="columns" :data-source="data" :row-selection="rowSelection" /> -->
-                        <a-list item-layout="horizontal" :data-source="data">
-                          <a-list-item slot="renderItem" slot-scope="item, index">
-                            <a slot="actions" @click="execView(item)">查看</a>
-                            <a slot="actions" @click="execPatch(item)">修改</a>
-                            <a-list-item-meta :index="index" :description="`${item.firm_name} 简介：${item.brief}，团队简介：${item.team_brief}`" >
-                               <a slot="title" >{{ `${item.firm_name} ${item.phone} 规模:${item.scale}，位于${item.address}，服务团队:${item.firm_count}人` }}</a>
-                            </a-list-item-meta>
-                          </a-list-item>
-                        </a-list>
+                    <div style="margin-left:20px;">
+                      <a-tabs default-active-key="1" @change="callback">
+                        <a-tab-pane key="1" tab="列表">
+                          <div class="reward-content-table" style="margin-left:0px; width:98%;"> 
+                          
+                              <a-list item-layout="horizontal" :data-source="data">
+                                <a-list-item slot="renderItem" slot-scope="item, index">
+                                  <a slot="actions" @click="execView(item)">查看</a>
+                                  <a slot="actions" @click="execPatch(item)">修改</a>
+                                  <a-list-item-meta :index="index" :description="`${item.firm_name} 简介：${item.brief}，团队简介：${item.team_brief}`" >
+                                    <a slot="title" >{{ `${item.firm_name} ${item.phone} 规模:${item.scale}，位于${item.address}，服务团队:${item.firm_count}人` }}</a>
+                                  </a-list-item-meta>
+                                </a-list-item>
+                              </a-list>
+                          </div>
+                        </a-tab-pane>
+
+                        <a-tab-pane key="2" tab="表格" force-render>
+                          <a-table style="width:100%;" size="middle" tableLayout="column.ellipsis" :bordered="false" :columns="columns" :data-source="data"  />
+                        </a-tab-pane>
+
+                      </a-tabs>
                     </div>
                 </div>
             </a-col>
@@ -74,7 +86,7 @@ export default {
       userinfo: '',
       usertitle:'',
       columns:[
-        { width: '2%', title: '', dataIndex: 'serialID', key: 'serialID', },
+        { width: '4%', title: '序号', dataIndex: 'serialID', key: 'serialID', },
         { width: '15%', title: '律所名称', dataIndex: 'firm_name', key: 'firm_name', },
         { width: '12%', title: '地址', dataIndex: 'address', key: 'address', },
         { width: '10%', title: '电话', dataIndex: 'phone', key: 'phone', },
@@ -87,7 +99,6 @@ export default {
         { width: '5%', title: '成立', dataIndex: 'establish_time', key: 'establish_time', }, // { width: '5%', title: '区域', dataIndex: 'in_zone', key: 'in_zone', }, // { width: '5%', title: '入库时间', dataIndex: 'in_time', key: 'in_time', }, // { width: '5%', title: '合作时间', dataIndex: 'start_time', key: 'start_time', }, // { width: '5%', title: '合作期间', dataIndex: 'coop_time', key: 'coop_time', },
       ],
       data:[],
-      rowSelection:[],
       statusType:{'valid':'有效','invalid':'删除'},
       zoneType:{'领地集团总部':'领地集团总部','重庆区域':'重庆区域','两湖区域':'两湖区域','川北区域':'川北区域','成都区域':'成都区域','乐眉区域':'乐眉区域','中原区域':'中原区域','攀西区域':'攀西区域','新疆区域':'新疆区域','大湾区域':'大湾区域','北京区域':'北京区域'},
     };
