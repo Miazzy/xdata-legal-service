@@ -169,7 +169,6 @@
 </template>
 <script>
 import * as workconfig from "@/request/workconfig";
-import * as menulist from "./component/menulist.vue";
 
 export default {
   mixins: [window.mixin],

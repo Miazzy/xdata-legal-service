@@ -158,7 +158,6 @@
 </template>
 <script>
 import * as workconfig from "@/request/workconfig";
-import * as menulist from "./component/menulist.vue";
 import * as task from '@/request/task';
 import * as manageAPI from '@/request/manage';
 import * as query from '@/request/query';
