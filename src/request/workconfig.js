@@ -817,6 +817,50 @@ export const compValidation = {
             files: '请上传诉讼案件明细的Excel文档！',
             apply_realname: '请输入申请人姓名！',
         }
+    },
+    firmapply: {
+        message: {
+            title: '',
+            create_by: '',
+            in_zone: '', // varchar(32)  default ''  not null comment '入库区域',
+            firm_name: '', // varchar(64)  default ''  not null comment '律所名称',
+            in_time: '', // varchar(32)  default ''  not null comment '入库时间',
+            tags: '',
+            plate: '',
+            establish_time: '', // varchar(32)  default ''  not null comment '成立时间',
+            address: '', // varchar(64)  default ''  not null comment '地址',
+            phone: '', // varchar(16)  default ''  not null comment '电话',
+            scale: '1-10人', // varchar(16)  default ''  not null comment '律所规模（人数）',
+            brief: '', // varchar(256) default ''  not null comment '律所简要介绍',
+            firm_count: 'N人', // varchar(16)  default ''  not null comment '服务团队人数',
+            team_brief: '', // varchar(256) default ''  not null comment '团队介绍',
+            fee: '￥N万/年', // varchar(64)  default ''  not null comment '费用',
+            major_fee: '一事一议', // varchar(64)  default ''  not null comment '重大诉讼费用',
+            common_fee: '商品房纠纷案件：￥N/件', // varchar(64)  default ''  not null comment '一般诉讼费用',
+            diligence_fee: '￥N万/项目', // varchar(64)  default ''  not null comment '尽调专项费用',
+            notice_fee: '￥N万/年', // varchar(64)  default ''  not null comment '发函专项费用',
+            penal_fee: '一事一议', // varchar(64)  default ''  not null comment '刑事专项费用',
+            coop_flag: '已合作', // varchar(1)   default 'Y' not null comment '是否已合作',
+            start_time: '', // varchar(32)  default ''  not null comment '开始合作时间',
+            coop_time: '', // varchar(32)  default ''  not null comment '最近合作期间',
+            coop_stime: '', // varchar(32)  default ''  not null comment '最近合作期间(开始时间)',
+            coop_etime: '', // varchar(32)  default ''  not null comment '最近合作期间(结束时间)',
+            out_flag: '未出库', // varchar(32)  default 'N' not null comment '是否出库',
+        },
+        valid: {
+            title: '请输入案件审批的标题！',
+            company: '请输入申请人员的所在公司！',
+            department: '请输入申请人员的所在部门！',
+            content: '请输入案件审批流程的申请事由！',
+            remark: '请输入备注信息！', //备注
+            amount: '请输入本次案件审批的单项奖金总额！',
+            reward_type: '请输入诉讼案件类型！',
+            reward_name: '请输入诉讼案件名称！',
+            reward_period: '请输入诉讼案件所属周期！',
+            hr_name: '请输入负责薪资管理的人力经理！',
+            files: '请上传诉讼案件明细的Excel文档！',
+            apply_realname: '请输入申请人姓名！',
+        }
     }
 }
 
