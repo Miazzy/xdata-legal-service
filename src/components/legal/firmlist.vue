@@ -25,6 +25,7 @@
                 <div style="width:100%;margin-left:0px;margin-right:0px;background:#fbf9fe;">
 
                     <div class="reward-top-button" style="margin-top:20px;margin-bottom:20px; margin-left:20px; width:100%;">
+                        <a-input-search placeholder="input search text" style="width:300px;" enter-button @search="execSearch" />
                         <a-button type="primary" @click="execApply" >新增</a-button>
                         <a-button type="primary" @click="execExport" >导出</a-button>
                     </div>
@@ -34,13 +35,12 @@
                           <a-list-item slot="renderItem" slot-scope="item, index">
                             <a slot="actions" @click="execView(item)">查看</a>
                             <a slot="actions" @click="execPatch(item)">修改</a>
-                            <a-list-item-meta :index="index" :description="`${item.firm_name} 简介：${item.brief}，服务团队人员:${item.firm_count}人，服务团队简介：${item.team_brief}`" >
-                               <a slot="title" >{{ `${item.firm_name} ${item.phone} 规模:${item.scale}，位于${item.address}` }}</a>
+                            <a-list-item-meta :index="index" :description="`${item.firm_name} 简介：${item.brief}，团队简介：${item.team_brief}`" >
+                               <a slot="title" >{{ `${item.firm_name} ${item.phone} 规模:${item.scale}，位于${item.address}，服务团队:${item.firm_count}人` }}</a>
                             </a-list-item-meta>
                           </a-list-item>
                         </a-list>
                     </div>
-
                 </div>
             </a-col>
         </keep-alive>
@@ -138,9 +138,9 @@ export default {
         list.map((item)=>{ 
             item.create_time = dayjs(item.create_time).format('YYYY-MM-DD'); 
             item.establish_time = dayjs(item.establish_time).format('YYYY-MM-DD') == 'Invalid Date' ? '/' : dayjs(item.establish_time).format('YYYY');
-            item.address = item.address.length > 50 ? item.address.slice(0,50) + '...' :  item.address;
-            item.brief = item.brief.length > 50 ? item.brief.slice(0,50) + '...' : item.brief;
-            item.team_brief = item.team_brief.length > 50 ? item.team_brief.slice(0,50) + '...' : item.team_brief;
+            item.address = item.address.length > 35 ? item.address.slice(0,35) + '...' :  item.address;
+            item.brief = item.brief.length > 35 ? item.brief.slice(0,35) + '...' : item.brief;
+            item.team_brief = item.team_brief.length > 35 ? item.team_brief.slice(0,35) + '...' : item.team_brief;
             item.firm_count = parseInt(item.firm_count);
             item.coop_flag = 'YN'.includes(item.coop_flag) ? {'Y':'已合作','N':'未合作'}[item.coop_flag] : item.coop_flag;
             item.out_flag = 'YN'.includes(item.out_flag) ? {'Y':'已出库','N':'未出库'}[item.out_flag] : item.out_flag;
@@ -172,6 +172,14 @@ export default {
       // 律所导出功能
       async execExport(){
           const { $router } = this;
+      },
+
+      // 律所执行搜索功能
+      async execSearch(value){
+        const tableName = this.tablename;
+        const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
+        const searchSql = `~and((firm_name,like,~${value}~)~or(address,like,~${value}~)~or(brief,like,~${value}~)~or(team_brief,like,~${value}~)~or(phone,like,~${value}~))`;
+        this.data = await this.handleList(tableName , '待处理,处理中,审批中,已完成,已驳回', userinfo, searchSql , 0 , 10000);
       },
 
   },
