@@ -33,7 +33,8 @@
                     <div style="margin-left:20px;">
                       <a-tabs default-active-key="1" @change="callback">
                         <a-tab-pane key="1" tab="列表">
-                          <div class="reward-content-table" style="margin-left:0px; width:98%;"> 
+                          <a-empty v-if="data.length == 0" style="margin-top:10%;height:580px;"/>
+                          <div v-if="data.length > 0" class="reward-content-table" style="margin-left:0px; width:98%;"> 
                               <a-list item-layout="horizontal" :data-source="data">
                                 <a-list-item slot="renderItem" slot-scope="item, index">
                                   <a slot="actions" @click="execView(item)">查看</a>
@@ -47,11 +48,12 @@
                         </a-tab-pane>
 
                         <a-tab-pane key="2" tab="表格" force-render>
-                          <a-table style="width:100%;" size="middle" tableLayout="column.ellipsis" :bordered="false" :columns="columns" :data-source="data"  />
+                          <a-empty v-if="data.length == 0" style="margin-top:10%;height:580px;"/>
+                          <a-table v-if="data.length > 0 " style="width:100%;" size="middle" tableLayout="column.ellipsis" :bordered="false" :columns="columns" :data-source="data"  />
                         </a-tab-pane>
 
                         <a-tab-pane key="3" tab="表单">
-                          Content of Tab Pane 3
+                          <a-empty v-if="data.length == 0" style="margin-top:10%;height:580px;"/>
                         </a-tab-pane>
 
                       </a-tabs>
