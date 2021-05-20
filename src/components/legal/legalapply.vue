@@ -25,6 +25,17 @@
         <keep-alive>
           <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
 
+            <div id="" class="" style="padding-left:2.75rem;padding-top:0.25rem;padding-bottom:0.25rem;background-color:#fefefe;" >
+              <a-breadcrumb>
+                <template v-for="(elem,index) in breadcrumb">
+                  <a-breadcrumb-item :key="elem.icon" :index="index" >
+                    <a-icon :type="elem.icon" />
+                    <span @click="redirectView(elem.path)">{{ elem.text }}</span>
+                  </a-breadcrumb-item>
+                </template>
+              </a-breadcrumb>
+            </div>
+
             <!-- 案件申请 -->
             <div style="background-color:#f0f0f0;">
 
