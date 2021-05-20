@@ -39,10 +39,10 @@
                 <div style="width:100%;margin-left:0px;margin-right:0px;background:#fbf9fe;">
 
                     <div class="reward-top-button" style="margin-top:20px;margin-bottom:20px; margin-left:20px;">
-                        <a-button type="primary">查看</a-button>
-                        <a-button type="primary">新增</a-button>
-                        <a-button type="primary">修改</a-button>
-                        <a-button type="primary">删除</a-button>
+                        <a-input-search placeholder="输入搜索关键字、案件名称、相关信息等" style="width:450px;" enter-button @search="execSearch" />
+                        <a-button type="primary" @click="execApply" >新增</a-button>
+                        <a-button type="primary" @click="execFresh" >刷新</a-button>
+                        <a-button type="primary" @click="execExport" >导出</a-button>
                     </div>
 
                     <div class="reward-content-table" style="margin-left:20px;">
@@ -113,6 +113,7 @@ export default {
   methods: {
       moment,
       isNull:Betools.tools.isNull,
+
       // 企业微信登录处理函数
       async  weworkLogin  (codeType = 'search', systemType = 'search')  {
         const userinfo_work = await Betools.query.queryWeworkUser(codeType, systemType,'v5');
@@ -156,6 +157,50 @@ export default {
             item.legalStatus = Betools.tools.isNull(item.legalStatus) ? '开庭举证' : item.legalStatus;
         });
         return list;
+      },
+
+      // 案件发起录入申请
+      async execApply(){
+          const { $router } = this;
+          $router.push(`/legal/legalapply?type=1&tname=案件录入&apply=申请`);
+      },
+
+      // 案件记录删除申请
+      async execDelete(elem){
+          const { $router } = this;
+      },
+
+      // 案件记录修改申请
+      async execPatch(elem){
+          const { $router } = this;
+          $router.push(`/legal/legalapply?id=${elem.id}&type=1&tname=案件修改&apply=修改`);
+      },
+
+      // 案件记录查看申请
+      async execView(elem){
+          const { $router } = this;
+          $router.push(`/legal/legalview?id=${elem.id}&type=1&tname=案件详情&apply=查看`);
+      },
+
+      // 案件记录导出功能
+      async execExport(){
+        const { $router } = this;
+        this.$refs.grid.exportTable('xlsx', false, '案件台账数据');
+      },
+
+      // 案件列表执行刷新操作45
+      async execFresh(){
+        const tableName = this.tablename;
+        const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
+        this.data = await this.handleList(tableName , '待处理,处理中,审批中,已完成,已结案,已驳回', userinfo, '' , 0 , 10000);
+      },
+
+      // 案件列表执行搜索功能
+      async execSearch(value){
+        const tableName = this.tablename;
+        const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
+        const searchSql = `~and((firm_name,like,~${value}~)~or(address,like,~${value}~)~or(brief,like,~${value}~)~or(team_brief,like,~${value}~)~or(phone,like,~${value}~)~or(scale,like,~${value}~))`;
+        this.data = await this.handleList(tableName , '待处理,处理中,审批中,已完成,已结案,已驳回', userinfo, searchSql , 0 , 10000);
       },
 
   },
