@@ -537,6 +537,7 @@ export default {
   methods: {
       moment,
       isNull:Betools.tools.isNull,
+      
       // 企业微信登录处理函数
       async  weworkLogin  (codeType = 'search', systemType = 'search')  {
         const userinfo_work = await Betools.query.queryWeworkUser(codeType, systemType,'v5');
@@ -650,8 +651,6 @@ export default {
           return !flag;
         });
 
-        debugger;
-
         if(invalidKey != '' && invalidKey != null){
           await vant.Dialog.alert({
             title: '温馨提示',
@@ -673,11 +672,10 @@ export default {
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
                   legal.tags = JSON.parse(legal.tags); //进行解析
-                  this.$toast.success('律所录入申请发起成功！');
                   this.loading = false; //设置状态
                   this.readonly = true;
                   this.role = 'view';
-                  vant.Dialog.alert({  title: '温馨提示',  message: `律所录入申请发起成功！`, });
+                  vant.Dialog.alert({  title: '温馨提示',  message: `律所录入申请发起成功！`, }); //  this.$toast.success('律所录入申请发起成功！');
                }
           });
       },
@@ -717,11 +715,10 @@ export default {
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
                   legal.tags = JSON.parse(legal.tags); //进行解析
-                  this.$toast.success('律所修改申请提交成功！');
                   this.loading = false; //设置状态
                   this.readonly = true;
                   this.role = 'view';
-                  vant.Dialog.alert({  title: '温馨提示',  message: `律所修改申请提交成功！`, });
+                  vant.Dialog.alert({  title: '温馨提示',  message: `律所修改申请提交成功！`, }); // this.$toast.success('律所修改申请提交成功！');
                   await this.handleList(this.tablename , id);
                }
           });
