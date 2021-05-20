@@ -44,10 +44,10 @@
 
                 <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
-                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                    <a-col v-if="isNull(id)" :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>流程标题</span>
                     </a-col>
-                    <a-col :span="8">
+                    <a-col v-if="isNull(id)" :span="8">
                       <a-input v-model="legal.title" :readonly='false' placeholder="请填写申请流程标题！" @blur="validFieldToast('title')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
@@ -260,6 +260,7 @@ export default {
         coop_time:moment(dayjs().format('YYYY-MM-DD'),'YYYY-MM-DD'),
         out_time:moment(dayjs().format('YYYY-MM-DD'),'YYYY-MM-DD'),
       },
+      id:'',
       legal:{
         id: '', // varchar(36)  default ''  not null
         title: 'XX律师申请流程',
@@ -327,6 +328,7 @@ export default {
   },
   methods: {
       moment,
+      isNull:Betools.tools.isNull,
       // 企业微信登录处理函数
       async  weworkLogin  (codeType = 'search', systemType = 'search')  {
         const userinfo_work = await Betools.query.queryWeworkUser(codeType, systemType,'v5');
@@ -351,9 +353,29 @@ export default {
           const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
           this.legal.apply_realname = userinfo.realname;
           this.legal.apply_username = userinfo.username;
+          const id = this.id = Betools.tools.getUrlParam('id');
+          return this.legal = await this.handleList(this.tablename , id);
         } catch (error) {
           console.log(error);
         }
+      },
+
+      // 查询不同状态的律所数据
+      async handleList(tableName , id){
+        let list = await Betools.manage.queryTableData(tableName , `_where=(id,eq,${id})&_sort=-id&_p=0&_size=1`);
+        list.map((item)=>{ 
+          try {
+            item.serialID = Betools.tools.isNull(item.serialID) ? index : item.serialID;
+            item.brief = item.brief.length > 30 ? item.brief.slice(0,30) + '...' : item.brief;
+            item.out_reason =  item.out_reason.length > 30 ? item.out_reason.slice(0,30) + '...' :  item.out_reason;
+            item.out_time = dayjs(item.out_time).format('YYYY-MM-DD') == 'Invalid Date' ? '/' : dayjs(item.out_time).format('YYYY-MM-DD'); 
+            item.out_flag = 'YN'.includes(item.out_flag) ? {'Y':'已出库','N':'未出库'}[item.out_flag] : item.out_flag;
+            item.start_time = dayjs(item.start_time).format('YYYY-MM-DD') == 'Invalid Date' ? '/' : dayjs(item.start_time).format('YYYY-MM-DD'); 
+          } catch (error) {
+            console.log(`error:`, error);
+          }
+        });
+        return list && list.length > 0 ? list[0] : {};
       },
 
       // 验证字段
