@@ -71,7 +71,7 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>申请人员</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input readonly v-model="item.apply_realname" :readonly="!!item.apply_realname" placeholder="请输入申请人员姓名！" @blur="validFieldToast('apply_realname')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="item.apply_realname" :readonly="!!item.apply_realname" placeholder="请输入申请人员姓名！" @blur="validFieldToast('apply_realname')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
@@ -575,10 +575,8 @@
 <script>
 import * as query from '@/request/query';
 import * as workflow from '@/request/workflow';
-import * as manageAPI from '@/request/manage';
 import * as wflowprocess from '@/request/wflow.process';
 import * as workconfig from '@/request/workconfig';
-import * as contact from '@/vuex/contacts';
 
 export default {
   mixins: [window.mixin],
@@ -669,6 +667,7 @@ export default {
       approve_content:'',
       processLogList:[],
       workflowLogList:[],
+      breadcrumb:[{icon:'home',text:'首页',path:'/legal/workspace'},{icon:'user',text:'案件管控',path:'/legal/workspace'},{icon:'form',text:'案件详情',path:''}],
       bpm_status:'',
       proponents:'',
     };
