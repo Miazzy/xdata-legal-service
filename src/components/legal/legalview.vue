@@ -639,7 +639,7 @@ export default {
       collection: [{ }],
       userinfo: '',
       usertitle:'',
-      breadcrumb:[{icon:'home',text:'首页',path:'/legal/workspace'},{icon:'user',text:'案件管控',path:'/legal/workspace'},{icon:'form',text:'案件发起',path:''}],
+      breadcrumb:[{icon:'home',text:'首页',path:'/legal/workspace'},{icon:'user',text:'案件管控',path:'/legal/workspace'},{icon:'form',text:'案件查看',path:''}],
       statusType:{'valid':'有效','invalid':'删除'},
       zoneType:{'领地集团总部':'领地集团总部','重庆区域':'重庆区域','两湖区域':'两湖区域','川北区域':'川北区域','成都区域':'成都区域','乐眉区域':'乐眉区域','中原区域':'中原区域','攀西区域':'攀西区域','新疆区域':'新疆区域','大湾区域':'大湾区域','北京区域':'北京区域'},
     };
@@ -652,6 +652,7 @@ export default {
   methods: {
       moment,
       isNull:Betools.tools.isNull,
+
       // 企业微信登录处理函数
       async  weworkLogin  (codeType = 'search', systemType = 'search')  {
         const userinfo_work = await Betools.query.queryWeworkUser(codeType, systemType,'v5');
@@ -660,40 +661,12 @@ export default {
           this.usertitle = (userinfo && userinfo.parent_company && userinfo.parent_company.name ? userinfo.parent_company.name + ' > ' :'')  + (userinfo ? userinfo.realname || userinfo.name || userinfo.lastname : '');
           return userinfo;
       },
-      async onDelete(){
-        console.log('delete');
-      },
+     
       // 执行页面跳转
       async redirectView(path) {
           Betools.tools.isNull(path) ? null: this.$router.push(path);
       },
-      // 文件update事件
-      async onUpdate(records){
 
-      },
-      // Excel文件解析成功
-      async onSuccess(data, file, ratio = 0.00, zone = '', project = '' , regexp = /[\ |‘|’|\~|\`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?]/g){
-        
-      },
-      // 文件change事件
-      async onChange(event) {
-        this.file = event.target.files ? event.target.files[0] : null;
-      },
-      // 上传提示
-      async toastUpload(flag){
-        if(flag == 'start'){
-          vant.Toast.loading({duration: 0, forbidClick: true, message: '上传中...',});
-        } else if(flag == 'fail'){
-          this.$toast.success('文件上传失败，请稍后重试！');
-        }
-      },
-      // 上传文件成功后回调函数
-      async uploadSuccess(file , res){
-        vant.Toast.clear();
-        this.legal.files = JSON.parse(res).message;
-        await Betools.tools.sleep(0);
-        this.$toast.success('上传成功');
-      },
       // 获取处理日志
       async queryProcessLog(){
         const id = Betools.tools.getUrlParam('id');
@@ -705,6 +678,7 @@ export default {
           console.log(error);
         }
       },
+
       // 删除处理日志
       async deleteProcessLog(){
         const id = Betools.tools.getUrlParam('id');
@@ -726,6 +700,8 @@ export default {
           await workflow.deleteViewProcessLog(tlist);
         }
       },
+
+      // 校验字段有效性
       validField(fieldName){
         const userinfo = Betools.storage.getStore('system_userinfo'); // 获取用户基础信息
         const regMail = workconfig.system.config.regexp.mail; // 邮箱验证正则表达式
@@ -736,6 +712,8 @@ export default {
         Betools.storage.setStore(`system_${this.tablename}_item#${this.legal.type}#@${userinfo.realname}` , JSON.stringify(this.legal) , 3600 * 2 );
         return Betools.tools.isNull(this.message[fieldName]);
       },
+
+      // 校验字段有效性并提示
       validFieldToast(fieldName){
         const flag = !this.validField(fieldName);
         if(flag){
@@ -784,10 +762,29 @@ export default {
         }
       },
 
+      // 查询不同状态的律所数据
+      async handleList(tableName , id){
+        let list = await Betools.manage.queryTableData(tableName , `_where=(id,eq,${id})&_sort=-id&_p=0&_size=1`);
+        list.map((item)=>{ 
+          try {
+            item.create_time = dayjs(item.create_time).format('YYYY-MM-DD'); 
+            item.receiveTime = dayjs(item.receiveTime).format('YYYY-MM-DD').toUpperCase() == 'Invalid Date'.toUpperCase() ? dayjs().format('YYYY-DD-MM') : dayjs(item.receiveTime).format('YYYY-MM-DD');
+            item.lawRTime = dayjs(item.lawRTime).format('YYYY-MM-DD').toUpperCase() == 'Invalid Date'.toUpperCase() ? dayjs().format('YYYY-DD-MM') : dayjs(item.lawRTime).format('YYYY-MM-DD');
+            item.handledTime = dayjs(item.handledTime).format('YYYY-MM-DD').toUpperCase() == 'Invalid Date'.toUpperCase() ? dayjs().format('YYYY-DD-MM') : dayjs(item.handledTime).format('YYYY-MM-DD');
+            item.legalStatus = Betools.tools.isNull(item.legalStatus) ? '开庭举证' : item.legalStatus;
+            item.caseType = JSON.parse(item.caseType);
+          } catch (error) {
+            console.log(`error:`, error);
+          }
+        });
+        return list && list.length > 0 ? list[0] : {};
+      },
+
       // 计算案件涉案金额
       caculateSum(){
        
       },
+
       // 用户提交入职登记表函数
       async handleApply() {
         await this.handleSave(); //先执行保存操作，保存完毕后执行流程跳转功能
