@@ -52,7 +52,7 @@
                     </a-card-grid>
                   </template>
                 </a-card>
-                <a-card v-if="index <= 1" :key="pane.id + pane.title" :title="' '" class="pane-flow-card-middle" >
+                <a-card v-if="index <= 1000" :key="pane.id + pane.title" :title="' '" class="pane-flow-card-middle" >
                 </a-card>
               </template>
             </div>
@@ -73,17 +73,25 @@
                   </div>
                 </a-card>
                 <a-card :loading="loading" title="诉讼案件流程" :bordered="false" style="margin-top:20px;">
-                  <a-tag
-                    color="blue"
-                    @click="handleWriteBlog()"
-                    style="margin-bottom:10px;position:absolute;top:18px;right:20px;display:none;"
-                  ></a-tag>
+                  <a-tag color="blue" style="margin-bottom:10px;position:absolute;top:18px;right:20px;display:none;" ></a-tag>
                   <div class="members">
                     <a-row>
                       <a-col :span="12" v-for="item in wflows" :key="item.href">
                         <a @click="item.click">
                           <a-avatar class="pane-right-avatar" size="small" :src="item.avatar" />
                           <span class="member">{{ item.name }}</span>
+                        </a>
+                      </a-col>
+                    </a-row>
+                  </div>
+                </a-card>
+                <a-card :loading="loading" title="法律网站" :bordered="false" style="margin-top:20px;">
+                  <a-tag color="blue" style="margin-bottom:5px;position:absolute;top:18px;right:20px;display:none;" ></a-tag>
+                  <div class="members" >
+                    <a-row>
+                      <a-col :span="24" v-for="item in lawsites" :key="item.href" style="padding-bottom:10px;">
+                        <a @click="item.click" style="margin-top:0px;margin-bottom:5px;padding-bottom:5px;">
+                          <span class="member" style="margin-top:0px;margin-bottom:5px;padding-bottom:5px;" >{{ item.name }}</span>
                         </a>
                       </a-col>
                     </a-row>
@@ -100,8 +108,6 @@
 </template>
 <script>
 import header from '@/components/legal/header.vue';
-
-import * as query from '@/request/query';
 import * as workconfig from '@/request/workconfig';
 
 export default {
@@ -118,6 +124,7 @@ export default {
       iswechat:'',
       paneflows: workconfig.reward($router),
       wflows: workconfig.getRewardWflow($router),
+      lawsites: workconfig.getLawWebsiteflow($router),
       quicktags: workconfig.getRewardQuickTag($router),
       userinfo: '',
       usertitle:'',

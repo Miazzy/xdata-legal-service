@@ -264,6 +264,42 @@ export const reward = ($router) => {
                 $router.push(`/legal/lawyerlist?type=1&tname=律师管理&apply=管理`, '_blank');
             }
         }],
+    }, {
+        id: 'law-pane',
+        title: '法院法官',
+        taskflows: [{
+            name: "法院录入",
+            avatar: `//cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/xinwen_jy.png`,
+            href: "/account/todolist",
+            description: '律师事务所录入申请',
+            click: () => {
+                $router.push(`/legal/firmapply?type=1&tname=律所录入&apply=申请`, '_blank');
+            }
+        }, {
+            name: "法官录入",
+            avatar: `//cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/xiangmuxinxi_jy.png`,
+            href: "/account/donelist",
+            description: '律师事务所下律师录入申请',
+            click: () => {
+                $router.push(`/legal/lawyerapply?type=1&tname=律师录入&apply=申请`, '_blank');
+            }
+        }, {
+            name: "法院管理",
+            avatar: `//cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/xiezuowendangku_jy.png`,
+            href: "/account/todolist",
+            description: '律师事务所管理',
+            click: () => {
+                $router.push(`/legal/firmlist?type=1&tname=律所管理&apply=管理`, '_blank');
+            }
+        }, {
+            name: "法官管理",
+            avatar: `//cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/baomingfei.png`,
+            href: "/account/todolist",
+            description: '律师管理',
+            click: () => {
+                $router.push(`/legal/lawyerlist?type=1&tname=律师管理&apply=管理`, '_blank');
+            }
+        }],
     }]
 };
 
@@ -332,6 +368,52 @@ export const getRewardWflow = ($router) => {
             href: "/blog/center",
             click: () => {
 
+            }
+        }
+    ];
+}
+
+export const getLawWebsiteflow = ($router) => {
+    return [{
+            name: "中国裁判文书网",
+            href: "https://wenshu.court.gov.cn/",
+            click: () => {
+                window.open('https://wenshu.court.gov.cn/', '_blank');
+            }
+        },
+        {
+            name: "人民法院公告网",
+            href: "https://rmfygg.court.gov.cn/",
+            click: () => {
+                window.open("https://rmfygg.court.gov.cn/", '_blank');
+            }
+        },
+        {
+            name: "中国执行信息公开网",
+            href: "http://zxgk.court.gov.cn/zhzxgk/",
+            click: () => {
+                window.open("http://zxgk.court.gov.cn/zhzxgk/", '_blank');
+            }
+        },
+        {
+            name: "中国法院网",
+            href: "https://www.chinacourt.org/index.shtml",
+            click: () => {
+                window.open("https://www.chinacourt.org/index.shtml", '_blank');
+            }
+        },
+        {
+            name: "中国庭审公开网",
+            href: "http://tingshen.court.gov.cn/",
+            click: () => {
+                window.open("http://tingshen.court.gov.cn/", '_blank');
+            }
+        },
+        {
+            name: "人民法院诉讼资产网",
+            href: "https://www.rmfysszc.gov.cn/",
+            click: () => {
+                window.open("http://tingshen.court.gov.cn/", '_blank');
             }
         }
     ];
