@@ -381,7 +381,8 @@ export default {
           const legal = Betools.storage.getStore(`system_${this.tablename}_item#${this.legal.type}#@${userinfo.realname}`); //获取缓存信息
           const id = this.id = Betools.tools.getUrlParam('id');
           if(!Betools.tools.isNull(id)){
-            return this.legal = await this.handleList(this.tablename , id);
+            this.legal = await this.handleList(this.tablename , id);
+            this.legal.firmID = this.legal.firmName;
           } else {
             try {
               if(legal){ //自动回显刚才填写的用户基础信息
