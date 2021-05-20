@@ -24,11 +24,16 @@
       <a-row :gutter="24">
         <keep-alive>
           <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
+
+            <!-- 案件申请 -->
             <div style="background-color:#f0f0f0;">
+
               <div id="legal-apply-content" class="reward-apply-content" style="height:auto; background-color:#fefefe; margin-top:0px; margin-left: 2.5rem; margin-right: 2.5rem; margin-bottom: 5rem; border: 1px solid #f0f0f0; front-size: 1rem;" >
+
                 <div class="reward-apply-header" style="height:80px; width:100%; text-align:center; margin-top:20px; font-size: 1.5rem; ">
-                  律师详情
+                  律师录入申请
                 </div>
+
                 <div class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
                     <a-col class="reward-apply-content-title-text" :span="4" style="font-size:1.1rem;">
@@ -36,23 +41,25 @@
                     </a-col>
                    </a-row>
                 </div>
+
                 <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
-                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                    <a-col v-if="isNull(id)" :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>流程标题</span>
                     </a-col>
-                    <a-col :span="8">
+                    <a-col v-if="isNull(id)" :span="8">
                       <a-input v-model="legal.title" :readonly='false' placeholder="请填写申请流程标题！" @blur="validFieldToast('title')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>律师姓名</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.lawyer_name" readonly placeholder="请输入律师姓名！" @blur="validFieldToast('lawyer_name')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      <a-input v-model="legal.lawyer_name" :readonly="false" placeholder="请输入律师姓名！" @blur="validFieldToast('lawyer_name')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                     </a-col>
                   </a-row>
                 </div>
-                <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+
+                <div v-if="isNull(id)" class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>填报日期</span>
@@ -68,22 +75,24 @@
                     </a-col>
                   </a-row>
                 </div>
+
                 <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>所属律所</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.firmID" readonly placeholder="请输入所属律所名称！" @blur="validFieldToast('firmID')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      <a-input v-model="legal.firmID" :readonly="false" placeholder="请输入所属律所名称！" @blur="validFieldToast('firmID')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>执业年限</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.years" readonly placeholder="请填写此律师的执业年限！" @blur="validFieldToast('years')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      <a-input v-model="legal.years" :readonly="false" placeholder="请填写此律师的执业年限！" @blur="validFieldToast('years')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                     </a-col>
                   </a-row>
                 </div>
+
                 <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
@@ -113,6 +122,7 @@
                     </a-col>
                   </a-row>
                 </div>
+
                 <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
@@ -129,6 +139,7 @@
                     </a-col>
                   </a-row>
                 </div>
+
                 <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
                     <a-col :span="4" style="height:auto; font-size:1.0rem; margin-top:5px; text-align: center;">
@@ -144,6 +155,7 @@
                     </a-col>
                   </a-row>
                 </div>
+
                 <div class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
                     <a-col class="reward-apply-content-title-text" :span="4" style="font-size:1.1rem;">
@@ -151,6 +163,7 @@
                     </a-col>
                    </a-row>
                 </div>
+
                 <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
@@ -177,6 +190,7 @@
                     </a-col>
                   </a-row>
                 </div>
+
                 <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
                     <a-col :span="4" style="height:auto; font-size:1.0rem; margin-top:5px; text-align: center;">
@@ -192,6 +206,7 @@
                     </a-col>
                   </a-row>
                 </div>
+
                 <div style="height:100px;">
                 </div>
               </div>
@@ -226,6 +241,7 @@ export default {
         coop_time:moment(dayjs().format('YYYY-MM-DD'),'YYYY-MM-DD'),
         out_time:moment(dayjs().format('YYYY-MM-DD'),'YYYY-MM-DD'),
       },
+      id:'',
       legal:{
         id: '', // varchar(36)  default ''  not null
         title: 'XX律师申请流程',
@@ -293,6 +309,7 @@ export default {
   },
   methods: {
       moment,
+      isNull:Betools.tools.isNull,
       // 企业微信登录处理函数
       async  weworkLogin  (codeType = 'search', systemType = 'search')  {
         const userinfo_work = await Betools.query.queryWeworkUser(codeType, systemType,'v5');
@@ -317,9 +334,30 @@ export default {
           const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
           this.legal.apply_realname = userinfo.realname;
           this.legal.apply_username = userinfo.username;
+          const id = this.id = Betools.tools.getUrlParam('id');
+          return this.legal = await this.handleList(this.tablename , id);
         } catch (error) {
           console.log(error);
         }
+      },
+
+      // 查询不同状态的律所数据
+      async handleList(tableName , id){
+        let list = await Betools.manage.queryTableData(tableName , `_where=(id,eq,${id})&_sort=-id&_p=0&_size=1`);
+        list.map((item)=>{ 
+          try {
+            item.serialID = Betools.tools.isNull(item.serialID) ? index : item.serialID;
+            item.brief = item.brief.length > 30 ? item.brief.slice(0,30) + '...' : item.brief;
+            item.out_reason =  item.out_reason.length > 30 ? item.out_reason.slice(0,30) + '...' :  item.out_reason;
+            item.create_time = dayjs(item.create_time).format('YYYY-MM-DD') == 'Invalid Date' ? '/' : dayjs(item.create_time).format('YYYY-MM-DD'); 
+            item.out_time = dayjs(item.out_time).format('YYYY-MM-DD') == 'Invalid Date' ? '/' : dayjs(item.out_time).format('YYYY-MM-DD'); 
+            item.out_flag = 'YN'.includes(item.out_flag) ? {'Y':'已出库','N':'未出库'}[item.out_flag] : item.out_flag;
+            item.start_time = dayjs(item.start_time).format('YYYY-MM-DD') == 'Invalid Date' ? '/' : dayjs(item.start_time).format('YYYY-MM-DD'); 
+          } catch (error) {
+            console.log(`error:`, error);
+          }
+        });
+        return list && list.length > 0 ? list[0] : {};
       },
 
       // 验证字段
@@ -377,16 +415,57 @@ export default {
             content: "是否确认保存此律师录入申请单?",
             onOk: async() => {
                   const { legal } = this;
-                  legal.id = id;
                   const result = await Betools.manage.postTableData(this.tablename , this.legal); // 向表单提交form对象数据
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
-                  this.$toast.success('律师录入申请成功！');
                   this.loading = false; //设置状态
                   this.readonly = true;
                   this.role = 'view';
-                  vant.Dialog.alert({  title: '温馨提示',  message: `律师录入申请成功！`, });
+                  vant.Dialog.alert({  title: '温馨提示',  message: `律师录入申请成功！`, }); //this.$toast.success('律师录入申请成功！');
+                  await this.handleList(this.tablename , id);
+               }
+          });
+      },
+
+      // 修改用户数据但是不提交
+      async handlePatch(){
+        
+        this.loading = true; // 显示加载状态
+        const userinfo = await Betools.storage.getStore('system_userinfo'); // 获取用户基础信息
+        const id = Betools.tools.getUrlParam('id'); // 表单ID
+
+        // 验证数据是否已经填写
+        const keys = Object.keys({ title: '' })
+
+        const invalidKey =  keys.find(key => {
+          const flag = this.validField(key);
+          return !flag;
+        });
+
+        if(invalidKey != '' && invalidKey != null){
+          await vant.Dialog.alert({
+            title: '温馨提示',
+            message: `请确认内容是否填写完整，错误：请输入[${invalidKey}]信息！`,
+          });
+          return false;
+        }
+
+        //是否确认提交此自由流程?
+        this.$confirm({
+            title: "确认操作",
+            content: "是否确认保存此律师录入申请单?",
+            onOk: async() => {
+                  const { legal } = this;
+                  const result = await Betools.manage.patchTableData(this.tablename, id, this.legal); // 向表单提交form对象数据
+                  if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
+                      return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
+                  }
+                  this.loading = false; //设置状态
+                  this.readonly = true;
+                  this.role = 'view';
+                  vant.Dialog.alert({  title: '温馨提示',  message: `律师修改操作成功！`, }); //this.$toast.success('律师修改操作成功！');
+                  await this.handleList(this.tablename , id);
                }
           });
       },

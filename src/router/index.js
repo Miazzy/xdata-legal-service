@@ -65,11 +65,18 @@ const routes = [{
         "subPage": resolve => require(["../components/legal/lawyerlist.vue"], resolve)
     }
 }, {
-    path: '/legal/firmview',
+    path: '/legal/firmview', //lawyerview
     name: "律所详情",
     components: {
         "default": resolve => require(["../components/legal/home.vue"], resolve),
         "subPage": resolve => require(["../components/legal/firmview.vue"], resolve)
+    }
+}, {
+    path: '/legal/lawyerview', //lawyerview
+    name: "律师详情",
+    components: {
+        "default": resolve => require(["../components/legal/home.vue"], resolve),
+        "subPage": resolve => require(["../components/legal/lawyerview.vue"], resolve)
     }
 }, {
     path: '/legal/legallist',
