@@ -67,31 +67,35 @@
                     </div>
                   </div>
                 </a-card>
-                <a-card :loading="loading" title="诉讼案件流程" :bordered="false" style="margin-top:10px;">
-                  <a-tag color="blue" style="margin-bottom:10px;position:absolute;top:18px;right:20px;display:none;" ></a-tag>
-                  <div class="members">
-                    <a-row>
-                      <a-col :span="12" v-for="item in wflows" :key="item.href">
-                        <a @click="item.click">
-                          <a-avatar class="pane-right-avatar" size="small" :src="item.avatar" />
-                          <span class="member">{{ item.name }}</span>
-                        </a>
-                      </a-col>
-                    </a-row>
-                  </div>
-                </a-card>
-                <a-card :loading="loading" title="法律/企业查看网站" :bordered="false" style="margin-top:10px;">
-                  <a-tag color="blue" style="margin-bottom:0px;position:absolute;top:18px;right:20px;display:none;" ></a-tag>
-                  <div class="members" >
-                    <a-row>
-                      <a-col :span="24" v-for="item in lawsites" :key="item.href" style="padding-bottom:10px;">
-                        <a @click="item.click" style="margin-top:0px;margin-bottom:5px;padding-bottom:5px;">
-                          <span class="member" style="margin-top:0px;margin-bottom:5px;padding-bottom:5px;" >{{ item.name }}</span>
-                        </a>
-                      </a-col>
-                    </a-row>
-                  </div>
-                </a-card>
+                <div id="nav-content-process" style="">
+                  <a-card :loading="loading" title="诉讼案件流程" :bordered="false" style="margin-top:10px;">
+                    <a-tag color="blue" style="margin-bottom:10px;position:absolute;top:18px;right:20px;display:none;" ></a-tag>
+                    <div class="members">
+                      <a-row>
+                        <a-col :span="12" v-for="item in wflows" :key="item.href">
+                          <a @click="item.click">
+                            <a-avatar class="pane-right-avatar" size="small" :src="item.avatar" />
+                            <span class="member">{{ item.name }}</span>
+                          </a>
+                        </a-col>
+                      </a-row>
+                    </div>
+                  </a-card>
+                </div>
+                <div id="nav-content-law" style="">
+                  <a-card :loading="loading" title="法律/企业查看网站" :bordered="false" style="margin-top:10px;">
+                    <a-tag color="blue" style="margin-bottom:0px;position:absolute;top:18px;right:20px;display:none;" ></a-tag>
+                    <div class="members" >
+                      <a-row>
+                        <a-col :span="24" v-for="item in lawsites" :key="item.href" style="padding-bottom:10px;">
+                          <a @click="item.click" style="margin-top:0px;margin-bottom:5px;padding-bottom:5px;">
+                            <span class="member" style="margin-top:0px;margin-bottom:5px;padding-bottom:5px;" >{{ item.name }}</span>
+                          </a>
+                        </a-col>
+                      </a-row>
+                    </div>
+                  </a-card>
+                </div>
             </div>
 
           </a-col>

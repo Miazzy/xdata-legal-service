@@ -100,3 +100,15 @@
 .pane-right-item-group-tag {
     margin-bottom: 10px;
 }
+
+#nav-content-law .ant-card-body {
+    padding: 24px;
+    zoom: 1;
+    padding-bottom: 5px;
+}
+
+#nav-content-process .ant-card-body {
+    padding: 24px;
+    zoom: 1;
+    padding-bottom: 10px;
+}
