@@ -474,6 +474,7 @@ export default {
       },
       columns: workconfig.columns.reward.items,
       wfcolumns: workconfig.columns.reward.wfcolumns,
+      firmlist:[],
       data: [],
       readonly: false,
       userList:[],
@@ -548,6 +549,7 @@ export default {
           const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
           this.legal.apply_realname = userinfo.realname;
           this.legal.apply_username = userinfo.username;
+          
           const legal = Betools.storage.getStore(`system_${this.tablename}_item#${this.legal.type}#@${userinfo.realname}`); //获取缓存信息
           const id = this.id = Betools.tools.getUrlParam('id');
           if(!Betools.tools.isNull(id)){

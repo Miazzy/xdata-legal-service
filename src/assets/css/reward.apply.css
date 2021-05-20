@@ -111,3 +111,14 @@
     height: 27px;
     line-height: 27px;
 }
+
+#legal-apply-content .ant-select-auto-complete.ant-select .ant-input {
+    height: 32px;
+    line-height: 1.5;
+    background: transparent;
+    border-width: 1px;
+    border-width: 0px 0px 1px;
+    border-style: solid;
+    border-color: rgb(254, 254, 254) rgb(254, 254, 254) rgb(240, 240, 240);
+    border-image: initial;
+}

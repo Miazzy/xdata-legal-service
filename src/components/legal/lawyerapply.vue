@@ -82,7 +82,7 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>所属律所</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.firmID" :readonly="false" placeholder="请输入所属律所名称！" @blur="validFieldToast('firmID')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      <a-auto-complete :data-source="firmNamelist" v-model="legal.firmID" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0; width:100%; border-width: 0px 0px 1px; border-style: solid; border-color: rgb(254, 254, 254) rgb(254, 254, 254) rgb(240, 240, 240); border-image: initial;"  placeholder="请输入律所名称！" :filter-option="filterOption" />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>执业年限</span>
@@ -298,6 +298,8 @@ export default {
       data: [],
       readonly: false,
       userList:[],
+      firmlist:[],
+      firmNamelist:[],
       release_userid:'',
       release_username:'',
       release_company:'',
@@ -344,6 +346,12 @@ export default {
   methods: {
       moment,
       isNull:Betools.tools.isNull,
+      // 律所名称过滤
+      filterOption(input, option) {
+        return (
+          option.componentOptions.children[0].text.toUpperCase().indexOf(input.toUpperCase()) >= 0
+        );
+      },
       // 企业微信登录处理函数
       async  weworkLogin  (codeType = 'search', systemType = 'search')  {
         const userinfo_work = await Betools.query.queryWeworkUser(codeType, systemType,'v5');
@@ -368,6 +376,8 @@ export default {
           const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
           this.legal.apply_realname = userinfo.realname;
           this.legal.apply_username = userinfo.username;
+          this.firmlist = await Betools.manage.queryTableData('bs_law_firm' , `_where=(status,ne,0)&_fields=id,firm_name&_sort=-id&_p=0&_size=10000`);
+          this.firmNamelist = this.firmlist.map(item => { return item.firm_name });
           const legal = Betools.storage.getStore(`system_${this.tablename}_item#${this.legal.type}#@${userinfo.realname}`); //获取缓存信息
           const id = this.id = Betools.tools.getUrlParam('id');
           if(!Betools.tools.isNull(id)){
