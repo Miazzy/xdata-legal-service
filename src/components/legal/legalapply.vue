@@ -1122,9 +1122,7 @@ export default {
       },
       // 用户提交入职登记表函数
       async handleApply() {
-        
         await this.handleSave(); //先执行保存操作，保存完毕后执行流程跳转功能
-
       },
 
       // 提交自由流程
