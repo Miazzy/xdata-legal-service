@@ -279,6 +279,7 @@ export default {
         id: '', // varchar(36)  default ''  not null
         title: 'XX律师申请流程',
         create_time: dayjs().format('YYYY-MM-DD'),
+        create_by :'', 
         firmID: '', // varchar(36)  default ''  not null comment '所属律所ID',
         lawyer_name:'', // 律师姓名
         college: 'XX大学', // varchar(32)  default ''  not null comment '大学名称',
@@ -367,8 +368,30 @@ export default {
           const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
           this.legal.apply_realname = userinfo.realname;
           this.legal.apply_username = userinfo.username;
+          const legal = Betools.storage.getStore(`system_${this.tablename}_item#${this.legal.type}#@${userinfo.realname}`); //获取缓存信息
           const id = this.id = Betools.tools.getUrlParam('id');
-          return this.legal = await this.handleList(this.tablename , id);
+          if(!Betools.tools.isNull(id)){
+            return this.legal = await this.handleList(this.tablename , id);
+          } else {
+            try {
+              if(legal){ //自动回显刚才填写的用户基础信息
+                this.legal.create_by = legal.create_by || this.legal.create_by;
+                this.legal.remark = legal.remark || this.legal.remark;
+                this.legal.status = legal.status || this.legal.status;
+              }
+              if(userinfo.department && userinfo.department.name){
+                this.legal.department = userinfo.department.name;
+                this.legal.company = userinfo.parent_company.name;
+              } else if(userinfo.systemuserinfo && userinfo.systemuserinfo.textfield1){
+                let temp = userinfo.systemuserinfo.textfield1.split('||')[0];
+                this.legal.company = temp.split('>')[temp.split('>').length - 1];
+                temp = userinfo.systemuserinfo.textfield1.split('||')[1];
+                this.legal.department = temp.split('>')[temp.split('>').length - 1];
+              }
+            } catch (error) {
+              console.log(error);
+            }
+          }
         } catch (error) {
           console.log(error);
         }
@@ -425,6 +448,7 @@ export default {
         this.loading = true; // 显示加载状态
         const userinfo = await Betools.storage.getStore('system_userinfo'); // 获取用户基础信息
         const id = Betools.tools.queryUniqueID(); // 表单ID
+        this.legal.create_time = dayjs().format('YYYY-MM-DD');
 
         // 验证数据是否已经填写
         const keys = Object.keys({ title: '' })
