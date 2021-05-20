@@ -24,11 +24,11 @@ export default {
   activated() {
   },
   mounted() {
-      debugger;
+
   },
-    created(){
-        debugger;
-    },
+  created(){
+
+  },
   methods: {
     // 执行页面跳转
     async redirectView(path) {

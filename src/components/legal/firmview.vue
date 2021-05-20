@@ -489,7 +489,7 @@ export default {
   },
   methods: {
       moment,
-
+      isNull:Betools.tools.isNull,
       // 企业微信登录处理函数
       async  weworkLogin  (codeType = 'search', systemType = 'search')  {
           const userinfo_work = await Betools.query.queryWeworkUser(codeType, systemType,'v5');
