@@ -34,18 +34,20 @@
                 </a-breadcrumb>
               </div>
 
+              <div style="background-color:#f0f0f0;">
+                <div id="legal-apply-content" class="reward-apply-content" style="height:auto; background-color:#fefefe; margin-top:0px; margin-left: 2.5rem; margin-right: 2.5rem; margin-bottom: 5rem; border: 1px solid #f0f0f0; front-size: 1rem;" >
                 <div style="width:100%;margin-left:0px;margin-right:0px;background:#fbf9fe;">
-
                     <div class="reward-top-button" style="margin-top:20px;margin-bottom:20px; margin-left:20px;">
                         <a-button type="primary">新增</a-button>
                         <a-button type="primary">修改</a-button>
                     </div>
-
                     <div class="reward-content-table" style="margin-left:20px;">
                         <a-table style="width:100%;" size="middle" tableLayout="column.ellipsis" :bordered="false" :columns="columns" :data-source="data" :row-selection="rowSelection" />
                     </div>
-
                 </div>
+                </div>
+              </div>
+              
             </a-col>
         </keep-alive>
       </a-row>
