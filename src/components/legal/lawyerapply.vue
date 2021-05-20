@@ -207,7 +207,7 @@
                   </a-row>
                 </div>
 
-                <div v-show="role != 'view' " class="reward-apply-content-item" style="margin-top:35px;margin-bottom:5px; margin-right:10px;">
+                <div v-show="role != 'view' && isNull(id) " class="reward-apply-content-item" style="margin-top:35px;margin-bottom:5px; margin-right:10px;">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
                     <a-col :span="8">
                     </a-col>
@@ -219,6 +219,20 @@
                     <a-col class="reward-apply-content-title-text" :span="4" style="">
                       <a-button type="primary" style="width: 120px;" @click="handleApply();"  >
                         提交
+                      </a-button>
+                    </a-col>
+                    <a-col :span="8">
+                    </a-col>
+                   </a-row>
+                </div>
+
+                <div v-show="role != 'view' && !isNull(id)  " class="reward-apply-content-item" style="margin-top:35px;margin-bottom:5px; margin-right:10px;">
+                   <a-row style="border-top: 1px dash #f0f0f0;" >
+                    <a-col :span="8">
+                    </a-col>
+                    <a-col class="reward-apply-content-title-text" :span="4" style="margin-left:100px;">
+                      <a-button type="primary" style="width: 120px;color:c0c0c0;" @click="handlePatch();"  >
+                        修改
                       </a-button>
                     </a-col>
                     <a-col :span="8">
@@ -438,11 +452,52 @@ export default {
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
-                  this.$toast.success('律师录入申请成功！');
                   this.loading = false; //设置状态
                   this.readonly = true;
                   this.role = 'view';
-                  vant.Dialog.alert({  title: '温馨提示',  message: `律师录入申请成功！`, });
+                  vant.Dialog.alert({  title: '温馨提示',  message: `律师录入申请成功！`, }); //this.$toast.success('律师录入申请成功！');
+                  await this.handleList(this.tablename , id);
+               }
+          });
+      },
+
+      // 修改用户数据但是不提交
+      async handlePatch(){
+        
+        this.loading = true; // 显示加载状态
+        const userinfo = await Betools.storage.getStore('system_userinfo'); // 获取用户基础信息
+        const id = Betools.tools.getUrlParam('id'); // 表单ID
+
+        // 验证数据是否已经填写
+        const keys = Object.keys({ title: '' })
+
+        const invalidKey =  keys.find(key => {
+          const flag = this.validField(key);
+          return !flag;
+        });
+
+        if(invalidKey != '' && invalidKey != null){
+          await vant.Dialog.alert({
+            title: '温馨提示',
+            message: `请确认内容是否填写完整，错误：请输入[${invalidKey}]信息！`,
+          });
+          return false;
+        }
+
+        //是否确认提交此自由流程?
+        this.$confirm({
+            title: "确认操作",
+            content: "是否确认保存此律师录入申请单?",
+            onOk: async() => {
+                  const { legal } = this;
+                  const result = await Betools.manage.patchTableData(this.tablename, id, this.legal); // 向表单提交form对象数据
+                  if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
+                      return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
+                  }
+                  this.loading = false; //设置状态
+                  this.readonly = true;
+                  this.role = 'view';
+                  vant.Dialog.alert({  title: '温馨提示',  message: `律师修改操作成功！`, }); //this.$toast.success('律师修改操作成功！');
                   await this.handleList(this.tablename , id);
                }
           });
