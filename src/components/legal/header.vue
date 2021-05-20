@@ -32,7 +32,7 @@ export default {
   methods: {
     // 执行页面跳转
     async redirectView(path) {
-        this.$router.push(path);
+        Betools.tools.isNull(path) ? null: this.$router.push(path);
     },
   },
 };

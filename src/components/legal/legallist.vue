@@ -107,7 +107,7 @@ export default {
 
       // 执行页面跳转
       async redirectView(path) {
-          this.$router.push(path);
+          Betools.tools.isNull(path) ? null: this.$router.push(path);
       },
      
       // 获取基础信息

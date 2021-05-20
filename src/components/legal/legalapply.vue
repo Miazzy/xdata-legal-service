@@ -717,7 +717,7 @@ export default {
       },
       // 执行页面跳转
       async redirectView(path) {
-          this.$router.push(path);
+          Betools.tools.isNull(path) ? null: this.$router.push(path);
       },
       // 文件update事件
       async onUpdate(records){
