@@ -28,7 +28,7 @@
                 <template v-for="(elem,index) in breadcrumb">
                   <a-breadcrumb-item :key="elem.icon" :index="index" >
                     <a-icon :type="elem.icon" />
-                    <span>{{ elem.text }}</span>
+                    <span @click="redirectView(elem.path)" >{{ elem.text }}</span>
                   </a-breadcrumb-item>
                 </template>
               </a-breadcrumb>
@@ -524,7 +524,7 @@ export default {
       collection: [{ }],
       userinfo: '',
       usertitle:'',
-      breadcrumb:[{icon:'home',text:'首页'},{icon:'user',text:'律所管理'},{icon:'form',text:'律所录入'}],
+      breadcrumb:[{icon:'home',text:'首页',path:'/legal/workspace'},{icon:'user',text:'律所管理',path:'/legal/workspace'},{icon:'form',text:'律所录入',path:''}],
       statusType:{'valid':'有效','invalid':'删除'},
       zoneType:{'领地集团总部':'领地集团总部','重庆区域':'重庆区域','两湖区域':'两湖区域','川北区域':'川北区域','成都区域':'成都区域','乐眉区域':'乐眉区域','中原区域':'中原区域','攀西区域':'攀西区域','新疆区域':'新疆区域','大湾区域':'大湾区域','北京区域':'北京区域'},
     };
