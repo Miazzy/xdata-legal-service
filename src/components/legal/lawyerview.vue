@@ -30,7 +30,7 @@
                 <template v-for="(elem,index) in breadcrumb">
                   <a-breadcrumb-item :key="elem.icon" :index="index" >
                     <a-icon :type="elem.icon" />
-                    <span>{{ elem.text }}</span>
+                    <span @click="redirectView(elem.path)">{{ elem.text }}</span>
                   </a-breadcrumb-item>
                 </template>
               </a-breadcrumb>
