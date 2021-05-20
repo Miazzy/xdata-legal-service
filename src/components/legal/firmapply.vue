@@ -695,7 +695,6 @@ export default {
             content: "是否确认修改此律所的信息?",
             onOk: async() => {
                   const { legal } = this;
-                  legal.id = id;
                   legal.tags = JSON.stringify(legal.tags); //进行序列化
                   const result = await Betools.manage.patchTableData(this.tablename , id , this.legal); // 向表单提交form对象数据
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
@@ -707,6 +706,7 @@ export default {
                   this.readonly = true;
                   this.role = 'view';
                   vant.Dialog.alert({  title: '温馨提示',  message: `律所修改申请提交成功！`, });
+                  await this.handleList(this.tablename , id);
                }
           });
       },
