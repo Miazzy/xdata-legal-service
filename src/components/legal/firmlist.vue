@@ -21,7 +21,7 @@
 
       <a-row :gutter="24" style="background:#fbf9fe;">
         <keep-alive>
-            <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
+            <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24" style="background-color:#f0f0f0;">
 
               <div id="" class="" style="padding-left:2.75rem;padding-top:0.25rem;padding-bottom:0.25rem;background-color:#fefefe;" >
                 <a-breadcrumb>
