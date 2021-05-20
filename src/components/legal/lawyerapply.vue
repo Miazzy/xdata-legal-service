@@ -558,6 +558,7 @@ export default {
                   this.role = 'view';
                   vant.Dialog.alert({  title: '温馨提示',  message: `律师修改操作成功！`, }); //this.$toast.success('律师修改操作成功！');
                   await this.handleList(this.tablename , id);
+                  this.legal.firmID = this.legal.firmName;
                }
           });
       },
