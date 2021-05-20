@@ -22,6 +22,18 @@
       <a-row :gutter="24" style="background:#fbf9fe;">
         <keep-alive>
           <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
+
+            <div id="" class="" style="padding-left:2.75rem;padding-top:0.25rem;padding-bottom:0.25rem;background-color:#fefefe;" >
+              <a-breadcrumb>
+                <template v-for="(elem,index) in breadcrumb">
+                  <a-breadcrumb-item :key="elem.icon" :index="index" >
+                    <a-icon :type="elem.icon" />
+                    <span>{{ elem.text }}</span>
+                  </a-breadcrumb-item>
+                </template>
+              </a-breadcrumb>
+            </div>
+
               <div style="width:100%;margin-left:0px;margin-right:0px;background:#fbf9fe;">
 
                   <div class="reward-top-button" style="margin-top:20px;margin-bottom:20px; margin-left:20px;">
@@ -122,6 +134,7 @@ export default {
       rowSelection:[],
       userinfo: '',
       usertitle:'',
+      breadcrumb:[{icon:'home',text:'首页'},{icon:'user',text:'律所管理'},{icon:'form',text:'律师管理'}],
       statusType:{'valid':'有效','invalid':'删除'},
       zoneType:{'领地集团总部':'领地集团总部','重庆区域':'重庆区域','两湖区域':'两湖区域','川北区域':'川北区域','成都区域':'成都区域','乐眉区域':'乐眉区域','中原区域':'中原区域','攀西区域':'攀西区域','新疆区域':'新疆区域','大湾区域':'大湾区域','北京区域':'北京区域'},
     };
