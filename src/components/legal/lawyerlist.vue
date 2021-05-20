@@ -34,6 +34,8 @@
               </a-breadcrumb>
             </div>
 
+            <div style="background-color:#f0f0f0;">
+              <div id="legal-apply-content" class="reward-apply-content" style="height:auto; background-color:#fefefe; margin-top:0px; margin-left: 2.5rem; margin-right: 2.5rem; margin-bottom: 5rem; border: 1px solid #f0f0f0; front-size: 1rem;" >
               <div style="width:100%;margin-left:0px;margin-right:0px;background:#fbf9fe;">
 
                   <div class="reward-top-button" style="margin-top:20px;margin-bottom:20px; margin-left:20px;">
@@ -87,6 +89,9 @@
                     </div>
 
               </div>
+              </div>
+            </div>
+            
           </a-col>
         </keep-alive>
       </a-row>
