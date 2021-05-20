@@ -883,7 +883,7 @@ export function getPaneflows(that) {
             id: 100,
             name: "我的知会",
             ename: "myrewardlist",
-            avatar: `//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/shenpi.png`,
+            avatar: `//cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/liebiao_jy.png`,
             href: "/account/myrewardlist",
             description: "查看我的案件审批知会流程",
             show: true,
