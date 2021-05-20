@@ -415,7 +415,56 @@ export const getLawWebsiteflow = ($router) => {
             click: () => {
                 window.open("http://tingshen.court.gov.cn/", '_blank');
             }
-        }
+        }, //
+        {
+            name: "中国政府网",
+            href: "http://www.gov.cn/",
+            click: () => {
+                window.open("http://www.gov.cn/", '_blank');
+            }
+        }, //
+        {
+            name: "中国政府网-法律法规",
+            href: "http://www.gov.cn/ziliao/flfg/index.htm",
+            click: () => {
+                window.open("http://www.gov.cn/ziliao/flfg/index.htm", '_blank');
+            }
+        }, //
+        {
+            name: "法律法规数据库",
+            href: "http://search.chinalaw.gov.cn/search2.html",
+            click: () => {
+                window.open("http://search.chinalaw.gov.cn/search2.html", '_blank');
+            }
+        }, //
+        {
+            name: "中国法院网法律文库",
+            href: "https://www.chinacourt.org/law",
+            click: () => {
+                window.open("https://www.chinacourt.org/law", '_blank');
+            }
+        }, //
+        // {
+        //     name: "企查查",
+        //     href: "https://www.qcc.com/",
+        //     click: () => {
+        //         window.open("https://www.qcc.com/", '_blank');
+        //     }
+        // },
+        // {
+        //     name: "天眼查",
+        //     href: "https://www.tianyancha.com/",
+        //     click: () => {
+        //         window.open("https://www.tianyancha.com/", '_blank');
+        //     }
+        // },
+        // {
+        //     name: "爱企查",
+        //     href: "https://aiqicha.baidu.com/",
+        //     click: () => {
+        //         window.open("https://aiqicha.baidu.com/", '_blank');
+        //     }
+        // },
     ];
 }
 

@@ -58,12 +58,7 @@
             </div>
 
             <div style="position:absolute; left:1000px; width: 300px;">
-                <a-card
-                  title="便捷导航"
-                  style="margin-bottom: 24px"
-                  :bordered="false"
-                  :body-style="{padding: 0}"
-                >
+                <a-card title="便捷导航" style="margin-bottom: 10px" :bordered="false" :body-style="{padding: 0}" >
                   <div class="item-group">
                     <div class="pane-right-item-group" >
                       <template v-for=" item in quicktags">
@@ -72,7 +67,7 @@
                     </div>
                   </div>
                 </a-card>
-                <a-card :loading="loading" title="诉讼案件流程" :bordered="false" style="margin-top:20px;">
+                <a-card :loading="loading" title="诉讼案件流程" :bordered="false" style="margin-top:10px;">
                   <a-tag color="blue" style="margin-bottom:10px;position:absolute;top:18px;right:20px;display:none;" ></a-tag>
                   <div class="members">
                     <a-row>
@@ -85,8 +80,8 @@
                     </a-row>
                   </div>
                 </a-card>
-                <a-card :loading="loading" title="法律网站" :bordered="false" style="margin-top:20px;">
-                  <a-tag color="blue" style="margin-bottom:5px;position:absolute;top:18px;right:20px;display:none;" ></a-tag>
+                <a-card :loading="loading" title="法律/企业查看网站" :bordered="false" style="margin-top:10px;">
+                  <a-tag color="blue" style="margin-bottom:0px;position:absolute;top:18px;right:20px;display:none;" ></a-tag>
                   <div class="members" >
                     <a-row>
                       <a-col :span="24" v-for="item in lawsites" :key="item.href" style="padding-bottom:10px;">
