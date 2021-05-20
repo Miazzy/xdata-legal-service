@@ -625,6 +625,8 @@ export default {
         this.loading = true; // 显示加载状态
         const userinfo = await Betools.storage.getStore('system_userinfo'); // 获取用户基础信息
         const id = Betools.tools.queryUniqueID(); // 表单ID
+        this.legal.create_time = dayjs().format('YYYY-MM-DD');
+        this.legal.create_by = (userinfo ? userinfo.realname || userinfo.name || userinfo.lastname : '');
 
         // 验证数据是否已经填写
         const keys = Object.keys({ title: '' , brief:'', team_brief:'' })
