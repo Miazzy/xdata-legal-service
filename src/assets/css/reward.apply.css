@@ -116,8 +116,34 @@
     height: 32px;
     line-height: 1.5;
     background: transparent;
-    border-width: 1px;
-    border-width: 0px 0px 1px;
+    border-width: 0px 0px 0px 0px;
+    border-style: solid;
+    border-color: rgb(254, 254, 254) rgb(254, 254, 254) rgb(240, 240, 240);
+    border-image: initial;
+}
+
+#legal-apply-content .ant-calendar-picker-input {
+    outline: none;
+    border-width: 0px 0px 0px 0px;
+    border-style: solid;
+    border-color: rgb(254, 254, 254) rgb(254, 254, 254) rgb(240, 240, 240);
+    border-image: initial;
+}
+
+#legal-apply-content .ant-select-selection__rendered {
+    position: relative;
+    display: block;
+    margin-right: 0px;
+    margin-left: 0px;
+    line-height: 30px;
+    border-width: 0px 0px 0px 0px;
+    border-style: solid;
+    border-color: rgb(254, 254, 254) rgb(254, 254, 254) rgb(240, 240, 240);
+    border-image: initial;
+}
+
+#legal-apply-content .ant-select-selection {
+    border-width: 0px 0px 0px 0px;
     border-style: solid;
     border-color: rgb(254, 254, 254) rgb(254, 254, 254) rgb(240, 240, 240);
     border-image: initial;

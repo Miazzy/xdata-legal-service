@@ -277,7 +277,7 @@ export default {
       id:'',
       legal:{
         id: '', // varchar(36)  default ''  not null
-        title: 'XX律师申请流程',
+        title: 'XX律师入库申请流程',
         create_time: dayjs().format('YYYY-MM-DD'),
         create_by :'', 
         firmID: '', // varchar(36)  default ''  not null comment '所属律所ID',
