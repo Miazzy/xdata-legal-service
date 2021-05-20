@@ -531,6 +531,18 @@ export default {
           return false;
         }
 
+        const firmName = this.legal.firmID;
+        const firm = this.firmlist.find(item => { return item.firm_name == firmName});
+        if(Betools.tools.isNull(firm)){
+          return await vant.Dialog.alert({
+            title: '温馨提示',
+            message: `您好，系统中不存在此律师事务所[${firmName}]，请在律所录入功能处录入律所信息后，再选择此律师事务所！`,
+          });
+        } else {
+          this.legal.firmID = firm.id;
+          this.legal.firmName = firm.firm_name;
+        }
+
         //是否确认提交此自由流程?
         this.$confirm({
             title: "确认操作",

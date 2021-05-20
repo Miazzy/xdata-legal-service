@@ -335,7 +335,8 @@ export default {
           this.legal.apply_realname = userinfo.realname;
           this.legal.apply_username = userinfo.username;
           const id = this.id = Betools.tools.getUrlParam('id');
-          return this.legal = await this.handleList(this.tablename , id);
+          this.legal = await this.handleList(this.tablename , id);
+          this.legal.firmID = this.legal.firmName;
         } catch (error) {
           console.log(error);
         }
