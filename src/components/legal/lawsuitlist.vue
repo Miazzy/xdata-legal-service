@@ -43,8 +43,48 @@
                         <a-button type="primary" @click="execFresh" >刷新</a-button>
                         <a-button type="primary" @click="execExport" >导出</a-button>
                     </div>
-                    <div class="reward-content-table" style="margin-left:20px;">
-                        <a-table style="width:100%;" size="middle" tableLayout="column.ellipsis" :bordered="false" :columns="columns" :data-source="data" :row-selection="rowSelection" />
+                    
+                    <div style="margin-left:20px;">
+                      <a-tabs default-active-key="1" @change="callback">
+                        <a-tab-pane key="1" tab="列表">
+                          <a-empty v-if="data.length == 0" style="margin-top:10%;height:580px;"/>
+                          <div v-if="data.length > 0" class="reward-content-table" style="margin-left:0px; width:98%;"> 
+                              <a-list item-layout="horizontal" :data-source="data">
+                                <a-list-item slot="renderItem" slot-scope="item, index">
+                                  <a slot="actions" @click="execView(item)">查看</a>
+                                  <a slot="actions" @click="execPatch(item)">修改</a>
+                                  <a-list-item-meta :index="index" :description="`${item.caseID} 受理法院：${item.court}，承办法官：${item.judge}，案件状态：${item.legalStatus}`" >
+                                    <a slot="title" >{{ `${item.caseID} ${item.caseType} 程序阶段：${item.stage}，原告：${item.accuser}，被告：${item.defendant}` }}</a>
+                                  </a-list-item-meta>
+                                </a-list-item>
+                              </a-list>
+                          </div>
+                        </a-tab-pane>
+
+                        <a-tab-pane key="2" tab="表格" force-render>
+                          <a-empty v-if="data.length == 0" style="margin-top:10%;height:580px;"/>
+                          <a-table v-if="data.length > 0 " style="width:105%;" size="middle" tableLayout="column.ellipsis" :bordered="false" :columns="columns" :data-source="data"  />
+                        </a-tab-pane>
+
+                        <a-tab-pane key="3" tab="表单">
+                          <a-empty v-if="data.length == 0" style="margin-top:10%;height:580px;"/>
+                          <vue-excel-editor v-if="data.length > 0" v-model="data" ref="grid" width="100%" filter-row autocomplete >
+                                <vue-excel-column field="caseID"      label="案件编号"          width="120px" />
+                                <vue-excel-column field="caseType"    label="案件案由"       width="120px" />
+                                <vue-excel-column field="stage"       label="程序阶段"          width="120px" />
+                                <vue-excel-column field="receiveTime" label="接收时间(业务部)"          width="120px" />
+                                <vue-excel-column field="lawRTime"    label="接收时间(法务部)"          width="120px" />
+                                <vue-excel-column field="accuser"      label="发起(原告)"          width="120px" />
+                                <vue-excel-column field="defendant"    label="应诉(被告)"          width="120px" />
+                                <vue-excel-column field="handledTime"  label="法院受理时间"       width="120px" />
+                                <vue-excel-column field="court"        label="受理法院"          width="120px" />
+                                <vue-excel-column field="judge"        label="承办法官"          width="120px" />
+                                <vue-excel-column field="inHouseLawyers" label="内部律师(承)"      width="120px" />
+                                <vue-excel-column field="legalStatus"    label="案件状态"         width="120px" />
+                          </vue-excel-editor>
+                        </a-tab-pane>
+
+                      </a-tabs>
                     </div>
                 </div>
                 </div>
