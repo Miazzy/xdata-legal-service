@@ -411,7 +411,6 @@ export default {
             content: "是否确认保存此律师录入申请单?",
             onOk: async() => {
                   const { legal } = this;
-                  legal.id = id;
                   const result = await Betools.manage.postTableData(this.tablename , this.legal); // 向表单提交form对象数据
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
@@ -421,6 +420,7 @@ export default {
                   this.readonly = true;
                   this.role = 'view';
                   vant.Dialog.alert({  title: '温馨提示',  message: `律师录入申请成功！`, });
+                  await this.handleList(this.tablename , id);
                }
           });
       },

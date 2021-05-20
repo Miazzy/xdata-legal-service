@@ -192,13 +192,15 @@ export default {
       },
 
       // 律师修改申请
-      async execPatch(){
+      async execPatch(elem){
           const { $router } = this;
+          $router.push(`/legal/lawyerapply?id=${elem.id}&type=1&tname=律师修改&apply=修改`);
       },
 
       // 律师修改申请
-      async execView(){
+      async execView(elem){
           const { $router } = this;
+          $router.push(`/legal/lawyerview?id=${elem.id}&type=1&tname=律师查看&apply=查看`);
       },
 
       // 律师导出功能
