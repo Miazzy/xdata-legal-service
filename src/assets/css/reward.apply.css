@@ -148,3 +148,11 @@
     border-color: rgb(254, 254, 254) rgb(254, 254, 254) rgb(240, 240, 240);
     border-image: initial;
 }
+
+#legal-apply-content .ant-cascader-input.ant-input {
+    position: relative;
+    width: 100%;
+    border: 0px;
+    background-color: transparent!important;
+    cursor: pointer;
+}

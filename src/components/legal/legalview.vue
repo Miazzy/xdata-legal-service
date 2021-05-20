@@ -202,18 +202,16 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>业务接收时间</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-date-picker v-model="legal.receiveTime" :default-value="options.datetime" placeholder="请输入业务部门接收时间！" @blur="validFieldToast('receiveTime')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.receiveTime" :default-value="options.datetime" placeholder="请输入业务部门接收时间！" @blur="validFieldToast('receiveTime')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>法律接收时间</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-date-picker v-model="legal.lawRTime" :default-value="options.datetime" placeholder="请输入法律部门接收时间！" @blur="validFieldToast('lawRTime')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.lawRTime" :default-value="options.datetime" placeholder="请输入法律部门接收时间！" @blur="validFieldToast('lawRTime')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
-
-                
 
                 <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
@@ -768,11 +766,17 @@ export default {
         list.map((item)=>{ 
           try {
             item.create_time = dayjs(item.create_time).format('YYYY-MM-DD'); 
-            item.receiveTime = dayjs(item.receiveTime).format('YYYY-MM-DD').toUpperCase() == 'Invalid Date'.toUpperCase() ? dayjs().format('YYYY-DD-MM') : dayjs(item.receiveTime).format('YYYY-MM-DD');
-            item.lawRTime = dayjs(item.lawRTime).format('YYYY-MM-DD').toUpperCase() == 'Invalid Date'.toUpperCase() ? dayjs().format('YYYY-DD-MM') : dayjs(item.lawRTime).format('YYYY-MM-DD');
-            item.handledTime = dayjs(item.handledTime).format('YYYY-MM-DD').toUpperCase() == 'Invalid Date'.toUpperCase() ? dayjs().format('YYYY-DD-MM') : dayjs(item.handledTime).format('YYYY-MM-DD');
+            item.receiveTime = dayjs(item.receiveTime).format('YYYY-MM-DD') == 'Invalid Date' ? "/" : dayjs(item.receiveTime).format('YYYY-MM-DD');
+            item.lawRTime = dayjs(item.lawRTime).format('YYYY-MM-DD') == 'Invalid Date' ? "/" : dayjs(item.lawRTime).format('YYYY-MM-DD');
+            item.handledTime = dayjs(item.handledTime).format('YYYY-MM-DD') == 'Invalid Date' ? "/" : dayjs(item.handledTime).format('YYYY-MM-DD');
             item.legalStatus = Betools.tools.isNull(item.legalStatus) ? '开庭举证' : item.legalStatus;
-            item.caseType = JSON.parse(item.caseType);
+            try {
+              item.caseType = JSON.parse(item.caseType);
+              item.zone = JSON.parse(item.zone);
+            } catch (error) {
+              item.zone = JSON.parse(item.zone);
+              item.caseType = JSON.parse(item.caseType);
+            }
           } catch (error) {
             console.log(`error:`, error);
           }
