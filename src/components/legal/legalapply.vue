@@ -244,7 +244,7 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;"></span>受理时间</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.handledTime" placeholder="请输入法院受理时间！" @blur="validFieldToast('handledTime')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-date-picker v-model="legal.handledTime" :default-value="options.datetime" placeholder="请输入法院受理时间！" @blur="validFieldToast('handledTime')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
@@ -339,7 +339,7 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>委托时间</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.lawOfficeTime" placeholder="请选择外聘律所委托时间！" @blur="validFieldToast('lawOfficeTime')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-date-picker v-model="legal.lawOfficeTime" :default-value="options.datetime" placeholder="请选择外聘律所委托时间！" @blur="validFieldToast('lawOfficeTime')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
