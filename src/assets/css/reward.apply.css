@@ -130,11 +130,11 @@
     border-image: initial;
 }
 
-#legal-apply-content .ant-select-selection__rendered {
+#legal-apply-content .ant-select-auto-complete .ant-select-selection__rendered {
     position: relative;
     display: block;
     margin-right: 0px;
-    margin-left: 10px;
+    margin-left: 0px;
     line-height: 30px;
     border-width: 0px 0px 0px 0px;
     border-style: solid;
