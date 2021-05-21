@@ -1449,7 +1449,7 @@ export default {
         //是否确认提交此自由流程?
         this.$confirm({
             title: "确认操作",
-            content: "是否确认修改此律所的信息?",
+            content: "是否确认修改此案件信息?",
             onOk: async() => {
                   const { legal } = this;
                   legal.zone = JSON.stringify(legal.zone); //进行序列化
@@ -1465,7 +1465,7 @@ export default {
                   this.loading = false; //设置状态
                   this.readonly = true;
                   this.role = 'view';
-                  vant.Dialog.alert({  title: '温馨提示',  message: `案件发起申请成功！`, }); 
+                  vant.Dialog.alert({  title: '温馨提示',  message: `案件信息修改成功！`, }); 
                   await this.handleList(this.tablename , id);
                }
           });
