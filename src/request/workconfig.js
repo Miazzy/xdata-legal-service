@@ -376,6 +376,7 @@ export const getRewardWflow = ($router) => {
 export const getLawWebsiteflow = ($router) => {
     return [{
             name: "中国裁判文书网",
+            span: 24,
             href: "https://wenshu.court.gov.cn/",
             click: () => {
                 window.open('https://wenshu.court.gov.cn/', '_blank');
@@ -383,6 +384,7 @@ export const getLawWebsiteflow = ($router) => {
         },
         {
             name: "人民法院公告网",
+            span: 24,
             href: "https://rmfygg.court.gov.cn/",
             click: () => {
                 window.open("https://rmfygg.court.gov.cn/", '_blank');
@@ -390,6 +392,7 @@ export const getLawWebsiteflow = ($router) => {
         },
         {
             name: "中国执行信息公开网",
+            span: 24,
             href: "http://zxgk.court.gov.cn/zhzxgk/",
             click: () => {
                 window.open("http://zxgk.court.gov.cn/zhzxgk/", '_blank');
@@ -397,6 +400,7 @@ export const getLawWebsiteflow = ($router) => {
         },
         {
             name: "中国法院网",
+            span: 24,
             href: "https://www.chinacourt.org/index.shtml",
             click: () => {
                 window.open("https://www.chinacourt.org/index.shtml", '_blank');
@@ -404,6 +408,7 @@ export const getLawWebsiteflow = ($router) => {
         },
         {
             name: "中国庭审公开网",
+            span: 24,
             href: "http://tingshen.court.gov.cn/",
             click: () => {
                 window.open("http://tingshen.court.gov.cn/", '_blank');
@@ -411,6 +416,7 @@ export const getLawWebsiteflow = ($router) => {
         },
         {
             name: "人民法院诉讼资产网",
+            span: 24,
             href: "https://www.rmfysszc.gov.cn/",
             click: () => {
                 window.open("http://tingshen.court.gov.cn/", '_blank');
@@ -418,6 +424,7 @@ export const getLawWebsiteflow = ($router) => {
         }, //
         {
             name: "中国政府网",
+            span: 24,
             href: "http://www.gov.cn/",
             click: () => {
                 window.open("http://www.gov.cn/", '_blank');
@@ -425,6 +432,7 @@ export const getLawWebsiteflow = ($router) => {
         }, //
         {
             name: "中国政府网-法律法规",
+            span: 24,
             href: "http://www.gov.cn/ziliao/flfg/index.htm",
             click: () => {
                 window.open("http://www.gov.cn/ziliao/flfg/index.htm", '_blank');
@@ -432,6 +440,7 @@ export const getLawWebsiteflow = ($router) => {
         }, //
         {
             name: "法律法规数据库",
+            span: 24,
             href: "http://search.chinalaw.gov.cn/search2.html",
             click: () => {
                 window.open("http://search.chinalaw.gov.cn/search2.html", '_blank');
@@ -439,6 +448,7 @@ export const getLawWebsiteflow = ($router) => {
         },
         {
             name: "中国法院网法律文库",
+            span: 24,
             href: "https://www.chinacourt.org/law",
             click: () => {
                 window.open("https://www.chinacourt.org/law", '_blank');
@@ -446,6 +456,7 @@ export const getLawWebsiteflow = ($router) => {
         },
         {
             name: "企查查",
+            span: 6,
             href: "https://www.qcc.com/",
             click: () => {
                 window.open("https://www.qcc.com/", '_blank');
@@ -453,9 +464,26 @@ export const getLawWebsiteflow = ($router) => {
         },
         {
             name: "天眼查",
+            span: 6,
             href: "https://www.tianyancha.com/",
             click: () => {
                 window.open("https://www.tianyancha.com/", '_blank');
+            }
+        },
+        {
+            name: "启信宝",
+            span: 6,
+            href: "https://www.qixin.com/",
+            click: () => {
+                window.open("https://www.qixin.com/", '_blank');
+            }
+        },
+        {
+            name: "爱企查",
+            span: 6,
+            href: "https://aiqicha.baidu.com/",
+            click: () => {
+                window.open("https://aiqicha.baidu.com/", '_blank');
             }
         },
     ];

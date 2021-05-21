@@ -102,9 +102,9 @@
 }
 
 #nav-content-law .ant-card-body {
-    padding: 24px;
+    padding: 12px 24px 12px 24px;
     zoom: 1;
-    padding-bottom: 5px;
+    padding-bottom: 0px;
 }
 
 #nav-content-process .ant-card-body {

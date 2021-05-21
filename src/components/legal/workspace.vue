@@ -87,7 +87,7 @@
                     <a-tag color="blue" style="margin-bottom:0px;position:absolute;top:18px;right:20px;display:none;" ></a-tag>
                     <div class="members" >
                       <a-row>
-                        <a-col :span="24" v-for="item in lawsites" :key="item.href" style="padding-bottom:10px;">
+                        <a-col :span="item.span" v-for="item in lawsites" :key="item.href" style="padding-bottom:10px;">
                           <a @click="item.click" style="margin-top:0px;margin-bottom:5px;padding-bottom:5px;">
                             <span class="member" style="margin-top:0px;margin-bottom:5px;padding-bottom:5px;" >{{ item.name }}</span>
                           </a>
