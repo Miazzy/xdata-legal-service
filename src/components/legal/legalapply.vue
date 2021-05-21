@@ -1165,13 +1165,9 @@ export default {
             item.handledTime = dayjs(item.handledTime).format('YYYY-MM-DD') == 'Invalid Date' ? nowdate : dayjs(item.handledTime).format('YYYY-MM-DD');
             item.legalStatus = Betools.tools.isNull(item.legalStatus) ? '开庭举证' : item.legalStatus;
             try {
-              item.caseType = JSON.parse(item.caseType);
-              item.zone = JSON.parse(item.zone);
-              item.court = JSON.parse(item.court);
+              item.caseType = JSON.parse(item.caseType),item.zone = JSON.parse(item.zone),item.court = JSON.parse(item.court);
             } catch (error) {
-              item.zone = JSON.parse(item.zone);
-              item.caseType = JSON.parse(item.caseType);
-              item.court = JSON.parse(item.court);
+              item.zone = JSON.parse(item.zone),item.caseType = JSON.parse(item.caseType),item.court = JSON.parse(item.court);
             }
           } catch (error) {
             console.log(`error:`, error);
