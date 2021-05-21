@@ -219,7 +219,7 @@ export default {
       // 案件记录追加进展
       async execProcess(elem){
           const { $router } = this;
-          $router.push(`/legal/legalapply?id=${elem.id}&type=1&tname=案件进展&apply=进展`);
+          $router.push(`/legal/legalview?id=${elem.id}&type=1&tname=案件进展&apply=进展`);
       },
 
       // 案件记录查看申请
