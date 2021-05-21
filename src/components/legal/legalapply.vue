@@ -315,18 +315,25 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>外部律所</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.externalFlag" placeholder="请选择是否聘用外部律所" @blur="validFieldToast('externalFlag')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-select  v-model="legal.externalFlag" default-value="是" @blur="validFieldToast('externalFlag')"  placeholder="请选择是否聘用外部律所" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                        <a-select-option value="是">
+                          是
+                        </a-select-option>
+                        <a-select-option value="否">
+                          否
+                        </a-select-option>
+                      </a-select>
                     </a-col>
                   </a-row>
                 </div>
 
-                <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                <div v-if="legal.externalFlag == '是' " class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>律师事务所</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.lawOffice" placeholder="请输入外聘律师事务所！" @blur="validFieldToast('lawOffice')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-auto-complete :data-source="firmNamelist" v-model="legal.lawOffice" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0; width:100%; border-width: 0px 0px 1px; border-style: solid; border-color: rgb(254, 254, 254) rgb(254, 254, 254) rgb(240, 240, 240); border-image: initial;"  placeholder="请输入律所名称！" :filter-option="filterOption" />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>委托时间</span>
@@ -337,7 +344,7 @@
                   </a-row>
                 </div>
 
-                <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                <div v-if="legal.externalFlag == '是' " class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>外聘律师</span>
@@ -582,7 +589,7 @@ export default {
         defendant :'', // varchar(64)  default '' not null comment '应诉人(被告/被上诉人)',
         thirdParty :'', // varchar(64)  default '' not null comment '第三人 third_party',
         handledTime :'', // varchar(32)  default '' not null comment '法院受理时间',
-        externalFlag :'', // varchar(2)   default 'N' not null comment '是否聘用外部律所',
+        externalFlag :'否', // varchar(2)   default 'N' not null comment '是否聘用外部律所',
         lawOffice :'', // varchar(64)  default '' not null comment '外聘律师',
         lawOfficeTime :'', // varchar(16)  default '' not null comment '外聘律所委托时间',
         lawyer :'', // varchar(64)  default '' not null comment '外聘律师',
@@ -703,6 +710,8 @@ export default {
       collection: [{ }],
       userinfo: '',
       usertitle:'',
+      firmlist:[],
+      firmNamelist:[],
       breadcrumb:[{icon:'home',text:'首页',path:'/legal/workspace'},{icon:'user',text:'案件管控',path:'/legal/workspace'},{icon:'form',text:'案件发起',path:''}],
       statusType:{'valid':'有效','invalid':'删除'},
       zoneType:{'领地集团总部':'领地集团总部','重庆区域':'重庆区域','两湖区域':'两湖区域','川北区域':'川北区域','成都区域':'成都区域','乐眉区域':'乐眉区域','中原区域':'中原区域','攀西区域':'攀西区域','新疆区域':'新疆区域','大湾区域':'大湾区域','北京区域':'北京区域'},
@@ -716,6 +725,12 @@ export default {
   methods: {
       moment,
       isNull:Betools.tools.isNull,
+      // 律所名称过滤
+      filterOption(input, option) {
+        return (
+          option.componentOptions.children[0].text.toUpperCase().indexOf(input.toUpperCase()) >= 0
+        );
+      },
       // 企业微信登录处理函数
       async  weworkLogin  (codeType = 'search', systemType = 'search')  {
         const userinfo_work = await Betools.query.queryWeworkUser(codeType, systemType,'v5');
@@ -1089,6 +1104,8 @@ export default {
           this.legal.apply_username = userinfo.username;
           const legal = Betools.storage.getStore(`system_${this.tablename}_item#${this.legal.type}#@${userinfo.realname}`); //获取缓存信息
           const id = this.id = Betools.tools.getUrlParam('id');
+          this.firmlist = await Betools.manage.queryTableData('bs_law_firm' , `_where=(status,ne,0)&_fields=id,firm_name&_sort=-id&_p=0&_size=10000`);
+          this.firmNamelist = this.firmlist.map(item => { return item.firm_name });
           if(!Betools.tools.isNull(id)){
             return this.legal = await this.handleList(this.tablename , id);
           } else {
