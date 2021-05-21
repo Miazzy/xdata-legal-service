@@ -490,8 +490,91 @@ export const getLawWebsiteflow = ($router) => {
 }
 
 export const courtList = () => {
-    return [
-
+    return [{
+            "label": "北京市高级人民法院",
+            "value": "北京市高级人民法院",
+            "children": [{
+                    "label": "北京市第一中级人民法院",
+                    "value": "北京市第一中级人民法院",
+                    "children": [
+                        { "label": "北京市石景山区人民法院", "value": "北京市石景山区人民法院" },
+                        { "label": "北京市海淀区人民法院", "value": "北京市海淀区人民法院" },
+                        { "label": "北京市门头沟区人民法院", "value": "北京市门头沟区人民法院" },
+                        { "label": "北京市昌平区人民法院", "value": "北京市昌平区人民法院" },
+                        { "label": "北京市延庆区人民法院", "value": "北京市延庆区人民法院" },
+                    ]
+                },
+                {
+                    "label": "北京市第二中级人民法院",
+                    "value": "北京市第二中级人民法院",
+                    "children": [
+                        { "label": "北京市东城区人民法院", "value": "北京市东城区人民法院" },
+                        { "label": "北京市丰台区人民法院", "value": "北京市丰台区人民法院" },
+                        { "label": "北京市西城区人民法院", "value": "北京市西城区人民法院" },
+                        { "label": "北京市房山区人民法院", "value": "北京市房山区人民法院" },
+                        { "label": "北京市大兴区人民法院", "value": "北京市大兴区人民法院" },
+                    ]
+                },
+                {
+                    "label": "北京市第三中级人民法院",
+                    "value": "北京市第三中级人民法院",
+                    "children": [
+                        { "label": "北京市朝阳区人民法院", "value": "北京市朝阳区人民法院" },
+                        { "label": "北京市顺义区人民法院", "value": "北京市顺义区人民法院" },
+                        { "label": "北京市通州区人民法院", "value": "北京市通州区人民法院" },
+                        { "label": "北京市平谷区人民法院", "value": "北京市平谷区人民法院" },
+                        { "label": "北京市怀柔区人民法院", "value": "北京市怀柔区人民法院" },
+                        { "label": "北京市密云区人民法院", "value": "北京市密云区人民法院" },
+                    ]
+                },
+                {
+                    "label": "北京市第四中级人民法院(北京铁路运输中级法院)",
+                    "value": "北京市第四中级人民法院(北京铁路运输中级法院)",
+                    "children": [
+                        { "label": "北京铁路运输法院", "value": "北京铁路运输法院" },
+                        { "label": "北京互联网法院", "value": "北京互联网法院" },
+                    ]
+                },
+                { "label": "北京知识产权法院", "value": "北京知识产权法院" },
+            ]
+        },
+        {
+            "label": "天津市高级人民法院",
+            "value": "天津市高级人民法院",
+            "children": [
+                { "label": "", "value": "" }
+            ]
+        },
+        { "label": "河北省高级人民法院", "value": "河北省高级人民法院", "children": [{ "label": "", "value": "" }] },
+        { "label": "山西省高级人民法院", "value": "山西省高级人民法院", "children": [{ "label": "", "value": "" }] },
+        { "label": "内蒙古自治区高级人民法院", "value": "内蒙古自治区高级人民法院", "children": [{ "label": "", "value": "" }] },
+        { "label": "辽宁省高级人民法院", "value": "辽宁省高级人民法院", "children": [{ "label": "", "value": "" }] },
+        { "label": "吉林省高级人民法院", "value": "吉林省高级人民法院", "children": [{ "label": "", "value": "" }] },
+        { "label": "黑龙江省高级人民法院", "value": "黑龙江省高级人民法院", "children": [{ "label": "", "value": "" }] },
+        { "label": "上海市高级人民法院", "value": "上海市高级人民法院", "children": [{ "label": "", "value": "" }] },
+        { "label": "江苏省高级人民法院", "value": "江苏省高级人民法院", "children": [{ "label": "", "value": "" }] },
+        { "label": "浙江省高级人民法院", "value": "浙江省高级人民法院", "children": [{ "label": "", "value": "" }] },
+        { "label": "安徽省高级人民法院", "value": "安徽省高级人民法院", "children": [{ "label": "", "value": "" }] },
+        { "label": "福建省高级人民法院", "value": "福建省高级人民法院", "children": [{ "label": "", "value": "" }] },
+        { "label": "江西省高级人民法院", "value": "江西省高级人民法院", "children": [{ "label": "", "value": "" }] },
+        { "label": "山东省高级人民法院", "value": "山东省高级人民法院", "children": [{ "label": "", "value": "" }] },
+        { "label": "河南省高级人民法院", "value": "河南省高级人民法院", "children": [{ "label": "", "value": "" }] },
+        { "label": "湖北省高级人民法院", "value": "湖北省高级人民法院", "children": [{ "label": "", "value": "" }] },
+        { "label": "湖南省高级人民法院", "value": "湖南省高级人民法院", "children": [{ "label": "", "value": "" }] },
+        { "label": "广东省高级人民法院", "value": "广东省高级人民法院", "children": [{ "label": "", "value": "" }] },
+        { "label": "广西壮族自治区高级人民法院", "value": "广西壮族自治区高级人民法院", "children": [{ "label": "", "value": "" }] },
+        { "label": "海南省高级人民法院", "value": "海南省高级人民法院", "children": [{ "label": "", "value": "" }] },
+        { "label": "重庆市高级人民法院", "value": "重庆市高级人民法院", "children": [{ "label": "", "value": "" }] },
+        { "label": "四川省高级人民法院", "value": "四川省高级人民法院", "children": [{ "label": "", "value": "" }] },
+        { "label": "贵州省高级人民法院", "value": "贵州省高级人民法院", "children": [{ "label": "", "value": "" }] },
+        { "label": "云南省高级人民法院", "value": "云南省高级人民法院", "children": [{ "label": "", "value": "" }] },
+        { "label": "西藏自治区高级人民法院", "value": "西藏自治区高级人民法院", "children": [{ "label": "", "value": "" }] },
+        { "label": "陕西省高级人民法院", "value": "陕西省高级人民法院", "children": [{ "label": "", "value": "" }] },
+        { "label": "甘肃省高级人民法院", "value": "甘肃省高级人民法院", "children": [{ "label": "", "value": "" }] },
+        { "label": "青海省高级人民法院", "value": "青海省高级人民法院", "children": [{ "label": "", "value": "" }] },
+        { "label": "宁夏回族自治区高级人民法院", "value": "宁夏回族自治区高级人民法院", "children": [{ "label": "", "value": "" }] },
+        { "label": "新疆维吾尔自治区高级人民法院", "value": "新疆维吾尔自治区高级人民法院", "children": [{ "label": "", "value": "" }] },
+        { "label": "新疆维吾尔自治区高级人民法院生产建设兵团分院", "value": "新疆维吾尔自治区高级人民法院生产建设兵团分院", "children": [{ "label": "", "value": "" }] },
     ];
 };
 
