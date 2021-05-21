@@ -840,7 +840,7 @@ export default {
           return false;
         }
       },
-      
+
       //用户选择知会人员
       async queryNotifyMan(){
         //获取盖章人信息
@@ -1171,6 +1171,7 @@ export default {
               item.zone = JSON.parse(item.zone);
               item.caseType = JSON.parse(item.caseType);
             }
+            this.legal.court = [];
           } catch (error) {
             console.log(`error:`, error);
           }
@@ -1386,11 +1387,13 @@ export default {
 
                   legal.zone = JSON.stringify(legal.zone); //进行序列化
                   legal.caseType = JSON.stringify(legal.caseType); //进行序列化
+                  legal.court = JSON.stringify(legal.court); //进行序列化
 
                   const result = await Betools.manage.postTableData(this.tablename , this.legal); // 向表单提交form对象数据
                   
                   legal.zone = JSON.parse(legal.zone); //进行序列化
                   legal.caseType = JSON.parse(legal.caseType); //进行序列化
+                  legal.court = JSON.parse(legal.court); //进行序列化
 
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
