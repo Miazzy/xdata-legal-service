@@ -421,7 +421,7 @@ export const getLawWebsiteflow = ($router) => {
             click: () => {
                 window.open("http://tingshen.court.gov.cn/", '_blank');
             }
-        }, //
+        },
         {
             name: "中国政府网",
             span: 24,
@@ -429,7 +429,7 @@ export const getLawWebsiteflow = ($router) => {
             click: () => {
                 window.open("http://www.gov.cn/", '_blank');
             }
-        }, //
+        },
         {
             name: "中国政府网-法律法规",
             span: 24,
@@ -437,7 +437,7 @@ export const getLawWebsiteflow = ($router) => {
             click: () => {
                 window.open("http://www.gov.cn/ziliao/flfg/index.htm", '_blank');
             }
-        }, //
+        },
         {
             name: "法律法规数据库",
             span: 24,
