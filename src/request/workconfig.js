@@ -165,7 +165,7 @@ export const reward = ($router) => {
         title: '案件管控',
         taskflows: [{
             name: "起诉案件发起",
-            avatar: `//cdn.jsdelivr.net/gh/Miazzy/yunwisdoms@r3.0.1/images/pay03.png`,
+            avatar: `https://cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/qiandao_jy.png`,
             href: "/account/todolist",
             description: '公司主动起诉案件发起申请',
             click: () => {
@@ -173,7 +173,7 @@ export const reward = ($router) => {
             }
         }, {
             name: "应诉案件发起",
-            avatar: `//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/pay.png`,
+            avatar: `https://cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/qiandaohuizong_jy.png`,
             href: "/account/donelist",
             description: '公司应诉案件发起申请',
             click: () => {
@@ -181,7 +181,7 @@ export const reward = ($router) => {
             }
         }, {
             name: "案件管理",
-            avatar: `//cdn.jsdelivr.net/gh/Miazzy/yunwisdoms@r3.0.0/images/pay02.png`,
+            avatar: `https://cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/yanglaodaiyuzigerenzheng.png`,
             href: "/account/donelist",
             description: '查看/管理案件列表信息',
             click: () => {
@@ -197,7 +197,7 @@ export const reward = ($router) => {
             },
         }, {
             name: "一审管理",
-            avatar: `//cdn.jsdelivr.net/gh/Miazzy/yunwisdoms@r3.0.0/images/pay00.png`,
+            avatar: `https://cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/fenbufenxiang_jy.png`,
             href: "/account/myrewards",
             description: '对案件进展处于一审阶段的案件进行管理',
             click: () => {
@@ -205,7 +205,7 @@ export const reward = ($router) => {
             },
         }, {
             name: "二审管理",
-            avatar: `//cdn.jsdelivr.net/gh/Miazzy/yunwisdoms@r3.0.2/images/pay07.png`,
+            avatar: `https://cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/laodongnenglijianding.png`,
             href: "/account/myanalyse",
             description: '对案件进展处于二审阶段的案件进行管理',
             click: () => {
@@ -213,7 +213,7 @@ export const reward = ($router) => {
             },
         }, {
             name: "执行管理",
-            avatar: `//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/yuebao.png`,
+            avatar: `https://cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/paimai.png`,
             href: "/account/myanalyse",
             description: '对案件进展处于执行阶段的案件进行管理',
             click: () => {
@@ -221,7 +221,7 @@ export const reward = ($router) => {
             },
         }, {
             name: "再审管理",
-            avatar: `//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/ribao.png`,
+            avatar: `https://cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/jungongyanshou_jy.png`,
             href: "/account/myanalyse",
             description: '对案件进展处于再审阶段的案件进行管理',
             click: () => {
@@ -269,7 +269,7 @@ export const reward = ($router) => {
         title: '法院法官',
         taskflows: [{
             name: "法院录入",
-            avatar: `//cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/xinwen_jy.png`,
+            avatar: `https://cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/anqiantiaojie.png`,
             href: "/account/todolist",
             description: '律师事务所录入申请',
             click: () => {
@@ -277,7 +277,7 @@ export const reward = ($router) => {
             }
         }, {
             name: "法官录入",
-            avatar: `//cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/xiangmuxinxi_jy.png`,
+            avatar: `https://cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/building-type-180000-18.png`,
             href: "/account/donelist",
             description: '律师事务所下律师录入申请',
             click: () => {
@@ -285,7 +285,7 @@ export const reward = ($router) => {
             }
         }, {
             name: "法院管理",
-            avatar: `//cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/xiezuowendangku_jy.png`,
+            avatar: `https://cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/qiyehaozujian_jy.png`,
             href: "/account/todolist",
             description: '律师事务所管理',
             click: () => {
@@ -293,7 +293,7 @@ export const reward = ($router) => {
             }
         }, {
             name: "法官管理",
-            avatar: `//cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/baomingfei.png`,
+            avatar: `https://cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/dushu_sn01.png`,
             href: "/account/todolist",
             description: '律师管理',
             click: () => {
@@ -444,13 +444,13 @@ export const getLawWebsiteflow = ($router) => {
                 window.open("https://www.chinacourt.org/law", '_blank');
             }
         }, //
-        // {
-        //     name: "企查查",
-        //     href: "https://www.qcc.com/",
-        //     click: () => {
-        //         window.open("https://www.qcc.com/", '_blank');
-        //     }
-        // },
+        {
+            name: "企查查",
+            href: "https://www.qcc.com/",
+            click: () => {
+                window.open("https://www.qcc.com/", '_blank');
+            }
+        },
         // {
         //     name: "天眼查",
         //     href: "https://www.tianyancha.com/",
