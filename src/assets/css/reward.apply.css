@@ -156,3 +156,17 @@
     background-color: transparent!important;
     cursor: pointer;
 }
+
+.ant-cascader-menu-item {
+    padding: 5px 12px;
+    height: 32px;
+    line-height: 22px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all .3s;
+}
+
+.ant-cascader-menu-item-expand {
+    position: relative;
+    padding-right: 24px;
+}
