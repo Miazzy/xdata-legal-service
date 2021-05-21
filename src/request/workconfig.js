@@ -490,7 +490,9 @@ export const getLawWebsiteflow = ($router) => {
 }
 
 export const courtList = () => {
-    return [{
+    return [
+        { "label": "", "value": "" },
+        {
             "label": "北京市高级人民法院",
             "value": "北京市高级人民法院",
             "children": [

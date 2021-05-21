@@ -51,8 +51,7 @@
                           <div v-if="data.length > 0" class="reward-content-table" style="margin-left:0px; width:98%;"> 
                               <a-list item-layout="horizontal" :data-source="data">
                                 <a-list-item slot="renderItem" slot-scope="item, index">
-                                  <a slot="actions" @click="execView(item)">查看</a>
-                                  <a slot="actions" @click="execPatch(item)">修改</a>
+                                  <a slot="actions" @click="execView(item)">查看</a><!-- <a slot="actions" @click="execPatch(item)">修改</a> -->
                                   <a-list-item-meta :index="index" :description="`${item.caseID} 受理法院：${item.court}，承办法官：${item.judge}，案件状态：${item.legalStatus}`" >
                                     <a slot="title" >{{ `${item.caseID} ${item.caseType} 程序阶段：${item.stage}，原告：${item.accuser}，被告：${item.defendant}` }}</a>
                                   </a-list-item-meta>
