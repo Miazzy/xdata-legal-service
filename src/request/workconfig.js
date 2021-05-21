@@ -489,6 +489,12 @@ export const getLawWebsiteflow = ($router) => {
     ];
 }
 
+export const courtList = () => {
+    return [
+
+    ];
+};
+
 /**
  * @description 诉讼案件明细默认配置
  */
