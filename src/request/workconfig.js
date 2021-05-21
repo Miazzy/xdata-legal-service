@@ -499,6 +499,7 @@ export const courtList = () => {
                     "label": "北京市第一中级人民法院",
                     "value": "北京市第一中级人民法院",
                     "children": [
+                        { "label": "", "value": "" },
                         { "label": "北京市石景山区人民法院", "value": "北京市石景山区人民法院" },
                         { "label": "北京市海淀区人民法院", "value": "北京市海淀区人民法院" },
                         { "label": "北京市门头沟区人民法院", "value": "北京市门头沟区人民法院" },
@@ -510,6 +511,7 @@ export const courtList = () => {
                     "label": "北京市第二中级人民法院",
                     "value": "北京市第二中级人民法院",
                     "children": [
+                        { "label": "", "value": "" },
                         { "label": "北京市东城区人民法院", "value": "北京市东城区人民法院" },
                         { "label": "北京市丰台区人民法院", "value": "北京市丰台区人民法院" },
                         { "label": "北京市西城区人民法院", "value": "北京市西城区人民法院" },
@@ -521,6 +523,7 @@ export const courtList = () => {
                     "label": "北京市第三中级人民法院",
                     "value": "北京市第三中级人民法院",
                     "children": [
+                        { "label": "", "value": "" },
                         { "label": "北京市朝阳区人民法院", "value": "北京市朝阳区人民法院" },
                         { "label": "北京市顺义区人民法院", "value": "北京市顺义区人民法院" },
                         { "label": "北京市通州区人民法院", "value": "北京市通州区人民法院" },
@@ -533,6 +536,7 @@ export const courtList = () => {
                     "label": "北京市第四中级人民法院",
                     "value": "北京市第四中级人民法院",
                     "children": [
+                        { "label": "", "value": "" },
                         { "label": "北京铁路运输法院", "value": "北京铁路运输法院" },
                         { "label": "北京互联网法院", "value": "北京互联网法院" },
                     ]
@@ -541,6 +545,7 @@ export const courtList = () => {
                     "label": "北京铁路运输中级法院",
                     "value": "北京铁路运输中级法院",
                     "children": [
+                        { "label": "", "value": "" },
                         { "label": "北京铁路运输法院", "value": "北京铁路运输法院" },
                         { "label": "北京互联网法院", "value": "北京互联网法院" },
                     ]
@@ -557,6 +562,7 @@ export const courtList = () => {
                     "label": "天津市第一中级人民法院",
                     "value": "天津市第一中级人民法院",
                     "children": [
+                        { "label": "", "value": "" },
                         { "label": "天津市和平区人民法院", "value": "天津市和平区人民法院" },
                         { "label": "天津市南开区人民法院", "value": "天津市南开区人民法院" },
                         { "label": "天津市红桥区人民法院", "value": "天津市红桥区人民法院" },
@@ -571,6 +577,7 @@ export const courtList = () => {
                     "label": "天津市第二中级人民法院",
                     "value": "天津市第二中级人民法院",
                     "children": [
+                        { "label": "", "value": "" },
                         { "label": "天津市河东区人民法院", "value": "天津市河东区人民法院" },
                         { "label": "天津市河西区人民法院", "value": "天津市河西区人民法院" },
                         { "label": "天津市河北区人民法院", "value": "天津市河北区人民法院" },
@@ -583,6 +590,7 @@ export const courtList = () => {
                     "label": "天津市第三中级人民法院",
                     "value": "天津市第三中级人民法院",
                     "children": [
+                        { "label": "", "value": "" },
                         { "label": "天津市滨海新区人民法院", "value": "天津市滨海新区人民法院" },
                         { "label": "天津市东丽区人民法院", "value": "天津市东丽区人民法院" },
                         { "label": "天津市宁河区人民法院", "value": "天津市宁河区人民法院" },
