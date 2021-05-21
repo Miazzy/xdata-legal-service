@@ -1,5 +1,5 @@
 <template>
-    <div class="welcome" :class="{hide:hide}">
+    <div class="welcome" :class="{ hide }">
         <img :src="src" alt="">
     </div>
 </template>
@@ -18,8 +18,7 @@ export default {
         this.hide = true; //隐藏背景图片
     },
     created(){
-      // 加载预览页面图片 首页背景图片 首页图片
-      this.src = Betools.tools.isPCWeb() ? this.src : this.src;
+      this.src = Betools.tools.isPCWeb() ? this.src : this.src; // 加载预览页面图片 首页背景图片 首页图片
     },
 }
 </script>

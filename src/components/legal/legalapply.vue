@@ -350,7 +350,7 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>外聘律师</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.lawyer" placeholder="请输入外聘律师！" @blur="validFieldToast('lawyer')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-auto-complete :data-source="lawyerNamelist" v-model="legal.lawyer" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0; width:100%; border-width: 0px 0px 1px; border-style: solid; border-color: rgb(254, 254, 254) rgb(254, 254, 254) rgb(240, 240, 240); border-image: initial;"  placeholder="请输入外聘律师！" :filter-option="filterOption" />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>联系电话</span>
@@ -713,6 +713,8 @@ export default {
       usertitle:'',
       firmlist:[],
       firmNamelist:[],
+      lawyerlist:[],
+      lawyerNamelist:[],
       breadcrumb:[{icon:'home',text:'首页',path:'/legal/workspace'},{icon:'user',text:'案件管控',path:'/legal/workspace'},{icon:'form',text:'案件发起',path:''}],
       statusType:{'valid':'有效','invalid':'删除'},
       zoneType:{'领地集团总部':'领地集团总部','重庆区域':'重庆区域','两湖区域':'两湖区域','川北区域':'川北区域','成都区域':'成都区域','乐眉区域':'乐眉区域','中原区域':'中原区域','攀西区域':'攀西区域','新疆区域':'新疆区域','大湾区域':'大湾区域','北京区域':'北京区域'},
@@ -1126,6 +1128,8 @@ export default {
           const id = this.id = Betools.tools.getUrlParam('id');
           this.firmlist = await Betools.manage.queryTableData('bs_law_firm' , `_where=(status,ne,0)&_fields=id,firm_name&_sort=-id&_p=0&_size=10000`);
           this.firmNamelist = this.firmlist.map(item => { return item.firm_name });
+          this.lawyerlist = await Betools.manage.queryTableData('bs_lawyer' , `_where=(status,ne,0)&_fields=id,lawyer_name&_sort=-id&_p=0&_size=10000`);
+          this.lawyerNamelist = this.lawyerlist.map(item => { return item.lawyer_name });
           if(!Betools.tools.isNull(id)){
             this.legal = await this.handleList(this.tablename , id);
           } else {
