@@ -223,8 +223,8 @@ export default {
 
       // 案件记录导出功能
       async execExport(){
-        const { $router } = this;
-        this.$refs.grid.exportTable('xlsx', false, '案件台账数据');
+          const { $router } = this;
+          this.$refs.grid.exportTable('xlsx', false, '案件台账数据');
       },
 
       // 案件列表执行刷新操作45

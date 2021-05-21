@@ -751,6 +751,10 @@ export default {
       async onUpdate(records){
 
       },
+      // 文件complete事件
+      async onComplete(){
+
+      },
       // Excel文件解析成功
       async onSuccess(data, file, ratio = 0.00, zone = '', project = '' , regexp = /[\ |‘|’|\~|\`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?]/g){
         
@@ -1095,6 +1099,7 @@ export default {
       // 查询基础信息
       async queryInfo() {
         try {
+          debugger;
           this.iswechat = Betools.tools.isWechat(); //查询当前是否微信端
           this.iswework = Betools.tools.isWework(); //查询是否为企业微信
           this.userinfo = await this.weworkLogin(); //查询当前登录用户
@@ -1108,7 +1113,7 @@ export default {
           this.firmlist = await Betools.manage.queryTableData('bs_law_firm' , `_where=(status,ne,0)&_fields=id,firm_name&_sort=-id&_p=0&_size=10000`);
           this.firmNamelist = this.firmlist.map(item => { return item.firm_name });
           if(!Betools.tools.isNull(id)){
-            return this.legal = await this.handleList(this.tablename , id);
+            this.legal = await this.handleList(this.tablename , id);
           } else {
             try {
               if(legal){ //自动回显刚才填写的用户基础信息
@@ -1132,6 +1137,31 @@ export default {
         } catch (error) {
           console.log(error);
         }
+      },
+
+      // 查询不同状态的律所数据
+      async handleList(tableName , id){
+        const nowdate = dayjs().format('YYYY-MM-DD')
+        let list = await Betools.manage.queryTableData(tableName , `_where=(id,eq,${id})&_sort=-id&_p=0&_size=1`);
+        list.map((item)=>{ 
+          try {
+            item.create_time = dayjs(item.create_time).format('YYYY-MM-DD'); 
+            item.receiveTime = dayjs(item.receiveTime).format('YYYY-MM-DD') == 'Invalid Date' ? nowdate : dayjs(item.receiveTime).format('YYYY-MM-DD');
+            item.lawRTime = dayjs(item.lawRTime).format('YYYY-MM-DD') == 'Invalid Date' ? nowdate : dayjs(item.lawRTime).format('YYYY-MM-DD');
+            item.handledTime = dayjs(item.handledTime).format('YYYY-MM-DD') == 'Invalid Date' ? nowdate : dayjs(item.handledTime).format('YYYY-MM-DD');
+            item.legalStatus = Betools.tools.isNull(item.legalStatus) ? '开庭举证' : item.legalStatus;
+            try {
+              item.caseType = JSON.parse(item.caseType);
+              item.zone = JSON.parse(item.zone);
+            } catch (error) {
+              item.zone = JSON.parse(item.zone);
+              item.caseType = JSON.parse(item.caseType);
+            }
+          } catch (error) {
+            console.log(`error:`, error);
+          }
+        });
+        return list && list.length > 0 ? list[0] : {};
       },
 
       // 计算案件涉案金额
