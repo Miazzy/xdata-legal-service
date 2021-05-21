@@ -726,12 +726,14 @@ export default {
   methods: {
       moment,
       isNull:Betools.tools.isNull,
+
       // 律所名称过滤
       filterOption(input, option) {
         return (
           option.componentOptions.children[0].text.toUpperCase().indexOf(input.toUpperCase()) >= 0
         );
       },
+
       // 企业微信登录处理函数
       async  weworkLogin  (codeType = 'search', systemType = 'search')  {
         const userinfo_work = await Betools.query.queryWeworkUser(codeType, systemType,'v5');
@@ -740,29 +742,37 @@ export default {
           this.usertitle = (userinfo && userinfo.parent_company && userinfo.parent_company.name ? userinfo.parent_company.name + ' > ' :'')  + (userinfo ? userinfo.realname || userinfo.name || userinfo.lastname : '');
           return userinfo;
       },
+
+      // 执行删除事件
       async onDelete(){
         console.log('delete');
       },
+
       // 执行页面跳转
       async redirectView(path) {
           Betools.tools.isNull(path) ? null: this.$router.push(path);
       },
-      // 文件update事件
+
+      // 执行update事件
       async onUpdate(records){
 
       },
-      // 文件complete事件
+
+      // 执行complete事件
       async onComplete(){
 
       },
+
       // Excel文件解析成功
       async onSuccess(data, file, ratio = 0.00, zone = '', project = '' , regexp = /[\ |‘|’|\~|\`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?]/g){
         
       },
-      // 文件change事件
+
+      // 执行change事件
       async onChange(event) {
         this.file = event.target.files ? event.target.files[0] : null;
       },
+
       // 上传提示
       async toastUpload(flag){
         if(flag == 'start'){
@@ -778,6 +788,7 @@ export default {
         await Betools.tools.sleep(0);
         this.$toast.success('上传成功');
       },
+
       // 获取处理日志
       async queryProcessLog(){
         const id = Betools.tools.getUrlParam('id');
@@ -789,6 +800,7 @@ export default {
           console.log(error);
         }
       },
+
       // 删除处理日志
       async deleteProcessLog(){
         const id = Betools.tools.getUrlParam('id');
@@ -810,6 +822,7 @@ export default {
           await workflow.deleteViewProcessLog(tlist);
         }
       },
+
       validField(fieldName){
         const userinfo = Betools.storage.getStore('system_userinfo'); // 获取用户基础信息
         const regMail = workconfig.system.config.regexp.mail; // 邮箱验证正则表达式
@@ -827,6 +840,7 @@ export default {
           return false;
         }
       },
+      
       //用户选择知会人员
       async queryNotifyMan(){
         //获取盖章人信息
