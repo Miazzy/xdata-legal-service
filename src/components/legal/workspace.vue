@@ -97,7 +97,6 @@
                   </a-card>
                 </div>
             </div>
-
             
           </a-col>
         </keep-alive>
