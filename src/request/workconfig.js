@@ -801,26 +801,292 @@ export const courtList = () => {
                 { "label": "安徽省亳州市中级人民法院", "value": "安徽省亳州市中级人民法院" },
             ]
         },
-        { "label": "福建省高级人民法院", "value": "福建省高级人民法院", "children": [{ "label": "", "value": "" }] },
-        { "label": "江西省高级人民法院", "value": "江西省高级人民法院", "children": [{ "label": "", "value": "" }] },
-        { "label": "山东省高级人民法院", "value": "山东省高级人民法院", "children": [{ "label": "", "value": "" }] },
-        { "label": "河南省高级人民法院", "value": "河南省高级人民法院", "children": [{ "label": "", "value": "" }] },
-        { "label": "湖北省高级人民法院", "value": "湖北省高级人民法院", "children": [{ "label": "", "value": "" }] },
-        { "label": "湖南省高级人民法院", "value": "湖南省高级人民法院", "children": [{ "label": "", "value": "" }] },
-        { "label": "广东省高级人民法院", "value": "广东省高级人民法院", "children": [{ "label": "", "value": "" }] },
-        { "label": "广西壮族自治区高级人民法院", "value": "广西壮族自治区高级人民法院", "children": [{ "label": "", "value": "" }] },
-        { "label": "海南省高级人民法院", "value": "海南省高级人民法院", "children": [{ "label": "", "value": "" }] },
-        { "label": "重庆市高级人民法院", "value": "重庆市高级人民法院", "children": [{ "label": "", "value": "" }] },
-        { "label": "四川省高级人民法院", "value": "四川省高级人民法院", "children": [{ "label": "", "value": "" }] },
-        { "label": "贵州省高级人民法院", "value": "贵州省高级人民法院", "children": [{ "label": "", "value": "" }] },
-        { "label": "云南省高级人民法院", "value": "云南省高级人民法院", "children": [{ "label": "", "value": "" }] },
-        { "label": "西藏自治区高级人民法院", "value": "西藏自治区高级人民法院", "children": [{ "label": "", "value": "" }] },
-        { "label": "陕西省高级人民法院", "value": "陕西省高级人民法院", "children": [{ "label": "", "value": "" }] },
-        { "label": "甘肃省高级人民法院", "value": "甘肃省高级人民法院", "children": [{ "label": "", "value": "" }] },
-        { "label": "青海省高级人民法院", "value": "青海省高级人民法院", "children": [{ "label": "", "value": "" }] },
-        { "label": "宁夏回族自治区高级人民法院", "value": "宁夏回族自治区高级人民法院", "children": [{ "label": "", "value": "" }] },
-        { "label": "新疆维吾尔自治区高级人民法院", "value": "新疆维吾尔自治区高级人民法院", "children": [{ "label": "", "value": "" }] },
-        { "label": "新疆维吾尔自治区高级人民法院生产建设兵团分院", "value": "新疆维吾尔自治区高级人民法院生产建设兵团分院", "children": [{ "label": "", "value": "" }] },
+        {
+            "label": "福建省高级人民法院",
+            "value": "福建省高级人民法院",
+            "children": [
+                { "label": "", "value": "" },
+                { "label": "福建省福州市中级人民法院", "value": "福建省福州市中级人民法院" },
+                { "label": "福建省厦门市中级人民法院", "value": "福建省厦门市中级人民法院" },
+                { "label": "福建省莆田市中级人民法院", "value": "福建省莆田市中级人民法院" },
+                { "label": "福建省三明市中级人民法院", "value": "福建省三明市中级人民法院" },
+                { "label": "福建省泉州市中级人民法院", "value": "福建省泉州市中级人民法院" },
+                { "label": "福建省漳州市中级人民法院", "value": "福建省漳州市中级人民法院" },
+                { "label": "福建省南平市中级人民法院", "value": "福建省南平市中级人民法院" },
+                { "label": "福建省宁德市中级人民法院", "value": "福建省宁德市中级人民法院" },
+                { "label": "福建省龙岩市中级人民法院", "value": "福建省龙岩市中级人民法院" },
+                { "label": "厦门海事法院", "value": "厦门海事法院" },
+                { "label": "福州铁路运输法院", "value": "福州铁路运输法院" },
+            ]
+        },
+        {
+            "label": "江西省高级人民法院",
+            "value": "江西省高级人民法院",
+            "children": [
+                { "label": "", "value": "" },
+                { "label": "江西省南昌市中级人民法院", "value": "江西省南昌市中级人民法院" },
+                { "label": "江西省景德镇市中级人民法院", "value": "江西省景德镇市中级人民法院" },
+                { "label": "江西省萍乡市中级人民法院", "value": "江西省萍乡市中级人民法院" },
+                { "label": "江西省九江市中级人民法院", "value": "江西省九江市中级人民法院" },
+                { "label": "江西省新余市中级人民法院", "value": "江西省新余市中级人民法院" },
+                { "label": "江西省鹰潭市中级人民法院", "value": "江西省鹰潭市中级人民法院" },
+                { "label": "江西省赣州市中级人民法院", "value": "江西省赣州市中级人民法院" },
+                { "label": "江西省宜春市中级人民法院", "value": "江西省宜春市中级人民法院" },
+                { "label": "江西省上饶市中级人民法院", "value": "江西省上饶市中级人民法院" },
+                { "label": "江西省吉安市中级人民法院", "value": "江西省吉安市中级人民法院" },
+                { "label": "江西省抚州市中级人民法院", "value": "江西省抚州市中级人民法院" },
+                { "label": "南昌铁路运输中级法院", "value": "南昌铁路运输中级法院" },
+            ]
+        },
+        {
+            "label": "山东省高级人民法院",
+            "value": "山东省高级人民法院",
+            "children": [
+                { "label": "", "value": "" },
+                { "label": "山东省济南市中级人民法院", "value": "山东省济南市中级人民法院" },
+                { "label": "山东省青岛市中级人民法院", "value": "山东省青岛市中级人民法院" },
+                { "label": "山东省淄博市中级人民法院", "value": "山东省淄博市中级人民法院" },
+                { "label": "山东省枣庄市中级人民法院", "value": "山东省枣庄市中级人民法院" },
+                { "label": "山东省东营市中级人民法院", "value": "山东省东营市中级人民法院" },
+                { "label": "山东省烟台市中级人民法院", "value": "山东省烟台市中级人民法院" },
+                { "label": "山东省潍坊市中级人民法院", "value": "山东省潍坊市中级人民法院" },
+                { "label": "山东省济宁市中级人民法院", "value": "山东省济宁市中级人民法院" },
+                { "label": "山东省泰安市中级人民法院", "value": "山东省泰安市中级人民法院" },
+                { "label": "山东省威海市中级人民法院", "value": "山东省威海市中级人民法院" },
+                { "label": "山东省日照市中级人民法院", "value": "山东省日照市中级人民法院" },
+                { "label": "山东省滨州市中级人民法院", "value": "山东省滨州市中级人民法院" },
+                { "label": "山东省德州市中级人民法院", "value": "山东省德州市中级人民法院" },
+                { "label": "山东省聊城市中级人民法院", "value": "山东省聊城市中级人民法院" },
+                { "label": "山东省临沂市中级人民法院", "value": "山东省临沂市中级人民法院" },
+                { "label": "山东省菏泽市中级人民法院", "value": "山东省菏泽市中级人民法院" },
+                { "label": "济南铁路运输中级法院", "value": "济南铁路运输中级法院" },
+                { "label": "青岛海事法院", "value": "青岛海事法院" },
+            ]
+        },
+        {
+            "label": "河南省高级人民法院",
+            "value": "河南省高级人民法院",
+            "children": [
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+            ]
+        },
+        {
+            "label": "湖北省高级人民法院",
+            "value": "湖北省高级人民法院",
+            "children": [
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+            ]
+        },
+        {
+            "label": "湖南省高级人民法院",
+            "value": "湖南省高级人民法院",
+            "children": [
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+            ]
+        },
+        {
+            "label": "广东省高级人民法院",
+            "value": "广东省高级人民法院",
+            "children": [
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+            ]
+        },
+        {
+            "label": "广西壮族自治区高级人民法院",
+            "value": "广西壮族自治区高级人民法院",
+            "children": [
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+            ]
+        },
+        {
+            "label": "海南省高级人民法院",
+            "value": "海南省高级人民法院",
+            "children": [
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+            ]
+        },
+        {
+            "label": "重庆市高级人民法院",
+            "value": "重庆市高级人民法院",
+            "children": [
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+            ]
+        },
+        {
+            "label": "四川省高级人民法院",
+            "value": "四川省高级人民法院",
+            "children": [
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+            ]
+        },
+        {
+            "label": "贵州省高级人民法院",
+            "value": "贵州省高级人民法院",
+            "children": [
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+            ]
+        },
+        {
+            "label": "云南省高级人民法院",
+            "value": "云南省高级人民法院",
+            "children": [
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+            ]
+        },
+        {
+            "label": "西藏自治区高级人民法院",
+            "value": "西藏自治区高级人民法院",
+            "children": [
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+            ]
+        },
+        {
+            "label": "陕西省高级人民法院",
+            "value": "陕西省高级人民法院",
+            "children": [
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+            ]
+        },
+        {
+            "label": "甘肃省高级人民法院",
+            "value": "甘肃省高级人民法院",
+            "children": [
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+            ]
+        },
+        {
+            "label": "青海省高级人民法院",
+            "value": "青海省高级人民法院",
+            "children": [
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+            ]
+        },
+        {
+            "label": "宁夏回族自治区高级人民法院",
+            "value": "宁夏回族自治区高级人民法院",
+            "children": [
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+            ]
+        },
+        {
+            "label": "新疆维吾尔自治区高级人民法院",
+            "value": "新疆维吾尔自治区高级人民法院",
+            "children": [
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+            ]
+        },
+        {
+            "label": "新疆维吾尔自治区高级人民法院生产建设兵团分院",
+            "value": "新疆维吾尔自治区高级人民法院生产建设兵团分院",
+            "children": [
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+                { "label": "", "value": "" },
+            ]
+        },
     ];
 };
 
