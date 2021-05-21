@@ -54,6 +54,7 @@
                                 <a-list-item slot="renderItem" slot-scope="item, index">
                                   <a slot="actions" @click="execView(item)">查看</a>
                                   <a slot="actions" @click="execPatch(item)">修改</a>
+                                  <a slot="actions" @click="execProcess(item)">进展</a>
                                   <a-list-item-meta :index="index" :description="`${item.caseID} 受理法院：${item.court}，承办法官：${item.judge}，案件状态：${item.legalStatus}`" >
                                     <a slot="title" >{{ `${item.caseID} ${item.caseType} 程序阶段：${item.stage}，原告：${item.accuser}，被告：${item.defendant}` }}</a>
                                   </a-list-item-meta>
@@ -213,6 +214,12 @@ export default {
       async execPatch(elem){
           const { $router } = this;
           $router.push(`/legal/legalapply?id=${elem.id}&type=1&tname=案件修改&apply=修改`);
+      },
+
+      // 案件记录追加进展
+      async execProcess(elem){
+          const { $router } = this;
+          $router.push(`/legal/legalapply?id=${elem.id}&type=1&tname=案件进展&apply=进展`);
       },
 
       // 案件记录查看申请
