@@ -202,16 +202,18 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>业务接收时间</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.receiveTime" :default-value="options.datetime" placeholder="请输入业务部门接收时间！" @blur="validFieldToast('receiveTime')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-date-picker v-model="legal.receiveTime" :default-value="options.datetime" placeholder="请输入业务部门接收时间！" @blur="validFieldToast('receiveTime')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>法律接收时间</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.lawRTime" :default-value="options.datetime" placeholder="请输入法律部门接收时间！" @blur="validFieldToast('lawRTime')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-date-picker v-model="legal.lawRTime" :default-value="options.datetime" placeholder="请输入法律部门接收时间！" @blur="validFieldToast('lawRTime')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
+
+                
 
                 <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
@@ -242,7 +244,7 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;"></span>受理时间</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.handledTime" placeholder="请输入法院受理时间！" @blur="validFieldToast('handledTime')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-date-picker v-model="legal.handledTime" :default-value="options.datetime" placeholder="请输入法院受理时间！" @blur="validFieldToast('handledTime')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
@@ -313,29 +315,36 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>外部律所</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.externalFlag" placeholder="请选择是否聘用外部律所" @blur="validFieldToast('externalFlag')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-select  v-model="legal.externalFlag" default-value="是" @blur="validFieldToast('externalFlag')"  placeholder="请选择是否聘用外部律所" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                        <a-select-option value="是">
+                          是
+                        </a-select-option>
+                        <a-select-option value="否">
+                          否
+                        </a-select-option>
+                      </a-select>
                     </a-col>
                   </a-row>
                 </div>
 
-                <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                <div v-if="legal.externalFlag == '是' " class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>律师事务所</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.lawOffice" placeholder="请输入外聘律师事务所！" @blur="validFieldToast('lawOffice')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-auto-complete :data-source="firmNamelist" v-model="legal.lawOffice" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0; width:100%; border-width: 0px 0px 1px; border-style: solid; border-color: rgb(254, 254, 254) rgb(254, 254, 254) rgb(240, 240, 240); border-image: initial;"  placeholder="请输入律所名称！" :filter-option="filterOption" />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>委托时间</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.lawOfficeTime" placeholder="请选择外聘律所委托时间！" @blur="validFieldToast('lawOfficeTime')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-date-picker v-model="legal.lawOfficeTime" :default-value="options.datetime" placeholder="请选择外聘律所委托时间！" @blur="validFieldToast('lawOfficeTime')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
 
-                <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                <div v-if="legal.externalFlag == '是' " class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>外聘律师</span>
@@ -360,13 +369,13 @@
                    </a-row>
                 </div>
 
-                <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                <div id="legal-apply-content-court" class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>受理法院</span>
                     </a-col>
-                    <a-col :span="8">
-                      <a-input v-model="legal.court"  placeholder="请输入受理法院！" @blur="validFieldToast('court')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                    <a-col :span="20">
+                      <a-cascader id="legal-apply-content-court-cascader"  v-model="legal.court" :options="options.courtOptions" placeholder="请输入受理法院！" @blur="validFieldToast('court')"  style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                     </a-col>
                   </a-row>
                 </div>
@@ -493,6 +502,7 @@ export default {
         datetime:moment(dayjs().format('YYYY-MM-DD'),'YYYY-MM-DD'),
         zoneOptions:JSON.parse(`[{"label":"融量集团","value":"融量集团","children":[{"label":"融量集团总部","value":"融量集团总部"},{"label":"地产板块","value":"地产板块","children":[{"label":"领地集团总部","value":"领地集团总部"},{"label":"重庆区域","value":"重庆区域"},{"label":"两湖区域","value":"两湖区域"},{"label":"川北区域","value":"川北区域"},{"label":"成都区域","value":"成都区域"},{"label":"川南区域","value":"川南区域"},{"label":"中原区域","value":"中原区域"},{"label":"攀西区域","value":"攀西区域"},{"label":"新疆区域","value":"新疆区域"},{"label":"大湾区域","value":"大湾区域"},{"label":"北京区域","value":"北京区域"},{"label":"园林公司","value":"园林公司"}]},{"label":"金融板块","value":"金融板块","children":[{"label":"量石投资","value":"量石投资"}]},{"label":"物业板块","value":"物业板块","children":[{"label":"领悦集团总部","value":"领悦集团总部"},{"label":"川南区域","value":"川南区域"},{"label":"商写事业部","value":"商写事业部"},{"label":"川北区域","value":"川北区域"},{"label":"新疆区域","value":"新疆区域"},{"label":"攀西区域","value":"攀西区域"},{"label":"长春区域","value":"长春区域"},{"label":"大湾区域","value":"大湾区域"},{"label":"郑州荆州区域","value":"郑州荆州区域"},{"label":"贵阳区域","value":"贵阳区域"},{"label":"佳美物业公司","value":"佳美物业公司"}]},{"label":"医疗健康板块","value":"医疗健康板块","children":[{"label":"健康事业部","value":"健康事业部"},{"label":"至诚和爱健管中心","value":"至诚和爱健管中心"},{"label":"高康国际医院","value":"高康国际医院"}]},{"label":"商业板块","value":"商业板块","children":[{"label":"宝瑞商管","value":"宝瑞商管"}]},{"label":"合作方财务公司","value":"合作方财务公司","children":[{"label":"共享财务中心","value":"共享财务中心"}]}]}]`),
         causeOptions:JSON.parse(`[{"label":"人格权纠纷","value":"人格权纠纷","children":[{"label":"名誉权纠纷","value":"名誉权纠纷"},{"label":"其他人格权纠纷","value":"其他人格权纠纷"}]},{"label":"物权纠纷","value":"物权纠纷","children":[{"label":"物权确认纠纷","value":"物权确认纠纷"},{"label":"排除妨害纠纷","value":"排除妨害纠纷"},{"label":"恢复原状纠纷","value":"恢复原状纠纷"},{"label":"返还原物纠纷","value":"返还原物纠纷"},{"label":"业主知情权纠纷","value":"业主知情权纠纷"},{"label":"相邻关系纠纷","value":"相邻关系纠纷"},{"label":"业主共有权纠纷","value":"业主共有权纠纷"},{"label":"建设用地使用权纠纷","value":"建设用地使用权纠纷"},{"label":"抵押权纠纷","value":"抵押权纠纷"}]},{"label":"合同纠纷、准合同纠纷","value":"合同纠纷、准合同纠纷","children":[{"label":"确认合同效力纠纷","value":"确认合同效力纠纷"},{"label":"房屋买卖合同纠纷","value":"房屋买卖合同纠纷"},{"label":"其他买卖合同纠纷","value":"其他买卖合同纠纷"},{"label":"租赁合同纠纷","value":"租赁合同纠纷"},{"label":"建设工程合同纠纷","value":"建设工程合同纠纷"},{"label":"物业服务合同纠纷-公共收益返还","value":"物业服务合同纠纷-公共收益返还"},{"label":"物业服务合同纠纷-返水纠纷","value":"物业服务合同纠纷-返水纠纷"},{"label":"物业服务合同纠纷-进退场纠纷","value":"物业服务合同纠纷-进退场纠纷"},{"label":"物业服务合同纠纷-物业服务费纠纷","value":"物业服务合同纠纷-物业服务费纠纷"},{"label":"物业服务合同纠纷-其他","value":"物业服务合同纠纷-其他"},{"label":"中介合同纠纷","value":"中介合同纠纷"},{"label":"劳务合同纠纷","value":"劳务合同纠纷"},{"label":"无因管理、不当得利纠纷","value":"无因管理、不当得利纠纷"},{"label":"追偿权纠纷","value":"追偿权纠纷"},{"label":"其他合同纠纷","value":"其他合同纠纷"},{"label":"缔约过失责任纠纷","value":"缔约过失责任纠纷"},{"label":"预约合同纠纷","value":"预约合同纠纷"},{"label":"建设用地使用权合同纠纷","value":"建设用地使用权合同纠纷"},{"label":"股权合作合同纠纷","value":"股权合作合同纠纷"},{"label":"委托开发合同纠纷","value":"委托开发合同纠纷"},{"label":"其他投资合同纠纷","value":"其他投资合同纠纷"},{"label":"商品房预约合同纠纷","value":"商品房预约合同纠纷"},{"label":"商品房销/预售合同纠纷-逾期交房纠纷","value":"商品房销/预售合同纠纷-逾期交房纠纷"},{"label":"商品房销/预售合同纠纷-逾期整改纠纷","value":"商品房销/预售合同纠纷-逾期整改纠纷"},{"label":"商品房销/预售合同纠纷-逾期办证纠纷","value":"商品房销/预售合同纠纷-逾期办证纠纷"},{"label":"商品房销/预售合同纠纷-退房纠纷","value":"商品房销/预售合同纠纷-退房纠纷"},{"label":"商品房销/预售合同纠纷-交付不符纠纷","value":"商品房销/预售合同纠纷-交付不符纠纷"},{"label":"商品房销/预售合同纠纷-房屋质量纠纷","value":"商品房销/预售合同纠纷-房屋质量纠纷"},{"label":"商品房销/预售合同纠纷-分包销合同纠纷","value":"商品房销/预售合同纠纷-分包销合同纠纷"},{"label":"商品房销/预售合同纠纷-用益物权纠纷（使用权转让）","value":"商品房销/预售合同纠纷-用益物权纠纷（使用权转让）"},{"label":"商品房销/预售合同纠纷-断供纠纷","value":"商品房销/预售合同纠纷-断供纠纷"},{"label":"商品房销/预售合同纠纷-其他纠纷","value":"商品房销/预售合同纠纷-其他纠纷"},{"label":"销售代理（中介)合同纠纷","value":"销售代理（中介)合同纠纷"},{"label":"营销广告合同纠纷","value":"营销广告合同纠纷"},{"label":"借款（民间借贷）/金融贷款合同纠纷","value":"借款（民间借贷）/金融贷款合同纠纷"},{"label":"建设工程合同纠纷-工程质量纠纷","value":"建设工程合同纠纷-工程质量纠纷"},{"label":"建设工程合同纠纷-欠付工程款纠纷","value":"建设工程合同纠纷-欠付工程款纠纷"},{"label":"建设工程合同纠纷-工程结算纠纷","value":"建设工程合同纠纷-工程结算纠纷"},{"label":"建设工程合同纠纷-质保金纠纷","value":"建设工程合同纠纷-质保金纠纷"},{"label":"建设工程合同纠纷-其他纠纷","value":"建设工程合同纠纷-其他纠纷"},{"label":"演出合同纠纷","value":"演出合同纠纷"},{"label":"无因管理纠纷","value":"无因管理纠纷"},{"label":"不当得利纠纷","value":"不当得利纠纷"}]},{"label":"劳动争议","value":"劳动争议","children":[{"label":"解除劳动合同纠纷","value":"解除劳动合同纠纷"},{"label":"确认劳动关系纠纷","value":"确认劳动关系纠纷"},{"label":"追索劳动报酬纠纷","value":"追索劳动报酬纠纷"},{"label":"竞业限制纠纷","value":"竞业限制纠纷"},{"label":"社会保险纠纷","value":"社会保险纠纷"},{"label":"工伤工亡纠纷","value":"工伤工亡纠纷"},{"label":"劳务派遣合同纠纷","value":"劳务派遣合同纠纷"},{"label":"其他劳动争议","value":"其他劳动争议"}]},{"label":"与公司、证券、保险、票据等有关的民事纠纷","value":"与公司、证券、保险、票据等有关的民事纠纷","children":[{"label":"请求变更公司登记纠纷","value":"请求变更公司登记纠纷"},{"label":"股权转让纠纷","value":"股权转让纠纷"},{"label":"股东知情权纠纷","value":"股东知情权纠纷"},{"label":"公司决议纠纷","value":"公司决议纠纷"},{"label":"公司盈余分配纠纷","value":"公司盈余分配纠纷"},{"label":"损害股东利益责任纠纷","value":"损害股东利益责任纠纷"},{"label":"损害公司利益责任纠纷","value":"损害公司利益责任纠纷"},{"label":"股东出资纠纷","value":"股东出资纠纷"},{"label":"股权激励纠纷","value":"股权激励纠纷"},{"label":"公司解散纠纷","value":"公司解散纠纷"},{"label":"其他与公司有关的纠纷","value":"其他与公司有关的纠纷"},{"label":"证券纠纷","value":"证券纠纷"},{"label":"保险合同纠纷","value":"保险合同纠纷"},{"label":"保险人代位求偿权纠纷","value":"保险人代位求偿权纠纷"}]},{"label":"著作权侵权纠纷","value":"著作权侵权纠纷","children":[{"label":"著作权侵权纠纷","value":"著作权侵权纠纷"}]},{"label":"侵权责任纠纷","value":"侵权责任纠纷","children":[{"label":"提供劳务致侵权纠纷","value":"提供劳务致侵权纠纷"},{"label":"网络侵权责任纠纷","value":"网络侵权责任纠纷"},{"label":"违反安全保障义务责任纠纷","value":"违反安全保障义务责任纠纷"},{"label":"生命权、身体权、健康权纠纷","value":"生命权、身体权、健康权纠纷"},{"label":"高空抛物、坠物致人身或财产损害责任纠纷","value":"高空抛物、坠物致人身或财产损害责任纠纷"},{"label":"其他致人或致财物损害的侵权责任纠纷","value":"其他致人或致财物损害的侵权责任纠纷"}]},{"label":"知识产权与竞争纠纷","value":"知识产权与竞争纠纷","children":[{"label":"知识产权与竞争纠纷","value":"知识产权与竞争纠纷"}]},{"label":"非讼程序案件案由","value":"非讼程序案件案由","children":[{"label":"公司清算案件","value":"公司清算案件"},{"label":"第三人撤销之诉","value":"第三人撤销之诉"},{"label":"执行程序中的异议之诉","value":"执行程序中的异议之诉"}]}]`),
+        courtOptions:workconfig.courtList(),
       },
       legal:{
         id :'', // varchar(36) not null comment '系统编号' primary key,
@@ -516,7 +526,7 @@ export default {
         defendant :'', // varchar(64)  default '' not null comment '应诉人(被告/被上诉人)',
         thirdParty :'', // varchar(64)  default '' not null comment '第三人 third_party',
         handledTime :'', // varchar(32)  default '' not null comment '法院受理时间',
-        externalFlag :'', // varchar(2)   default 'N' not null comment '是否聘用外部律所',
+        externalFlag :'否', // varchar(2)   default 'N' not null comment '是否聘用外部律所',
         lawOffice :'', // varchar(64)  default '' not null comment '外聘律师',
         lawOfficeTime :'', // varchar(16)  default '' not null comment '外聘律所委托时间',
         lawyer :'', // varchar(64)  default '' not null comment '外聘律师',
@@ -637,7 +647,9 @@ export default {
       collection: [{ }],
       userinfo: '',
       usertitle:'',
-      breadcrumb:[{icon:'home',text:'首页',path:'/legal/workspace'},{icon:'user',text:'案件管控',path:'/legal/workspace'},{icon:'form',text:'案件查看',path:''}],
+      firmlist:[],
+      firmNamelist:[],
+      breadcrumb:[{icon:'home',text:'首页',path:'/legal/workspace'},{icon:'user',text:'案件管控',path:'/legal/workspace'},{icon:'form',text:'案件发起',path:''}],
       statusType:{'valid':'有效','invalid':'删除'},
       zoneType:{'领地集团总部':'领地集团总部','重庆区域':'重庆区域','两湖区域':'两湖区域','川北区域':'川北区域','成都区域':'成都区域','乐眉区域':'乐眉区域','中原区域':'中原区域','攀西区域':'攀西区域','新疆区域':'新疆区域','大湾区域':'大湾区域','北京区域':'北京区域'},
     };
@@ -651,6 +663,13 @@ export default {
       moment,
       isNull:Betools.tools.isNull,
 
+      // 律所名称过滤
+      filterOption(input, option) {
+        return (
+          option.componentOptions.children[0].text.toUpperCase().indexOf(input.toUpperCase()) >= 0
+        );
+      },
+
       // 企业微信登录处理函数
       async  weworkLogin  (codeType = 'search', systemType = 'search')  {
         const userinfo_work = await Betools.query.queryWeworkUser(codeType, systemType,'v5');
@@ -659,10 +678,51 @@ export default {
           this.usertitle = (userinfo && userinfo.parent_company && userinfo.parent_company.name ? userinfo.parent_company.name + ' > ' :'')  + (userinfo ? userinfo.realname || userinfo.name || userinfo.lastname : '');
           return userinfo;
       },
-     
+
+      // 执行删除事件
+      async onDelete(){
+        console.log('delete');
+      },
+
       // 执行页面跳转
       async redirectView(path) {
           Betools.tools.isNull(path) ? null: this.$router.push(path);
+      },
+
+      // 执行update事件
+      async onUpdate(records){
+
+      },
+
+      // 执行complete事件
+      async onComplete(){
+
+      },
+
+      // Excel文件解析成功
+      async onSuccess(data, file, ratio = 0.00, zone = '', project = '' , regexp = /[\ |‘|’|\~|\`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?]/g){
+        
+      },
+
+      // 执行change事件
+      async onChange(event) {
+        this.file = event.target.files ? event.target.files[0] : null;
+      },
+
+      // 上传提示
+      async toastUpload(flag){
+        if(flag == 'start'){
+          vant.Toast.loading({duration: 0, forbidClick: true, message: '上传中...',});
+        } else if(flag == 'fail'){
+          this.$toast.success('文件上传失败，请稍后重试！');
+        }
+      },
+      // 上传文件成功后回调函数
+      async uploadSuccess(file , res){
+        vant.Toast.clear();
+        this.legal.files = JSON.parse(res).message;
+        await Betools.tools.sleep(0);
+        this.$toast.success('上传成功');
       },
 
       // 获取处理日志
@@ -699,7 +759,6 @@ export default {
         }
       },
 
-      // 校验字段有效性
       validField(fieldName){
         const userinfo = Betools.storage.getStore('system_userinfo'); // 获取用户基础信息
         const regMail = workconfig.system.config.regexp.mail; // 邮箱验证正则表达式
@@ -710,8 +769,6 @@ export default {
         Betools.storage.setStore(`system_${this.tablename}_item#${this.legal.type}#@${userinfo.realname}` , JSON.stringify(this.legal) , 3600 * 2 );
         return Betools.tools.isNull(this.message[fieldName]);
       },
-
-      // 校验字段有效性并提示
       validFieldToast(fieldName){
         const flag = !this.validField(fieldName);
         if(flag){
@@ -720,9 +777,279 @@ export default {
         }
       },
 
+      //用户选择知会人员
+      async queryNotifyMan(){
+        //获取盖章人信息
+        const user_admin_name = this.legal.hr_name;
+        if(!user_admin_name || user_admin_name.length <= 1){
+          return;
+        }
+        try {
+          if(!!user_admin_name){
+            //从用户表数据中获取填报人资料
+            let user = await Betools.manage.queryUserByNameReward(user_admin_name.trim(),200);
+            if(!!user){
+              //如果是用户数组列表，则展示列表，让用户自己选择
+              if(Array.isArray(user)){
+                try {
+                  user.map((elem,index) => {
+                    let company = elem.textfield1.split('||')[0];
+                    company = company.slice(company.lastIndexOf('>')+1);
+                    let department = elem.textfield1.split('||')[1];
+                    department = department.slice(department.lastIndexOf('>')+1);
+                    this.userList.push({id:elem.loginid , name:elem.lastname , tel:'' , address: company + "||" + elem.textfield1.split('||')[1] , company: company , department:department , mail: elem.email , isDefault: !index });
+                  })
+                  //获取盖印人姓名
+                  this.legal.hr_name = user[0].lastname;
+                  //当前盖印人编号
+                  this.legal.hr_id = this.userid = user[0].loginid;
+                } catch (error) {
+                  console.log(error);
+                }
+              } else { //如果只有一个用户数据，则直接设置
+                try {
+                  let company = user.textfield1.split('||')[0];
+                  company = company.slice(company.lastIndexOf('>')+1);
+                  let department = user.textfield1.split('||')[1];
+                  department = department.slice(department.lastIndexOf('>')+1);
+                  //将用户数据推送至对方数组
+                  this.userList.push({id:user.loginid , name:user.lastname , tel:user.mobile , address: company + "||" + user.textfield1.split('||')[1] , company: company , department:department , mail: this.legal.dealMail, isDefault: !this.userList.length });
+                  //获取盖印人姓名
+                  this.legal.hr_name = user.lastname;
+                  //当前盖印人编号
+                  this.legal.hr_id = this.userid = user.loginid;
+                } catch (error) {
+                  console.log(error);
+                }
+              }
+              //遍历去重
+              try {
+                this.userList = this.userList.filter((item,index) => {
+                  legal.isDefault = index == 0 ? true : false;
+                  let findex = this.userList.findIndex((subitem,index) => { return sublegal.id == legal.id });
+                  return index == findex;
+                })
+              } catch (error) {
+                console.log(error);
+              }
+            }
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      },
+
+      //选中当前知会人员
+      async selectNotifyUser(value){
+        const user = this.userList.find((item,index) => {return this.legal.hr_id == legal.id});
+        this.legal.hr_name = user.name;
+      },
+
+      async queryReleaseMan(){
+
+        //获取盖章人信息
+        const user_admin_name = this.release_username;
+
+        //输入的用户
+        if(!user_admin_name || user_admin_name.length <= 1){
+          return;
+        }
+        try {
+          if(!!user_admin_name){
+            //从用户表数据中获取填报人资料
+            let user = await Betools.manage.queryUserByNameReward(user_admin_name.trim(),200);
+            if(!!user){
+              //如果是用户数组列表，则展示列表，让用户自己选择
+              if(Array.isArray(user)){
+                try {
+                  user.map((elem,index) => {
+                    let company = elem.textfield1.split('||')[0];
+                    let department = elem.textfield1.split('||')[1];
+                    let mobile = elem.mobile ? `${elem.mobile.slice(0,3)}****${elem.mobile.slice(-4)}` : '';
+                    let temp = Betools.tools.queryZoneProjectAll(elem.textfield1.split('||')[0], ['领地集团有限公司','领悦服务','宝瑞商管','医疗健康板块', '金融板块' ,'邛崃创达公司'], department);
+                    this.release_userlist.push({id:elem.loginid , name:elem.lastname , mobile:elem.mobile, tel: mobile , zone: temp.zone , project: temp.project , address: company + "||" + elem.textfield1.split('||')[1] , company: temp.company , department: temp.department , mail: elem.email , isDefault: !index });
+                  })
+                  this.release_username = user[0].lastname; //获取盖印人姓名
+                  this.release_userid = this.userid = user[0].loginid; //当前盖印人编号
+                  this.selectReleaseUser();
+                } catch (error) {
+                  console.log(error);
+                }
+              } else { //如果只有一个用户数据，则直接设置
+                try {
+                  let company = user.textfield1.split('||')[0];
+                  let department = user.textfield1.split('||')[1];
+                  let mobile = elem.mobile ? `${elem.mobile.slice(0,3)}****${elem.mobile.slice(-4)}` : '';
+                  let temp = Betools.tools.queryZoneProjectAll(user.textfield1.split('||')[0], ['领地集团有限公司','领悦服务','宝瑞商管','医疗健康板块', '金融板块' ,'邛崃创达公司'], department);
+                  this.release_userlist.push({id:user.loginid , name:user.lastname , mobile:elem.mobile, tel:mobile , zone: temp.zone , project: temp.project , address: company + "||" + user.textfield1.split('||')[1] , company: temp.company , department: temp.department , mail: this.legal.dealMail, isDefault: !this.release_userlist.length }); //将用户数据推送至对方数组
+                  this.release_username = user.lastname; //获取盖印人姓名
+                  this.release_userid = this.userid = user.loginid; //当前盖印人编号
+                  this.selectReleaseUser();
+                } catch (error) {
+                  console.log(error);
+                }
+              }
+              //遍历去重
+              try {
+                this.release_userlist = this.release_userlist.filter((item,index) => {
+                  legal.isDefault = index == 0 ? true : false;
+                  let findex = this.release_userlist.findIndex((subitem,index) => { return sublegal.id == legal.id });
+                  return index == findex;
+                })
+              } catch (error) {
+                console.log(error);
+              }
+            }
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      },
+
+      //选中当前知会人员
+      async selectReleaseUser(record , value){
+
+        try {
+          if(Betools.tools.isNull(record)){
+            const user = this.release_userlist.find((item,index) => {return this.release_userid == legal.id}); //获取员工基本信息
+            this.release_username = user.name;  //设置员工
+            this.release_company = user.company;
+            this.release_department = user.department;
+            this.release_mobile = user.mobile;
+            this.release_zone = user.zone;
+            this.release_project = user.project;
+            const temp = await query.queryUserInfoByMobile(user.mobile); //查询员工职务
+            console.log(`temp: ${JSON.stringify(temp)}`);
+            this.release_position = temp ? temp.position : ''; //设置员工职务
+          } else {
+            this.release_username = record.name;
+            this.release_userid = record.id;
+            this.release_company = record.company;
+            this.release_department = record.department;
+            this.release_mobile = record.mobile;
+            this.release_zone = record.zone;
+            this.release_project = record.project;
+            const temp = await query.queryUserInfoByMobile(record.mobile); //查询员工职务
+            console.log(`temp: ${JSON.stringify(temp)}`);
+            this.release_position = temp ? temp.position : ''; //设置员工职务
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      },
+
+      async queryApproveMan(){
+
+        //获取盖章人信息
+        const user_admin_name = this.approve_username;
+
+        //输入的用户
+        if(!user_admin_name || user_admin_name.length <= 1){
+          return;
+        }
+
+        try {
+          if(!!user_admin_name){
+
+            //从用户表数据中获取填报人资料
+            let user = await Betools.manage.queryUserByNameReward(user_admin_name.trim(),200);
+
+            if(!!user){
+
+              //如果是用户数组列表，则展示列表，让用户自己选择
+              if(Array.isArray(user)){
+
+                try {
+                  user.map((elem,index) => {
+                    let company = elem.textfield1.split('||')[0];
+                    company = company.slice(company.lastIndexOf('>')+1);
+                    let department = elem.textfield1.split('||')[1];
+                    department = department.slice(department.lastIndexOf('>')+1);
+                    let mobile = elem.mobile ? `${elem.mobile.slice(0,3)}****${elem.mobile.slice(-4)}` : '';
+                    this.approve_userlist.push({id:elem.loginid , name:elem.lastname , mobile:elem.mobile, tel: mobile , address: company + "||" + elem.textfield1.split('||')[1] , company: company , department:department , mail: elem.email , isDefault: !index });
+                  })
+
+                  //获取盖印人姓名
+                  this.approve_username = user[0].lastname;
+                  //当前盖印人编号
+                  this.approve_userid = this.userid = user[0].loginid;
+
+                  try {
+                    this.selectApproveUser();
+                  } catch (error) {
+                    console.log(error);
+                  }
+
+                } catch (error) {
+                  console.log(error);
+                }
+
+              } else { //如果只有一个用户数据，则直接设置
+
+                try {
+                  let company = user.textfield1.split('||')[0];
+                  company = company.slice(company.lastIndexOf('>')+1);
+                  let department = user.textfield1.split('||')[1];
+                  department = department.slice(department.lastIndexOf('>')+1);
+                  let mobile = elem.mobile ? `${elem.mobile.slice(0,3)}****${elem.mobile.slice(-4)}` : '';
+                  //将用户数据推送至对方数组
+                  this.approve_userlist.push({id:user.loginid , name:user.lastname , mobile:elem.mobile, tel:mobile , address: company + "||" + user.textfield1.split('||')[1] , company: company , department:department , mail: this.legal.dealMail, isDefault: !this.release_userlist.length });
+
+                  //获取盖印人姓名
+                  this.approve_username = user.lastname;
+                  //当前盖印人编号
+                  this.approve_userid = this.userid = user.loginid;
+
+                  try {
+                    this.selectApproveUser();
+                  } catch (error) {
+                    console.log(error);
+                  }
+
+                } catch (error) {
+                  console.log(error);
+                }
+
+              }
+
+              //遍历去重
+              try {
+                this.approve_userlist = this.approve_userlist.filter((item,index) => {
+                  legal.isDefault = index == 0 ? true : false;
+                  let findex = this.approve_userlist.findIndex((subitem,index) => { return sublegal.id == legal.id });
+                  return index == findex;
+                })
+              } catch (error) {
+                console.log(error);
+              }
+
+            }
+          }
+        } catch (error) {
+          console.log(error);
+        }
+
+      },
+
+      //选中当前知会人员
+      async selectApproveUser(value){
+        //获取员工基本信息
+        const user = this.approve_userlist.find((item,index) => {return this.approve_userid == legal.id});
+        //设置员工
+        this.approve_username = user.name;
+        this.approve_mobile = user.mobile;
+        this.approve_company = user.company;
+        this.approve_department = user.department;
+        //查询员工职务
+        const temp = await query.queryUserInfoByMobile(user.mobile);
+        //设置员工职务
+        this.approve_position = temp.position;
+      },
+
       // 查询基础信息
       async queryInfo() {
         try {
+          debugger;
           this.iswechat = Betools.tools.isWechat(); //查询当前是否微信端
           this.iswework = Betools.tools.isWework(); //查询是否为企业微信
           this.userinfo = await this.weworkLogin(); //查询当前登录用户
@@ -733,8 +1060,10 @@ export default {
           this.legal.apply_username = userinfo.username;
           const legal = Betools.storage.getStore(`system_${this.tablename}_item#${this.legal.type}#@${userinfo.realname}`); //获取缓存信息
           const id = this.id = Betools.tools.getUrlParam('id');
+          this.firmlist = await Betools.manage.queryTableData('bs_law_firm' , `_where=(status,ne,0)&_fields=id,firm_name&_sort=-id&_p=0&_size=10000`);
+          this.firmNamelist = this.firmlist.map(item => { return item.firm_name });
           if(!Betools.tools.isNull(id)){
-            return this.legal = await this.handleList(this.tablename , id);
+            this.legal = await this.handleList(this.tablename , id);
           } else {
             try {
               if(legal){ //自动回显刚才填写的用户基础信息
@@ -762,20 +1091,19 @@ export default {
 
       // 查询不同状态的律所数据
       async handleList(tableName , id){
+        const nowdate = dayjs().format('YYYY-MM-DD')
         let list = await Betools.manage.queryTableData(tableName , `_where=(id,eq,${id})&_sort=-id&_p=0&_size=1`);
         list.map((item)=>{ 
           try {
             item.create_time = dayjs(item.create_time).format('YYYY-MM-DD'); 
-            item.receiveTime = dayjs(item.receiveTime).format('YYYY-MM-DD') == 'Invalid Date' ? "/" : dayjs(item.receiveTime).format('YYYY-MM-DD');
-            item.lawRTime = dayjs(item.lawRTime).format('YYYY-MM-DD') == 'Invalid Date' ? "/" : dayjs(item.lawRTime).format('YYYY-MM-DD');
-            item.handledTime = dayjs(item.handledTime).format('YYYY-MM-DD') == 'Invalid Date' ? "/" : dayjs(item.handledTime).format('YYYY-MM-DD');
+            item.receiveTime = dayjs(item.receiveTime).format('YYYY-MM-DD') == 'Invalid Date' ? nowdate : dayjs(item.receiveTime).format('YYYY-MM-DD');
+            item.lawRTime = dayjs(item.lawRTime).format('YYYY-MM-DD') == 'Invalid Date' ? nowdate : dayjs(item.lawRTime).format('YYYY-MM-DD');
+            item.handledTime = dayjs(item.handledTime).format('YYYY-MM-DD') == 'Invalid Date' ? nowdate : dayjs(item.handledTime).format('YYYY-MM-DD');
             item.legalStatus = Betools.tools.isNull(item.legalStatus) ? '开庭举证' : item.legalStatus;
             try {
-              item.caseType = JSON.parse(item.caseType);
-              item.zone = JSON.parse(item.zone);
+              item.caseType = JSON.parse(item.caseType),item.zone = JSON.parse(item.zone),item.court = JSON.parse(item.court);
             } catch (error) {
-              item.zone = JSON.parse(item.zone);
-              item.caseType = JSON.parse(item.caseType);
+              item.zone = JSON.parse(item.zone),item.caseType = JSON.parse(item.caseType),item.court = JSON.parse(item.court);
             }
           } catch (error) {
             console.log(`error:`, error);
@@ -788,7 +1116,6 @@ export default {
       caculateSum(){
        
       },
-
       // 用户提交入职登记表函数
       async handleApply() {
         await this.handleSave(); //先执行保存操作，保存完毕后执行流程跳转功能
@@ -973,41 +1300,38 @@ export default {
           return !flag;
         });
 
+        // 校验字段完整性
         if(invalidKey != '' && invalidKey != null){
-          await vant.Dialog.alert({
+          return await vant.Dialog.alert({
             title: '温馨提示',
             message: `请确认内容是否填写完整，错误：请输入[${invalidKey}]信息！`,
           });
-          return false;
         }
 
-        //是否确认提交此自由流程?
+        // 是否确认提交此自由流程?
         this.$confirm({
             title: "确认操作",
             content: "是否确认保存此案件发起申请单?",
             onOk: async() => {
 
                   const { legal } = this;
-
                   legal.id = id;
-
                   legal.zone = JSON.stringify(legal.zone); //进行序列化
                   legal.caseType = JSON.stringify(legal.caseType); //进行序列化
-
-                  const result = await Betools.manage.postTableData(this.tablename , this.legal); // 向表单提交form对象数据
-                  
+                  legal.court = JSON.stringify(legal.court); //进行序列化
+                  const result = await Betools.manage.postTableData(this.tablename , legal); // 向表单提交form对象数据
                   legal.zone = JSON.parse(legal.zone); //进行序列化
                   legal.caseType = JSON.parse(legal.caseType); //进行序列化
-
+                  legal.court = JSON.parse(legal.court); //进行序列化
+                  
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
 
-                  this.$toast.success('案件发起申请成功！');
                   this.loading = false; //设置状态
                   this.readonly = true;
                   this.role = 'view';
-                  vant.Dialog.alert({  title: '温馨提示',  message: `案件发起申请成功！`, });
+                  vant.Dialog.alert({  title: '温馨提示',  message: `案件发起申请成功！`, }); //this.$toast.success('案件发起申请成功！');
                }
           });
 
