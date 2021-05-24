@@ -1115,7 +1115,6 @@ export default {
       // 查询基础信息
       async queryInfo() {
         try {
-          debugger;
           this.iswechat = Betools.tools.isWechat(); //查询当前是否微信端
           this.iswework = Betools.tools.isWework(); //查询是否为企业微信
           this.userinfo = await this.weworkLogin(); //查询当前登录用户
