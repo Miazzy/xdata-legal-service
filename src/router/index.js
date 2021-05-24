@@ -93,6 +93,48 @@ const routes = [{
         "subPage": resolve => require(["../components/legal/lawsuitlist.vue"], resolve)
     }
 }, {
+    path: '/legal/court/courtapply',
+    name: "法院录入",
+    components: {
+        "default": resolve => require(["../components/legal/home.vue"], resolve),
+        "subPage": resolve => require(["../components/legal/court/courtapply.vue"], resolve)
+    }
+}, {
+    path: '/legal/court/courtlist',
+    name: "法院管理",
+    components: {
+        "default": resolve => require(["../components/legal/home.vue"], resolve),
+        "subPage": resolve => require(["../components/legal/court/courtlist.vue"], resolve)
+    }
+}, {
+    path: '/legal/court/courtview',
+    name: "法院查看",
+    components: {
+        "default": resolve => require(["../components/legal/home.vue"], resolve),
+        "subPage": resolve => require(["../components/legal/court/courtview.vue"], resolve)
+    }
+}, {
+    path: '/legal/court/judgeapply',
+    name: "法官录入",
+    components: {
+        "default": resolve => require(["../components/legal/home.vue"], resolve),
+        "subPage": resolve => require(["../components/legal/court/judgeapply.vue"], resolve)
+    }
+}, {
+    path: '/legal/court/judgelist',
+    name: "法官管理",
+    components: {
+        "default": resolve => require(["../components/legal/home.vue"], resolve),
+        "subPage": resolve => require(["../components/legal/court/judgelist.vue"], resolve)
+    }
+}, {
+    path: '/legal/court/judgeview',
+    name: "法官查看",
+    components: {
+        "default": resolve => require(["../components/legal/home.vue"], resolve),
+        "subPage": resolve => require(["../components/legal/court/judgeview.vue"], resolve)
+    }
+}, {
     path: '/legal/netdisk',
     name: "云文件",
     components: {

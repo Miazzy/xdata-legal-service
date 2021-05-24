@@ -250,7 +250,6 @@ export default {
           return this.$toast.fail('请输入报表月份！');
         }
         const list = await query.queryRewardDataByID(this.period);
-        debugger;
         this.data = list;
         this.$toast.success(`查询${this.period}月度报表成功！`);
       },

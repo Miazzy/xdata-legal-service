@@ -243,7 +243,6 @@ export async function queryUserInfoByMobile(mobile) {
         //返回缓存值
         if (typeof cache != 'undefined' && cache != null && cache != '') {
             console.log(`mobile: ${JSON.stringify(cache)}`);
-            debugger;
             return cache;
         }
 
@@ -251,7 +250,6 @@ export async function queryUserInfoByMobile(mobile) {
 
         if (res.body != null && res.body.length > 0) {
             console.log(`mobile: ${JSON.stringify(res.body)}`);
-            debugger;
             Betools.storage.setStore(`sys_user_cache_mobile_userinfo${mobile}`, res.body, 3600 * 24 * 7);
         }
 
