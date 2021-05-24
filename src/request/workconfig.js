@@ -1140,6 +1140,7 @@ export const courtList = () => {
                     "label": "内蒙古自治区呼伦贝尔市中级人民法院",
                     "value": "内蒙古自治区呼伦贝尔市中级人民法院",
                     "children": [
+                        { "label": "", "value": "" },
                         { "id": 490, "label": "呼伦贝尔市海拉尔区人民法院", "value": "呼伦贝尔市海拉尔区人民法院" },
                         { "id": 491, "label": "扎兰屯市人民法院", "value": "扎兰屯市人民法院" },
                         { "id": 492, "label": "阿荣旗人民法院", "value": "阿荣旗人民法院" },
@@ -1160,6 +1161,7 @@ export const courtList = () => {
                     "label": "内蒙古自治区兴安盟中级人民法院",
                     "value": "内蒙古自治区兴安盟中级人民法院",
                     "children": [
+                        { "label": "", "value": "" },
                         { "id": 504, "label": "乌兰浩特市人民法院" },
                         { "id": 505, "label": "阿尔山市人民法院" },
                         { "id": 506, "label": "科尔沁右翼前旗人民法院" },
@@ -1172,6 +1174,7 @@ export const courtList = () => {
                     "label": "内蒙古自治区通辽市中级人民法院",
                     "value": "内蒙古自治区通辽市中级人民法院",
                     "children": [
+                        { "label": "", "value": "" },
                         { "id": 511, "label": "通辽市科尔沁区人民法院" },
                         { "id": 512, "label": "科尔沁左翼中旗人民法院" },
                         { "id": 513, "label": "科尔沁左翼后旗人民法院" },
@@ -1186,6 +1189,7 @@ export const courtList = () => {
                     "label": "内蒙古自治区锡林郭勒盟中级人民法院",
                     "value": "内蒙古自治区锡林郭勒盟中级人民法院",
                     "children": [
+                        { "label": "", "value": "" },
                         { "id": 520, "label": "二连浩特市人民法院" },
                         { "id": 521, "label": "阿巴嘎旗人民法院" },
                         { "id": 522, "label": "苏尼特右旗人民法院" },
@@ -1205,6 +1209,7 @@ export const courtList = () => {
                     "label": "内蒙古自治区乌兰察布市中级人民法院",
                     "value": "内蒙古自治区乌兰察布市中级人民法院",
                     "children": [
+                        { "label": "", "value": "" },
                         { "id": 533, "label": "乌兰察布市集宁区人民法院" },
                         { "id": 534, "label": "卓资县人民法院" },
                         { "id": 535, "label": "化德县人民法院" },
@@ -1222,6 +1227,7 @@ export const courtList = () => {
                     "label": "内蒙古自治区鄂尔多斯市中级人民法院",
                     "value": "内蒙古自治区鄂尔多斯市中级人民法院",
                     "children": [
+                        { "label": "", "value": "" },
                         { "id": 545, "label": "鄂尔多斯市东胜区人民法院" },
                         { "id": 546, "label": "达拉特旗人民法院" },
                         { "id": 547, "label": "准格尔旗人民法院" },
@@ -1237,6 +1243,7 @@ export const courtList = () => {
                     "label": "内蒙古自治区巴彦淖尔市中级人民法院",
                     "value": "内蒙古自治区巴彦淖尔市中级人民法院",
                     "children": [
+                        { "label": "", "value": "" },
                         { "id": 554, "label": "巴彦淖尔市临河区人民法院" },
                         { "id": 555, "label": "磴口县人民法院" },
                         { "id": 556, "label": "乌拉特中旗人民法院" },
@@ -1250,6 +1257,7 @@ export const courtList = () => {
                     "label": "内蒙古自治区阿拉善盟中级人民法院",
                     "value": "内蒙古自治区阿拉善盟中级人民法院",
                     "children": [
+                        { "label": "", "value": "" },
                         { "id": 562, "label": "阿拉善左旗人民法院" },
                         { "id": 563, "label": "额济纳旗人民法院" },
                         { "id": 564, "label": "阿拉善右旗人民法院" },
@@ -1259,6 +1267,7 @@ export const courtList = () => {
                     "label": "呼和浩特铁路运输中级法院",
                     "value": "呼和浩特铁路运输中级法院",
                     "children": [
+                        { "label": "", "value": "" },
                         { "id": 566, "label": "包头铁路运输法院" },
                         { "id": 567, "label": "呼和浩特铁路运输法院" },
                         { "id": 1010, "label": "海拉尔铁路运输法院" },
@@ -1275,7 +1284,9 @@ export const courtList = () => {
                 {
                     "label": "辽宁省沈阳市中级人民法院",
                     "value": "辽宁省沈阳市中级人民法院",
-                    "children": [{ "id": 602, "label": "沈阳市和平区人民法院" },
+                    "children": [
+                        { "label": "", "value": "" },
+                        { "id": 602, "label": "沈阳市和平区人民法院" },
                         { "id": 603, "label": "沈阳市沈河区人民法院" },
                         { "id": 604, "label": "沈阳市大东区人民法院" },
                         { "id": 605, "label": "沈阳市皇姑区人民法院" },
@@ -1316,6 +1327,7 @@ export const courtList = () => {
                     "label": "辽宁省鞍山市中级人民法院",
                     "value": "辽宁省鞍山市中级人民法院",
                     "children": [
+                        { "label": "", "value": "" },
                         { "id": 630, "label": "鞍山市铁东区人民法院" },
                         { "id": 631, "label": "鞍山市铁西区人民法院" },
                         { "id": 632, "label": "鞍山市立山区人民法院" },
@@ -1329,6 +1341,7 @@ export const courtList = () => {
                     "label": "辽宁省抚顺市中级人民法院",
                     "value": "辽宁省抚顺市中级人民法院",
                     "children": [
+                        { "label": "", "value": "" },
                         { "id": 638, "label": "抚顺市新抚区人民法院" },
                         { "id": 639, "label": "抚顺市东洲区人民法院" },
                         { "id": 640, "label": "抚顺市望花区人民法院" },
@@ -1342,6 +1355,7 @@ export const courtList = () => {
                     "label": "辽宁省本溪市中级人民法院",
                     "value": "辽宁省本溪市中级人民法院",
                     "children": [
+                        { "label": "", "value": "" },
                         { "id": 646, "label": "本溪市平山区人民法院" },
                         { "id": 647, "label": "本溪市溪湖区人民法院" },
                         { "id": 648, "label": "本溪市明山区人民法院" },
@@ -1354,6 +1368,7 @@ export const courtList = () => {
                     "label": "辽宁省丹东市中级人民法院",
                     "value": "辽宁省丹东市中级人民法院",
                     "children": [
+                        { "label": "", "value": "" },
                         { "id": 653, "label": "丹东市元宝区人民法院" },
                         { "id": 654, "label": "丹东市振兴区人民法院" },
                         { "id": 655, "label": "丹东市振安区人民法院" },
@@ -1365,7 +1380,9 @@ export const courtList = () => {
                 {
                     "label": "辽宁省锦州市中级人民法院",
                     "value": "辽宁省锦州市中级人民法院",
-                    "children": [{ "id": 660, "label": "锦州市古塔区人民法院" },
+                    "children": [
+                        { "label": "", "value": "" },
+                        { "id": 660, "label": "锦州市古塔区人民法院" },
                         { "id": 661, "label": "锦州市凌河区人民法院" },
                         { "id": 662, "label": "锦州市太和区人民法院" },
                         { "id": 663, "label": "凌海市人民法院" },
@@ -1377,7 +1394,9 @@ export const courtList = () => {
                 {
                     "label": "辽宁省营口市中级人民法院",
                     "value": "辽宁省营口市中级人民法院",
-                    "children": [{ "id": 669, "label": "营口市站前区人民法院" },
+                    "children": [
+                        { "label": "", "value": "" },
+                        { "id": 669, "label": "营口市站前区人民法院" },
                         { "id": 670, "label": "营口市西市区人民法院" },
                         { "id": 671, "label": "营口市鲅鱼圈区人民法院" },
                         { "id": 672, "label": "营口市老边区人民法院" },
@@ -1388,7 +1407,9 @@ export const courtList = () => {
                 {
                     "label": "辽宁省阜新市中级人民法院",
                     "value": "辽宁省阜新市中级人民法院",
-                    "children": [{ "id": 676, "label": "阜新市海州区人民法院" },
+                    "children": [
+                        { "label": "", "value": "" },
+                        { "id": 676, "label": "阜新市海州区人民法院" },
                         { "id": 677, "label": "阜新市新邱区人民法院" },
                         { "id": 678, "label": "阜新市太平区人民法院" },
                         { "id": 679, "label": "阜新市清河门区人民法院" },
@@ -1400,7 +1421,9 @@ export const courtList = () => {
                 {
                     "label": "辽宁省辽阳市中级人民法院",
                     "value": "辽宁省辽阳市中级人民法院",
-                    "children": [{ "id": 684, "label": "辽阳市白塔区人民法院" },
+                    "children": [
+                        { "label": "", "value": "" },
+                        { "id": 684, "label": "辽阳市白塔区人民法院" },
                         { "id": 685, "label": "辽阳市文圣区人民法院" },
                         { "id": 686, "label": "辽阳市宏伟区人民法院" },
                         { "id": 687, "label": "辽阳市弓长岭区人民法院" },
@@ -1412,7 +1435,9 @@ export const courtList = () => {
                 {
                     "label": "辽宁省盘锦市中级人民法院",
                     "value": "辽宁省盘锦市中级人民法院",
-                    "children": [{ "id": 692, "label": "盘锦市双台子区人民法院" },
+                    "children": [
+                        { "label": "", "value": "" },
+                        { "id": 692, "label": "盘锦市双台子区人民法院" },
                         { "id": 693, "label": "盘锦市兴隆台区人民法院" },
                         { "id": 694, "label": "盘锦市大洼区人民法院" },
                         { "id": 695, "label": "盘山县人民法院" }
@@ -1421,7 +1446,9 @@ export const courtList = () => {
                 {
                     "label": "辽宁省铁岭市中级人民法院",
                     "value": "辽宁省铁岭市中级人民法院",
-                    "children": [{ "id": 697, "label": "铁岭市银州区人民法院" },
+                    "children": [
+                        { "label": "", "value": "" },
+                        { "id": 697, "label": "铁岭市银州区人民法院" },
                         { "id": 698, "label": "铁岭市清河区人民法院" },
                         { "id": 699, "label": "调兵山市人民法院" },
                         { "id": 700, "label": "开原市人民法院" },
@@ -1433,7 +1460,9 @@ export const courtList = () => {
                 {
                     "label": "辽宁省朝阳市中级人民法院",
                     "value": "辽宁省朝阳市中级人民法院",
-                    "children": [{ "id": 705, "label": "朝阳市双塔区人民法院" },
+                    "children": [
+                        { "label": "", "value": "" },
+                        { "id": 705, "label": "朝阳市双塔区人民法院" },
                         { "id": 706, "label": "朝阳市龙城区人民法院" },
                         { "id": 707, "label": "北票市人民法院" },
                         { "id": 708, "label": "朝阳县人民法院" },
@@ -1445,7 +1474,9 @@ export const courtList = () => {
                 {
                     "label": "辽宁省葫芦岛市中级人民法院",
                     "value": "辽宁省葫芦岛市中级人民法院",
-                    "children": [{ "id": 713, "label": "葫芦岛市连山区人民法院" },
+                    "children": [
+                        { "label": "", "value": "" },
+                        { "id": 713, "label": "葫芦岛市连山区人民法院" },
                         { "id": 714, "label": "葫芦岛市南票区人民法院" },
                         { "id": 715, "label": "葫芦岛市龙港区人民法院" },
                         { "id": 716, "label": "绥中县人民法院" },
@@ -1456,7 +1487,9 @@ export const courtList = () => {
                 {
                     "label": "沈阳铁路运输中级法院",
                     "value": "沈阳铁路运输中级法院",
-                    "children": [{ "id": 720, "label": "沈阳铁路运输法院" },
+                    "children": [
+                        { "label": "", "value": "" },
+                        { "id": 720, "label": "沈阳铁路运输法院" },
                         { "id": 722, "label": "锦州铁路运输法院" },
                         { "id": 723, "label": "大连铁路运输法院" },
                         { "id": 725, "label": "丹东铁路运输法院" }
@@ -1466,6 +1499,7 @@ export const courtList = () => {
                     "label": "辽宁省辽河中级人民法院",
                     "value": "辽宁省辽河中级人民法院",
                     "children": [
+                        { "label": "", "value": "" },
                         { "id": 731, "label": "辽河人民法院" },
                     ],
                 },
@@ -1483,7 +1517,9 @@ export const courtList = () => {
                 {
                     "label": "吉林省长春市中级人民法院",
                     "value": "吉林省长春市中级人民法院",
-                    "children": [{ "id": 752, "label": "长春市南关区人民法院" },
+                    "children": [
+                        { "label": "", "value": "" },
+                        { "id": 752, "label": "长春市南关区人民法院" },
                         { "id": 753, "label": "长春市宽城区人民法院" },
                         { "id": 754, "label": "长春市朝阳区人民法院" },
                         { "id": 755, "label": "长春市二道区人民法院" },
@@ -1502,7 +1538,9 @@ export const courtList = () => {
                 {
                     "label": "吉林省吉林市中级人民法院",
                     "value": "吉林省吉林市中级人民法院",
-                    "children": [{ "id": 764, "label": "吉林市昌邑区人民法院" },
+                    "children": [
+                        { "label": "", "value": "" },
+                        { "id": 764, "label": "吉林市昌邑区人民法院" },
                         { "id": 765, "label": "吉林市龙潭区人民法院" },
                         { "id": 766, "label": "吉林市船营区人民法院" },
                         { "id": 767, "label": "吉林市丰满区人民法院" },
@@ -1517,7 +1555,9 @@ export const courtList = () => {
                 {
                     "label": "吉林省四平市中级人民法院",
                     "value": "吉林省四平市中级人民法院",
-                    "children": [{ "id": 774, "label": "四平市铁西区人民法院" },
+                    "children": [
+                        { "label": "", "value": "" },
+                        { "id": 774, "label": "四平市铁西区人民法院" },
                         { "id": 775, "label": "四平市铁东区人民法院" },
                         { "id": 776, "label": "公主岭市人民法院" },
                         { "id": 777, "label": "梨树县人民法院" },
@@ -1528,7 +1568,9 @@ export const courtList = () => {
                 {
                     "label": "吉林省辽源市中级人民法院",
                     "value": "吉林省辽源市中级人民法院",
-                    "children": [{ "id": 781, "label": "辽源市龙山区人民法院" },
+                    "children": [
+                        { "label": "", "value": "" },
+                        { "id": 781, "label": "辽源市龙山区人民法院" },
                         { "id": 782, "label": "辽源市西安区人民法院" },
                         { "id": 783, "label": "东丰县人民法院" },
                         { "id": 784, "label": "东辽县人民法院" }
@@ -1537,7 +1579,9 @@ export const courtList = () => {
                 {
                     "label": "吉林省通化市中级人民法院",
                     "value": "吉林省通化市中级人民法院",
-                    "children": [{ "id": 786, "label": "通化市东昌区人民法院" },
+                    "children": [
+                        { "label": "", "value": "" },
+                        { "id": 786, "label": "通化市东昌区人民法院" },
                         { "id": 787, "label": "通化市二道江区人民法院" },
                         { "id": 788, "label": "梅河口市人民法院" },
                         { "id": 789, "label": "集安市人民法院" },
@@ -1549,7 +1593,9 @@ export const courtList = () => {
                 {
                     "label": "吉林省白山市中级人民法院",
                     "value": "吉林省白山市中级人民法院",
-                    "children": [{ "id": 794, "label": "白山市浑江区人民法院" },
+                    "children": [
+                        { "label": "", "value": "" },
+                        { "id": 794, "label": "白山市浑江区人民法院" },
                         { "id": 795, "label": "白山市江源区人民法院" },
                         { "id": 796, "label": "临江市人民法院" },
                         { "id": 797, "label": "抚松县人民法院" },
@@ -1560,7 +1606,9 @@ export const courtList = () => {
                 {
                     "label": "吉林省白城市中级人民法院",
                     "value": "吉林省白城市中级人民法院",
-                    "children": [{ "id": 801, "label": "白城市洮北区人民法院" },
+                    "children": [
+                        { "label": "", "value": "" },
+                        { "id": 801, "label": "白城市洮北区人民法院" },
                         { "id": 802, "label": "洮南市人民法院" },
                         { "id": 803, "label": "大安市人民法院" },
                         { "id": 804, "label": "镇赉县人民法院" },
@@ -1570,7 +1618,9 @@ export const courtList = () => {
                 {
                     "label": "吉林省延边朝鲜族自治州中级人民法院",
                     "value": "吉林省延边朝鲜族自治州中级人民法院",
-                    "children": [{ "id": 807, "label": "延吉市人民法院" },
+                    "children": [
+                        { "label": "", "value": "" },
+                        { "id": 807, "label": "延吉市人民法院" },
                         { "id": 808, "label": "图们市人民法院" },
                         { "id": 809, "label": "敦化市人民法院" },
                         { "id": 810, "label": "龙井市人民法院" },
@@ -1583,7 +1633,9 @@ export const courtList = () => {
                 {
                     "label": "吉林省延边林区中级法院",
                     "value": "吉林省延边林区中级法院",
-                    "children": [{ "id": 818, "label": "汪清林区基层法院" },
+                    "children": [
+                        { "label": "", "value": "" },
+                        { "id": 818, "label": "汪清林区基层法院" },
                         { "id": 819, "label": "和龙林区基层法院" },
                         { "id": 821, "label": "白河林区基层法院" },
                         { "id": 822, "label": "敦化林区基层法院" },
@@ -1593,7 +1645,9 @@ export const courtList = () => {
                 {
                     "label": "吉林省松原市中级人民法院",
                     "value": "吉林省松原市中级人民法院",
-                    "children": [{ "id": 827, "label": "松原市宁江区人民法院" },
+                    "children": [
+                        { "label": "", "value": "" },
+                        { "id": 827, "label": "松原市宁江区人民法院" },
                         { "id": 829, "label": "乾安县人民法院" },
                         { "id": 830, "label": "前郭尔罗斯蒙古族自治县人民法院" },
                         { "id": 831, "label": "长岭县人民法院" },
@@ -1603,7 +1657,9 @@ export const courtList = () => {
                 {
                     "label": "吉林省长春林区中级法院",
                     "value": "吉林省长春林区中级法院",
-                    "children": [{ "id": 836, "label": "临江林区基层法院" },
+                    "children": [
+                        { "label": "", "value": "" },
+                        { "id": 836, "label": "临江林区基层法院" },
                         { "id": 833, "label": "白石山林区基层法院" },
                         { "id": 834, "label": "红石林区基层法院" },
                         { "id": 845, "label": "抚松林区基层法院" },
@@ -1613,7 +1669,9 @@ export const courtList = () => {
                 {
                     "label": "长春铁路运输中级法院",
                     "value": "长春铁路运输中级法院",
-                    "children": [{ "id": 724, "label": "长春铁路运输法院" },
+                    "children": [
+                        { "label": "", "value": "" },
+                        { "id": 724, "label": "长春铁路运输法院" },
                         { "id": 721, "label": "吉林铁路运输法院" },
                         { "id": 726, "label": "通化铁路运输法院" },
                         { "id": 729, "label": "白城铁路运输法院" },
@@ -1630,7 +1688,9 @@ export const courtList = () => {
                 {
                     "label": "黑龙江省哈尔滨市中级人民法院",
                     "value": "黑龙江省哈尔滨市中级人民法院",
-                    "children": [{ "label": "", "value": "" }],
+                    "children": [
+                        { "label": "", "value": "" }
+                    ],
                 },
                 {
                     "label": "黑龙江省齐齐哈尔市中级人民法院",
