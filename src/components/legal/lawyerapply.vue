@@ -358,12 +358,14 @@ export default {
   methods: {
       moment,
       isNull:Betools.tools.isNull,
+
       // 律所名称过滤
       filterOption(input, option) {
         return (
           option.componentOptions.children[0].text.toUpperCase().indexOf(input.toUpperCase()) >= 0
         );
       },
+
       // 企业微信登录处理函数
       async  weworkLogin  (codeType = 'search', systemType = 'search')  {
         const userinfo_work = await Betools.query.queryWeworkUser(codeType, systemType,'v5');
@@ -378,7 +380,7 @@ export default {
           Betools.tools.isNull(path) ? null: this.$router.push(path);
       },
      
-      // 获取URL或者二维码信息
+      // 获取基础信息
       async queryInfo() {
         try {
           this.iswechat = Betools.tools.isWechat(); //查询当前是否微信端
@@ -496,18 +498,17 @@ export default {
             title: '温馨提示',
             message: `您好，系统中不存在此律师事务所[${firmName}]，请在律所录入功能处录入律所信息后，再选择此律师事务所！`,
           });
-        } else {
-          this.legal.firmID = firm.id;
-          this.legal.firmName = firm.firm_name;
-        }
+        } 
 
-        //是否确认提交此自由流程?
+        // 是否确认提交此自由流程?
         this.$confirm({
             title: "确认操作",
             content: "是否确认保存此律师录入申请单?",
             onOk: async() => {
                   const { legal } = this;
-                  const result = await Betools.manage.postTableData(this.tablename , this.legal); // 向表单提交form对象数据
+                  (!Betools.tools.isNull(firm)) ? (legal.firmID = firm.id,legal.firmName = firm.firm_name):null;
+                  const result = await Betools.manage.postTableData(this.tablename , legal); // 向表单提交form对象数据
+                  (!Betools.tools.isNull(firm)) ? legal.firmID = legal.firmName : null;
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
@@ -550,10 +551,7 @@ export default {
             title: '温馨提示',
             message: `您好，系统中不存在此律师事务所[${firmName}]，请在律所录入功能处录入律所信息后，再选择此律师事务所！`,
           });
-        } else {
-          this.legal.firmID = firm.id;
-          this.legal.firmName = firm.firm_name;
-        }
+        } 
 
         //是否确认提交此自由流程?
         this.$confirm({
@@ -561,7 +559,9 @@ export default {
             content: "是否确认保存此律师录入申请单?",
             onOk: async() => {
                   const { legal } = this;
-                  const result = await Betools.manage.patchTableData(this.tablename, id, this.legal); // 向表单提交form对象数据
+                  (!Betools.tools.isNull(firm)) ? (legal.firmID = firm.id,legal.firmName = firm.firm_name):null;
+                  const result = await Betools.manage.patchTableData(this.tablename, id, legal); // 向表单提交form对象数据
+                  (!Betools.tools.isNull(firm)) ? legal.firmID = legal.firmName : null;
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
@@ -570,7 +570,6 @@ export default {
                   this.role = 'view';
                   vant.Dialog.alert({  title: '温馨提示',  message: `律师修改操作成功！`, }); //this.$toast.success('律师修改操作成功！');
                   await this.handleList(this.tablename , id);
-                  this.legal.firmID = this.legal.firmName;
                }
           });
       },
