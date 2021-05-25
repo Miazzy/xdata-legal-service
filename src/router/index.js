@@ -86,11 +86,11 @@ const routes = [{
         "subPage": resolve => require(["../components/legal/case/legallist.vue"], resolve)
     }
 }, {
-    path: '/legal/lawsuitlist',
+    path: '/legal/course/lawsuitlist',
     name: "结案记录",
     components: {
         "default": resolve => require(["../components/legal/home.vue"], resolve),
-        "subPage": resolve => require(["../components/legal/lawsuitlist.vue"], resolve)
+        "subPage": resolve => require(["../components/legal/course/lawsuitlist.vue"], resolve)
     }
 }, {
     path: '/legal/court/courtapply',

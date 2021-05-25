@@ -171,7 +171,7 @@ export const reward = ($router) => {
             href: "/account/myanalyse",
             description: '查看已结案案件列表信息',
             click: () => {
-                $router.push(`/legal/lawsuitlist?&type=99&status=finish&legalTname=all`, '_blank');
+                $router.push(`/legal/course/lawsuitlist?&type=99&status=finish&legalTname=all`, '_blank');
             },
         }, {
             name: "一审管理",
