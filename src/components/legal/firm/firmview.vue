@@ -552,6 +552,6 @@ export default {
 };
 </script>
 <style scoped >
-    @import "../../assets/css/reward.home.css";
-    @import "../../assets/css/reward.apply.css";
+    @import "../../../assets/css/reward.home.css";
+    @import "../../../assets/css/reward.apply.css";
 </style>
