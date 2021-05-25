@@ -472,6 +472,29 @@ export const courtList = async() => {
     return courtData[0].children;
 };
 
+export const courtPlainList = async() => {
+    const courtData = await courtList();
+    const data = courtData[0].children;
+    let list = [];
+    for (const firstObj of data) {
+        const { value } = firstObj;
+        list.push(value);
+        if (!Betools.tools.isNull(firstObj.children)) {
+            for (const secondObj of firstObj.children) {
+                const { value } = secondObj;
+                list.push(value);
+                if (!Betools.tools.isNull(secondObj.children)) {
+                    for (const thirdObj of secondObj.children) {
+                        const { value } = thirdObj;
+                        list.push(value);
+                    }
+                }
+            }
+        }
+    }
+    return list;
+};
+
 /**
  * @description 诉讼案件明细默认配置
  */

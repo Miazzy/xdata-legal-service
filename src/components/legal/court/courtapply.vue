@@ -34,13 +34,12 @@
               </a-breadcrumb>
             </div>
             
-            <!-- 案件申请 -->
             <div style="background-color:#f0f0f0;">
 
               <div id="legal-apply-content" class="reward-apply-content" style="height:auto; background-color:#fefefe; margin-top:0px; margin-left: 2.5rem; margin-right: 2.5rem; margin-bottom: 5rem; border: 1px solid #f0f0f0; front-size: 1rem;" >
 
                 <div class="reward-apply-header" style="height:80px; width:100%; text-align:center; margin-top:20px; font-size: 1.5rem; ">
-                  律所录入申请
+                  法院录入申请
                 </div>
 
                 <div class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
@@ -86,6 +85,7 @@
                     </a-col>
                     <a-col :span="8">
                       <a-input v-model="legal.court_name" :readonly="false" placeholder="请输入法院名称！" @blur="validFieldToast('court_name')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      <a-auto-complete :data-source="courtNamelist" v-model="legal.court_name" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0; width:100%; border-width: 0px 0px 1px; border-style: solid; border-color: rgb(254, 254, 254) rgb(254, 254, 254) rgb(240, 240, 240); border-image: initial;"  placeholder="请输入法院名称！" :filter-option="filterOption" />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>法院负责人</span>
@@ -244,6 +244,8 @@ export default {
       userList:[],
       approve_userlist:[],
       approve_executelist:[],
+      courtlist:[],
+      courtNamelist:[],
       role:'',
       file:'',
       message: workconfig.compValidation.legalapply.message,
@@ -273,6 +275,13 @@ export default {
   methods: {
       moment,
       isNull:Betools.tools.isNull,
+
+      // 法院名称过滤
+      filterOption(input, option) {
+        return (
+          option.componentOptions.children[0].text.toUpperCase().indexOf(input.toUpperCase()) >= 0
+        );
+      },
       
       // 企业微信登录处理函数
       async  weworkLogin  (codeType = 'search', systemType = 'search')  {
