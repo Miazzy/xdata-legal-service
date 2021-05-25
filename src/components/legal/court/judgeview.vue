@@ -39,7 +39,7 @@
               <div id="legal-apply-content" class="reward-apply-content" style="height:auto; background-color:#fefefe; margin-top:0px; margin-left: 2.5rem; margin-right: 2.5rem; margin-bottom: 5rem; border: 1px solid #f0f0f0; front-size: 1rem;" >
 
                 <div class="reward-apply-header" style="height:80px; width:100%; text-align:center; margin-top:20px; font-size: 1.5rem; ">
-                  法院录入申请
+                  法官录入申请
                 </div>
 
                 <div class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
@@ -90,7 +90,7 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>法院名称</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-auto-complete :data-source="courtNamelist" v-model="legal.courtName" placeholder="请输入此法院名称！" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0; width:100%; " :filter-option="filterOption" />
+                      <a-auto-complete :data-source="courtNamelist" v-model="legal.court_name" placeholder="请输入此法院名称！" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0; width:100%; " :filter-option="filterOption" />
                     </a-col>
                   </a-row>
                 </div>
@@ -123,7 +123,7 @@
                 <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
                     <a-col :span="4" style="height:auto; font-size:1.0rem; margin-top:5px; text-align: center;">
-                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>法院简介</span>
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>法官简介</span>
                     </a-col>
                     <a-col :span="20">
                       <a-textarea
@@ -155,7 +155,7 @@ export default {
     return {
       iswechat:false,
       iswework:false,
-      pageName: "法官查看",
+      pageName: "法官录入",
       momentNewMsg: true,
       activeTabKey: 3,
       acceptType:'*/*',
