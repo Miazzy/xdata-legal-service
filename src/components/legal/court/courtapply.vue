@@ -210,7 +210,6 @@ export default {
       momentNewMsg: true,
       activeTabKey: 3,
       acceptType:'*/*',
-      uploadURL:'',
       tablename:'bs_company_legal_courtsession',
       size: 0,
       options:{
@@ -247,7 +246,6 @@ export default {
       approve_executelist:[],
       role:'',
       file:'',
-      uploadURL:'https://upload.yunwisdom.club:30443/sys/common/upload',
       message: workconfig.compValidation.legalapply.message,
       valid: workconfig.compValidation.legalapply.valid,
       goodstype: workconfig.goodstype,
