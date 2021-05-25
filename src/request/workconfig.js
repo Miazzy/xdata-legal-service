@@ -28,7 +28,7 @@ export const system = {
  * @description 工作组配置
  */
 export const group = {
-   
+
 }
 
 /**
@@ -215,7 +215,7 @@ export const reward = ($router) => {
             href: "/account/todolist",
             description: '律师事务所录入申请',
             click: () => {
-                $router.push(`/legal/firmapply?type=1&tname=律所录入&apply=申请`, '_blank');
+                $router.push(`/legal/firm/firmapply?type=1&tname=律所录入&apply=申请`, '_blank');
             }
         }, {
             name: "律师录入",
@@ -223,7 +223,7 @@ export const reward = ($router) => {
             href: "/account/donelist",
             description: '律师事务所下律师录入申请',
             click: () => {
-                $router.push(`/legal/lawyerapply?type=1&tname=律师录入&apply=申请`, '_blank');
+                $router.push(`/legal/lawyer/lawyerapply?type=1&tname=律师录入&apply=申请`, '_blank');
             }
         }, {
             name: "律所管理",
@@ -231,7 +231,7 @@ export const reward = ($router) => {
             href: "/account/todolist",
             description: '律师事务所管理',
             click: () => {
-                $router.push(`/legal/firmlist?type=1&tname=律所管理&apply=管理`, '_blank');
+                $router.push(`/legal/firm/firmlist?type=1&tname=律所管理&apply=管理`, '_blank');
             }
         }, {
             name: "律师管理",
@@ -239,7 +239,7 @@ export const reward = ($router) => {
             href: "/account/todolist",
             description: '律师管理',
             click: () => {
-                $router.push(`/legal/lawyerlist?type=1&tname=律师管理&apply=管理`, '_blank');
+                $router.push(`/legal/lawyer/lawyerlist?type=1&tname=律师管理&apply=管理`, '_blank');
             }
         }],
     }, {
@@ -251,7 +251,7 @@ export const reward = ($router) => {
             href: "/account/todolist",
             description: '法院信息录入申请',
             click: () => {
-                $router.push(`/legal/firmapply?type=1&tname=律所录入&apply=申请`, '_blank');
+                $router.push(`/legal/firm/firmapply?type=1&tname=律所录入&apply=申请`, '_blank');
             }
         }, {
             name: "法官录入",
@@ -259,7 +259,7 @@ export const reward = ($router) => {
             href: "/account/donelist",
             description: '法官信息录入申请',
             click: () => {
-                $router.push(`/legal/lawyerapply?type=1&tname=律师录入&apply=申请`, '_blank');
+                $router.push(`/legal/lawyer/lawyerapply?type=1&tname=律师录入&apply=申请`, '_blank');
             }
         }, {
             name: "法院管理",
@@ -267,7 +267,7 @@ export const reward = ($router) => {
             href: "/account/todolist",
             description: '法院信息数据管理',
             click: () => {
-                $router.push(`/legal/firmlist?type=1&tname=律所管理&apply=管理`, '_blank');
+                $router.push(`/legal/firm/firmlist?type=1&tname=律所管理&apply=管理`, '_blank');
             }
         }, {
             name: "法官管理",
@@ -275,7 +275,7 @@ export const reward = ($router) => {
             href: "/account/todolist",
             description: '法官信息数据管理',
             click: () => {
-                $router.push(`/legal/lawyerlist?type=1&tname=律师管理&apply=管理`, '_blank');
+                $router.push(`/legal/lawyer/lawyerlist?type=1&tname=律师管理&apply=管理`, '_blank');
             }
         }],
     }]
@@ -468,7 +468,7 @@ export const getLawWebsiteflow = ($router) => {
 }
 
 export const courtList = async() => {
-    const courtData = await Betools.query.queryNacosConfig('system.legal.config','courtData');
+    const courtData = await Betools.query.queryNacosConfig('system.legal.config', 'courtData');
     return courtData[0].children;
 };
 

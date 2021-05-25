@@ -37,46 +37,46 @@ const routes = [{
         "subPage": resolve => require(["../components/legal/legalview.vue"], resolve)
     }
 }, {
-    path: '/legal/firmapply',
+    path: '/legal/firm/firmapply',
     name: "律所申请",
     components: {
         "default": resolve => require(["../components/legal/home.vue"], resolve),
-        "subPage": resolve => require(["../components/legal/firmapply.vue"], resolve)
+        "subPage": resolve => require(["../components/legal/firm/firmapply.vue"], resolve)
     }
 }, {
-    path: '/legal/lawyerapply',
+    path: '/legal/lawyer/lawyerapply',
     name: "律师申请",
     components: {
         "default": resolve => require(["../components/legal/home.vue"], resolve),
-        "subPage": resolve => require(["../components/legal/lawyerapply.vue"], resolve)
+        "subPage": resolve => require(["../components/legal/lawyer/lawyerapply.vue"], resolve)
     }
 }, {
-    path: '/legal/firmlist',
+    path: '/legal/firm/firmlist',
     name: "律所管理",
     components: {
         "default": resolve => require(["../components/legal/home.vue"], resolve),
-        "subPage": resolve => require(["../components/legal/firmlist.vue"], resolve)
+        "subPage": resolve => require(["../components/legal/firm/firmlist.vue"], resolve)
     }
 }, {
-    path: '/legal/lawyerlist',
+    path: '/legal/lawyer/lawyerlist',
     name: "律师管理",
     components: {
         "default": resolve => require(["../components/legal/home.vue"], resolve),
-        "subPage": resolve => require(["../components/legal/lawyerlist.vue"], resolve)
+        "subPage": resolve => require(["../components/legal/lawyer/lawyerlist.vue"], resolve)
     }
 }, {
-    path: '/legal/firmview', //lawyerview
+    path: '/legal/firm/firmview', //lawyerview
     name: "律所详情",
     components: {
         "default": resolve => require(["../components/legal/home.vue"], resolve),
-        "subPage": resolve => require(["../components/legal/firmview.vue"], resolve)
+        "subPage": resolve => require(["../components/legal/firm/firmview.vue"], resolve)
     }
 }, {
-    path: '/legal/lawyerview', //lawyerview
+    path: '/legal/lawyer/lawyerview', //lawyerview
     name: "律师详情",
     components: {
         "default": resolve => require(["../components/legal/home.vue"], resolve),
-        "subPage": resolve => require(["../components/legal/lawyerview.vue"], resolve)
+        "subPage": resolve => require(["../components/legal/lawyer/lawyerview.vue"], resolve)
     }
 }, {
     path: '/legal/legallist',

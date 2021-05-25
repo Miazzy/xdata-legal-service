@@ -202,7 +202,7 @@ export default {
       // 律所录入申请
       async execApply(){
           const { $router } = this;
-          $router.push(`/legal/firmapply?type=1&tname=律所录入&apply=申请`);
+          $router.push(`/legal/firm/firmapply?type=1&tname=律所录入&apply=申请`);
       },
 
       // 律所删除申请
@@ -213,13 +213,13 @@ export default {
       // 律所修改申请
       async execPatch(elem){
           const { $router } = this;
-          $router.push(`/legal/firmapply?id=${elem.id}&type=1&tname=律所修改&apply=修改`);
+          $router.push(`/legal/firm/firmapply?id=${elem.id}&type=1&tname=律所修改&apply=修改`);
       },
 
       // 律所查看申请
       async execView(elem){
           const { $router } = this;
-          $router.push(`/legal/firmview?id=${elem.id}&type=1&tname=律所详情&apply=查看`);
+          $router.push(`/legal/firm/firmview?id=${elem.id}&type=1&tname=律所详情&apply=查看`);
       },
 
       // 律所导出功能
