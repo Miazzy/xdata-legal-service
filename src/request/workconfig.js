@@ -472,21 +472,22 @@ export const courtList = async() => {
     return courtData[0].children;
 };
 
-export const courtPlainList = async() => {
-    const courtData = await courtList();
-    const data = courtData[0].children;
+export const courtPlainList = async(key) => {
+    const data = await courtList();
     let list = [];
     for (const firstObj of data) {
         const { value } = firstObj;
-        list.push(value);
-        if (!Betools.tools.isNull(firstObj.children)) {
-            for (const secondObj of firstObj.children) {
-                const { value } = secondObj;
-                list.push(value);
-                if (!Betools.tools.isNull(secondObj.children)) {
-                    for (const thirdObj of secondObj.children) {
-                        const { value } = thirdObj;
-                        list.push(value);
+        if (!Betools.tools.isNull(value) && value.includes(key)) {
+            !Betools.tools.isNull(value) ? list.push(value) : null;
+            if (!Betools.tools.isNull(firstObj.children)) {
+                for (const secondObj of firstObj.children) {
+                    const { value } = secondObj;
+                    !Betools.tools.isNull(value) ? list.push(value) : null;
+                    if (!Betools.tools.isNull(secondObj.children)) {
+                        for (const thirdObj of secondObj.children) {
+                            const { value } = thirdObj;
+                            !Betools.tools.isNull(value) ? list.push(value) : null;
+                        }
                     }
                 }
             }

@@ -81,17 +81,16 @@
                 <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>所属地区</span>
+                    </a-col>
+                    <a-col :span="8">
+                      <a-auto-complete :data-source="zoneList" v-model="legal.zone" placeholder="请输入此法院所属地区！" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0; width:100%; " :filter-option="filterOption" />
+                    </a-col>
+                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>法院名称</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.court_name" :readonly="false" placeholder="请输入法院名称！" @blur="validFieldToast('court_name')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
-                      <a-auto-complete :data-source="courtNamelist" v-model="legal.court_name" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0; width:100%; border-width: 0px 0px 1px; border-style: solid; border-color: rgb(254, 254, 254) rgb(254, 254, 254) rgb(240, 240, 240); border-image: initial;"  placeholder="请输入法院名称！" :filter-option="filterOption" />
-                    </a-col>
-                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>法院负责人</span>
-                    </a-col>
-                    <a-col :span="8">
-                      <a-input v-model="legal.principal" :readonly="false" placeholder="请输入法院负责人！" @blur="validFieldToast('principal')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      <a-auto-complete :data-source="courtNamelist" v-model="legal.court_name" placeholder="请输入此法院名称！" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0; width:100%; " :filter-option="filterOption" />
                     </a-col>
                   </a-row>
                 </div>
@@ -116,16 +115,16 @@
                 <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>法院负责人</span>
+                    </a-col>
+                    <a-col :span="8">
+                      <a-input v-model="legal.principal" :readonly="false" placeholder="请输入法院负责人！" @blur="validFieldToast('principal')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                    </a-col>
+                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>法院地址</span>
                     </a-col>
                     <a-col :span="8">
                       <a-input v-model="legal.address" :default-value="options.address" placeholder="请输入此法院地址信息！" @blur="validFieldToast('address')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
-                    </a-col>
-                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>所属地区</span>
-                    </a-col>
-                    <a-col :span="8">
-                      <a-input v-model="legal.zone" placeholder="请输入此法院所属地区！" @blur="validFieldToast('zone')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
@@ -246,6 +245,7 @@ export default {
       approve_executelist:[],
       courtlist:[],
       courtNamelist:[],
+      zoneList:['北京市','天津市','河北省','山西省','内蒙古自治区','辽宁省','吉林省','黑龙江省','上海市','江苏省','浙江省','安徽省','福建省','江西省','山东省','河南省','湖北省','湖南省','广东省','广西壮族自治区','海南省','重庆市','四川省','贵州省','云南省','西藏自治区','陕西省','甘肃省','青海省','宁夏回族自治区','新疆维吾尔自治区'],
       role:'',
       file:'',
       message: workconfig.compValidation.legalapply.message,
@@ -267,6 +267,14 @@ export default {
       zoneType:{'领地集团总部':'领地集团总部','重庆区域':'重庆区域','两湖区域':'两湖区域','川北区域':'川北区域','成都区域':'成都区域','乐眉区域':'乐眉区域','中原区域':'中原区域','攀西区域':'攀西区域','新疆区域':'新疆区域','大湾区域':'大湾区域','北京区域':'北京区域'},
     };
   },
+  watch:{
+    'legal.zone'(value,item2){ //此处监听obj属性a值变量 item1为新值，item2为旧值
+      (async()=>{
+        this.courtNamelist = await workconfig.courtPlainList(value);
+      })();
+    },
+    deep:true,
+  },
   activated() {
   },
   mounted() {
@@ -279,13 +287,13 @@ export default {
       // 法院名称过滤
       filterOption(input, option) {
         return (
-          option.componentOptions.children[0].text.toUpperCase().indexOf(input.toUpperCase()) >= 0
+          option.componentOptions.children[0].text.indexOf(input) >= 0
         );
       },
       
       // 企业微信登录处理函数
       async  weworkLogin  (codeType = 'search', systemType = 'search')  {
-        const userinfo_work = await Betools.query.queryWeworkUser(codeType, systemType,'v5');
+          const userinfo_work = await Betools.query.queryWeworkUser(codeType, systemType,'v5');
           const userinfo = await Betools.storage.getStore('system_userinfo');
           this.legal.create_by = (userinfo ? userinfo.realname || userinfo.name || userinfo.lastname : '');
           this.usertitle = (userinfo && userinfo.parent_company && userinfo.parent_company.name ? userinfo.parent_company.name + ' > ' :'')  + (userinfo ? userinfo.realname || userinfo.name || userinfo.lastname : '');
@@ -308,6 +316,7 @@ export default {
           this.legal.apply_realname = userinfo.realname;
           this.legal.apply_username = userinfo.username;
           
+          debugger;
           const legal = Betools.storage.getStore(`system_${this.tablename}_item#${this.legal.type}#@${userinfo.realname}`); //获取缓存信息
           const id = this.id = Betools.tools.getUrlParam('id');
           if(!Betools.tools.isNull(id)){
