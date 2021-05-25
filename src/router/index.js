@@ -23,18 +23,18 @@ const routes = [{
         "subPage": resolve => require(["../components/legal/workspace.vue"], resolve)
     }
 }, {
-    path: '/legal/legalapply',
+    path: '/legal/case/legalapply',
     name: "案件申请",
     components: {
         "default": resolve => require(["../components/legal/home.vue"], resolve),
-        "subPage": resolve => require(["../components/legal/legalapply.vue"], resolve)
+        "subPage": resolve => require(["../components/legal/case/legalapply.vue"], resolve)
     }
 }, {
-    path: '/legal/legalview',
+    path: '/legal/case/legalview',
     name: "案件管理",
     components: {
         "default": resolve => require(["../components/legal/home.vue"], resolve),
-        "subPage": resolve => require(["../components/legal/legalview.vue"], resolve)
+        "subPage": resolve => require(["../components/legal/case/legalview.vue"], resolve)
     }
 }, {
     path: '/legal/firm/firmapply',
@@ -79,11 +79,11 @@ const routes = [{
         "subPage": resolve => require(["../components/legal/lawyer/lawyerview.vue"], resolve)
     }
 }, {
-    path: '/legal/legallist',
+    path: '/legal/case/legallist',
     name: "案件管理",
     components: {
         "default": resolve => require(["../components/legal/home.vue"], resolve),
-        "subPage": resolve => require(["../components/legal/legallist.vue"], resolve)
+        "subPage": resolve => require(["../components/legal/case/legallist.vue"], resolve)
     }
 }, {
     path: '/legal/lawsuitlist',

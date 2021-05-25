@@ -514,7 +514,7 @@ export default {
     // 跳转到详情页面
     async querylegalview(id = '', panename = '', typename = '', bpm_status = 1 , proponents = '' , pid){
       try {
-        this.$router.push(`/legal/legalview?id=${id}&pid=${pid}&tname=bs_reward_apply&panename=${panename}&typename=${typename}&bpm_status=${bpm_status}&proponents=${proponents}`);
+        this.$router.push(`/legal/case/legalview?id=${id}&pid=${pid}&tname=bs_reward_apply&panename=${panename}&typename=${typename}&bpm_status=${bpm_status}&proponents=${proponents}`);
       } catch (error) {
         console.log(error);
       }

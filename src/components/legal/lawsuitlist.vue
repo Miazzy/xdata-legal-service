@@ -199,7 +199,7 @@ export default {
       // 案件发起录入申请
       async execApply(){
           const { $router } = this;
-          $router.push(`/legal/legalapply?type=1&tname=案件录入&apply=申请`);
+          $router.push(`/legal/case/legalapply?type=1&tname=案件录入&apply=申请`);
       },
 
       // 案件记录删除申请
@@ -210,13 +210,13 @@ export default {
       // 案件记录修改申请
       async execPatch(elem){
           const { $router } = this;
-          $router.push(`/legal/legalapply?id=${elem.id}&type=1&tname=案件修改&apply=修改`);
+          $router.push(`/legal/case/legalapply?id=${elem.id}&type=1&tname=案件修改&apply=修改`);
       },
 
       // 案件记录查看申请
       async execView(elem){
           const { $router } = this;
-          $router.push(`/legal/legalview?id=${elem.id}&type=1&tname=案件详情&apply=查看`);
+          $router.push(`/legal/case/legalview?id=${elem.id}&type=1&tname=案件详情&apply=查看`);
       },
 
       // 案件记录导出功能

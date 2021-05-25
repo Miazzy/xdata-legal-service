@@ -476,7 +476,7 @@ export async function handleApproveWF(curRow = '', fixedWFlow = '', data = [], t
             let receiveURL = null;
             //发送企业微信通知，知会人力/财务人员，进行知会确认操作！
             try {
-                receiveURL = encodeURIComponent(`${window.requestAPIConfig.vuechatdomain}/#/legal/legalview?id=${bussinessNode.id}&pid=&tname=bs_reward_apply&panename=myrewardlist&typename=hr_admin_ids&bpm_status=4&proponents=${bussinessNode.hr_admin_ids}&role=hr`);
+                receiveURL = encodeURIComponent(`${window.requestAPIConfig.vuechatdomain}/#/legal/case/legalview?id=${bussinessNode.id}&pid=&tname=bs_reward_apply&panename=myrewardlist&typename=hr_admin_ids&bpm_status=4&proponents=${bussinessNode.hr_admin_ids}&role=hr`);
                 await superagent.get(`${window.requestAPIConfig.restapi}/api/v1/weappms/${bussinessNode.hr_admin_ids}/亲爱的同事，${bussinessNode.create_by}提交的案件发起申请已处理完毕：${bussinessNode["title"]}，内容：${bussinessNode['content']}，请及时进行知会确认操作！?type=reward&rurl=${receiveURL}`)
                     .set('accept', 'json');
             } catch (error) {
@@ -484,7 +484,7 @@ export async function handleApproveWF(curRow = '', fixedWFlow = '', data = [], t
             }
             //发送企业微信通知，知会流程发起人，此案件发起申请已经完成！
             try {
-                receiveURL = encodeURIComponent(`${window.requestAPIConfig.vuechatdomain}/#/legal/legalview?id=${bussinessCodeID}&pid=&tname=bs_reward_apply&panename=mytodolist&typename=wflow_done&bpm_status=4&proponents=${bussinessNode.create_by}`);
+                receiveURL = encodeURIComponent(`${window.requestAPIConfig.vuechatdomain}/#/legal/case/legalview?id=${bussinessCodeID}&pid=&tname=bs_reward_apply&panename=mytodolist&typename=wflow_done&bpm_status=4&proponents=${bussinessNode.create_by}`);
                 await superagent.get(`${window.requestAPIConfig.restapi}/api/v1/weappms/${bussinessNode.create_by}/亲爱的同事，您提交的案件发起申请已处理完毕：${bussinessNode["title"]}，内容：${bussinessNode['content']}！?type=reward&rurl=${receiveURL}`)
                     .set('accept', 'json');
             } catch (error) {
@@ -652,7 +652,7 @@ export async function handleApproveWF(curRow = '', fixedWFlow = '', data = [], t
                 );
 
                 //此处获取到待审核人员firstAuditor,可以向此用户推送审批消息，打开消息即可审批。
-                await handleNotifyHR(firstAuditor, curRow["proponents"], '', encodeURIComponent(`${window.requestAPIConfig.vuechatdomain}/#/legal/legalview?id=${curRow.business_data_id}&pid=${pnode.id}&tname=bs_reward_apply&panename=mytodolist&typename=wflow_todo&bpm_status=${bpmStatus.bpm_status}&proponents=${curRow["proponents"]}`));
+                await handleNotifyHR(firstAuditor, curRow["proponents"], '', encodeURIComponent(`${window.requestAPIConfig.vuechatdomain}/#/legal/case/legalview?id=${curRow.business_data_id}&pid=${pnode.id}&tname=bs_reward_apply&panename=mytodolist&typename=wflow_todo&bpm_status=${bpmStatus.bpm_status}&proponents=${curRow["proponents"]}`));
 
                 //提示信息 //console.log(" 修改当前记录审批状态为处理中返回结果:" + JSON.stringify(result) );
                 vant.Dialog.alert({
@@ -663,7 +663,7 @@ export async function handleApproveWF(curRow = '', fixedWFlow = '', data = [], t
 
                 //发送审批流程通知，通知流程下一位审批人，点击审批详情，处理用户提交的诉讼案件流程审批通知。
                 try {
-                    const receiveURL = encodeURIComponent(`${window.requestAPIConfig.vuechatdomain}/#/legal/legalview?id=${bussinessCodeID}&pid=&tname=bs_reward_apply&panename=mytodolist&typename=wflow_todo&bpm_status=2&proponents=${firstAuditor}`);
+                    const receiveURL = encodeURIComponent(`${window.requestAPIConfig.vuechatdomain}/#/legal/case/legalview?id=${bussinessCodeID}&pid=&tname=bs_reward_apply&panename=mytodolist&typename=wflow_todo&bpm_status=2&proponents=${firstAuditor}`);
                     await superagent.get(`${window.requestAPIConfig.restapi}/api/v1/weappms/${firstAuditor}/亲爱的同事，您收到案件发起申请审批处理请求：${curRow["title"]}，内容：${curRow['content']}，请您及时进行审批处理！?type=reward&rurl=${receiveURL}`)
                         .set('accept', 'json');
                 } catch (error) {
@@ -833,7 +833,7 @@ export async function handleRejectWF() {
 
             //发送企业微信通知，知会流程发起人，此案件发起申请已经完成！
             try {
-                receiveURL = encodeURIComponent(`${window.requestAPIConfig.vuechatdomain}/#/legal/legalview?id=${bussinessCodeID}&pid=&tname=bs_reward_apply&panename=mytodolist&typename=wflow_done&bpm_status=4&proponents=${bussinessNode.create_by}`);
+                receiveURL = encodeURIComponent(`${window.requestAPIConfig.vuechatdomain}/#/legal/case/legalview?id=${bussinessCodeID}&pid=&tname=bs_reward_apply&panename=mytodolist&typename=wflow_done&bpm_status=4&proponents=${bussinessNode.create_by}`);
                 await superagent.get(`${window.requestAPIConfig.restapi}/api/v1/weappms/${bussinessNode.create_by}/亲爱的同事，您提交的案件发起申请已被驳回：${bussinessNode["title"]}，内容：${bussinessNode['content']}，驳回意见：${message}，请修改申请内容后重新提交流程?type=reward&rurl=${receiveURL}`)
                     .set('accept', 'json');
             } catch (error) {
