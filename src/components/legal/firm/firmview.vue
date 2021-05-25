@@ -543,6 +543,7 @@ export default {
               item.coop_flag = 'YN'.includes(item.coop_flag) ? {'Y':'已合作','N':'未合作'}[item.coop_flag] : item.coop_flag;
               item.out_flag = 'YN'.includes(item.out_flag) ? {'Y':'已出库','N':'未出库'}[item.out_flag] : item.out_flag;
               item.tags = JSON.parse(item.tags);
+              item.in_zone = JSON.parse(item.in_zone); //进行解析
             } catch (error) {
               console.log('error>',error);
             }
