@@ -336,7 +336,7 @@ export default {
           Betools.tools.isNull(path) ? null: this.$router.push(path);
       },
      
-      // 获取URL或者二维码信息
+      // 查询基础信息
       async queryInfo() {
         try {
           this.iswechat = Betools.tools.isWechat(); //查询当前是否微信端

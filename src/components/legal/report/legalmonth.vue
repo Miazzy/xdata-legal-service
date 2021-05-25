@@ -237,7 +237,7 @@ export default {
           console.log(error);
         }
       },
-      // 获取URL或者二维码信息
+      // 查询基础信息
       async queryInfo() {
 
         this.userinfo = await this.weworkLogin(); //查询当前登录用户

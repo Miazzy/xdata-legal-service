@@ -213,7 +213,6 @@ export default {
       size: 0,
       options:{
         create_time:moment(dayjs().format('YYYY-MM-DD'),'YYYY-MM-DD'),
-        in_time:moment(dayjs().format('YYYY-MM-DD'),'YYYY-MM-DD'),
         establish_time:moment(dayjs().format('YYYY-MM-DD'),'YYYY-MM-DD'),
         start_time:moment(dayjs().format('YYYY-MM-DD'),'YYYY-MM-DD'),
         coop_time:moment(dayjs().format('YYYY-MM-DD'),'YYYY-MM-DD'),
@@ -241,8 +240,6 @@ export default {
       data: [],
       readonly: false,
       userList:[],
-      approve_userlist:[],
-      approve_executelist:[],
       courtlist:[],
       courtNamelist:[],
       zoneList:['北京市','天津市','河北省','山西省','内蒙古自治区','辽宁省','吉林省','黑龙江省','上海市','江苏省','浙江省','安徽省','福建省','江西省','山东省','河南省','湖北省','湖南省','广东省','广西壮族自治区','海南省','重庆市','四川省','贵州省','云南省','西藏自治区','陕西省','甘肃省','青海省','宁夏回族自治区','新疆维吾尔自治区'],
@@ -250,16 +247,8 @@ export default {
       file:'',
       message: workconfig.compValidation.legalapply.message,
       valid: workconfig.compValidation.legalapply.valid,
-      goodstype: workconfig.goodstype,
-      goodsborrowtype: workconfig.goodsborrowtype,
-      diplomaType: workconfig.compcolumns.diplomaTypeColumns,
       acceptType: workconfig.compcolumns.acceptType,
-      commonTypeColumns: workconfig.compcolumns.commonTypeColumns,
-      sealTypeColumns: workconfig.compcolumns.sealTypeColumns,
-      selectedSheet: null,
-      sheetName: null,
       sheets: [{ name: "Sheet1", data: [{}] }],
-      collection: [{ }],
       userinfo: '',
       usertitle:'',
       breadcrumb:[{icon:'home',text:'首页',path:'/legal/workspace'},{icon:'user',text:'法院管理',path:'/legal/workspace'},{icon:'form',text:'法院录入',path:''}],
@@ -305,7 +294,7 @@ export default {
           Betools.tools.isNull(path) ? null: this.$router.push(path);
       },
      
-      // 获取URL或者二维码信息
+      // 查询基础信息
       async queryInfo() {
         try {
           this.iswechat = Betools.tools.isWechat(); //查询当前是否微信端
@@ -315,48 +304,22 @@ export default {
           const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
           this.legal.apply_realname = userinfo.realname;
           this.legal.apply_username = userinfo.username;
-          
-          debugger;
           const legal = Betools.storage.getStore(`system_${this.tablename}_item#${this.legal.type}#@${userinfo.realname}`); //获取缓存信息
           const id = this.id = Betools.tools.getUrlParam('id');
           if(!Betools.tools.isNull(id)){
             return this.legal = await this.handleList(this.tablename , id);
-          } else {
-            try {
-              if(legal){ //自动回显刚才填写的用户基础信息
-                this.legal.create_by = legal.create_by || this.legal.create_by;
-                this.legal.remark = legal.remark || this.legal.remark;
-                this.legal.status = legal.status || this.legal.status;
-              }
-              if(userinfo.department && userinfo.department.name){
-                this.legal.department = userinfo.department.name;
-                this.legal.company = userinfo.parent_company.name;
-              } else if(userinfo.systemuserinfo && userinfo.systemuserinfo.textfield1){
-                let temp = userinfo.systemuserinfo.textfield1.split('||')[0];
-                this.legal.company = temp.split('>')[temp.split('>').length - 1];
-                temp = userinfo.systemuserinfo.textfield1.split('||')[1];
-                this.legal.department = temp.split('>')[temp.split('>').length - 1];
-              }
-            } catch (error) {
-              console.log(error);
-            }
-          }
+          } 
         } catch (error) {
           console.log(error);
         }
       },
 
-      // 查询不同状态的律所数据
+      // 查询不同状态的法院数据
       async handleList(tableName , id){
         let list = await Betools.manage.queryTableData(tableName , `_where=(id,eq,${id})&_sort=-id&_p=0&_size=1`);
         list.map((item)=>{ 
           try {
             item.create_time = dayjs(item.create_time).format('YYYY-MM-DD'); 
-            item.establish_time = dayjs(item.establish_time).format('YYYY-MM-DD') == 'Invalid Date' ? '/' : dayjs(item.establish_time).format('YYYY-MM-DD');
-            item.firm_count = parseInt(item.firm_count);
-            item.coop_flag = 'YN'.includes(item.coop_flag) ? {'Y':'已合作','N':'未合作'}[item.coop_flag] : item.coop_flag;
-            item.out_flag = 'YN'.includes(item.out_flag) ? {'Y':'已出库','N':'未出库'}[item.out_flag] : item.out_flag;
-            item.tags = JSON.parse(item.tags);
           } catch (error) {
             console.log(`error:`, error);
           }
@@ -388,7 +351,7 @@ export default {
         await this.handleSave(); //先执行保存操作，保存完毕后执行流程跳转功能
       },
 
-      // 保存用户数据但是不提交
+      // 保存用户数据
       async handleSave(){
         
         this.loading = true; // 显示加载状态
@@ -397,82 +360,57 @@ export default {
         this.legal.create_time = dayjs().format('YYYY-MM-DD');
         this.legal.create_by = (userinfo ? userinfo.realname || userinfo.name || userinfo.lastname : '');
 
-        // 验证数据是否已经填写
-        const keys = Object.keys({ title: '' , brief:'', team_brief:'' })
-
-        const invalidKey =  keys.find(key => {
-          const flag = this.validField(key);
-          return !flag;
-        });
-
+        const keys = Object.keys({ title: '' , brief:'', }); // 验证数据是否已经填写
+        const invalidKey =  keys.find(key => { return !this.validField(key);});
         if(invalidKey != '' && invalidKey != null){
-          await vant.Dialog.alert({
-            title: '温馨提示',
-            message: `请确认内容是否填写完整，错误：请输入[${invalidKey}]信息！`,
-          });
-          return false;
+          return await vant.Dialog.alert( { title: '温馨提示', message: `请确认内容是否填写完整，错误：请输入[${invalidKey}]信息！`,} );
         }
 
         //是否确认提交此自由流程?
         this.$confirm({
             title: "确认操作",
-            content: "是否确认保存此律所录入申请单?",
+            content: "是否确认保存此法院录入申请单?",
             onOk: async() => {
                   const { legal } = this;
                   legal.id = id;
-                  legal.tags = JSON.stringify(legal.tags); //进行序列化
                   const result = await Betools.manage.postTableData(this.tablename , this.legal); // 向表单提交form对象数据
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
-                  legal.tags = JSON.parse(legal.tags); //进行解析
                   this.loading = false; //设置状态
                   this.readonly = true;
                   this.role = 'view';
-                  vant.Dialog.alert({  title: '温馨提示',  message: `律所录入申请发起成功！`, }); //  this.$toast.success('律所录入申请发起成功！');
+                  vant.Dialog.alert({  title: '温馨提示',  message: `法院录入申请发起成功！`, }); //  this.$toast.success('律所录入申请发起成功！');
                }
           });
       },
 
-      // 修改用户数据但是不提交
+      // 修改用户数据
       async handlePatch(){
         
         this.loading = true; // 显示加载状态
         const userinfo = await Betools.storage.getStore('system_userinfo'); // 获取用户基础信息
         const id = Betools.tools.getUrlParam('id'); // 表单ID
-
-        // 验证数据是否已经填写
-        const keys = Object.keys({ title: '' })
-
-        const invalidKey =  keys.find(key => {
-          const flag = this.validField(key);
-          return !flag;
-        });
-
+        const keys = Object.keys({ title: '' }); // 验证数据是否已经填写
+        const invalidKey =  keys.find(key => { return !this.validField(key); });
         if(invalidKey != '' && invalidKey != null){
-          await vant.Dialog.alert({
-            title: '温馨提示',
-            message: `请确认内容是否填写完整，错误：请输入[${invalidKey}]信息！`,
-          });
-          return false;
+          return await vant.Dialog.alert( { title: '温馨提示', message: `请确认内容是否填写完整，错误：请输入[${invalidKey}]信息！`, });
         }
 
         //是否确认提交此自由流程?
         this.$confirm({
             title: "确认操作",
-            content: "是否确认修改此律所的信息?",
+            content: "是否确认修改此法院的信息?",
             onOk: async() => {
                   const { legal } = this;
-                  legal.tags = JSON.stringify(legal.tags); //进行序列化
                   const result = await Betools.manage.patchTableData(this.tablename , id , this.legal); // 向表单提交form对象数据
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
-                  legal.tags = JSON.parse(legal.tags); //进行解析
                   this.loading = false; //设置状态
                   this.readonly = true;
                   this.role = 'view';
-                  vant.Dialog.alert({  title: '温馨提示',  message: `律所修改申请提交成功！`, }); // this.$toast.success('律所修改申请提交成功！');
+                  vant.Dialog.alert({  title: '温馨提示',  message: `法院修改申请提交成功！`, }); // this.$toast.success('律所修改申请提交成功！');
                   await this.handleList(this.tablename , id);
                }
           });
