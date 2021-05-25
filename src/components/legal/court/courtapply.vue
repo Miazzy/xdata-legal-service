@@ -231,8 +231,6 @@ export default {
         'pname': '',
         'status': 'valid',
       },
-      columns: workconfig.columns.reward.items,
-      wfcolumns: workconfig.columns.reward.wfcolumns,
       firmlist:[],
       data: [],
       readonly: false,

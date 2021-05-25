@@ -54,8 +54,8 @@
                                 <a-list-item slot="renderItem" slot-scope="item, index">
                                   <a slot="actions" @click="execView(item)">查看</a>
                                   <a slot="actions" @click="execPatch(item)">修改</a>
-                                  <a-list-item-meta :index="index" :description="`${item.firm_name} 简介：${item.brief_min}，团队简介：${item.team_brief_min}`" >
-                                    <a slot="title" >{{ `${item.firm_name} ${item.phone} 规模:${item.scale}，位于${item.address}，服务团队:${item.firm_count}人` }}</a>
+                                  <a-list-item-meta :index="index" :description="`${item.court_name} 简介：${item.brief}`" >
+                                    <a slot="title" >{{ `${item.court_name} 法院负责人:${item.principal}，位于${item.address}，法官:${item.judge}(${item.mobile})` }}</a>
                                   </a-list-item-meta>
                                 </a-list-item>
                               </a-list>
@@ -71,20 +71,13 @@
                           <a-empty v-if="data.length == 0" style="margin-top:10%;height:580px;"/>
                           <vue-excel-editor v-if="data.length > 0" v-model="data" ref="grid" width="100%" filter-row autocomplete >
                                 <vue-excel-column field="serialID"      label="序号"          width="60px" />
-                                <vue-excel-column field="firm_name"     label="律所名称"       width="100px" />
-                                <vue-excel-column field="address"       label="地址"          width="200px" />
-                                <vue-excel-column field="phone"         label="电话"          width="120px" />
-                                <vue-excel-column field="scale"         label="规模"          width="120px" />
-                                <vue-excel-column field="brief"         label="简介"          width="300px" />
-                                <vue-excel-column field="firm_count"    label="人数"          width="120px" />
-                                <vue-excel-column field="team_brief"    label="团队介绍"       width="300px" />
-                                <vue-excel-column field="coop_flag"     label="合作"          width="120px" />
-                                <vue-excel-column field="out_flag"      label="出库"          width="120px" />
-                                <vue-excel-column field="establish_time" label="成立时间"      width="120px" />
-                                <vue-excel-column field="in_zone"        label="区域"         width="120px" />
-                                <vue-excel-column field="in_time"        label="入库时间"      width="120px" />
-                                <vue-excel-column field="start_time"     label="最近合作时间"   width="120px" />
-                                <vue-excel-column field="coop_time"      label="合作期间"      width="180px" />
+                                <vue-excel-column field="court_name"    label="法院名称"       width="100px" />
+                                <vue-excel-column field="principal"     label="法院负责人"          width="200px" />
+                                <vue-excel-column field="judge"         label="法官名称"          width="120px" />
+                                <vue-excel-column field="mobile"        label="法官电话"          width="120px" />
+                                <vue-excel-column field="address"       label="法院地址"          width="300px" />
+                                <vue-excel-column field="zone"          label="所属区域"          width="120px" />
+                                <vue-excel-column field="brief"         label="法院介绍"       width="300px" />
                           </vue-excel-editor>
                         </a-tab-pane>
 
@@ -106,7 +99,7 @@ export default {
     return {
       iswechat:false,
       iswework:false,
-      pageName: "案件管理",
+      pageName: "法院管理",
       momentNewMsg: true,
       activeTabKey: 3,
       acceptType:'*/*',
@@ -125,21 +118,17 @@ export default {
       userinfo: '',
       usertitle:'',
       columns:[
-        { width: '4%', title: '序号', dataIndex: 'serialID', key: 'serialID', },
-        { width: '15%', title: '律所名称', dataIndex: 'firm_name', key: 'firm_name', },
-        { width: '12%', title: '地址', dataIndex: 'address', key: 'address', },
-        { width: '10%', title: '电话', dataIndex: 'phone', key: 'phone', },
-        { width: '5%', title: '规模', dataIndex: 'scale', key: 'scale', },
-        { width: '20%', title: '简介', dataIndex: 'brief_min', key: 'brief_min', },
-        { width: '4%', title: '人数', dataIndex: 'firm_count', key: 'firm_count', },
-        { width: '18%', title: '团队介绍', dataIndex: 'team_brief_min', key: 'team_brief_min', },
-        { width: '5%', title: '合作', dataIndex: 'coop_flag', key: 'coop_flag', },
-        { width: '5%', title: '出库', dataIndex: 'out_flag', key: 'out_flag', },
-        { width: '5%', title: '成立', dataIndex: 'establish_time', key: 'establish_time', }, 
-        // { width: '5%', title: '区域', dataIndex: 'in_zone', key: 'in_zone', }, // { width: '5%', title: '入库时间', dataIndex: 'in_time', key: 'in_time', }, // { width: '5%', title: '合作时间', dataIndex: 'start_time', key: 'start_time', }, // { width: '5%', title: '合作期间', dataIndex: 'coop_time', key: 'coop_time', },
+        { width: '5%', title: '序号', dataIndex: 'serialID', key: 'serialID', },
+        { width: '15%', title: '法院名称', dataIndex: 'court_name', key: 'court_name', },
+        { width: '10%', title: '法院负责人', dataIndex: 'principal', key: 'principal', },
+        { width: '10%', title: '法官名称', dataIndex: 'judge', key: 'judge', },
+        { width: '10%', title: '法官电话', dataIndex: 'mobile', key: 'mobile', },
+        { width: '10%', title: '法院地址', dataIndex: 'address', key: 'address', },
+        { width: '10%', title: '所属区域', dataIndex: 'zone', key: 'zone', },
+        { width: '20%', title: '法院简介', dataIndex: 'brief', key: 'brief', },
       ],
       data:[],
-      breadcrumb:[{icon:'home',text:'首页',path:'/legal/workspace'},{icon:'user',text:'律所管理',path:'/legal/workspace'},{icon:'form',text:'律所管理',path:''}],
+      breadcrumb:[{icon:'home',text:'首页',path:'/legal/workspace'},{icon:'user',text:'法院法官',path:'/legal/workspace'},{icon:'form',text:'法院管理',path:''}],
       statusType:{'valid':'有效','invalid':'删除'},
       zoneType:{'领地集团总部':'领地集团总部','重庆区域':'重庆区域','两湖区域':'两湖区域','川北区域':'川北区域','成都区域':'成都区域','乐眉区域':'乐眉区域','中原区域':'中原区域','攀西区域':'攀西区域','新疆区域':'新疆区域','大湾区域':'大湾区域','北京区域':'北京区域'},
     };
@@ -175,26 +164,20 @@ export default {
           this.userinfo = await this.weworkLogin(); //查询当前登录用户
           this.back = Betools.tools.getUrlParam('back') || '/legal/workspace'; //查询上一页
           const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
-          this.data = await this.handleList(tableName , '待处理,处理中,审批中,已完成,已驳回', userinfo, '' , 0 , 10000);
+          this.data = await this.handleList(tableName , 'valid,invalid', userinfo, '' , 0 , 10000);
         } catch (error) {
           console.log(error);
         }
       },
 
       // 查询不同状态的领用数据
-      async handleList(tableName , status = '待处理', userinfo, searchSql , page = 0 , size = 10000){
+      async handleList(tableName , status = 'valid', userinfo, searchSql , page = 0 , size = 10000){
         if(Betools.tools.isNull(userinfo) || Betools.tools.isNull(userinfo.username)){
             return [];
         }
         let list = await Betools.manage.queryTableData(tableName , `_where=(status,in,${status})${searchSql}&_sort=-id&_p=${page}&_size=${size}`);
         list.map((item)=>{ 
             item.create_time = dayjs(item.create_time).format('YYYY-MM-DD'); 
-            item.establish_time = dayjs(item.establish_time).format('YYYY-MM-DD') == 'Invalid Date' ? '/' : dayjs(item.establish_time).format('YYYY-MM-DD');
-            item.brief_min = item.brief.length > 35 ? item.brief.slice(0,35) + '...' : item.brief;
-            item.team_brief_min = item.team_brief.length > 35 ? item.team_brief.slice(0,35) + '...' : item.team_brief;
-            item.firm_count = parseInt(item.firm_count);
-            item.coop_flag = 'YN'.includes(item.coop_flag) ? {'Y':'已合作','N':'未合作'}[item.coop_flag] : item.coop_flag;
-            item.out_flag = 'YN'.includes(item.out_flag) ? {'Y':'已出库','N':'未出库'}[item.out_flag] : item.out_flag;
         });
         return list;
       },
@@ -202,7 +185,7 @@ export default {
       // 律所录入申请
       async execApply(){
           const { $router } = this;
-          $router.push(`/legal/firm/firmapply?type=1&tname=律所录入&apply=申请`);
+          $router.push(`/legal/court/courtapply?type=1&tname=法院录入&apply=申请`);
       },
 
       // 律所删除申请
@@ -213,34 +196,34 @@ export default {
       // 律所修改申请
       async execPatch(elem){
           const { $router } = this;
-          $router.push(`/legal/firm/firmapply?id=${elem.id}&type=1&tname=律所修改&apply=修改`);
+          $router.push(`/legal/court/courtapply?id=${elem.id}&type=1&tname=法院修改&apply=修改`);
       },
 
       // 律所查看申请
       async execView(elem){
           const { $router } = this;
-          $router.push(`/legal/firm/firmview?id=${elem.id}&type=1&tname=律所详情&apply=查看`);
+          $router.push(`/legal/court/courtview?id=${elem.id}&type=1&tname=法院详情&apply=查看`);
       },
 
       // 律所导出功能
       async execExport(){
         const { $router } = this;
-        this.$refs.grid.exportTable('xlsx', false, '律所台账数据');
+        this.$refs.grid.exportTable('xlsx', false, '法院台账数据');
       },
 
       // 律所执行刷新操作45
       async execFresh(){
         const tableName = this.tablename;
         const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
-        this.data = await this.handleList(tableName , '待处理,处理中,审批中,已完成,已驳回', userinfo, '' , 0 , 10000);
+        this.data = await this.handleList(tableName , 'valid,invalid', userinfo, '' , 0 , 10000);
       },
 
       // 律所执行搜索功能
       async execSearch(value){
         const tableName = this.tablename;
         const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
-        const searchSql = `~and((firm_name,like,~${value}~)~or(address,like,~${value}~)~or(brief,like,~${value}~)~or(team_brief,like,~${value}~)~or(phone,like,~${value}~)~or(scale,like,~${value}~))`;
-        this.data = await this.handleList(tableName , '待处理,处理中,审批中,已完成,已驳回', userinfo, searchSql , 0 , 10000);
+        const searchSql = `~and((court_name,like,~${value}~)~or(address,like,~${value}~)~or(brief,like,~${value}~))`;
+        this.data = await this.handleList(tableName , 'valid,invalid', userinfo, searchSql , 0 , 10000);
       },
 
   },
