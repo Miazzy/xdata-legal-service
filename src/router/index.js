@@ -163,18 +163,18 @@ const routes = [{
         "subPage": resolve => require(["../components/legal/message.vue"], resolve)
     }
 }, {
-    path: '/legal/legalmonth',
+    path: '/legal/report/legalmonth',
     name: "月度报表",
     components: {
         "default": resolve => require(["../components/legal/home.vue"], resolve),
-        "subPage": resolve => require(["../components/legal/legalmonth.vue"], resolve)
+        "subPage": resolve => require(["../components/legal/report/legalmonth.vue"], resolve)
     }
 }, {
-    path: '/legal/legalquarter',
+    path: '/legal/report/legalquarter',
     name: "季度报表",
     components: {
         "default": resolve => require(["../components/legal/home.vue"], resolve),
-        "subPage": resolve => require(["../components/legal/legalquarter.vue"], resolve)
+        "subPage": resolve => require(["../components/legal/report/legalquarter.vue"], resolve)
     }
 }];
 

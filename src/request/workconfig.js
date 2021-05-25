@@ -195,7 +195,7 @@ export const reward = ($router) => {
             href: "/account/myanalyse",
             description: '对案件进展处于执行阶段的案件进行管理',
             click: () => {
-                // $router.push(`/legal/legalmonth?type=month`);
+                // $router.push(`/legal/report/legalmonth?type=month`);
             },
         }, {
             name: "再审管理",
@@ -203,7 +203,7 @@ export const reward = ($router) => {
             href: "/account/myanalyse",
             description: '对案件进展处于再审阶段的案件进行管理',
             click: () => {
-                // $router.push(`/legal/legalmonth?type=quarter`);
+                // $router.push(`/legal/report/legalmonth?type=quarter`);
             },
         }],
     }, {
