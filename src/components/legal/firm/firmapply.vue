@@ -436,7 +436,7 @@ export default {
     return {
       iswechat:false,
       iswework:false,
-      pageName: "案件管理",
+      pageName: "律所管理",
       momentNewMsg: true,
       activeTabKey: 3,
       acceptType:'*/*',

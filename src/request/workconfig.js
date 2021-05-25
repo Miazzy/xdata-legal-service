@@ -251,7 +251,7 @@ export const reward = ($router) => {
             href: "/account/todolist",
             description: '法院信息录入申请',
             click: () => {
-                $router.push(`/legal/firm/firmapply?type=1&tname=律所录入&apply=申请`, '_blank');
+                $router.push(`/legal/court/courtapply?type=1&tname=法院录入&apply=申请`, '_blank');
             }
         }, {
             name: "法官录入",
@@ -259,7 +259,7 @@ export const reward = ($router) => {
             href: "/account/donelist",
             description: '法官信息录入申请',
             click: () => {
-                $router.push(`/legal/lawyer/lawyerapply?type=1&tname=律师录入&apply=申请`, '_blank');
+                $router.push(`/legal/court/judgeapply?type=1&tname=法官录入&apply=申请`, '_blank');
             }
         }, {
             name: "法院管理",
@@ -267,7 +267,7 @@ export const reward = ($router) => {
             href: "/account/todolist",
             description: '法院信息数据管理',
             click: () => {
-                $router.push(`/legal/firm/firmlist?type=1&tname=律所管理&apply=管理`, '_blank');
+                $router.push(`/legal/court/courtlist?type=1&tname=法院管理&apply=管理`, '_blank');
             }
         }, {
             name: "法官管理",
@@ -275,7 +275,7 @@ export const reward = ($router) => {
             href: "/account/todolist",
             description: '法官信息数据管理',
             click: () => {
-                $router.push(`/legal/lawyer/lawyerlist?type=1&tname=律师管理&apply=管理`, '_blank');
+                $router.push(`/legal/court/judgelist?type=1&tname=法官管理&apply=管理`, '_blank');
             }
         }],
     }]

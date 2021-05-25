@@ -403,7 +403,7 @@ export default {
     return {
       iswechat:false,
       iswework:false,
-      pageName: "案件管理",
+      pageName: "律所查看",
       momentNewMsg: true,
       activeTabKey: 3,
       acceptType:'*/*',
