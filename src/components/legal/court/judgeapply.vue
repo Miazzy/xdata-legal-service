@@ -39,7 +39,7 @@
               <div id="legal-apply-content" class="reward-apply-content" style="height:auto; background-color:#fefefe; margin-top:0px; margin-left: 2.5rem; margin-right: 2.5rem; margin-bottom: 5rem; border: 1px solid #f0f0f0; front-size: 1rem;" >
 
                 <div class="reward-apply-header" style="height:80px; width:100%; text-align:center; margin-top:20px; font-size: 1.5rem; ">
-                  法院录入申请
+                  法官录入申请
                 </div>
 
                 <div class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
@@ -101,7 +101,7 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>法官名称</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.judge" placeholder="请输入此法院法官名称！" @blur="validFieldToast('judge')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.name" placeholder="请输入法官名称！" @blur="validFieldToast('name')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>联系电话</span>
@@ -112,27 +112,10 @@
                   </a-row>
                 </div>
 
-                <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
-                  <a-row>
-                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>法院负责人</span>
-                    </a-col>
-                    <a-col :span="8">
-                      <a-input v-model="legal.principal" :readonly="false" placeholder="请输入法院负责人！" @blur="validFieldToast('principal')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
-                    </a-col>
-                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>法院地址</span>
-                    </a-col>
-                    <a-col :span="8">
-                      <a-input v-model="legal.address" :default-value="options.address" placeholder="请输入此法院地址信息！" @blur="validFieldToast('address')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
-                    </a-col>
-                  </a-row>
-                </div>
-
                 <div class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
                     <a-col class="reward-apply-content-title-text" :span="4" style="font-size:1.1rem;">
-                      法院简介
+                      法官简介
                     </a-col>
                    </a-row>
                 </div>
@@ -140,12 +123,12 @@
                 <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
                     <a-col :span="4" style="height:auto; font-size:1.0rem; margin-top:5px; text-align: center;">
-                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>法院简介</span>
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>法官简介</span>
                     </a-col>
                     <a-col :span="20">
                       <a-textarea
                         v-model="legal.brief"
-                        placeholder="请输入此法院简要介绍！"
+                        placeholder="请输入此法官简介！"
                         :auto-size="{ minRows: 10, maxRows: 100 }"
                         style="height:120px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"
                       />
@@ -205,11 +188,11 @@ export default {
     return {
       iswechat:false,
       iswework:false,
-      pageName: "法院管理",
+      pageName: "法官录入",
       momentNewMsg: true,
       activeTabKey: 3,
       acceptType:'*/*',
-      tablename:'bs_company_legal_courtsession',
+      tablename:'bs_company_legal_judicative',
       size: 0,
       options:{
         create_time:moment(dayjs().format('YYYY-MM-DD'),'YYYY-MM-DD'),
@@ -217,18 +200,15 @@ export default {
       id:'',
       legal:{
         'id': '',
-        'title': '录入法院流程申请',
+        'title': '录入法官流程申请',
         'create_time': dayjs().format('YYYY-MM-DD'),
         'create_by': '',
-        'court_name': '',
-        'principal': '',
-        'judge': '',
+        'courtName': '',
+        'name': '',
         'mobile': '',
         'address': '',
         'zone': '',
         'brief':'',
-        'pid': '',
-        'pname': '',
         'status': 'valid',
       },
       firmlist:[],
