@@ -111,7 +111,7 @@ export default {
       activeTabKey: 3,
       acceptType:'*/*',
       uploadURL:'',
-      tablename:'bs_law_firm',
+      tablename:'bs_company_legal_courtsession',
       size: 0,
       options:{},
       legal:{},

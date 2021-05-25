@@ -213,9 +213,6 @@ export default {
       size: 0,
       options:{
         create_time:moment(dayjs().format('YYYY-MM-DD'),'YYYY-MM-DD'),
-        establish_time:moment(dayjs().format('YYYY-MM-DD'),'YYYY-MM-DD'),
-        start_time:moment(dayjs().format('YYYY-MM-DD'),'YYYY-MM-DD'),
-        coop_time:moment(dayjs().format('YYYY-MM-DD'),'YYYY-MM-DD'),
       },
       id:'',
       legal:{
