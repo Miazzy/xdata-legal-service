@@ -287,6 +287,18 @@ export default {
           $router.push(`/legal/case/legalview?id=${elem.id}&type=1&tname=案件详情&apply=view`);
       },
 
+      // 案件记录删除信息
+      async execDelete(elem){
+          const { $router } = this;
+          
+      },
+
+      // 案件记录禁用信息
+      async execBan(elem){
+          const { $router } = this;
+          
+      },
+
       // 案件记录导出功能
       async execExport(){
           const { $router } = this;
