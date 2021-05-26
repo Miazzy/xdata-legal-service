@@ -57,7 +57,7 @@
                                   
                                   <a-dropdown slot="actions">
                                     <a class="ant-dropdown-link" @click="e => e.preventDefault()">
-                                      管理<a-icon type="down" />
+                                      案件周期<a-icon type="down" />
                                     </a>
                                     <a-menu slot="overlay" >
                                       <a-menu-item key="0" @click="execProcess(item)">
@@ -77,9 +77,6 @@
                                       </a-menu-item>
                                       <a-menu-item key="4">
                                         结案操作
-                                      </a-menu-item>
-                                      <a-menu-item key="4">
-                                        隐藏案件
                                       </a-menu-item>
                                     </a-menu>
                                   </a-dropdown>
@@ -247,7 +244,7 @@ export default {
       // 案件记录追加进展
       async execProcess(elem){
           const { $router } = this;
-          $router.push(`/legal/case/legalview?id=${elem.id}&type=1&tname=案件进展&apply=process`);
+          $router.push(`/legal/case/legalview?id=${elem.id}&type=1&tname=案件进展&apply=进展`);
       },
 
       // 案件记录查看申请

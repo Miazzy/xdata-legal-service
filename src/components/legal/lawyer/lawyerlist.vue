@@ -201,7 +201,7 @@ export default {
       // 律师录入申请
       async execApply(){
           const { $router } = this;
-          $router.push(`/legal/lawyer/lawyerapply?type=1&tname=律师录入&apply=申请`);
+          $router.push(`/legal/lawyer/lawyerapply?type=1&tname=律师录入&apply=new`);
       },
 
       // 律师删除申请
@@ -212,13 +212,13 @@ export default {
       // 律师修改申请
       async execPatch(elem){
           const { $router } = this;
-          $router.push(`/legal/lawyer/lawyerapply?id=${elem.id}&type=1&tname=律师修改&apply=修改`);
+          $router.push(`/legal/lawyer/lawyerapply?id=${elem.id}&type=1&tname=律师修改&apply=edit`);
       },
 
       // 律师修改申请
       async execView(elem){
           const { $router } = this;
-          $router.push(`/legal/lawyer/lawyerview?id=${elem.id}&type=1&tname=律师查看&apply=查看`);
+          $router.push(`/legal/lawyer/lawyerview?id=${elem.id}&type=1&tname=律师查看&apply=view`);
       },
 
       // 律师导出功能

@@ -51,7 +51,23 @@
                           <div v-if="data.length > 0" class="reward-content-table" style="margin-left:0px; width:98%;"> 
                               <a-list item-layout="horizontal" :data-source="data">
                                 <a-list-item slot="renderItem" slot-scope="item, index">
-                                  <a slot="actions" @click="execView(item)">查看</a><!-- <a slot="actions" @click="execPatch(item)">修改</a> -->
+                                  <a slot="actions" @click="execView(item)">查看</a>
+                                  <a-dropdown slot="actions">
+                                    <a class="ant-dropdown-link" @click="e => e.preventDefault()">
+                                      管理<a-icon type="down" />
+                                    </a>
+                                    <a-menu slot="overlay" >
+                                      <a-menu-item key="0" @click="execProcess(item)">
+                                        案件评价
+                                      </a-menu-item>
+                                      <a-menu-item key="1">
+                                        律师评价
+                                      </a-menu-item>
+                                      <a-menu-item key="1">
+                                        查看评价
+                                      </a-menu-item>
+                                    </a-menu>
+                                  </a-dropdown>
                                   <a-list-item-meta :index="index" :description="`${item.caseID} 受理法院：${item.court}，承办法官：${item.judge}，案件状态：${item.legalStatus}`" >
                                     <a slot="title" >{{ `${item.caseID} ${item.caseType} 程序阶段：${item.stage}，原告：${item.accuser}，被告：${item.defendant}` }}</a>
                                   </a-list-item-meta>
@@ -199,7 +215,7 @@ export default {
       // 案件发起录入申请
       async execApply(){
           const { $router } = this;
-          $router.push(`/legal/case/legalapply?type=1&tname=案件录入&apply=申请`);
+          $router.push(`/legal/case/legalapply?type=1&tname=案件录入&apply=new`);
       },
 
       // 案件记录删除申请
@@ -210,13 +226,13 @@ export default {
       // 案件记录修改申请
       async execPatch(elem){
           const { $router } = this;
-          $router.push(`/legal/case/legalapply?id=${elem.id}&type=1&tname=案件修改&apply=修改`);
+          $router.push(`/legal/case/legalapply?id=${elem.id}&type=1&tname=案件修改&apply=edit`);
       },
 
       // 案件记录查看申请
       async execView(elem){
           const { $router } = this;
-          $router.push(`/legal/case/legalview?id=${elem.id}&type=1&tname=案件详情&apply=查看`);
+          $router.push(`/legal/case/legalview?id=${elem.id}&type=1&tname=案件详情&apply=view`);
       },
 
       // 案件记录导出功能
