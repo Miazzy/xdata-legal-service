@@ -179,3 +179,7 @@
     border-color: rgb(254, 254, 254) rgb(254, 254, 254) rgb(240, 240, 240);
     border-image: initial;
 }
+
+#legal-apply-content .reward-apply-content-lawcase {
+    pointer-events: all;
+}

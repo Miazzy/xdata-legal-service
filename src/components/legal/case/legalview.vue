@@ -61,11 +61,29 @@
                     <a-col :span="8">
                       <a-input v-model="legal.title" readonly placeholder="请填写本案件流程标题！" @blur="validFieldToast('title')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                     </a-col>
+                  </a-row>
+                </div>
+
+                <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                  <a-row>
+                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>案件类别</span>
+                    </a-col>
+                    <a-col :span="8">
+                      <a-select  v-model="legal.caseSType" default-value="起诉案件" @blur="validFieldToast('caseSType')"  placeholder="请选择案件类别！" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                        <a-select-option value="起诉案件">
+                          起诉案件
+                        </a-select-option>
+                        <a-select-option value="应诉案件">
+                          应诉案件
+                        </a-select-option>
+                      </a-select>
+                    </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>案件编号</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.caseID" readonly placeholder="请输入案件编号！" @blur="validFieldToast('caseID')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      <a-input v-model="legal.caseID" :readonly='false' placeholder="请输入案件编号！" @blur="validFieldToast('caseID')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                     </a-col>
                   </a-row>
                 </div>
@@ -439,7 +457,7 @@
                    </a-row>
                 </div>
 
-                <div class="reward-apply-content-item" style="pointer-events:all; margin-top:5px; margin-bottom:5px; margin-right:10px;">
+                <div :class="operate == 'process' && !isNull(id) ? 'reward-apply-content-item reward-apply-content-lawcase' : 'reward-apply-content-item' " style="margin-top:5px; margin-bottom:5px; margin-right:10px;">
                   <a-row>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>案件进展</span>
@@ -455,11 +473,11 @@
                   </a-row>
                 </div>
 
-                <div v-show="operate == 'process' && !isNull(id)  " class="reward-apply-content-item" style="margin-top:35px;margin-bottom:5px; margin-right:10px;">
+                <div v-show="operate == 'process' && !isNull(id)  " class="reward-apply-content-item" style="pointer-events:all; margin-top:35px;margin-bottom:5px; margin-right:10px;">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
                     <a-col :span="8">
                     </a-col>
-                    <a-col class="reward-apply-content-title-text" :span="4" style="margin-left:100px;">
+                    <a-col class="reward-apply-content-title-text" :span="4" style="pointer-events:all; margin-left:100px;">
                       <a-button type="primary" style="width: 120px;color:c0c0c0;" @click="handleProcess();"  >
                         追加进展
                       </a-button>
@@ -1322,7 +1340,32 @@ export default {
 
       // 追加案件进展信息
       async handleProcess(){
+        this.loading = true; // 显示加载状态
+        const userinfo = await Betools.storage.getStore('system_userinfo'); // 获取用户基础信息
+        const id = Betools.tools.getUrlParam('id'); // 表单ID
 
+        // 验证数据是否已经填写
+        if(Betools.tools.isNull(this.legal.lawcase)){
+          return await vant.Dialog.alert({ title: '温馨提示', message: `请注意案件进展信息不能为空，请填写后提交！`,});
+        }
+
+        //是否确认提交此自由流程?
+        this.$confirm({
+            title: "确认操作",
+            content: "是否确认追加此案件进展信息?",
+            onOk: async() => {
+                  const { lawcase } = this.legal;
+                  const result = await Betools.manage.patchTableData(this.tablename, id, {lawcase}); // 向表单提交form对象数据
+                  if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
+                      return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
+                  }
+                  this.loading = false; //设置状态
+                  this.readonly = true;
+                  this.role = 'view';
+                  vant.Dialog.alert({  title: '温馨提示',  message: `已提交案件进展信息！`, }); 
+                  await this.handleList(this.tablename , id);
+               }
+          });
       },
 
 

@@ -52,8 +52,26 @@
                           <div v-if="data.length > 0" class="reward-content-table" style="margin-left:0px; width:98%;"> 
                               <a-list item-layout="horizontal" :data-source="data">
                                 <a-list-item slot="renderItem" slot-scope="item, index">
-                                  <a slot="actions" @click="execView(item)">查看</a>
-                                  <a slot="actions" @click="execPatch(item)">修改</a>
+
+                                  <a-dropdown slot="actions">
+                                    <a class="ant-dropdown-link" @click="e => e.preventDefault()">
+                                      操作<a-icon type="down" />
+                                    </a>
+                                    <a-menu slot="overlay" >
+                                      <a-menu-item key="200" @click="execView(item)">
+                                        查看案件
+                                      </a-menu-item>
+                                      <a-menu-item key="201" @click="execPatch(item)">
+                                        修改案件
+                                      </a-menu-item>
+                                      <a-menu-item key="101">
+                                        删除案件
+                                      </a-menu-item>
+                                      <a-menu-item key="99">
+                                        禁用案件
+                                      </a-menu-item>
+                                    </a-menu>
+                                  </a-dropdown>
                                   
                                   <a-dropdown slot="actions">
                                     <a class="ant-dropdown-link" @click="e => e.preventDefault()">
@@ -75,11 +93,24 @@
                                       <a-menu-item key="4">
                                         进入再审阶段
                                       </a-menu-item>
-                                      <a-menu-item key="4">
-                                        结案操作
+                                      <a-menu-item key="100">
+                                        结案闭单
                                       </a-menu-item>
-                                      <a-menu-item key="4">
-                                        隐藏案件
+                                    </a-menu>
+                                  </a-dropdown>
+                                  <a-dropdown slot="actions">
+                                    <a class="ant-dropdown-link" @click="e => e.preventDefault()">
+                                      评价<a-icon type="down" />
+                                    </a>
+                                    <a-menu slot="overlay" >
+                                      <a-menu-item key="200">
+                                        案件评价
+                                      </a-menu-item>
+                                      <a-menu-item key="201">
+                                        律师评价
+                                      </a-menu-item>
+                                      <a-menu-item key="299">
+                                        查看评价
                                       </a-menu-item>
                                     </a-menu>
                                   </a-dropdown>
