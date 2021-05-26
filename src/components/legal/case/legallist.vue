@@ -284,9 +284,8 @@ export default {
 
       // 案件记录删除信息
       async execDelete(elem){
-          const { $router , data , tablename , handleList} = this;
+          const { $router , data , tablename , execFresh } = this;
           const that = this;
-          const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
           this.$confirm({
               title: "温馨提示",
               content: "您好，删除案件记录后不可恢复，您确定执行删除操作?",
@@ -295,18 +294,16 @@ export default {
                     if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                         return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                     }
+                    await execFresh();
                     vant.Dialog.alert({  title: '温馨提示',  message: `已执行删除操作！`, }); 
-                    await handleList(tablename , '待处理,处理中,审批中,已完成,已结案,已驳回', userinfo, '' , 0 , 10000);
-                    that.data = await handleList(tablename , '待处理,处理中,审批中,已完成,已结案,已驳回', userinfo, '' , 0 , 10000);
                 }
             });
       },
 
       // 案件记录禁用信息
       async execBan(elem){
-          const { $router , data , tablename , handleList} = this;
+          const { $router , data , tablename , execFresh } = this;
           const that = this;
-          const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
           this.$confirm({
               title: "温馨提示",
               content: "您确定执行禁用操作?",
@@ -315,9 +312,8 @@ export default {
                     if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                         return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                     }
+                    await execFresh();
                     vant.Dialog.alert({  title: '温馨提示',  message: `已执行禁用操作！`, }); 
-                    await handleList(tablename , '待处理,处理中,审批中,已完成,已结案,已驳回', userinfo, '' , 0 , 10000);
-                    that.data = await handleList(tablename , '待处理,处理中,审批中,已完成,已结案,已驳回', userinfo, '' , 0 , 10000);
                 }
             });
       },
