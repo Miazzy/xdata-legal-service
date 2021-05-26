@@ -296,6 +296,7 @@ export default {
                         return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                     }
                     vant.Dialog.alert({  title: '温馨提示',  message: `已执行删除操作！`, }); 
+                    await handleList(tablename , '待处理,处理中,审批中,已完成,已结案,已驳回', userinfo, '' , 0 , 10000);
                     that.data = await handleList(tablename , '待处理,处理中,审批中,已完成,已结案,已驳回', userinfo, '' , 0 , 10000);
                 }
             });
@@ -315,6 +316,7 @@ export default {
                         return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                     }
                     vant.Dialog.alert({  title: '温馨提示',  message: `已执行禁用操作！`, }); 
+                    await handleList(tablename , '待处理,处理中,审批中,已完成,已结案,已驳回', userinfo, '' , 0 , 10000);
                     that.data = await handleList(tablename , '待处理,处理中,审批中,已完成,已结案,已驳回', userinfo, '' , 0 , 10000);
                 }
             });
