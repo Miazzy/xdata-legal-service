@@ -61,6 +61,24 @@
                     <a-col :span="8">
                       <a-input v-model="legal.title" :readonly='false' placeholder="请填写本案件流程标题！" @blur="validFieldToast('title')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                     </a-col>
+                  </a-row>
+                </div>
+
+                <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                  <a-row>
+                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>案件类别</span>
+                    </a-col>
+                    <a-col :span="8">
+                      <a-select  v-model="legal.caseSType" default-value="起诉案件" @blur="validFieldToast('caseSType')"  placeholder="请选择案件类别！" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                        <a-select-option value="起诉案件">
+                          起诉案件
+                        </a-select-option>
+                        <a-select-option value="应诉案件">
+                          应诉案件
+                        </a-select-option>
+                      </a-select>
+                    </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>案件编号</span>
                     </a-col>
@@ -466,7 +484,7 @@
                   </a-row>
                 </div>
 
-                <div class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
+                <div v-show="role != 'view' && isNull(id) " class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
                     <a-col class="reward-apply-content-title-text" :span="4" style="font-size:1.1rem;">
                       流程设置
@@ -474,7 +492,7 @@
                    </a-row>
                 </div>
 
-                <div id="van-user-list" class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                <div v-show="role != 'view' && isNull(id) " id="van-user-list" class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row style="position:relative;">
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;"></span>审批人员</span>
@@ -585,7 +603,7 @@ export default {
         zoneProject :'', // varchar(128) default '' not null comment '区域项目名称',
         caseID :'', // varchar(64)  default '' not null comment '案件编号',
         caseType :'', // varchar(64)  default '' not null comment '一级案由',
-        caseSType :'', // varchar(64)  default '' not null comment '二级案由',
+        caseSType :'起诉案件', // varchar(64)  default '' not null comment '二级案由',
         stage :'一审阶段', // varchar(64)  default '' not null comment '程序阶段',
         receiveTime: '', // timestamp    default CURRENT_TIMESTAMP not null comment '业务部门接收时间',
         lawRTime: '', // timestamp    default CURRENT_TIMESTAMP not null comment '法律部门接收时间',
@@ -1122,6 +1140,7 @@ export default {
           this.iswework = Betools.tools.isWework(); //查询是否为企业微信
           this.userinfo = await this.weworkLogin(); //查询当前登录用户
           this.options.courtOptions = await workconfig.courtList();
+          this.legal.caseSType = (Betools.tools.getUrlParam('legalTname') || '起诉') + '案件';
           this.back = Betools.tools.getUrlParam('back') || '/legal/workspace'; //查询上一页
           this.legal.legalTname = (Betools.tools.getUrlParam('type') || '0') == '0' ? '起诉' : '应诉';  //查询type
           const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
@@ -1135,6 +1154,7 @@ export default {
           this.lawyerNamelist = this.lawyerlist.map(item => { return item.lawyer_name });
           if(!Betools.tools.isNull(id)){
             this.legal = await this.handleList(this.tablename , id);
+            debugger;
           } else {
             try {
               if(legal){ //自动回显刚才填写的用户基础信息
