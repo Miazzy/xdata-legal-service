@@ -292,7 +292,7 @@ export default {
         out_time: dayjs().format('YYYY-MM-DD'), // varchar(32)  default ''  not null,
         out_flag: '未出库', // varchar(1)   default 'N' not null,
         out_reason: '无', // varchar(256) default ''  not null,
-        territory:'', // 擅长领域
+        territory:[], // 擅长领域
       },
       columns: workconfig.columns.reward.items,
       wfcolumns: workconfig.columns.reward.wfcolumns,
@@ -376,6 +376,7 @@ export default {
             item.out_time = dayjs(item.out_time).format('YYYY-MM-DD') == 'Invalid Date' ? '/' : dayjs(item.out_time).format('YYYY-MM-DD'); 
             item.out_flag = 'YN'.includes(item.out_flag) ? {'Y':'已出库','N':'未出库'}[item.out_flag] : item.out_flag;
             item.start_time = dayjs(item.start_time).format('YYYY-MM-DD') == 'Invalid Date' ? '/' : dayjs(item.start_time).format('YYYY-MM-DD'); 
+            item.territory = JSON.parse(item.territory);
           } catch (error) {
             console.log(`error:`, error);
           }

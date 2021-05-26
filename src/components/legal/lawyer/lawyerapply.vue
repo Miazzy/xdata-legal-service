@@ -438,6 +438,7 @@ export default {
             item.out_time = dayjs(item.out_time).format('YYYY-MM-DD') == 'Invalid Date' ? '/' : dayjs(item.out_time).format('YYYY-MM-DD'); 
             item.out_flag = 'YN'.includes(item.out_flag) ? {'Y':'已出库','N':'未出库'}[item.out_flag] : item.out_flag;
             item.start_time = dayjs(item.start_time).format('YYYY-MM-DD') == 'Invalid Date' ? '/' : dayjs(item.start_time).format('YYYY-MM-DD'); 
+            item.territory = JSON.parse(item.territory);
           } catch (error) {
             console.log(`error:`, error);
           }
@@ -511,7 +512,9 @@ export default {
             onOk: async() => {
                   const { legal } = this;
                   (!Betools.tools.isNull(firm)) ? (legal.firmID = firm.id,legal.firmName = firm.firm_name):null;
+                  legal.territory = JSON.stringify(legal.territory);
                   const result = await Betools.manage.postTableData(this.tablename , legal); // 向表单提交form对象数据
+                  legal.territory = JSON.parse(legal.territory);
                   (!Betools.tools.isNull(firm)) ? legal.firmID = legal.firmName : null;
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
@@ -564,7 +567,9 @@ export default {
             onOk: async() => {
                   const { legal } = this;
                   (!Betools.tools.isNull(firm)) ? (legal.firmID = firm.id,legal.firmName = firm.firm_name):null;
+                  legal.territory = JSON.stringify(legal.territory);
                   const result = await Betools.manage.patchTableData(this.tablename, id, legal); // 向表单提交form对象数据
+                  legal.territory = JSON.parse(legal.territory);
                   (!Betools.tools.isNull(firm)) ? legal.firmID = legal.firmName : null;
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
