@@ -64,10 +64,10 @@
                                       <a-menu-item key="201" @click="execPatch(item)">
                                         修改案件
                                       </a-menu-item>
-                                      <a-menu-item key="101">
+                                      <a-menu-item key="101" @click="execDelete(item)">
                                         删除案件
                                       </a-menu-item>
-                                      <a-menu-item key="99">
+                                      <a-menu-item key="99" @click="execBan(item)">
                                         禁用案件
                                       </a-menu-item>
                                     </a-menu>
@@ -264,11 +264,6 @@ export default {
           $router.push(`/legal/case/legalapply?type=1&tname=案件录入&apply=new`);
       },
 
-      // 案件记录删除申请
-      async execDelete(elem){
-          const { $router } = this;
-      },
-
       // 案件记录修改申请
       async execPatch(elem){
           const { $router } = this;
@@ -289,14 +284,40 @@ export default {
 
       // 案件记录删除信息
       async execDelete(elem){
-          const { $router } = this;
-          
+          const { $router , data , tablename , handleList} = this;
+          const that = this;
+          const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
+          this.$confirm({
+              title: "温馨提示",
+              content: "您好，删除案件记录后不可恢复，您确定执行删除操作?",
+              onOk: async() => {
+                    const result = await Betools.manage.patchTableData(tablename, elem.id, {status:'已删除'}); // 向表单提交form对象数据
+                    if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
+                        return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
+                    }
+                    vant.Dialog.alert({  title: '温馨提示',  message: `已执行删除操作！`, }); 
+                    that.data = await handleList(tablename , '待处理,处理中,审批中,已完成,已结案,已驳回', userinfo, '' , 0 , 10000);
+                }
+            });
       },
 
       // 案件记录禁用信息
       async execBan(elem){
-          const { $router } = this;
-          
+          const { $router , data , tablename , handleList} = this;
+          const that = this;
+          const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
+          this.$confirm({
+              title: "温馨提示",
+              content: "您确定执行禁用操作?",
+              onOk: async() => {
+                    const result = await Betools.manage.patchTableData(tablename, elem.id, {status:'已作废'}); // 向表单提交form对象数据
+                    if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
+                        return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
+                    }
+                    vant.Dialog.alert({  title: '温馨提示',  message: `已执行禁用操作！`, }); 
+                    that.data = await handleList(tablename , '待处理,处理中,审批中,已完成,已结案,已驳回', userinfo, '' , 0 , 10000);
+                }
+            });
       },
 
       // 案件记录导出功能
