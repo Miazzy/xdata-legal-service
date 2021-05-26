@@ -61,11 +61,34 @@
                     <a-col v-if="isNull(id)" :span="8">
                       <a-input v-model="legal.title" :readonly='false' placeholder="请填写申请流程标题！" @blur="validFieldToast('title')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                     </a-col>
+                    <a-col :span="4" style="display:none;font-size:1.0rem; margin-top:5px; text-align: center;">
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>律师姓名</span>
+                    </a-col>
+                    <a-col :span="8" style="display:none;">
+                      <a-input v-model="legal.lawyer_name" :readonly="false" placeholder="请输入律师姓名！" @blur="validFieldToast('lawyer_name')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                    </a-col>
+                  </a-row>
+                </div>
+
+                <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                  <a-row>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>律师姓名</span>
                     </a-col>
                     <a-col :span="8">
                       <a-input v-model="legal.lawyer_name" :readonly="false" placeholder="请输入律师姓名！" @blur="validFieldToast('lawyer_name')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                    </a-col>
+                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>擅长领域</span>
+                    </a-col>
+                    <a-col :span="8">
+                      <a-select mode="multiple" v-model="legal.territory"  @blur="validFieldToast('territory')"  placeholder="请填写律师擅长领域！" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                        <template v-for="(elem,index) in territoryList ">
+                          <a-select-option :key="elem" :index="index" :value="elem">
+                            {{elem}}
+                          </a-select-option>
+                        </template>
+                      </a-select>
                     </a-col>
                   </a-row>
                 </div>
@@ -268,31 +291,18 @@ export default {
         xid: '', // varchar(36)  default ''  not null,
         out_time: dayjs().format('YYYY-MM-DD'), // varchar(32)  default ''  not null,
         out_flag: '未出库', // varchar(1)   default 'N' not null,
-        out_reason: '无', // varchar(256) default ''  not null
+        out_reason: '无', // varchar(256) default ''  not null,
+        territory:'', // 擅长领域
       },
       columns: workconfig.columns.reward.items,
       wfcolumns: workconfig.columns.reward.wfcolumns,
       data: [],
       readonly: false,
       userList:[],
-      release_userid:'',
-      release_username:'',
-      release_company:'',
-      release_department:'',
-      release_position:'',
-      release_amount:'',
-      release_mobile:'',
       release_userlist:[],
-      release_zone:'',
-      release_project:'',
-      approve_userid:'',
-      approve_username:'',
-      approve_mobile:'',
-      approve_department:'',
-      approve_company:'',
-      approve_position:'',
       approve_userlist:[],
       approve_executelist:[],
+      territoryList:[ '家庭纠纷', '借款借贷', '交通事故', '房产纠纷', '刑事辩护', '合同纠纷', '经济纠纷', '土地纠纷', '劳动工伤', '消费权益', '医疗纠纷', '行政诉讼', '公司事务', '知识产权', '保险理赔', '征地拆迁', '涉外海关', '工程建设', '综合咨询', ],
       role:'',
       file:'',
       uploadURL:'https://upload.yunwisdom.club:30443/sys/common/upload',
