@@ -191,6 +191,9 @@
                         <a-select-option value="再审阶段">
                           再审阶段
                         </a-select-option>
+                        <a-select-option value="结案闭单">
+                          结案闭单
+                        </a-select-option>
                       </a-select>
                     </a-col>
                   </a-row>

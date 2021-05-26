@@ -54,7 +54,32 @@
                                 <a-list-item slot="renderItem" slot-scope="item, index">
                                   <a slot="actions" @click="execView(item)">查看</a>
                                   <a slot="actions" @click="execPatch(item)">修改</a>
-                                  <a slot="actions" @click="execProcess(item)">进展</a>
+                                  
+                                  <a-dropdown slot="actions">
+                                    <a class="ant-dropdown-link" @click="e => e.preventDefault()">
+                                      案件周期<a-icon type="down" />
+                                    </a>
+                                    <a-menu slot="overlay" >
+                                      <a-menu-item key="0" @click="execProcess(item)">
+                                        录入案件进展
+                                      </a-menu-item>
+                                      <a-menu-item key="1">
+                                        进入一审阶段
+                                      </a-menu-item>
+                                      <a-menu-item key="2">
+                                        进入二审阶段
+                                      </a-menu-item>
+                                      <a-menu-item key="3">
+                                        进入执行阶段
+                                      </a-menu-item>
+                                      <a-menu-item key="4">
+                                        进入再审阶段
+                                      </a-menu-item>
+                                      <a-menu-item key="4">
+                                        结案操作
+                                      </a-menu-item>
+                                    </a-menu>
+                                  </a-dropdown>
                                   <a-list-item-meta :index="index" :description="`${item.caseID} 受理法院：${item.court}，承办法官：${item.judge}，案件状态：${item.legalStatus}`" >
                                     <a slot="title" >{{ `${item.caseID} ${item.caseType} 程序阶段：${item.stage}，原告：${item.accuser}，被告：${item.defendant}` }}</a>
                                   </a-list-item-meta>
