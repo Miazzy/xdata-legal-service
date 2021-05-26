@@ -117,7 +117,7 @@ export default {
       usertitle:'',
       columns:[
         { width: '5%', title: '序号', dataIndex: 'serialID', key: 'serialID', },
-        { width: '15%', title: '法院名称', dataIndex: 'courtName', key: 'courtName', },
+        { width: '15%', title: '法院名称', dataIndex: 'court_name', key: 'court_name', },
         { width: '10%', title: '法官名称', dataIndex: 'name', key: 'name', },
         { width: '10%', title: '法官电话', dataIndex: 'mobile', key: 'mobile', },
         { width: '10%', title: '所属区域', dataIndex: 'zone', key: 'zone', },
