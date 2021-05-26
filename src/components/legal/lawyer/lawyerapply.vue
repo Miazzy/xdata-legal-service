@@ -302,7 +302,8 @@ export default {
         xid: '', // varchar(36)  default ''  not null,
         out_time: dayjs().format('YYYY-MM-DD'), // varchar(32)  default ''  not null,
         out_flag: '未出库', // varchar(1)   default 'N' not null,
-        out_reason: '无', // varchar(256) default ''  not null
+        out_reason: '无', // varchar(256) default ''  not null,
+        territory:'', // 擅长领域
       },
       columns: workconfig.columns.reward.items,
       wfcolumns: workconfig.columns.reward.wfcolumns,
