@@ -170,3 +170,12 @@
     position: relative;
     padding-right: 24px;
 }
+
+#legal-apply-content .ant-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, .2);
+    border-width: 0px 0px 1px 0px;
+    border-style: solid;
+    border-color: rgb(254, 254, 254) rgb(254, 254, 254) rgb(240, 240, 240);
+    border-image: initial;
+}
