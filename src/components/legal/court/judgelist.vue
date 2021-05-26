@@ -55,7 +55,7 @@
                                   <a slot="actions" @click="execView(item)">查看</a>
                                   <a slot="actions" @click="execPatch(item)">修改</a>
                                   <a-list-item-meta :index="index" :description="`${item.name} 简介：${item.brief}`" >
-                                    <a slot="title" >{{ `${item.name} 电话：${item.mobile}，所属法院:${item.courtName} ` }}</a>
+                                    <a slot="title" >{{ `${item.name} 电话：${item.mobile}，所属区域:${item.zone} ，所属法院:${item.court_name} ` }}</a>
                                   </a-list-item-meta>
                                 </a-list-item>
                               </a-list>
@@ -74,7 +74,7 @@
                                 <vue-excel-column field="name"         label="法官名称"          width="200px" />
                                 <vue-excel-column field="mobile"        label="法官电话"          width="200px" />
                                 <vue-excel-column field="zone"          label="所属区域"          width="200px" />
-                                <vue-excel-column field="courtName"    label="所属法院"       width="150px" />
+                                <vue-excel-column field="court_name"    label="所属法院"       width="150px" />
                                 <vue-excel-column field="brief"         label="法官简介"       width="300px" />
                           </vue-excel-editor>
                         </a-tab-pane>
@@ -181,7 +181,7 @@ export default {
       // 律所录入申请
       async execApply(){
           const { $router } = this;
-          $router.push(`/legal/court/judgeapply?type=1&tname=法院录入&apply=申请`);
+          $router.push(`/legal/court/judgeapply?type=1&tname=法官录入&apply=申请`);
       },
 
       // 律所删除申请
@@ -192,13 +192,13 @@ export default {
       // 律所修改申请
       async execPatch(elem){
           const { $router } = this;
-          $router.push(`/legal/court/judgeapply?id=${elem.id}&type=1&tname=法院修改&apply=修改`);
+          $router.push(`/legal/court/judgeapply?id=${elem.id}&type=1&tname=法官修改&apply=修改`);
       },
 
       // 律所查看申请
       async execView(elem){
           const { $router } = this;
-          $router.push(`/legal/court/judgeview?id=${elem.id}&type=1&tname=法院详情&apply=查看`);
+          $router.push(`/legal/court/judgeview?id=${elem.id}&type=1&tname=法官详情&apply=查看`);
       },
 
       // 律所导出功能
@@ -218,7 +218,7 @@ export default {
       async execSearch(value){
         const tableName = this.tablename;
         const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
-        const searchSql = `~and((court_name,like,~${value}~)~or(address,like,~${value}~)~or(brief,like,~${value}~))`;
+        const searchSql = `~and((court_name,like,~${value}~)~or(name,like,~${value}~)~or(brief,like,~${value}~)~or(mobile,like,~${value}~))`;
         this.data = await this.handleList(tableName , 'valid,invalid', userinfo, searchSql , 0 , 10000);
       },
 
