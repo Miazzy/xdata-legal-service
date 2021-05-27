@@ -36,10 +36,10 @@
               </a-breadcrumb>
             </div>
 
-            <!-- 案件详情 -->
+            <!-- 案件申请 -->
             <div style="background-color:#f0f0f0;">
 
-              <div id="legal-apply-content" class="reward-apply-content" style="pointer-events: none; height:auto; background-color:#fefefe; margin-top:0px; margin-left: 2.5rem; margin-right: 2.5rem; margin-bottom: 5rem; border: 1px solid #f0f0f0; front-size: 1rem;" >
+              <div id="legal-apply-content" class="reward-apply-content" style="height:auto; background-color:#fefefe; margin-top:0px; margin-left: 2.5rem; margin-right: 2.5rem; margin-bottom: 5rem; border: 1px solid #f0f0f0; front-size: 1rem;" >
 
                 <div class="reward-apply-header" style="height:80px; width:100%; text-align:center; margin-top:20px; font-size: 1.5rem; ">
                   {{ legal.legalTname }}案件发起申请
@@ -53,13 +53,13 @@
                    </a-row>
                 </div>
 
-                <div class="reward-apply-content-item" style=" margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>流程标题</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.title" readonly placeholder="请填写本案件流程标题！" @blur="validFieldToast('title')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      <a-input v-model="legal.title" :readonly='false' placeholder="请填写本案件流程标题！" @blur="validFieldToast('title')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                     </a-col>
                   </a-row>
                 </div>
@@ -111,7 +111,7 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>案件类别</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-select  v-model="legal.legalType" readonly default-value="一般案件" @blur="validFieldToast('legalType')"  placeholder="请选择案件类别！" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                      <a-select  v-model="legal.legalType" default-value="一般案件" @blur="validFieldToast('legalType')"  placeholder="请选择案件类别！" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
                         <a-select-option value="一般案件">
                           一般案件
                         </a-select-option>
@@ -124,7 +124,7 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>业务板块</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-select  v-model="legal.plate" readonly default-value="地产板块" @blur="validFieldToast('plate')"  placeholder="请选择业务板块！" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                      <a-select  v-model="legal.plate" default-value="地产板块" @blur="validFieldToast('plate')"  placeholder="请选择业务板块！" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
                         <a-select-option value="融量集团总部">
                           融量集团总部
                         </a-select-option>
@@ -165,13 +165,13 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>所属区域</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-cascader v-model="legal.zone" readonly :options="options.zoneOptions" placeholder="请选择所属区域" @blur="validFieldToast('zone')"  style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      <a-cascader v-model="legal.zone" :options="options.zoneOptions" placeholder="请选择所属区域" @blur="validFieldToast('zone')"  style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>所属项目</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.zoneProject" readonly  placeholder="请选择所属项目！" @blur="validFieldToast('zoneProject')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      <a-input v-model="legal.zoneProject" :readonly='false' placeholder="请选择所属项目！" @blur="validFieldToast('zoneProject')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                     </a-col>
                   </a-row>
                 </div>
@@ -190,13 +190,13 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>案由信息</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-cascader v-model="legal.caseType" readonly :options="options.causeOptions" placeholder="请选择一级案由/二级案由信息！" @blur="validFieldToast('caseType')"  style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      <a-cascader v-model="legal.caseType" :options="options.causeOptions" placeholder="请选择一级案由/二级案由信息！" @blur="validFieldToast('caseType')"  style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>程序阶段</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-select  v-model="legal.stage" readonly default-value="一审阶段" @blur="validFieldToast('stage')"  placeholder="请选择当前案件程序阶段（一审/二审/执行/再审）！" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                      <a-select  v-model="legal.stage" default-value="一审阶段" @blur="validFieldToast('stage')"  placeholder="请选择当前案件程序阶段（一审/二审/执行/再审）！" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
                         <a-select-option value="一审阶段">
                           一审阶段
                         </a-select-option>
@@ -223,13 +223,13 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>业务接收时间</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-date-picker v-model="legal.receiveTime" readonly :default-value="options.datetime" placeholder="请输入业务部门接收时间！" @blur="validFieldToast('receiveTime')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-date-picker v-model="legal.receiveTime" :default-value="options.datetime" placeholder="请输入业务部门接收时间！" @blur="validFieldToast('receiveTime')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>法律接收时间</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-date-picker v-model="legal.lawRTime" readonly :default-value="options.datetime" placeholder="请输入法律部门接收时间！" @blur="validFieldToast('lawRTime')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-date-picker v-model="legal.lawRTime" :default-value="options.datetime" placeholder="请输入法律部门接收时间！" @blur="validFieldToast('lawRTime')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
@@ -242,13 +242,13 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>诉讼发起人</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.accuser" readonly placeholder="请输入诉讼发起人(原告/上诉人)！" @blur="validFieldToast('accuser')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.accuser" placeholder="请输入诉讼发起人(原告/上诉人)！" @blur="validFieldToast('accuser')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>应诉人</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.defendant" readonly placeholder="请输入应诉人(被告/被上诉人)！" @blur="validFieldToast('defendant')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.defendant" placeholder="请输入应诉人(被告/被上诉人)！" @blur="validFieldToast('defendant')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
@@ -259,13 +259,13 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;"></span>第三人</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.thirdParty" readonly placeholder="请输入第三人！" @blur="validFieldToast('thirdParty')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.thirdParty" placeholder="请输入第三人！" @blur="validFieldToast('thirdParty')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;"></span>受理时间</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-date-picker v-model="legal.handledTime" readonly :default-value="options.datetime" placeholder="请输入法院受理时间！" @blur="validFieldToast('handledTime')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-date-picker v-model="legal.handledTime" :default-value="options.datetime" placeholder="请输入法院受理时间！" @blur="validFieldToast('handledTime')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
@@ -276,7 +276,12 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>诉讼请求</span>
                     </a-col>
                     <a-col :span="20">
-                      <a-textarea v-model="legal.remark" placeholder="请输入案件的诉讼请求！" readonly :auto-size="{ minRows: 10, maxRows: 100 }" style="height:120px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-textarea
+                        v-model="legal.remark"
+                        placeholder="请输入案件的诉讼请求！"
+                        :auto-size="{ minRows: 10, maxRows: 100 }"
+                        style="height:120px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"
+                      />
                     </a-col>
                   </a-row>
                 </div>
@@ -295,7 +300,7 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>诉讼本金</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.claimsCapital" readonly placeholder="请输入诉讼本金！" @blur="validFieldToast('claimsCapital')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.claimsCapital" placeholder="请输入诉讼本金！" @blur="validFieldToast('claimsCapital')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
@@ -306,13 +311,13 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>诉讼违约金</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.claimsDedit" readonly placeholder="请输入诉讼违约金！" @blur="validFieldToast('claimsDedit')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.claimsDedit" placeholder="请输入诉讼违约金！" @blur="validFieldToast('claimsDedit')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>诉讼标的额</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.claimsBidSum" readonly placeholder="请输入诉讼标的额！" @blur="validFieldToast('claimsBidSum')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.claimsBidSum" placeholder="请输入诉讼标的额！" @blur="validFieldToast('claimsBidSum')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
@@ -331,7 +336,7 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>外部律所</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-select  v-model="legal.externalFlag" readonly default-value="是" @blur="validFieldToast('externalFlag')"  placeholder="请选择是否聘用外部律所" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                      <a-select  v-model="legal.externalFlag" default-value="是" @blur="validFieldToast('externalFlag')"  placeholder="请选择是否聘用外部律所" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
                         <a-select-option value="是">
                           是
                         </a-select-option>
@@ -349,13 +354,13 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>律师事务所</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-auto-complete :data-source="firmNamelist" v-model="legal.lawOffice" readonly style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0; width:100%; border-width: 0px 0px 1px; border-style: solid; border-color: rgb(254, 254, 254) rgb(254, 254, 254) rgb(240, 240, 240); border-image: initial;"  placeholder="请输入律所名称！" :filter-option="filterOption" />
+                      <a-auto-complete :data-source="firmNamelist" v-model="legal.lawOffice" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0; width:100%; border-width: 0px 0px 1px; border-style: solid; border-color: rgb(254, 254, 254) rgb(254, 254, 254) rgb(240, 240, 240); border-image: initial;"  placeholder="请输入律所名称！" :filter-option="filterOption" />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>委托时间</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-date-picker v-model="legal.lawOfficeTime" readonly :default-value="options.datetime" placeholder="请选择外聘律所委托时间！" @blur="validFieldToast('lawOfficeTime')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-date-picker v-model="legal.lawOfficeTime" :default-value="options.datetime" placeholder="请选择外聘律所委托时间！" @blur="validFieldToast('lawOfficeTime')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
@@ -366,13 +371,13 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>外聘律师</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.lawyer" readonly placeholder="请输入外聘律师！" @blur="validFieldToast('lawyer')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-auto-complete :data-source="lawyerNamelist" v-model="legal.lawyer" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0; width:100%; border-width: 0px 0px 1px; border-style: solid; border-color: rgb(254, 254, 254) rgb(254, 254, 254) rgb(240, 240, 240); border-image: initial;"  placeholder="请输入外聘律师！" :filter-option="filterOption" />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>联系电话</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.lawyerMobile" readonly placeholder="请输入律师联系电话！" @blur="validFieldToast('lawyerMobile')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.lawyerMobile" placeholder="请输入律师联系电话！" @blur="validFieldToast('lawyerMobile')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
@@ -391,7 +396,7 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>受理法院</span>
                     </a-col>
                     <a-col :span="20">
-                      <a-cascader id="legal-apply-content-court-cascader"  v-model="legal.court" :options="options.courtOptions" readonly placeholder="请输入受理法院！" @blur="validFieldToast('court')"  style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      <a-cascader id="legal-apply-content-court-cascader"  v-model="legal.court" :options="options.courtOptions" placeholder="请输入受理法院！" @blur="validFieldToast('court')"  style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                     </a-col>
                   </a-row>
                 </div>
@@ -402,13 +407,13 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>承办法官</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.judge" readonly placeholder="请输入承办法官！" @blur="validFieldToast('judge')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.judge"  placeholder="请输入承办法官！" @blur="validFieldToast('judge')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>法官联系方式</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.judgeMobile" readonly placeholder="请输入承办法官联系方式！" @blur="validFieldToast('judgeMobile')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.judgeMobile"  placeholder="请输入承办法官联系方式！" @blur="validFieldToast('judgeMobile')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
@@ -419,13 +424,13 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>内部律师</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.inHouseLawyers" readonly placeholder="请输入内部律师！" @blur="validFieldToast('inHouseLawyers')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.inHouseLawyers"  placeholder="请输入内部律师！" @blur="validFieldToast('inHouseLawyers')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>外部律师</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.outHouseLawyers" readonly placeholder="请输入外部律师！" @blur="validFieldToast('outHouseLawyers')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.outHouseLawyers"  placeholder="请输入外部律师！" @blur="validFieldToast('outHouseLawyers')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>                
@@ -444,47 +449,366 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>事项披露</span>
                     </a-col>
                     <a-col :span="20" style="height:auto;">
-                      <a-textarea v-model="legal.disclosure" readonly :auto-size="{ minRows: 10, maxRows: 50 }" style="height:120px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
-                    </a-col>
-                  </a-row>
-                </div>
-
-                <div class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
-                   <a-row style="border-top: 1px dash #f0f0f0;" >
-                    <a-col class="reward-apply-content-title-text" :span="4" style="font-size:1.1rem;">
-                      案件进展
-                    </a-col>
-                   </a-row>
-                </div>
-
-                <div :class="operate == 'process' && !isNull(id) ? 'reward-apply-content-item reward-apply-content-lawcase' : 'reward-apply-content-item' " style="margin-top:5px; margin-bottom:5px; margin-right:10px;">
-                  <a-row>
-                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>案件进展</span>
-                    </a-col>
-                    <a-col :span="20">
                       <a-textarea
-                        v-model="legal.lawcase"
-                        placeholder="请输入本案件的案件进展！"
-                        :auto-size="{ minRows: 10, maxRows: 50 }"
-                        style="height:120px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"
+                        v-model="legal.disclosure"
+                        @blur="validFieldToast('disclosure')"
+                        placeholder="请输入本诉讼案件中的重大事项披露！"
+                        :auto-size="{ minRows: 1, maxRows: 5 }"
+                        style="height:80px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"
                       />
                     </a-col>
                   </a-row>
                 </div>
-
-                <div v-show="operate == 'process' && !isNull(id)  " class="reward-apply-content-item" style="pointer-events:all; margin-top:35px;margin-bottom:5px; margin-right:10px;">
+                
+                <div class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
-                    <a-col :span="8">
-                    </a-col>
-                    <a-col class="reward-apply-content-title-text" :span="4" style="pointer-events:all; margin-left:100px;">
-                      <a-button type="primary" style="width: 120px;color:c0c0c0;" @click="handleProcess();"  >
-                        追加进展
-                      </a-button>
-                    </a-col>
-                    <a-col :span="8">
+                    <a-col class="reward-apply-content-title-text" :span="4" style="font-size:1.1rem;">
+                      案件周期
                     </a-col>
                    </a-row>
+                </div>
+
+                <div class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;padding-left:70px;" >
+                      <a-tabs default-active-key="1" @change="callback">
+                        <a-tab-pane key="1" tab="一审管理" style="margin-left:-35px;">
+
+                          <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px;margin-right:10px;">
+                            <a-row>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>举证截止日</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-date-picker v-model="legal.fstEvidence" :default-value="options.datetime" placeholder="请输入举证截止日！" @blur="validFieldToast('receiveTime')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                              </a-col>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>开庭时间</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-date-picker v-model="legal.fstCourtDate" :default-value="options.datetime" placeholder="请输入开庭时间！" @blur="validFieldToast('lawRTime')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                              </a-col>
+                            </a-row>
+                          </div>
+
+                          <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                            <a-row>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>诉讼预案</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-input v-model="legal.fstPlan" :options="options.zoneOptions" placeholder="请输入诉讼预案" @blur="validFieldToast('zone')"  style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                              </a-col>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>未填写原因</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-input v-model="legal.fstReason" :readonly='false' placeholder="请输入未填写原因！" @blur="validFieldToast('zoneProject')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                              </a-col>
+                            </a-row>
+                          </div>
+
+                          <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                            <a-row>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>与预案是否相符</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-input v-model="legal.fstConform" :options="options.zoneOptions" placeholder="请输入与预案是否相符！" @blur="validFieldToast('zone')"  style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                              </a-col>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>不符原因</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-input v-model="legal.fstUnConformReasom" :readonly='false' placeholder="请输入不符原因！" @blur="validFieldToast('zoneProject')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                              </a-col>
+                            </a-row>
+                          </div>
+
+                          <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                            <a-row>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>减损金额</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-input v-model="legal.fstDetractionSum" :options="options.zoneOptions" placeholder="请输入减损金额！" @blur="validFieldToast('zone')"  style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                              </a-col>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>裁判生效</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-input v-model="legal.fstValid" :readonly='false' placeholder="请输入裁判生效情况！" @blur="validFieldToast('zoneProject')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                              </a-col>
+                            </a-row>
+                          </div>
+
+                          <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                            <a-row>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>上诉</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-input v-model="legal.fstAppeal" :options="options.zoneOptions" placeholder="请输入上诉情况！" @blur="validFieldToast('zone')"  style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                              </a-col>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>上诉截止日</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-input v-model="legal.fstAppealTime" :readonly='false' placeholder="请输入上诉截止日！" @blur="validFieldToast('zoneProject')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                              </a-col>
+                            </a-row>
+                          </div>
+
+
+                        </a-tab-pane>
+                        <a-tab-pane key="2" tab="二审管理">
+
+                          <div v-show=" '|二审阶段|再审阶段|执行阶段|结案闭单|'.includes(legal.stage) ">
+                          <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px;margin-right:10px;">
+                            <a-row>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>举证截止日</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-date-picker v-model="legal.secEvidence" :default-value="options.datetime" placeholder="请输入举证截止日！" @blur="validFieldToast('receiveTime')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                              </a-col>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>开庭时间</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-date-picker v-model="legal.secCourtDate" :default-value="options.datetime" placeholder="请输入开庭时间！" @blur="validFieldToast('lawRTime')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                              </a-col>
+                            </a-row>
+                          </div>
+
+                          <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                            <a-row>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>诉讼预案</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-input v-model="legal.secPlan" :options="options.zoneOptions" placeholder="请输入诉讼预案" @blur="validFieldToast('zone')"  style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                              </a-col>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>未填写原因</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-input v-model="legal.secReason" :readonly='false' placeholder="请输入未填写原因！" @blur="validFieldToast('zoneProject')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                              </a-col>
+                            </a-row>
+                          </div>
+
+                          <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                            <a-row>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>与预案是否相符</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-input v-model="legal.secConform" :options="options.zoneOptions" placeholder="请输入与预案是否相符！" @blur="validFieldToast('zone')"  style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                              </a-col>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>不符原因</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-input v-model="legal.secUnConformReasom" :readonly='false' placeholder="请输入不符原因！" @blur="validFieldToast('zoneProject')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                              </a-col>
+                            </a-row>
+                          </div>
+
+                          <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                            <a-row>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>减损金额</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-input v-model="legal.secDetractionSum" :options="options.zoneOptions" placeholder="请输入减损金额！" @blur="validFieldToast('zone')"  style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                              </a-col>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>裁判生效</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-input v-model="legal.secValid" :readonly='false' placeholder="请输入裁判生效情况！" @blur="validFieldToast('zoneProject')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                              </a-col>
+                            </a-row>
+                          </div>
+
+                          <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                            <a-row>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>上诉</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-input v-model="legal.secAppeal" :options="options.zoneOptions" placeholder="请输入上诉情况！" @blur="validFieldToast('zone')"  style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                              </a-col>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>上诉截止日</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-input v-model="legal.secAppealTime" :readonly='false' placeholder="请输入上诉截止日！" @blur="validFieldToast('zoneProject')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                              </a-col>
+                            </a-row>
+                          </div>
+                          </div>
+
+                        </a-tab-pane>
+                        <a-tab-pane key="3" tab="再审管理" >
+
+                          <div v-show=" '|再审阶段|执行阶段|结案闭单|'.includes(legal.stage) ">
+                          <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px;margin-right:10px;">
+                            <a-row>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>举证期限</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-date-picker v-model="legal.reviewEvidence" :default-value="options.datetime" placeholder="请输入举证期限！" @blur="validFieldToast('receiveTime')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                              </a-col>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>开庭时间</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-date-picker v-model="legal.reviewCourtDate" :default-value="options.datetime" placeholder="请输入开庭时间！" @blur="validFieldToast('lawRTime')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                              </a-col>
+                            </a-row>
+                          </div>
+
+                          <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                            <a-row>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>诉讼预案</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-input v-model="legal.reviewPlan" :options="options.zoneOptions" placeholder="请输入诉讼预案" @blur="validFieldToast('zone')"  style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                              </a-col>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>未填写原因</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-input v-model="legal.reviewReason" :readonly='false' placeholder="请输入未填写原因！" @blur="validFieldToast('zoneProject')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                              </a-col>
+                            </a-row>
+                          </div>
+
+                          <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                            <a-row>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>与预案是否相符</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-input v-model="legal.reviewConform" :options="options.zoneOptions" placeholder="请输入与预案是否相符！" @blur="validFieldToast('zone')"  style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                              </a-col>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>不符原因</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-input v-model="legal.reviewUnConformReasom" :readonly='false' placeholder="请输入不符原因！" @blur="validFieldToast('zoneProject')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                              </a-col>
+                            </a-row>
+                          </div>
+
+                          <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                            <a-row>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>减损金额</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-input v-model="legal.reviewDetractionSum" :options="options.zoneOptions" placeholder="请输入减损金额！" @blur="validFieldToast('zone')"  style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                              </a-col>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>裁判生效</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-input v-model="legal.reviewValid" :readonly='false' placeholder="请输入裁判生效情况！" @blur="validFieldToast('zoneProject')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                              </a-col>
+                            </a-row>
+                          </div>
+                          </div>
+                        </a-tab-pane>
+
+                        <a-tab-pane key="4" tab="执行管理">
+
+                          <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                            <a-row>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>是否申请强制执行</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-select  v-model="legal.enforce" default-value="否" @blur="validFieldToast('enforce')"  placeholder="请输入是否申请强制执行！" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                                  <a-select-option value="是">
+                                    是
+                                  </a-select-option>
+                                  <a-select-option value="否">
+                                    否
+                                  </a-select-option>
+                                </a-select>
+                              </a-col>
+                            </a-row>
+                          </div>
+
+                          <div v-show="legal.enforce == '是' "  class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                            <a-row>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>申请执行立案时间</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-input v-model="legal.enforce_time" :readonly='false' placeholder="请输入申请执行立案时间！" @blur="validFieldToast('zoneProject')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                              </a-col>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>执行立案金额</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-input v-model="legal.enforce_fee" :options="options.zoneOptions" placeholder="请输入执行立案金额！" @blur="validFieldToast('zone')"  style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                              </a-col>
+                            </a-row>
+                          </div>
+
+                        </a-tab-pane>
+
+                        <a-tab-pane key="5" tab="结案管理">
+
+                          <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                            <a-row>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>是否结案</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-select  v-model="legal.close_flag" default-value="否" @blur="validFieldToast('close_flag')"  placeholder="请输入是否结案！" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                                  <a-select-option value="是">
+                                    是
+                                  </a-select-option>
+                                  <a-select-option value="否">
+                                    否
+                                  </a-select-option>
+                                </a-select>
+                              </a-col>
+                              <a-col v-show="legal.close_flag == '是' " :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>结案日期</span>
+                              </a-col>
+                              <a-col v-show="legal.close_flag == '是' " :span="8">
+                                <a-input  v-model="legal.closeDate" :options="options.zoneOptions" placeholder="请输入结案日期！" @blur="validFieldToast('zone')"  style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                              </a-col>
+                            </a-row>
+                          </div>
+
+                        </a-tab-pane>
+
+                        <a-tab-pane key="100" tab="案件进展">
+
+                          <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                            <a-row>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>案件进展</span>
+                              </a-col>
+                              <a-col :span="20">
+                                <a-textarea
+                                  v-model="legal.lawcase"
+                                  placeholder="请输入本案件的案件进展！"
+                                  :auto-size="{ minRows: 10, maxRows: 50 }"
+                                  style="height:120px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"
+                                />
+                              </a-col>
+                            </a-row>
+                          </div>
+
+                        </a-tab-pane>
+                      </a-tabs>
                 </div>
 
                 <div style="height:100px;">
@@ -542,7 +866,7 @@ export default {
         zoneProject :'', // varchar(128) default '' not null comment '区域项目名称',
         caseID :'', // varchar(64)  default '' not null comment '案件编号',
         caseType :'', // varchar(64)  default '' not null comment '一级案由',
-        caseSType :'', // varchar(64)  default '' not null comment '二级案由',
+        caseSType :'起诉案件', // varchar(64)  default '' not null comment '二级案由',
         stage :'一审阶段', // varchar(64)  default '' not null comment '程序阶段',
         receiveTime: '', // timestamp    default CURRENT_TIMESTAMP not null comment '业务部门接收时间',
         lawRTime: '', // timestamp    default CURRENT_TIMESTAMP not null comment '法律部门接收时间',
@@ -603,11 +927,15 @@ export default {
         reviewAppeal :'', // varchar(2)   default 'N' not null comment '再审是否上诉',
         reviewAppealTime:'', // varchar(32)  default '' not null comment '再审上诉期',
 
+        enforce:'否',
+        enforce_time:'',
+        enforce_fee:'',
+
+        close_flag:'否',
         closeDate :'', // varchar(32)  default '' not null comment '结案日期',
         archiveDate :'', // varchar(32)  default '' not null comment '归档日期',
         progress :'', // text not null comment '办理进展'
       },
-      operate:'',
       columns: workconfig.columns.reward.items,
       wfcolumns: workconfig.columns.reward.wfcolumns,
       data: [],
@@ -645,11 +973,37 @@ export default {
       selectedSheet: null,
       sheetName: null,
       sheets: [{ name: "Sheet1", data: [{}] }],
+      fields: {
+              '分配性质':'type',
+              '发放期间': 'period',
+              '员工姓名':'username',
+              '员工OA':'account',
+              '所属单位':'company',
+              '所属部门':'department',
+              '所属区域':'zone',
+              '所属项目':'project',
+              '员工职务':'position',
+              '分配金额':'amount',
+            },
+      datas:[{
+              'type':'当期分配',
+              'period': '‘2020年01月’',
+              'username':'员工姓名XXX',
+              'account':'account',
+              'company':'领地集团总部',
+              'department':'XX部',
+              'zone':'XX区域',
+              'project':'XXX项目',
+              'position':'XXX专员',
+              'amount':'10000.00',
+            },],
       collection: [{ }],
       userinfo: '',
       usertitle:'',
       firmlist:[],
       firmNamelist:[],
+      lawyerlist:[],
+      lawyerNamelist:[],
       breadcrumb:[{icon:'home',text:'首页',path:'/legal/workspace'},{icon:'user',text:'案件管控',path:'/legal/workspace'},{icon:'form',text:'案件查看',path:''}],
       statusType:{'valid':'有效','invalid':'删除'},
       zoneType:{'领地集团总部':'领地集团总部','重庆区域':'重庆区域','两湖区域':'两湖区域','川北区域':'川北区域','成都区域':'成都区域','乐眉区域':'乐眉区域','中原区域':'中原区域','攀西区域':'攀西区域','新疆区域':'新疆区域','大湾区域':'大湾区域','北京区域':'北京区域'},
@@ -1032,17 +1386,19 @@ export default {
 
       },
 
-      
-
       //选中当前知会人员
       async selectApproveUser(value){
-        const user = this.approve_userlist.find((item,index) => {return this.approve_userid == legal.id}); //获取员工基本信息
-        this.approve_username = user.name; //设置员工
+        //获取员工基本信息
+        const user = this.approve_userlist.find((item,index) => {return this.approve_userid == legal.id});
+        //设置员工
+        this.approve_username = user.name;
         this.approve_mobile = user.mobile;
         this.approve_company = user.company;
         this.approve_department = user.department;
-        const temp = await query.queryUserInfoByMobile(user.mobile); //查询员工职务
-        this.approve_position = temp.position; //设置员工职务
+        //查询员工职务
+        const temp = await query.queryUserInfoByMobile(user.mobile);
+        //设置员工职务
+        this.approve_position = temp.position;
       },
 
       // 查询基础信息
@@ -1052,9 +1408,9 @@ export default {
           this.iswework = Betools.tools.isWework(); //查询是否为企业微信
           this.userinfo = await this.weworkLogin(); //查询当前登录用户
           this.options.courtOptions = await workconfig.courtList();
+          this.legal.caseSType = (Betools.tools.getUrlParam('legalTname') || '起诉') + '案件';
           this.back = Betools.tools.getUrlParam('back') || '/legal/workspace'; //查询上一页
           this.legal.legalTname = (Betools.tools.getUrlParam('type') || '0') == '0' ? '起诉' : '应诉';  //查询type
-          this.operate = Betools.tools.getUrlParam('apply') || 'view';
           const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
           this.legal.apply_realname = userinfo.realname;
           this.legal.apply_username = userinfo.username;
@@ -1062,8 +1418,11 @@ export default {
           const id = this.id = Betools.tools.getUrlParam('id');
           this.firmlist = await Betools.manage.queryTableData('bs_law_firm' , `_where=(status,ne,0)&_fields=id,firm_name&_sort=-id&_p=0&_size=10000`);
           this.firmNamelist = this.firmlist.map(item => { return item.firm_name });
+          this.lawyerlist = await Betools.manage.queryTableData('bs_lawyer' , `_where=(status,ne,0)&_fields=id,lawyer_name&_sort=-id&_p=0&_size=10000`);
+          this.lawyerNamelist = this.lawyerlist.map(item => { return item.lawyer_name });
           if(!Betools.tools.isNull(id)){
             this.legal = await this.handleList(this.tablename , id);
+            debugger;
           } else {
             try {
               if(legal){ //自动回显刚才填写的用户基础信息
@@ -1105,7 +1464,6 @@ export default {
             } catch (error) {
               item.zone = JSON.parse(item.zone),item.caseType = JSON.parse(item.caseType),item.court = JSON.parse(item.court);
             }
-            debugger;
           } catch (error) {
             console.log(`error:`, error);
           }
@@ -1314,21 +1672,22 @@ export default {
             title: "确认操作",
             content: "是否确认保存此案件发起申请单?",
             onOk: async() => {
-
                   const { legal } = this;
                   legal.id = id;
                   legal.zone = JSON.stringify(legal.zone); //进行序列化
                   legal.caseType = JSON.stringify(legal.caseType); //进行序列化
                   legal.court = JSON.stringify(legal.court); //进行序列化
-                  const result = await Betools.manage.postTableData(this.tablename , legal); // 向表单提交form对象数据
+                  try { // TRY CATCH 不要移除，如果报错可能导致异常
+                    const result = await Betools.manage.postTableData(this.tablename , legal); // 向表单提交form对象数据
+                  } catch (error) {
+                    console.error(error);
+                  }
                   legal.zone = JSON.parse(legal.zone); //进行序列化
                   legal.caseType = JSON.parse(legal.caseType); //进行序列化
                   legal.court = JSON.parse(legal.court); //进行序列化
-                  
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
-
                   this.loading = false; //设置状态
                   this.readonly = true;
                   this.role = 'view';
@@ -1338,36 +1697,84 @@ export default {
 
       },
 
-      // 追加案件进展信息
-      async handleProcess(){
+      // 审批人员添加函数
+      async rewardApproveAdd(){
+        if(!this.approve_userid){
+          return this.$toast.success('请选择审批人员处下拉列表中的待选审批人员！');
+        }
+        const index = this.approve_executelist.findIndex( item => {
+          return item.userid == this.approve_userid;
+        })
+        if(index >= 0){
+          return this.$toast.success('该审批人员已经添加，请重新输入！');
+        }
+        try {
+          const mobile = this.approve_mobile ? `${this.approve_mobile.slice(0,3)}****${this.approve_mobile.slice(-4)}` : '';
+          const user = {key: this.approve_executelist.length + 1 , id:Betools.tools.queryUniqueID(),username:this.approve_username , userid: this.approve_userid , mobile , company: this.approve_company , department : this.approve_department , position : this.approve_position};
+          this.approve_executelist.push(JSON.parse(JSON.stringify(user)));
+          this.approve_userid = '';
+          this.approve_username = '';
+          this.approve_mobile = '';
+          this.approve_position = '';
+          this.approve_userlist = [];
+        } catch (error) {
+          console.log(error);
+        }
+      },
+
+      // 修改用户数据但是不提交
+      async handlePatch(){
+        
         this.loading = true; // 显示加载状态
         const userinfo = await Betools.storage.getStore('system_userinfo'); // 获取用户基础信息
         const id = Betools.tools.getUrlParam('id'); // 表单ID
 
         // 验证数据是否已经填写
-        if(Betools.tools.isNull(this.legal.lawcase)){
-          return await vant.Dialog.alert({ title: '温馨提示', message: `请注意案件进展信息不能为空，请填写后提交！`,});
+        const keys = Object.keys({ title: '' })
+        const invalidKey =  keys.find(key => {
+          const flag = this.validField(key);
+          return !flag;
+        });
+        if(invalidKey != '' && invalidKey != null){
+          return await vant.Dialog.alert({
+            title: '温馨提示',
+            message: `请确认内容是否填写完整，错误：请输入[${invalidKey}]信息！`,
+          });
         }
 
         //是否确认提交此自由流程?
         this.$confirm({
             title: "确认操作",
-            content: "是否确认追加此案件进展信息?",
+            content: "是否确认修改此案件信息?",
             onOk: async() => {
-                  const { lawcase } = this.legal;
-                  const result = await Betools.manage.patchTableData(this.tablename, id, {lawcase}); // 向表单提交form对象数据
+                  const { legal } = this;
+
+                  legal.zone = JSON.stringify(legal.zone); //进行序列化
+                  legal.caseType = JSON.stringify(legal.caseType); //进行序列化
+                  legal.court = JSON.stringify(legal.court); //进行序列化
+                  
+                  try {
+                    const result = await Betools.manage.patchTableData(this.tablename, id, legal); // 向表单提交form对象数据
+                  } catch (error) {
+                    console.error(error);
+                  }
+
+                  legal.zone = JSON.parse(legal.zone); //进行序列化
+                  legal.caseType = JSON.parse(legal.caseType); //进行序列化
+                  legal.court = JSON.parse(legal.court); //进行序列化
+
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
+
                   this.loading = false; //设置状态
                   this.readonly = true;
                   this.role = 'view';
-                  vant.Dialog.alert({  title: '温馨提示',  message: `已提交案件进展信息！`, }); 
+                  vant.Dialog.alert({  title: '温馨提示',  message: `案件信息修改成功！`, }); 
                   await this.handleList(this.tablename , id);
                }
           });
       },
-
 
   },
 };
