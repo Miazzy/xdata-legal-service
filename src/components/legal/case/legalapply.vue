@@ -1480,16 +1480,25 @@ export default {
             content: "是否确认修改此案件信息?",
             onOk: async() => {
                   const { legal } = this;
+
                   legal.zone = JSON.stringify(legal.zone); //进行序列化
                   legal.caseType = JSON.stringify(legal.caseType); //进行序列化
                   legal.court = JSON.stringify(legal.court); //进行序列化
-                  const result = await Betools.manage.patchTableData(this.tablename, id, legal); // 向表单提交form对象数据
+                  
+                  try {
+                    const result = await Betools.manage.patchTableData(this.tablename, id, legal); // 向表单提交form对象数据
+                  } catch (error) {
+                    console.error(error);
+                  }
+
                   legal.zone = JSON.parse(legal.zone); //进行序列化
                   legal.caseType = JSON.parse(legal.caseType); //进行序列化
                   legal.court = JSON.parse(legal.court); //进行序列化
+
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
+                  
                   this.loading = false; //设置状态
                   this.readonly = true;
                   this.role = 'view';
