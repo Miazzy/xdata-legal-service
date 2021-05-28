@@ -849,7 +849,7 @@
                     <a-col :span="8">
                     </a-col>
                     <a-col class="reward-apply-content-title-text" :span="4" style="margin-left:100px;">
-                      <a-button type="primary" style="width: 120px;color:c0c0c0;" @click="handlePatch();"  >
+                      <a-button type="primary" style="width: 120px;color:c0c0c0;" @click="handleProcess();"  >
                         追加进展
                       </a-button>
                     </a-col>
@@ -1694,6 +1694,31 @@ export default {
         }
       },
 
+      // 审批人员添加函数
+      async rewardApproveAdd(){
+        if(!this.approve_userid){
+          return this.$toast.success('请选择审批人员处下拉列表中的待选审批人员！');
+        }
+        const index = this.approve_executelist.findIndex( item => {
+          return item.userid == this.approve_userid;
+        })
+        if(index >= 0){
+          return this.$toast.success('该审批人员已经添加，请重新输入！');
+        }
+        try {
+          const mobile = this.approve_mobile ? `${this.approve_mobile.slice(0,3)}****${this.approve_mobile.slice(-4)}` : '';
+          const user = {key: this.approve_executelist.length + 1 , id:Betools.tools.queryUniqueID(),username:this.approve_username , userid: this.approve_userid , mobile , company: this.approve_company , department : this.approve_department , position : this.approve_position};
+          this.approve_executelist.push(JSON.parse(JSON.stringify(user)));
+          this.approve_userid = '';
+          this.approve_username = '';
+          this.approve_mobile = '';
+          this.approve_position = '';
+          this.approve_userlist = [];
+        } catch (error) {
+          console.log(error);
+        }
+      },
+
       // 保存用户数据但是不提交
       async handleSave(){
         
@@ -1752,31 +1777,6 @@ export default {
 
       },
 
-      // 审批人员添加函数
-      async rewardApproveAdd(){
-        if(!this.approve_userid){
-          return this.$toast.success('请选择审批人员处下拉列表中的待选审批人员！');
-        }
-        const index = this.approve_executelist.findIndex( item => {
-          return item.userid == this.approve_userid;
-        })
-        if(index >= 0){
-          return this.$toast.success('该审批人员已经添加，请重新输入！');
-        }
-        try {
-          const mobile = this.approve_mobile ? `${this.approve_mobile.slice(0,3)}****${this.approve_mobile.slice(-4)}` : '';
-          const user = {key: this.approve_executelist.length + 1 , id:Betools.tools.queryUniqueID(),username:this.approve_username , userid: this.approve_userid , mobile , company: this.approve_company , department : this.approve_department , position : this.approve_position};
-          this.approve_executelist.push(JSON.parse(JSON.stringify(user)));
-          this.approve_userid = '';
-          this.approve_username = '';
-          this.approve_mobile = '';
-          this.approve_position = '';
-          this.approve_userlist = [];
-        } catch (error) {
-          console.log(error);
-        }
-      },
-
       // 修改用户数据但是不提交
       async handlePatch(){
         
@@ -1826,6 +1826,36 @@ export default {
                   this.readonly = true;
                   this.role = 'view';
                   vant.Dialog.alert({  title: '温馨提示',  message: `案件信息修改成功！`, }); 
+                  await this.handleList(this.tablename , id);
+               }
+          });
+      },
+
+      // 追加案件进展信息
+      async handleProcess(){
+        this.loading = true; // 显示加载状态
+        const userinfo = await Betools.storage.getStore('system_userinfo'); // 获取用户基础信息
+        const id = Betools.tools.getUrlParam('id'); // 表单ID
+
+        // 验证数据是否已经填写
+        if(Betools.tools.isNull(this.legal.lawcase)){
+          return await vant.Dialog.alert({ title: '温馨提示', message: `请注意案件进展信息不能为空，请填写后提交！`,});
+        }
+
+        //是否确认提交此自由流程?
+        this.$confirm({
+            title: "确认操作",
+            content: "是否确认追加此案件进展信息?",
+            onOk: async() => {
+                  const { lawcase } = this.legal;
+                  const result = await Betools.manage.patchTableData(this.tablename, id, {lawcase}); // 向表单提交form对象数据
+                  if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
+                      return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
+                  }
+                  this.loading = false; //设置状态
+                  this.readonly = true;
+                  this.role = 'view';
+                  vant.Dialog.alert({  title: '温馨提示',  message: `已提交案件进展信息！`, }); 
                   await this.handleList(this.tablename , id);
                }
           });
