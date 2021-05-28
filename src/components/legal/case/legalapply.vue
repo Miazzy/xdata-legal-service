@@ -830,7 +830,7 @@
                    </a-row>
                 </div>
 
-                <div v-show="role != 'view' && !isNull(id)  " class="reward-apply-content-item" style="margin-top:35px;margin-bottom:5px; margin-right:10px;">
+                <div v-show="role == 'edit' && !isNull(id)  " class="reward-apply-content-item" style="margin-top:35px;margin-bottom:5px; margin-right:10px;">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
                     <a-col :span="8">
                     </a-col>
@@ -1459,6 +1459,7 @@ export default {
           this.options.courtOptions = await workconfig.courtList();
           this.legal.caseSType = (Betools.tools.getUrlParam('legalTname') || '起诉') + '案件';
           this.role = Betools.tools.getUrlParam('role');
+          debugger;
           this.back = Betools.tools.getUrlParam('back') || '/legal/workspace'; //查询上一页
           this.legal.legalTname = (Betools.tools.getUrlParam('type') || '0') == '0' ? '起诉' : '应诉';  //查询type
           const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
