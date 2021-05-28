@@ -34,7 +34,7 @@ const routes = [{
     name: "案件管理",
     components: {
         "default": resolve => require(["../components/legal/home.vue"], resolve),
-        "subPage": resolve => require(["../components/legal/case/legalview.vue"], resolve)
+        "subPage": resolve => require(["../components/legal/case/legalapply.vue"], resolve)
     }
 }, {
     path: '/legal/firm/firmapply',
