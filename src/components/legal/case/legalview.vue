@@ -297,10 +297,10 @@
                 <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>诉讼本金</span>
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>诉讼标的额</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.claimsCapital" placeholder="请输入诉讼本金！" @blur="validFieldToast('claimsCapital')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.claimsBidSum" placeholder="请输入诉讼标的额！" @blur="validFieldToast('claimsBidSum')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
@@ -314,10 +314,10 @@
                       <a-input v-model="legal.claimsDedit" placeholder="请输入诉讼违约金！" @blur="validFieldToast('claimsDedit')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>诉讼标的额</span>
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>诉讼本金</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.claimsBidSum" placeholder="请输入诉讼标的额！" @blur="validFieldToast('claimsBidSum')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.claimsCapital" placeholder="请输入诉讼本金！" @blur="validFieldToast('claimsCapital')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
@@ -1004,7 +1004,7 @@ export default {
       firmNamelist:[],
       lawyerlist:[],
       lawyerNamelist:[],
-      breadcrumb:[{icon:'home',text:'首页',path:'/legal/workspace'},{icon:'user',text:'案件管控',path:'/legal/workspace'},{icon:'form',text:'案件查看',path:''}],
+      breadcrumb:[{icon:'home',text:'首页',path:'/legal/workspace'},{icon:'user',text:'案件管控',path:'/legal/workspace'},{icon:'form',text:'案件发起',path:''}],
       statusType:{'valid':'有效','invalid':'删除'},
       zoneType:{'领地集团总部':'领地集团总部','重庆区域':'重庆区域','两湖区域':'两湖区域','川北区域':'川北区域','成都区域':'成都区域','乐眉区域':'乐眉区域','中原区域':'中原区域','攀西区域':'攀西区域','新疆区域':'新疆区域','大湾区域':'大湾区域','北京区域':'北京区域'},
     };
@@ -1671,23 +1671,28 @@ export default {
         this.$confirm({
             title: "确认操作",
             content: "是否确认保存此案件发起申请单?",
-            onOk: async() => {
+            onOk: async(result) => {
+
                   const { legal } = this;
                   legal.id = id;
                   legal.zone = JSON.stringify(legal.zone); //进行序列化
                   legal.caseType = JSON.stringify(legal.caseType); //进行序列化
                   legal.court = JSON.stringify(legal.court); //进行序列化
+                  
                   try { // TRY CATCH 不要移除，如果报错可能导致异常
-                    const result = await Betools.manage.postTableData(this.tablename , legal); // 向表单提交form对象数据
+                    result = await Betools.manage.postTableData(this.tablename , legal); // 向表单提交form对象数据
                   } catch (error) {
                     console.error(error);
                   }
+
                   legal.zone = JSON.parse(legal.zone); //进行序列化
                   legal.caseType = JSON.parse(legal.caseType); //进行序列化
                   legal.court = JSON.parse(legal.court); //进行序列化
+                  
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
+
                   this.loading = false; //设置状态
                   this.readonly = true;
                   this.role = 'view';
@@ -1746,7 +1751,7 @@ export default {
         this.$confirm({
             title: "确认操作",
             content: "是否确认修改此案件信息?",
-            onOk: async() => {
+            onOk: async(result) => {
                   const { legal } = this;
 
                   legal.zone = JSON.stringify(legal.zone); //进行序列化
@@ -1754,7 +1759,7 @@ export default {
                   legal.court = JSON.stringify(legal.court); //进行序列化
                   
                   try {
-                    const result = await Betools.manage.patchTableData(this.tablename, id, legal); // 向表单提交form对象数据
+                    result = await Betools.manage.patchTableData(this.tablename, id, legal); // 向表单提交form对象数据
                   } catch (error) {
                     console.error(error);
                   }

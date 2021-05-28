@@ -261,25 +261,25 @@ export default {
       // 案件发起录入申请
       async execApply(){
           const { $router } = this;
-          $router.push(`/legal/case/legalapply?type=1&tname=案件录入&apply=new`);
+          $router.push(`/legal/case/legalapply?type=1&tname=案件录入&apply=new&role=new`);
       },
 
       // 案件记录修改申请
       async execPatch(elem){
           const { $router } = this;
-          $router.push(`/legal/case/legalapply?id=${elem.id}&type=1&tname=案件修改&apply=edit`);
+          $router.push(`/legal/case/legalapply?id=${elem.id}&type=1&tname=案件修改&apply=edit&role=edit`);
       },
 
       // 案件记录追加进展
       async execProcess(elem){
           const { $router } = this;
-          $router.push(`/legal/case/legalview?id=${elem.id}&type=1&tname=案件进展&apply=process`);
+          $router.push(`/legal/case/legalview?id=${elem.id}&type=1&tname=案件进展&apply=process&role=process`);
       },
 
       // 案件记录查看申请
       async execView(elem){
           const { $router } = this;
-          $router.push(`/legal/case/legalview?id=${elem.id}&type=1&tname=案件详情&apply=view`);
+          $router.push(`/legal/case/legalapply?id=${elem.id}&type=1&tname=案件详情&apply=view&role=view`);
       },
 
       // 案件记录删除信息
