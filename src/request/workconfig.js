@@ -353,6 +353,30 @@ export const getRewardWflow = ($router) => {
 
 export const getLawWebsiteflow = ($router) => {
     return [{
+            name: "中国法院网",
+            span: 24,
+            href: "https://www.chinacourt.org/index.shtml",
+            click: () => {
+                window.open("https://www.chinacourt.org/index.shtml", '_blank');
+            }
+        },
+        {
+            name: "中国仲裁网",
+            span: 24,
+            href: "http://www.china-arbitration.com/",
+            click: () => {
+                window.open("http://www.china-arbitration.com/", '_blank');
+            }
+        },
+        {
+            name: "中国政府网",
+            span: 24,
+            href: "http://www.gov.cn/",
+            click: () => {
+                window.open("http://www.gov.cn/", '_blank');
+            }
+        },
+        {
             name: "中国裁判文书网",
             span: 24,
             href: "https://wenshu.court.gov.cn/",
@@ -369,27 +393,19 @@ export const getLawWebsiteflow = ($router) => {
             }
         },
         {
-            name: "中国执行信息公开网",
-            span: 24,
-            href: "http://zxgk.court.gov.cn/zhzxgk/",
-            click: () => {
-                window.open("http://zxgk.court.gov.cn/zhzxgk/", '_blank');
-            }
-        },
-        {
-            name: "中国法院网",
-            span: 24,
-            href: "https://www.chinacourt.org/index.shtml",
-            click: () => {
-                window.open("https://www.chinacourt.org/index.shtml", '_blank');
-            }
-        },
-        {
             name: "中国庭审公开网",
             span: 24,
             href: "http://tingshen.court.gov.cn/",
             click: () => {
                 window.open("http://tingshen.court.gov.cn/", '_blank');
+            }
+        },
+        {
+            name: "中国执行信息公开网",
+            span: 24,
+            href: "http://zxgk.court.gov.cn/zhzxgk/",
+            click: () => {
+                window.open("http://zxgk.court.gov.cn/zhzxgk/", '_blank');
             }
         },
         {
@@ -401,30 +417,6 @@ export const getLawWebsiteflow = ($router) => {
             }
         },
         {
-            name: "中国政府网",
-            span: 24,
-            href: "http://www.gov.cn/",
-            click: () => {
-                window.open("http://www.gov.cn/", '_blank');
-            }
-        },
-        {
-            name: "中国政府网-法律法规",
-            span: 24,
-            href: "http://www.gov.cn/ziliao/flfg/index.htm",
-            click: () => {
-                window.open("http://www.gov.cn/ziliao/flfg/index.htm", '_blank');
-            }
-        },
-        {
-            name: "法律法规数据库",
-            span: 24,
-            href: "http://search.chinalaw.gov.cn/search2.html",
-            click: () => {
-                window.open("http://search.chinalaw.gov.cn/search2.html", '_blank');
-            }
-        },
-        {
             name: "中国法院网法律文库",
             span: 24,
             href: "https://www.chinacourt.org/law",
@@ -433,11 +425,19 @@ export const getLawWebsiteflow = ($router) => {
             }
         },
         {
-            name: "中国仲裁网",
-            span: 24,
-            href: "http://www.china-arbitration.com/",
+            name: "中国政府网-法律",
+            span: 11,
+            href: "http://www.gov.cn/ziliao/flfg/index.htm",
             click: () => {
-                window.open("http://www.china-arbitration.com/", '_blank');
+                window.open("http://www.gov.cn/ziliao/flfg/index.htm", '_blank');
+            }
+        },
+        {
+            name: "法律法规库",
+            span: 10,
+            href: "http://search.chinalaw.gov.cn/search2.html",
+            click: () => {
+                window.open("http://search.chinalaw.gov.cn/search2.html", '_blank');
             }
         },
         {
