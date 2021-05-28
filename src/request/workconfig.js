@@ -433,6 +433,14 @@ export const getLawWebsiteflow = ($router) => {
             }
         },
         {
+            name: "中国仲裁网",
+            span: 24,
+            href: "http://www.china-arbitration.com/",
+            click: () => {
+                window.open("http://www.china-arbitration.com/", '_blank');
+            }
+        },
+        {
             name: "企查查",
             span: 6,
             href: "https://www.qcc.com/",
