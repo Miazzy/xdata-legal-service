@@ -374,13 +374,30 @@
                       <a-auto-complete :data-source="lawyerNamelist" v-model="legal.lawyer" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0; width:100%; border-width: 0px 0px 1px; border-style: solid; border-color: rgb(254, 254, 254) rgb(254, 254, 254) rgb(240, 240, 240); border-image: initial;"  placeholder="请输入外聘律师！" :filter-option="filterOption" />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>联系电话</span>
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>律师联系电话</span>
                     </a-col>
                     <a-col :span="8">
                       <a-input v-model="legal.lawyerMobile" placeholder="请输入律师联系电话！" @blur="validFieldToast('lawyerMobile')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
+
+                <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                  <a-row>
+                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>内部律师</span>
+                    </a-col>
+                    <a-col :span="8">
+                      <a-input v-model="legal.inHouseLawyers"  placeholder="请输入内部律师！" @blur="validFieldToast('inHouseLawyers')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                    </a-col>
+                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>律师联系电话</span>
+                    </a-col>
+                    <a-col :span="8">
+                      <a-input v-model="legal.inHouseLawyersMobile"  placeholder="请输入内部律师联系电话！" @blur="validFieldToast('outHouseLawyers')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                    </a-col>
+                  </a-row>
+                </div> 
 
                 <div class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
@@ -416,24 +433,7 @@
                       <a-input v-model="legal.judgeMobile"  placeholder="请输入承办法官联系方式！" @blur="validFieldToast('judgeMobile')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
-                </div>
-
-                <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
-                  <a-row>
-                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>内部律师</span>
-                    </a-col>
-                    <a-col :span="8">
-                      <a-input v-model="legal.inHouseLawyers"  placeholder="请输入内部律师！" @blur="validFieldToast('inHouseLawyers')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
-                    </a-col>
-                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>外部律师</span>
-                    </a-col>
-                    <a-col :span="8">
-                      <a-input v-model="legal.outHouseLawyers"  placeholder="请输入外部律师！" @blur="validFieldToast('outHouseLawyers')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
-                    </a-col>
-                  </a-row>
-                </div>                
+                </div>               
 
                 <div class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
@@ -934,7 +934,9 @@ export default {
         judge :'', // varchar(64)  default '' not null comment '承办法官',
         judgeMobile :'', // varchar(16)  default '' not null comment '承办法官联系方式',
         inHouseLawyers :'', // varchar(64)  default '' not null comment '承办人员 内部律师',
+        inHouseLawyersMobile:'', 
         outHouseLawyers :'', // varchar(64)  default '' not null comment '承办人员 外部律师',
+        outHouseLawyersMobile:'',
         disclosure :'', // text not null comment '诉讼中重大事项披露',
         lawcase :'' ,// text not null comment '案件进展',
         lastTime :'' , // timestamp default CURRENT_TIMESTAMP not null comment '最后修改时间',
