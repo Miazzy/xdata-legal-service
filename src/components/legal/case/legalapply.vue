@@ -209,6 +209,12 @@
                         <a-select-option value="再审阶段">
                           再审阶段
                         </a-select-option>
+                        <a-select-option value="行政复议">
+                          行政复议
+                        </a-select-option>
+                        <a-select-option value="劳动仲裁">
+                          劳动仲裁
+                        </a-select-option>
                         <a-select-option value="结案闭单">
                           结案闭单
                         </a-select-option>
