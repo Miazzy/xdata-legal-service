@@ -39,9 +39,40 @@
                 <div style="width:100%;margin-left:0px;margin-right:0px;background:#fbf9fe;">
 
                     <div class="reward-top-button" style="margin-top:20px;margin-bottom:20px; margin-left:20px;">
-                        <a-input-search placeholder="输入搜索关键字、案件名称、相关信息等" style="width:450px;" enter-button @search="execSearch" />
-                        <a-button type="primary" @click="execApply" >新增</a-button>
+                        <a-input-search v-model="legal.value" placeholder="输入搜索关键字、案件名称、相关信息等" style="width:450px;" enter-button @search="execSearch" />
+                        
+                        <div style="display:inline;margin-left:15px;font-size:14px;margin-right:10px;">
+                          <span>案件阶段</span>
+                          <a-select  v-model="legal.stage" default-value="一审阶段" placeholder="选择案件程序阶段" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                            <a-select-option value="全部">
+                              全部
+                            </a-select-option>
+                            <a-select-option value="一审阶段">
+                              一审阶段
+                            </a-select-option>
+                            <a-select-option value="二审阶段">
+                              二审阶段
+                            </a-select-option>
+                            <a-select-option value="执行阶段">
+                              执行阶段
+                            </a-select-option>
+                            <a-select-option value="再审阶段">
+                              再审阶段
+                            </a-select-option>
+                            <a-select-option value="行政复议">
+                              行政复议
+                            </a-select-option>
+                            <a-select-option value="劳动仲裁">
+                              劳动仲裁
+                            </a-select-option>
+                            <a-select-option value="结案闭单">
+                              结案闭单
+                            </a-select-option>
+                          </a-select>
+                        </div>
+                        <a-button type="primary" @click="execSearch" >查询</a-button>
                         <a-button type="primary" @click="execFresh" >刷新</a-button>
+                        <a-button type="primary" @click="execApply" >新增</a-button>
                         <a-button type="primary" @click="execExport" >导出</a-button>
                     </div>
 
@@ -173,7 +204,10 @@ export default {
       tablename:'bs_legal',
       size: 0,
       options:{},
-      legal:{},
+      legal:{
+        value:'',
+        stage:'全部',
+      },
       data: [],
       readonly: false,
       userList:[],
@@ -334,9 +368,11 @@ export default {
       // 案件列表执行搜索功能
       async execSearch(value){
         const tableName = this.tablename;
+        const { legal } = this;
         const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
-        const searchSql = `~and((title,like,~${value}~)~or(fstPlan,like,~${value}~)~or(legalType,like,~${value}~)~or(plate,like,~${value}~)~or(firm,like,~${value}~)~or(legalTname,like,~${value}~)~or(zone,like,~${value}~)~or(zoneProject,like,~${value}~)~or(caseID,like,~${value}~)~or(caseType,like,~${value}~)~or(caseSType,like,~${value}~)~or(stage,like,~${value}~)~or(accuser,like,~${value}~)~or(defendant,like,~${value}~)~or(court,like,~${value}~)~or(judge,like,~${value}~)~or(judgeMobile,like,~${value}~)~or(inHouseLawyers,like,~${value}~)~or(disclosure,like,~${value}~)~or(lawcase,like,~${value}~)~or(thirdParty,like,~${value}~)~or(lawOffice,like,~${value}~)~or(lawyer,like,~${value}~)~or(lawyerMobile,like,~${value}~)~or(claims,like,~${value}~))`;
-        this.data = await this.handleList(tableName , '待处理,处理中,审批中,已完成,已结案,已驳回', userinfo, searchSql , 0 , 10000);
+        let searchSql = typeof legal.value == 'string' ? `~and((title,like,~${legal.value}~)~or(fstPlan,like,~${legal.value}~)~or(legalType,like,~${legal.value}~)~or(plate,like,~${legal.value}~)~or(firm,like,~${legal.value}~)~or(legalTname,like,~${legal.value}~)~or(zone,like,~${legal.value}~)~or(zoneProject,like,~${legal.value}~)~or(caseID,like,~${legal.value}~)~or(caseType,like,~${legal.value}~)~or(caseSType,like,~${legal.value}~)~or(stage,like,~${legal.value}~)~or(accuser,like,~${legal.value}~)~or(defendant,like,~${legal.value}~)~or(court,like,~${legal.value}~)~or(judge,like,~${legal.value}~)~or(judgeMobile,like,~${legal.value}~)~or(inHouseLawyers,like,~${legal.value}~)~or(disclosure,like,~${legal.value}~)~or(lawcase,like,~${legal.value}~)~or(thirdParty,like,~${legal.value}~)~or(lawOffice,like,~${legal.value}~)~or(lawyer,like,~${legal.value}~)~or(lawyerMobile,like,~${legal.value}~)~or(claims,like,~${legal.value}~))` : '';
+        let stageSql = Betools.tools.isNull(legal.stage) || legal.stage == '全部' ? '' : `~and(stage,in,${legal.stage})`;
+        this.data = await this.handleList(tableName , '待处理,处理中,审批中,已完成,已结案,已驳回', userinfo, stageSql + searchSql , 0 , 10000);
       },
 
   },
