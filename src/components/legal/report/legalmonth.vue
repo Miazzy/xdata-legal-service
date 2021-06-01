@@ -174,7 +174,6 @@ export default {
       downloadURL:'https://upload.yunwisdom.club:30443/',
       message: workconfig.compValidation.legalapply.message,
       valid: workconfig.compValidation.legalapply.valid,
-      goodstype: workconfig.goodstype,
       goodsborrowtype: workconfig.goodsborrowtype,
       diplomaType: workconfig.compcolumns.diplomaTypeColumns,
       acceptType: workconfig.compcolumns.acceptType,
