@@ -194,14 +194,12 @@
                                 <vue-excel-column field="caseID"      label="案件编号"          width="120px" />
                                 <vue-excel-column field="create_time"    label="填报日期"       width="120px" />
                                 <vue-excel-column field="create_by"    label="填报人员"       width="120px" />
-
                                 <vue-excel-column field="legalType"    label="案件级别"       width="120px" />
                                 <vue-excel-column field="legalTname"    label="案件类型"       width="120px" />
                                 <vue-excel-column field="stage"       label="程序阶段"          width="120px" />
                                 <vue-excel-column field="plate"    label="所属板块"       width="120px" />
                                 <vue-excel-column field="zone"    label="所属区域"       width="120px" />
                                 <vue-excel-column field="zoneProject"    label="项目名称"       width="120px" />
-                                
                                 <vue-excel-column field="receiveTime" label="接收时间(业务部)" width="120px" />
                                 <vue-excel-column field="lawRTime"    label="接收时间(法务部)" width="120px" />
                                 <vue-excel-column field="accuser"      label="发起(原告)"          width="150px" />
@@ -222,7 +220,6 @@
                                 <vue-excel-column field="claimsBidSum"  label="诉讼标的额"        width="120px" />
                                 <vue-excel-column field="disclosure"    label="事项披露"          width="120px" />
                                 <vue-excel-column field="lawcase"       label="案件进展"          width="120px" />
-
                                 <vue-excel-column field="fstEvidence"   label="一审举证期限"          width="120px" />
                                 <vue-excel-column field="fstCourtDate"  label="一审开庭时间"          width="120px" />
                                 <vue-excel-column field="fstPlan"       label="一审诉讼预案"          width="120px" />
@@ -233,7 +230,6 @@
                                 <vue-excel-column field="fstValid"      label="一审是否生效"          width="120px" />
                                 <vue-excel-column field="fstAppeal"     label="一审是否上诉"          width="120px" />
                                 <vue-excel-column field="fstAppealTime" label="一审上诉期"            width="120px" />
-
                                 <vue-excel-column field="secEvidence"   label="二审举证期限"          width="120px" />
                                 <vue-excel-column field="secCourtDate"  label="二审开庭时间"          width="120px" />
                                 <vue-excel-column field="secPlan"       label="二审诉讼预案"          width="120px" />
@@ -244,7 +240,6 @@
                                 <vue-excel-column field="secValid"      label="二审是否生效"          width="120px" />
                                 <vue-excel-column field="secAppeal"     label="二审是否上诉"          width="120px" />
                                 <vue-excel-column field="secAppealTime" label="二审上诉期"            width="120px" />
-
                                 <vue-excel-column field="reviewEvidence"   label="再审举证期限"          width="120px" />
                                 <vue-excel-column field="reviewCourtDate"  label="再审开庭时间"          width="120px" />
                                 <vue-excel-column field="reviewPlan"       label="再审诉讼预案"          width="120px" />
@@ -255,7 +250,6 @@
                                 <vue-excel-column field="reviewValid"      label="再审是否生效"          width="120px" />
                                 <vue-excel-column field="reviewAppeal"     label="再审是否上诉"          width="120px" />
                                 <vue-excel-column field="reviewAppealTime" label="再审上诉期"            width="120px" />
-
                           </vue-excel-editor>
                         </a-tab-pane>
 
