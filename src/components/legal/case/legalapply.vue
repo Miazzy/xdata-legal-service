@@ -108,7 +108,7 @@
                 <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>案件类别</span>
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>案件级别</span>
                     </a-col>
                     <a-col :span="8">
                       <a-select  v-model="legal.legalType" default-value="一般案件" @blur="validFieldToast('legalType')"  placeholder="请选择案件类别！" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">

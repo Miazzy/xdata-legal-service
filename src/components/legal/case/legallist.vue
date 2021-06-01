@@ -85,9 +85,24 @@
                             </a-select-option>
                           </a-select>
                         </div>
+
+                        <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
+                          <span>案件级别</span>
+                          <a-select  v-model="legal.legalType" default-value="一般案件"  placeholder="请选择案件类别" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                            <a-select-option value="全部">
+                              全部
+                            </a-select-option>
+                            <a-select-option value="一般案件">
+                              一般案件
+                            </a-select-option>
+                            <a-select-option value="重大案件">
+                              重大案件
+                            </a-select-option>
+                          </a-select>
+                        </div>
                         <a-button type="primary" @click="execSearch" >查询</a-button>
                         <a-button type="primary" @click="execFresh" style="display:none;">刷新</a-button>
-                        <a-button type="primary" @click="execApply" >新增</a-button>
+                        <a-button type="primary" @click="execApply" style="display:none;">新增</a-button>
                         <a-button type="primary" @click="execExport" >导出</a-button>
                     </div>
 
@@ -223,6 +238,7 @@ export default {
         value:'',
         stage:'全部',
         caseSType:'全部',
+        legalType:'全部',
       },
       data: [],
       readonly: false,
@@ -390,7 +406,8 @@ export default {
         let searchSql = typeof legal.value == 'string' ? `~and((title,like,~${legal.value}~)~or(create_by,like,~${legal.value}~)~or(fstPlan,like,~${legal.value}~)~or(legalType,like,~${legal.value}~)~or(plate,like,~${legal.value}~)~or(firm,like,~${legal.value}~)~or(legalTname,like,~${legal.value}~)~or(zone,like,~${legal.value}~)~or(zoneProject,like,~${legal.value}~)~or(caseID,like,~${legal.value}~)~or(caseType,like,~${legal.value}~)~or(caseSType,like,~${legal.value}~)~or(stage,like,~${legal.value}~)~or(accuser,like,~${legal.value}~)~or(defendant,like,~${legal.value}~)~or(court,like,~${legal.value}~)~or(judge,like,~${legal.value}~)~or(judgeMobile,like,~${legal.value}~)~or(inHouseLawyers,like,~${legal.value}~)~or(disclosure,like,~${legal.value}~)~or(lawcase,like,~${legal.value}~)~or(thirdParty,like,~${legal.value}~)~or(lawOffice,like,~${legal.value}~)~or(lawyer,like,~${legal.value}~)~or(lawyerMobile,like,~${legal.value}~)~or(claims,like,~${legal.value}~))` : '';
         let stageSql = Betools.tools.isNull(legal.stage) || legal.stage == '全部' ? '' : `~and(stage,in,${legal.stage})`;
         let caseSTypeSQL = Betools.tools.isNull(legal.caseSType) || legal.caseSType == '全部' ? '':`~and(caseSType,eq,${legal.caseSType})`;
-        this.data = await this.handleList(tableName , '待处理,处理中,审批中,已完成,已结案,已驳回', userinfo, stageSql + caseSTypeSQL + searchSql , 0 , 10000);
+        let legalTypeSQL = Betools.tools.isNull(legal.legalType) || legal.legalType == '全部' ? '':`~and(legalType,eq,${legal.legalType})`;
+        this.data = await this.handleList(tableName , '待处理,处理中,审批中,已完成,已结案,已驳回', userinfo, stageSql + caseSTypeSQL + legalTypeSQL + searchSql , 0 , 10000);
       },
 
   },
