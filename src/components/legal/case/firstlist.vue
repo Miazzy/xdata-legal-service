@@ -21,7 +21,7 @@
 
       <a-row :gutter="24" style="background:#fbf9fe;">
         <keep-alive>
-            <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24" style="background-color:#f0f0f0;">
+            <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
 
               <div id="" class="" style="padding-left:2.75rem;padding-top:0.25rem;padding-bottom:0.25rem;background-color:#fefefe;" >
                 <a-breadcrumb>
@@ -37,14 +37,13 @@
               <div style="background-color:#f0f0f0;">
                 <div id="legal-apply-content" class="reward-apply-content" style="height:auto; background-color:#fefefe; margin-top:0px; margin-left: 2.5rem; margin-right: 2.5rem; margin-bottom: 5rem; border: 1px solid #f0f0f0; front-size: 1rem;" >
                 <div style="width:100%;margin-left:0px;margin-right:0px;background:#fbf9fe;">
-
                     <div class="reward-top-button" style="margin-top:20px;margin-bottom:20px; margin-left:20px;">
                         <a-input-search placeholder="输入搜索关键字、案件名称、相关信息等" style="width:450px;" enter-button @search="execSearch" />
                         <a-button type="primary" @click="execApply" >新增</a-button>
                         <a-button type="primary" @click="execFresh" >刷新</a-button>
                         <a-button type="primary" @click="execExport" >导出</a-button>
                     </div>
-
+                    
                     <div style="margin-left:20px;">
                       <a-tabs default-active-key="1" @change="callback">
                         <a-tab-pane key="1" tab="列表">
@@ -53,30 +52,19 @@
                               <a-list item-layout="horizontal" :data-source="data">
                                 <a-list-item slot="renderItem" slot-scope="item, index">
                                   <a slot="actions" @click="execView(item)">查看</a>
-                                  <a slot="actions" @click="execPatch(item)">修改</a>
-                                  
                                   <a-dropdown slot="actions">
                                     <a class="ant-dropdown-link" @click="e => e.preventDefault()">
-                                      案件周期<a-icon type="down" />
+                                      管理<a-icon type="down" />
                                     </a>
                                     <a-menu slot="overlay" >
                                       <a-menu-item key="0" @click="execProcess(item)">
-                                        录入案件进展
+                                        案件评价
                                       </a-menu-item>
                                       <a-menu-item key="1">
-                                        进入一审阶段
+                                        律师评价
                                       </a-menu-item>
-                                      <a-menu-item key="2">
-                                        进入二审阶段
-                                      </a-menu-item>
-                                      <a-menu-item key="3">
-                                        进入执行阶段
-                                      </a-menu-item>
-                                      <a-menu-item key="4">
-                                        进入再审阶段
-                                      </a-menu-item>
-                                      <a-menu-item key="4">
-                                        结案操作
+                                      <a-menu-item key="1">
+                                        查看评价
                                       </a-menu-item>
                                     </a-menu>
                                   </a-dropdown>
@@ -113,7 +101,6 @@
 
                       </a-tabs>
                     </div>
-
                 </div>
                 </div>
               </div>
@@ -153,19 +140,20 @@ export default {
         { title: '案件编号', dataIndex: 'caseID', key: 'caseID', },
         { title: '案件案由', dataIndex: 'caseType', key: 'caseType', },
         { title: '程序阶段', dataIndex: 'stage', key: 'stage', },
-        { title: '接收时间(业务部)', dataIndex: 'receiveTime', key: 'receiveTime', },
-        { title: '接收时间(法务部)', dataIndex: 'lawRTime', key: 'lawRTime', },
+        { title: '业务接收(业务部)', dataIndex: 'receiveTime', key: 'receiveTime', },
+        { title: '法律接收(法务部)', dataIndex: 'lawRTime', key: 'lawRTime', },
         { title: '发起(原告)', dataIndex: 'accuser', key: 'accuser', },
         { title: '应诉(被告)', dataIndex: 'defendant', key: 'defendant', },
         { title: '法院受理', dataIndex: 'handledTime', key: 'handledTime', },
         { title: '受理法院', dataIndex: 'court', key: 'court', },
         { title: '承办法官', dataIndex: 'judge', key: 'judge', },
         { title: '内部律师(承)', dataIndex: 'inHouseLawyers', key: 'inHouseLawyers', },
-        { title: '案件状态', dataIndex: 'legalStatus', key: 'legalStatus', }, // { title: '流程标题', dataIndex: 'title', key: 'title', }, // { title: '填报日期', dataIndex: 'create_time', key: 'create_time', }, // { title: '填报人员', dataIndex: 'create_by', key: 'create_by', }, // { title: '案件类别', dataIndex: 'legalType', key: 'legalType', }, // { title: '所属板块', dataIndex: 'plate', key: 'plate', }, // { title: '公司名称', dataIndex: 'firm', key: 'firm', }, // { title: '所属区域', dataIndex: 'zone', key: 'zone', }, // { title: '项目名称', dataIndex: 'zoneProject', key: 'zoneProject', }, // { title: '第三人', dataIndex: 'thirdParty', key: 'thirdParty', }, // { title: '外聘律所', dataIndex: 'externalFlag', key: 'externalFlag', }, // { title: '外聘律所名称', dataIndex: 'lawOffice', key: 'lawOffice', }, // { title: '委托时间', dataIndex: 'lawOfficeTime', key: 'lawOfficeTime', }, // { title: '外聘律师', dataIndex: 'lawyer', key: 'lawyer', }, // { title: '律师电话', dataIndex: 'lawyerMobile', key: 'lawyerMobile', }, // { title: '诉讼请求', dataIndex: 'claims', key: 'claims', }, // { title: '诉讼本金', dataIndex: 'claimsCapital', key: 'claimsCapital', }, // { title: '诉讼违约金', dataIndex: 'claimsDedit', key: 'claimsDedit', }, // { title: '诉讼标的额', dataIndex: 'claimsBidSum', key: 'claimsBidSum', }, // { title: '法官电话', dataIndex: 'judgeMobile', key: 'judgeMobile', }, // { title: '外部律师(承办)', dataIndex: 'outHouseLawyers', key: 'outHouseLawyers', }, // { title: '事项披露', dataIndex: 'disclosure', key: 'disclosure', }, // { title: '案件进展', dataIndex: 'lawcase', key: 'lawcase', }, // { title: '最后修改时间', dataIndex: 'lastTime', key: 'lastTime', }, // { title: '最后修改人员', dataIndex: 'lastModifier', key: 'lastModifier', }, // { title: '结案日期', dataIndex: 'closeDate', key: 'closeDate', }, // { title: '归档日期', dataIndex: 'archiveDate', key: 'archiveDate', }, // { title: '办理进展', dataIndex: 'progress', key: 'progress', }, // { title: '申请人姓名', dataIndex: 'apply_realname', key: 'apply_realname', }, // { title: '申请人账号', dataIndex: 'apply_username', key: 'apply_username', }, // { title: '案件类型', dataIndex: 'legalTname', key: 'legalTname', },
+        { title: '案件状态', dataIndex: 'legalStatus', key: 'legalStatus', },
+        // { title: '流程标题', dataIndex: 'title', key: 'title', }, // { title: '填报日期', dataIndex: 'create_time', key: 'create_time', }, // { title: '填报人员', dataIndex: 'create_by', key: 'create_by', }, // { title: '案件类别', dataIndex: 'legalType', key: 'legalType', }, // { title: '所属板块', dataIndex: 'plate', key: 'plate', }, // { title: '公司名称', dataIndex: 'firm', key: 'firm', }, // { title: '所属区域', dataIndex: 'zone', key: 'zone', }, // { title: '项目名称', dataIndex: 'zoneProject', key: 'zoneProject', }, // { title: '第三人', dataIndex: 'thirdParty', key: 'thirdParty', }, // { title: '外聘律所', dataIndex: 'externalFlag', key: 'externalFlag', }, // { title: '外聘律所名称', dataIndex: 'lawOffice', key: 'lawOffice', }, // { title: '委托时间', dataIndex: 'lawOfficeTime', key: 'lawOfficeTime', }, // { title: '外聘律师', dataIndex: 'lawyer', key: 'lawyer', }, // { title: '律师电话', dataIndex: 'lawyerMobile', key: 'lawyerMobile', }, // { title: '诉讼请求', dataIndex: 'claims', key: 'claims', }, // { title: '诉讼本金', dataIndex: 'claimsCapital', key: 'claimsCapital', }, // { title: '诉讼违约金', dataIndex: 'claimsDedit', key: 'claimsDedit', }, // { title: '诉讼标的额', dataIndex: 'claimsBidSum', key: 'claimsBidSum', }, // { title: '法官电话', dataIndex: 'judgeMobile', key: 'judgeMobile', }, // { title: '外部律师(承办)', dataIndex: 'outHouseLawyers', key: 'outHouseLawyers', }, // { title: '事项披露', dataIndex: 'disclosure', key: 'disclosure', }, // { title: '案件进展', dataIndex: 'lawcase', key: 'lawcase', }, // { title: '最后修改时间', dataIndex: 'lastTime', key: 'lastTime', }, // { title: '最后修改人员', dataIndex: 'lastModifier', key: 'lastModifier', }, // { title: '结案日期', dataIndex: 'closeDate', key: 'closeDate', }, // { title: '归档日期', dataIndex: 'archiveDate', key: 'archiveDate', }, // { title: '办理进展', dataIndex: 'progress', key: 'progress', }, // { title: '申请人姓名', dataIndex: 'apply_realname', key: 'apply_realname', }, // { title: '申请人账号', dataIndex: 'apply_username', key: 'apply_username', }, // { title: '案件类型', dataIndex: 'legalTname', key: 'legalTname', },
       ],
       data:[],
       rowSelection:[],
-      breadcrumb:[{icon:'home',text:'首页',path:'/legal/workspace'},{icon:'user',text:'案件管控',path:'/legal/workspace'},{icon:'form',text:'案件管理',path:''}],
+      breadcrumb:[{icon:'home',text:'首页',path:'/legal/workspace'},{icon:'user',text:'案件管控',path:'/legal/workspace'},{icon:'form',text:'结案记录',path:''}],
       statusType:{'valid':'有效','invalid':'删除'},
       zoneType:{'领地集团总部':'领地集团总部','重庆区域':'重庆区域','两湖区域':'两湖区域','川北区域':'川北区域','成都区域':'成都区域','乐眉区域':'乐眉区域','中原区域':'中原区域','攀西区域':'攀西区域','新疆区域':'新疆区域','大湾区域':'大湾区域','北京区域':'北京区域'},
     };
@@ -202,18 +190,18 @@ export default {
           this.userinfo = await this.weworkLogin(); //查询当前登录用户
           this.back = Betools.tools.getUrlParam('back') || '/legal/workspace'; //查询上一页
           const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
-          this.data = await this.handleList(tableName , '待处理,处理中,审批中,已完成,已结案,已驳回', userinfo, '' , 0 , 10000);
+          this.data = await this.handleList(tableName , '一审阶段', userinfo, '' , 0 , 10000);
         } catch (error) {
           console.log(error);
         }
       },
 
-      //查询不同状态的领用数据
-      async handleList(tableName , status = '待处理,处理中,审批中,已完成,已结案,已驳回', userinfo, searchSql , page = 0 , size = 10000){
+      // 查询不同状态的领用数据
+      async handleList(tableName , stage = '一审阶段', userinfo, searchSql , page = 0 , size = 10000){
         if(Betools.tools.isNull(userinfo) || Betools.tools.isNull(userinfo.username)){
             return [];
         }
-        let list = await Betools.manage.queryTableData(tableName , `_where=(status,in,${status})${searchSql}&_sort=-id&_p=${page}&_size=${size}`);
+        let list = await Betools.manage.queryTableData(tableName , `_where=(stage,in,${stage})${searchSql}&_sort=-id&_p=${page}&_size=${size}`);
         list.map((item)=>{ 
             item.create_time = dayjs(item.create_time).format('YYYY-MM-DD'); 
             item.receiveTime = dayjs(item.receiveTime).format('YYYY-MM-DD') == 'Invalid Date' ? '/' : dayjs(item.receiveTime).format('YYYY-MM-DD');
@@ -241,12 +229,6 @@ export default {
           $router.push(`/legal/case/legalapply?id=${elem.id}&type=1&tname=案件修改&apply=edit`);
       },
 
-      // 案件记录追加进展
-      async execProcess(elem){
-          const { $router } = this;
-          $router.push(`/legal/case/legalview?id=${elem.id}&type=1&tname=案件进展&apply=进展`);
-      },
-
       // 案件记录查看申请
       async execView(elem){
           const { $router } = this;
@@ -255,15 +237,15 @@ export default {
 
       // 案件记录导出功能
       async execExport(){
-          const { $router } = this;
-          this.$refs.grid.exportTable('xlsx', false, '案件台账数据');
+        const { $router } = this;
+        this.$refs.grid.exportTable('xlsx', false, '案件台账数据');
       },
 
-      // 案件列表执行刷新操作45
+      // 案件列表执行刷新操作
       async execFresh(){
         const tableName = this.tablename;
         const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
-        this.data = await this.handleList(tableName , '待处理,处理中,审批中,已完成,已结案,已驳回', userinfo, '' , 0 , 10000);
+        this.data = await this.handleList(tableName , '一审阶段', userinfo, '' , 0 , 10000);
       },
 
       // 案件列表执行搜索功能
@@ -271,7 +253,7 @@ export default {
         const tableName = this.tablename;
         const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
         const searchSql = `~and((firm_name,like,~${value}~)~or(address,like,~${value}~)~or(brief,like,~${value}~)~or(team_brief,like,~${value}~)~or(phone,like,~${value}~)~or(scale,like,~${value}~))`;
-        this.data = await this.handleList(tableName , '待处理,处理中,审批中,已完成,已结案,已驳回', userinfo, searchSql , 0 , 10000);
+        this.data = await this.handleList(tableName , '一审阶段', userinfo, searchSql , 0 , 10000);
       },
 
   },
