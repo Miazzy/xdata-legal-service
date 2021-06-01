@@ -246,6 +246,7 @@ export default {
   methods: {
       moment,
       isNull:Betools.tools.isNull,
+      deNull:Betools.tools.deNull,
 
       // 企业微信登录处理函数
       async  weworkLogin  (codeType = 'search', systemType = 'search')  {
