@@ -86,7 +86,7 @@
                           </a-select>
                         </div>
                         <a-button type="primary" @click="execSearch" >查询</a-button>
-                        <a-button type="primary" @click="execFresh" >刷新</a-button>
+                        <a-button type="primary" @click="execFresh" style="display:none;">刷新</a-button>
                         <a-button type="primary" @click="execApply" >新增</a-button>
                         <a-button type="primary" @click="execExport" >导出</a-button>
                     </div>
