@@ -179,7 +179,7 @@ export const reward = ($router) => {
             href: "/account/myrewards",
             description: '对案件进展处于一审阶段的案件进行管理',
             click: () => {
-                // $router.push(`/legal/case/legalapply?type=3&reward_name=特殊贡献`, '_blank');
+                $router.push(`/legal/case/firstlist?type=99&&status=all&legalTname=all`, '_blank');
             },
         }, {
             name: "二审管理",
@@ -187,23 +187,21 @@ export const reward = ($router) => {
             href: "/account/myanalyse",
             description: '对案件进展处于二审阶段的案件进行管理',
             click: () => {
-                // $router.push(`/legal/case/legalapply?type=4&reward_name=其他诉讼案件`, '_blank');
+                $router.push(`/legal/case/secondlist?type=99&&status=all&legalTname=all`, '_blank');
             },
         }, {
             name: "执行管理",
             avatar: `https://cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/paimai.png`,
             href: "/account/myanalyse",
             description: '对案件进展处于执行阶段的案件进行管理',
-            click: () => {
-                // $router.push(`/legal/report/legalmonth?type=month`);
-            },
+            click: () => {},
         }, {
             name: "再审管理",
             avatar: `https://cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/jungongyanshou_jy.png`,
             href: "/account/myanalyse",
             description: '对案件进展处于再审阶段的案件进行管理',
             click: () => {
-                // $router.push(`/legal/report/legalmonth?type=quarter`);
+                $router.push(`/legal/case/thirdlist?type=99&&status=all&legalTname=all`, '_blank');
             },
         }],
     }, {

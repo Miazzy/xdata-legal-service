@@ -93,6 +93,27 @@ const routes = [{
         "subPage": resolve => require(["../components/legal/course/lawsuitlist.vue"], resolve)
     }
 }, {
+    path: '/legal/case/firstlist',
+    name: "一审管理",
+    components: {
+        "default": resolve => require(["../components/legal/home.vue"], resolve),
+        "subPage": resolve => require(["../components/legal/case/firstlist.vue"], resolve)
+    }
+}, {
+    path: '/legal/case/secondlist',
+    name: "二审管理",
+    components: {
+        "default": resolve => require(["../components/legal/home.vue"], resolve),
+        "subPage": resolve => require(["../components/legal/case/secondlist.vue"], resolve)
+    }
+}, {
+    path: '/legal/case/thirdlist',
+    name: "再审管理",
+    components: {
+        "default": resolve => require(["../components/legal/home.vue"], resolve),
+        "subPage": resolve => require(["../components/legal/case/thirdlist.vue"], resolve)
+    }
+}, {
     path: '/legal/court/courtapply',
     name: "法院录入",
     components: {
