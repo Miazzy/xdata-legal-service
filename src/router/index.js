@@ -107,6 +107,13 @@ const routes = [{
         "subPage": resolve => require(["../components/legal/case/secondlist.vue"], resolve)
     }
 }, {
+    path: '/legal/case/executelist',
+    name: "执行管理",
+    components: {
+        "default": resolve => require(["../components/legal/home.vue"], resolve),
+        "subPage": resolve => require(["../components/legal/case/executelist.vue"], resolve)
+    }
+}, {
     path: '/legal/case/thirdlist',
     name: "再审管理",
     components: {

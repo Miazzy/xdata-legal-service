@@ -194,7 +194,9 @@ export const reward = ($router) => {
             avatar: `https://cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/paimai.png`,
             href: "/account/myanalyse",
             description: '对案件进展处于执行阶段的案件进行管理',
-            click: () => {},
+            click: () => {
+                $router.push(`/legal/case/executelist?type=99&&status=all&legalTname=all`, '_blank');
+            },
         }, {
             name: "再审管理",
             avatar: `https://cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/jungongyanshou_jy.png`,
