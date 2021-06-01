@@ -190,18 +190,18 @@ export default {
           this.userinfo = await this.weworkLogin(); //查询当前登录用户
           this.back = Betools.tools.getUrlParam('back') || '/legal/workspace'; //查询上一页
           const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
-          this.data = await this.handleList(tableName , '已结案', userinfo, '' , 0 , 10000);
+          this.data = await this.handleList(tableName , '结案闭单', userinfo, '' , 0 , 10000);
         } catch (error) {
           console.log(error);
         }
       },
 
       // 查询不同状态的领用数据
-      async handleList(tableName , status = '已结案', userinfo, searchSql , page = 0 , size = 10000){
+      async handleList(tableName , stage = '结案闭单', userinfo, searchSql , page = 0 , size = 10000){
         if(Betools.tools.isNull(userinfo) || Betools.tools.isNull(userinfo.username)){
             return [];
         }
-        let list = await Betools.manage.queryTableData(tableName , `_where=(status,in,${status})${searchSql}&_sort=-id&_p=${page}&_size=${size}`);
+        let list = await Betools.manage.queryTableData(tableName , `_where=(stage,in,${stage})${searchSql}&_sort=-id&_p=${page}&_size=${size}`);
         list.map((item)=>{ 
             item.create_time = dayjs(item.create_time).format('YYYY-MM-DD'); 
             item.receiveTime = dayjs(item.receiveTime).format('YYYY-MM-DD') == 'Invalid Date' ? '/' : dayjs(item.receiveTime).format('YYYY-MM-DD');
@@ -245,7 +245,7 @@ export default {
       async execFresh(){
         const tableName = this.tablename;
         const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
-        this.data = await this.handleList(tableName , '已结案', userinfo, '' , 0 , 10000);
+        this.data = await this.handleList(tableName , '结案闭单', userinfo, '' , 0 , 10000);
       },
 
       // 案件列表执行搜索功能
@@ -253,7 +253,7 @@ export default {
         const tableName = this.tablename;
         const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
         const searchSql = `~and((firm_name,like,~${value}~)~or(address,like,~${value}~)~or(brief,like,~${value}~)~or(team_brief,like,~${value}~)~or(phone,like,~${value}~)~or(scale,like,~${value}~))`;
-        this.data = await this.handleList(tableName , '已结案', userinfo, searchSql , 0 , 10000);
+        this.data = await this.handleList(tableName , '结案闭单', userinfo, searchSql , 0 , 10000);
       },
 
   },
