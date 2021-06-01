@@ -21,7 +21,7 @@
 
       <a-row :gutter="24" style="background:#fbf9fe;">
         <keep-alive>
-            <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
+            <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24" style="background-color:#f0f0f0;">
 
               <div id="" class="" style="padding-left:2.75rem;padding-top:0.25rem;padding-bottom:0.25rem;background-color:#fefefe;" >
                 <a-breadcrumb>
@@ -37,13 +37,43 @@
               <div style="background-color:#f0f0f0;">
                 <div id="legal-apply-content" class="reward-apply-content" style="height:auto; background-color:#fefefe; margin-top:0px; margin-left: 2.5rem; margin-right: 2.5rem; margin-bottom: 5rem; border: 1px solid #f0f0f0; front-size: 1rem;" >
                 <div style="width:100%;margin-left:0px;margin-right:0px;background:#fbf9fe;">
+
                     <div class="reward-top-button" style="margin-top:20px;margin-bottom:20px; margin-left:20px;">
-                        <a-input-search placeholder="输入搜索关键字、案件名称、相关信息等" style="width:450px;" enter-button @search="execSearch" />
-                        <a-button type="primary" @click="execApply" >新增</a-button>
-                        <a-button type="primary" @click="execFresh" >刷新</a-button>
+                        <a-input-search v-model="legal.value" placeholder="输入搜索关键字、案件名称、相关信息等" style="width:450px;" enter-button @search="execSearch" />
+
+                        <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
+                          <span>案件类别</span>
+                          <a-select  v-model="legal.caseSType" default-value="起诉案件" placeholder="请选择案件类别！" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                            <a-select-option value="全部">
+                              全部
+                            </a-select-option>
+                            <a-select-option value="起诉案件">
+                              起诉案件
+                            </a-select-option>
+                            <a-select-option value="应诉案件">
+                              应诉案件
+                            </a-select-option>
+                          </a-select>
+                        </div>
+
+                        <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
+                          <span>案件级别</span>
+                          <a-select  v-model="legal.legalType" default-value="一般案件"  placeholder="请选择案件类别" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                            <a-select-option value="全部">
+                              全部
+                            </a-select-option>
+                            <a-select-option value="一般案件">
+                              一般案件
+                            </a-select-option>
+                            <a-select-option value="重大案件">
+                              重大案件
+                            </a-select-option>
+                          </a-select>
+                        </div>
+                        <a-button type="primary" @click="execSearch" >查询</a-button>
                         <a-button type="primary" @click="execExport" >导出</a-button>
                     </div>
-                    
+
                     <div style="margin-left:20px;">
                       <a-tabs default-active-key="1" @change="callback">
                         <a-tab-pane key="1" tab="列表">
@@ -51,19 +81,64 @@
                           <div v-if="data.length > 0" class="reward-content-table" style="margin-left:0px; width:98%;"> 
                               <a-list item-layout="horizontal" :data-source="data">
                                 <a-list-item slot="renderItem" slot-scope="item, index">
-                                  <a slot="actions" @click="execView(item)">查看</a>
+
+                                  <a-dropdown slot="actions">
+                                    <a class="ant-dropdown-link" @click="e => e.preventDefault()">
+                                      操作<a-icon type="down" />
+                                    </a>
+                                    <a-menu slot="overlay" >
+                                      <a-menu-item key="200" @click="execView(item)">
+                                        查看案件
+                                      </a-menu-item>
+                                      <a-menu-item key="201" @click="execPatch(item)">
+                                        修改案件
+                                      </a-menu-item>
+                                      <a-menu-item key="101" @click="execDelete(item)">
+                                        删除案件
+                                      </a-menu-item>
+                                      <a-menu-item key="99" @click="execBan(item)">
+                                        禁用案件
+                                      </a-menu-item>
+                                    </a-menu>
+                                  </a-dropdown>
+                                  
                                   <a-dropdown slot="actions">
                                     <a class="ant-dropdown-link" @click="e => e.preventDefault()">
                                       管理<a-icon type="down" />
                                     </a>
                                     <a-menu slot="overlay" >
                                       <a-menu-item key="0" @click="execProcess(item)">
+                                        录入案件进展
+                                      </a-menu-item>
+                                      <a-menu-item key="1">
+                                        进入一审阶段
+                                      </a-menu-item>
+                                      <a-menu-item key="2">
+                                        进入二审阶段
+                                      </a-menu-item>
+                                      <a-menu-item key="3">
+                                        进入执行阶段
+                                      </a-menu-item>
+                                      <a-menu-item key="4">
+                                        进入再审阶段
+                                      </a-menu-item>
+                                      <a-menu-item key="100">
+                                        结案闭单
+                                      </a-menu-item>
+                                    </a-menu>
+                                  </a-dropdown>
+                                  <a-dropdown slot="actions">
+                                    <a class="ant-dropdown-link" @click="e => e.preventDefault()">
+                                      评价<a-icon type="down" />
+                                    </a>
+                                    <a-menu slot="overlay" >
+                                      <a-menu-item key="200">
                                         案件评价
                                       </a-menu-item>
-                                      <a-menu-item key="1">
+                                      <a-menu-item key="201">
                                         律师评价
                                       </a-menu-item>
-                                      <a-menu-item key="1">
+                                      <a-menu-item key="299">
                                         查看评价
                                       </a-menu-item>
                                     </a-menu>
@@ -85,22 +160,70 @@
                           <a-empty v-if="data.length == 0" style="margin-top:10%;height:580px;"/>
                           <vue-excel-editor v-if="data.length > 0" v-model="data" ref="grid" width="100%" filter-row autocomplete >
                                 <vue-excel-column field="caseID"      label="案件编号"          width="120px" />
-                                <vue-excel-column field="caseType"    label="案件案由"       width="120px" />
+                                <vue-excel-column field="create_time"    label="填报日期"       width="120px" />
+                                <vue-excel-column field="create_by"    label="填报人员"       width="120px" />
+                                <vue-excel-column field="legalType"    label="案件级别"       width="120px" />
+                                <vue-excel-column field="legalTname"    label="案件类型"       width="120px" />
                                 <vue-excel-column field="stage"       label="程序阶段"          width="120px" />
-                                <vue-excel-column field="receiveTime" label="接收时间(业务部)"          width="120px" />
-                                <vue-excel-column field="lawRTime"    label="接收时间(法务部)"          width="120px" />
-                                <vue-excel-column field="accuser"      label="发起(原告)"          width="120px" />
-                                <vue-excel-column field="defendant"    label="应诉(被告)"          width="120px" />
+                                <vue-excel-column field="plate"    label="所属板块"       width="120px" />
+                                <vue-excel-column field="zone"    label="所属区域"       width="120px" />
+                                <vue-excel-column field="zoneProject"    label="项目名称"       width="120px" />
+                                <vue-excel-column field="receiveTime" label="接收时间(业务部)" width="120px" />
+                                <vue-excel-column field="lawRTime"    label="接收时间(法务部)" width="120px" />
+                                <vue-excel-column field="accuser"      label="发起(原告)"          width="150px" />
+                                <vue-excel-column field="defendant"    label="应诉(被告)"          width="150px" />
+                                <vue-excel-column field="thirdParty"    label="第三人"          width="150px" />
+                                <vue-excel-column field="caseType"    label="案件案由"       width="200px" />
                                 <vue-excel-column field="handledTime"  label="法院受理时间"       width="120px" />
-                                <vue-excel-column field="court"        label="受理法院"          width="120px" />
+                                <vue-excel-column field="court"        label="受理法院"          width="200px" />
                                 <vue-excel-column field="judge"        label="承办法官"          width="120px" />
-                                <vue-excel-column field="inHouseLawyers" label="内部律师(承)"      width="120px" />
-                                <vue-excel-column field="legalStatus"    label="案件状态"         width="120px" />
+                                <vue-excel-column field="judgeMobile"        label="法官电话"          width="120px" />
+                                <vue-excel-column field="inHouseLawyers" label="内部律师"      width="120px" />
+                                <vue-excel-column field="inHouseLawyersMobile" label="律师电话"      width="120px" />
+                                <vue-excel-column field="lawOffice"     label="律所名称"          width="120px" />
+                                <vue-excel-column field="lawOfficeTime" label="委托时间"          width="120px" />
+                                <vue-excel-column field="lawyer"        label="外聘律师"          width="120px" />
+                                <vue-excel-column field="lawyerMobile"  label="律师电话"          width="120px" />
+                                <vue-excel-column field="claims"        label="诉讼请求"          width="120px" />
+                                <vue-excel-column field="claimsBidSum"  label="诉讼标的额"        width="120px" />
+                                <vue-excel-column field="disclosure"    label="事项披露"          width="120px" />
+                                <vue-excel-column field="lawcase"       label="案件进展"          width="120px" />
+                                <vue-excel-column field="fstEvidence"   label="一审举证期限"          width="120px" />
+                                <vue-excel-column field="fstCourtDate"  label="一审开庭时间"          width="120px" />
+                                <vue-excel-column field="fstPlan"       label="一审诉讼预案"          width="120px" />
+                                <vue-excel-column field="fstReason"     label="一审未填写原因"        width="120px" />
+                                <vue-excel-column field="fstConform"    label="一审与预案是否相符"     width="200px" />
+                                <vue-excel-column field="fstUnConformReasom"    label="一审不符原因"  width="120px" />
+                                <vue-excel-column field="fstDetractionSum"      label="一审减损金额"  width="120px" />
+                                <vue-excel-column field="fstValid"      label="一审是否生效"          width="120px" />
+                                <vue-excel-column field="fstAppeal"     label="一审是否上诉"          width="120px" />
+                                <vue-excel-column field="fstAppealTime" label="一审上诉期"            width="120px" />
+                                <vue-excel-column field="secEvidence"   label="二审举证期限"          width="120px" />
+                                <vue-excel-column field="secCourtDate"  label="二审开庭时间"          width="120px" />
+                                <vue-excel-column field="secPlan"       label="二审诉讼预案"          width="120px" />
+                                <vue-excel-column field="secReason"     label="二审未填写原因"        width="120px" />
+                                <vue-excel-column field="secConform"    label="二审与预案是否相符"     width="200px" />
+                                <vue-excel-column field="secUnConformReasom"    label="二审不符原因"  width="120px" />
+                                <vue-excel-column field="secDetractionSum"      label="二审减损金额"  width="120px" />
+                                <vue-excel-column field="secValid"      label="二审是否生效"          width="120px" />
+                                <vue-excel-column field="secAppeal"     label="二审是否上诉"          width="120px" />
+                                <vue-excel-column field="secAppealTime" label="二审上诉期"            width="120px" />
+                                <vue-excel-column field="reviewEvidence"   label="再审举证期限"          width="120px" />
+                                <vue-excel-column field="reviewCourtDate"  label="再审开庭时间"          width="120px" />
+                                <vue-excel-column field="reviewPlan"       label="再审诉讼预案"          width="120px" />
+                                <vue-excel-column field="reviewReason"     label="再审未填写原因"        width="120px" />
+                                <vue-excel-column field="reviewConform"    label="再审与预案是否相符"     width="200px" />
+                                <vue-excel-column field="reviewUnConformReasom"    label="再审不符原因"  width="120px" />
+                                <vue-excel-column field="reviewDetractionSum"      label="再审减损金额"  width="120px" />
+                                <vue-excel-column field="reviewValid"      label="再审是否生效"          width="120px" />
+                                <vue-excel-column field="reviewAppeal"     label="再审是否上诉"          width="120px" />
+                                <vue-excel-column field="reviewAppealTime" label="再审上诉期"            width="120px" />
                           </vue-excel-editor>
                         </a-tab-pane>
 
                       </a-tabs>
                     </div>
+
                 </div>
                 </div>
               </div>
@@ -126,7 +249,12 @@ export default {
       tablename:'bs_legal',
       size: 0,
       options:{},
-      legal:{},
+      legal:{
+        value:'',
+        stage:'结案闭单',
+        caseSType:'全部',
+        legalType:'全部',
+      },
       data: [],
       readonly: false,
       userList:[],
@@ -140,16 +268,15 @@ export default {
         { title: '案件编号', dataIndex: 'caseID', key: 'caseID', },
         { title: '案件案由', dataIndex: 'caseType', key: 'caseType', },
         { title: '程序阶段', dataIndex: 'stage', key: 'stage', },
-        { title: '业务接收(业务部)', dataIndex: 'receiveTime', key: 'receiveTime', },
-        { title: '法律接收(法务部)', dataIndex: 'lawRTime', key: 'lawRTime', },
+        { title: '接收时间(业务部)', dataIndex: 'receiveTime', key: 'receiveTime', },
+        { title: '接收时间(法务部)', dataIndex: 'lawRTime', key: 'lawRTime', },
         { title: '发起(原告)', dataIndex: 'accuser', key: 'accuser', },
         { title: '应诉(被告)', dataIndex: 'defendant', key: 'defendant', },
         { title: '法院受理', dataIndex: 'handledTime', key: 'handledTime', },
         { title: '受理法院', dataIndex: 'court', key: 'court', },
         { title: '承办法官', dataIndex: 'judge', key: 'judge', },
         { title: '内部律师(承)', dataIndex: 'inHouseLawyers', key: 'inHouseLawyers', },
-        { title: '案件状态', dataIndex: 'legalStatus', key: 'legalStatus', },
-        // { title: '流程标题', dataIndex: 'title', key: 'title', }, // { title: '填报日期', dataIndex: 'create_time', key: 'create_time', }, // { title: '填报人员', dataIndex: 'create_by', key: 'create_by', }, // { title: '案件类别', dataIndex: 'legalType', key: 'legalType', }, // { title: '所属板块', dataIndex: 'plate', key: 'plate', }, // { title: '公司名称', dataIndex: 'firm', key: 'firm', }, // { title: '所属区域', dataIndex: 'zone', key: 'zone', }, // { title: '项目名称', dataIndex: 'zoneProject', key: 'zoneProject', }, // { title: '第三人', dataIndex: 'thirdParty', key: 'thirdParty', }, // { title: '外聘律所', dataIndex: 'externalFlag', key: 'externalFlag', }, // { title: '外聘律所名称', dataIndex: 'lawOffice', key: 'lawOffice', }, // { title: '委托时间', dataIndex: 'lawOfficeTime', key: 'lawOfficeTime', }, // { title: '外聘律师', dataIndex: 'lawyer', key: 'lawyer', }, // { title: '律师电话', dataIndex: 'lawyerMobile', key: 'lawyerMobile', }, // { title: '诉讼请求', dataIndex: 'claims', key: 'claims', }, // { title: '诉讼本金', dataIndex: 'claimsCapital', key: 'claimsCapital', }, // { title: '诉讼违约金', dataIndex: 'claimsDedit', key: 'claimsDedit', }, // { title: '诉讼标的额', dataIndex: 'claimsBidSum', key: 'claimsBidSum', }, // { title: '法官电话', dataIndex: 'judgeMobile', key: 'judgeMobile', }, // { title: '外部律师(承办)', dataIndex: 'outHouseLawyers', key: 'outHouseLawyers', }, // { title: '事项披露', dataIndex: 'disclosure', key: 'disclosure', }, // { title: '案件进展', dataIndex: 'lawcase', key: 'lawcase', }, // { title: '最后修改时间', dataIndex: 'lastTime', key: 'lastTime', }, // { title: '最后修改人员', dataIndex: 'lastModifier', key: 'lastModifier', }, // { title: '结案日期', dataIndex: 'closeDate', key: 'closeDate', }, // { title: '归档日期', dataIndex: 'archiveDate', key: 'archiveDate', }, // { title: '办理进展', dataIndex: 'progress', key: 'progress', }, // { title: '申请人姓名', dataIndex: 'apply_realname', key: 'apply_realname', }, // { title: '申请人账号', dataIndex: 'apply_username', key: 'apply_username', }, // { title: '案件类型', dataIndex: 'legalTname', key: 'legalTname', },
+        { title: '案件状态', dataIndex: 'legalStatus', key: 'legalStatus', }, // { title: '流程标题', dataIndex: 'title', key: 'title', }, // { title: '填报日期', dataIndex: 'create_time', key: 'create_time', }, // { title: '填报人员', dataIndex: 'create_by', key: 'create_by', }, // { title: '案件类别', dataIndex: 'legalType', key: 'legalType', }, // { title: '所属板块', dataIndex: 'plate', key: 'plate', }, // { title: '公司名称', dataIndex: 'firm', key: 'firm', }, // { title: '所属区域', dataIndex: 'zone', key: 'zone', }, // { title: '项目名称', dataIndex: 'zoneProject', key: 'zoneProject', }, // { title: '第三人', dataIndex: 'thirdParty', key: 'thirdParty', }, // { title: '外聘律所', dataIndex: 'externalFlag', key: 'externalFlag', }, // { title: '外聘律所名称', dataIndex: 'lawOffice', key: 'lawOffice', }, // { title: '委托时间', dataIndex: 'lawOfficeTime', key: 'lawOfficeTime', }, // { title: '外聘律师', dataIndex: 'lawyer', key: 'lawyer', }, // { title: '律师电话', dataIndex: 'lawyerMobile', key: 'lawyerMobile', }, // { title: '诉讼请求', dataIndex: 'claims', key: 'claims', }, // { title: '诉讼本金', dataIndex: 'claimsCapital', key: 'claimsCapital', }, // { title: '诉讼违约金', dataIndex: 'claimsDedit', key: 'claimsDedit', }, // { title: '诉讼标的额', dataIndex: 'claimsBidSum', key: 'claimsBidSum', }, // { title: '法官电话', dataIndex: 'judgeMobile', key: 'judgeMobile', }, // { title: '外部律师(承办)', dataIndex: 'outHouseLawyers', key: 'outHouseLawyers', }, // { title: '事项披露', dataIndex: 'disclosure', key: 'disclosure', }, // { title: '案件进展', dataIndex: 'lawcase', key: 'lawcase', }, // { title: '最后修改时间', dataIndex: 'lastTime', key: 'lastTime', }, // { title: '最后修改人员', dataIndex: 'lastModifier', key: 'lastModifier', }, // { title: '结案日期', dataIndex: 'closeDate', key: 'closeDate', }, // { title: '归档日期', dataIndex: 'archiveDate', key: 'archiveDate', }, // { title: '办理进展', dataIndex: 'progress', key: 'progress', }, // { title: '申请人姓名', dataIndex: 'apply_realname', key: 'apply_realname', }, // { title: '申请人账号', dataIndex: 'apply_username', key: 'apply_username', }, // { title: '案件类型', dataIndex: 'legalTname', key: 'legalTname', },
       ],
       data:[],
       rowSelection:[],
@@ -166,6 +293,7 @@ export default {
   methods: {
       moment,
       isNull:Betools.tools.isNull,
+      deNull:Betools.tools.deNull,
 
       // 企业微信登录处理函数
       async  weworkLogin  (codeType = 'search', systemType = 'search')  {
@@ -189,19 +317,18 @@ export default {
           this.iswework = Betools.tools.isWework(); //查询是否为企业微信
           this.userinfo = await this.weworkLogin(); //查询当前登录用户
           this.back = Betools.tools.getUrlParam('back') || '/legal/workspace'; //查询上一页
-          const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
-          this.data = await this.handleList(tableName , '结案闭单', userinfo, '' , 0 , 10000);
+          this.execSearch();
         } catch (error) {
           console.log(error);
         }
       },
 
-      // 查询不同状态的领用数据
-      async handleList(tableName , stage = '结案闭单', userinfo, searchSql , page = 0 , size = 10000){
+      //查询不同状态的领用数据
+      async handleList(tableName , status = '待处理,处理中,审批中,已完成,已结案,已驳回', userinfo, searchSql , page = 0 , size = 10000){
         if(Betools.tools.isNull(userinfo) || Betools.tools.isNull(userinfo.username)){
             return [];
         }
-        let list = await Betools.manage.queryTableData(tableName , `_where=(stage,in,${stage})${searchSql}&_sort=-id&_p=${page}&_size=${size}`);
+        let list = await Betools.manage.queryTableData(tableName , `_where=(status,in,${status})${searchSql}&_sort=-id&_p=${page}&_size=${size}`);
         list.map((item)=>{ 
             item.create_time = dayjs(item.create_time).format('YYYY-MM-DD'); 
             item.receiveTime = dayjs(item.receiveTime).format('YYYY-MM-DD') == 'Invalid Date' ? '/' : dayjs(item.receiveTime).format('YYYY-MM-DD');
@@ -215,45 +342,86 @@ export default {
       // 案件发起录入申请
       async execApply(){
           const { $router } = this;
-          $router.push(`/legal/case/legalapply?type=1&tname=案件录入&apply=new`);
-      },
-
-      // 案件记录删除申请
-      async execDelete(elem){
-          const { $router } = this;
+          $router.push(`/legal/case/legalapply?type=1&tname=案件录入&apply=new&role=new`);
       },
 
       // 案件记录修改申请
       async execPatch(elem){
           const { $router } = this;
-          $router.push(`/legal/case/legalapply?id=${elem.id}&type=1&tname=案件修改&apply=edit`);
+          $router.push(`/legal/case/legalapply?id=${elem.id}&type=1&tname=案件修改&apply=edit&role=edit`);
+      },
+
+      // 案件记录追加进展
+      async execProcess(elem){
+          const { $router } = this;
+          $router.push(`/legal/case/legalapply?id=${elem.id}&type=1&tname=案件进展&apply=process&role=process`);
       },
 
       // 案件记录查看申请
       async execView(elem){
           const { $router } = this;
-          $router.push(`/legal/case/legalview?id=${elem.id}&type=1&tname=案件详情&apply=view`);
+          $router.push(`/legal/case/legalapply?id=${elem.id}&type=1&tname=案件详情&apply=view&role=view`);
+      },
+
+      // 案件记录删除信息
+      async execDelete(elem){
+          const { $router , data , tablename , execFresh } = this;
+          const that = this;
+          this.$confirm({
+              title: "温馨提示",
+              content: "您好，删除案件记录后不可恢复，您确定执行删除操作?",
+              onOk: async() => {
+                    const result = await Betools.manage.patchTableData(tablename, elem.id, {status:'已删除'}); // 向表单提交form对象数据
+                    if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
+                        return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
+                    }
+                    await execFresh();
+                    vant.Dialog.alert({  title: '温馨提示',  message: `已执行删除操作！`, }); 
+                }
+            });
+      },
+
+      // 案件记录禁用信息
+      async execBan(elem){
+          const { $router , data , tablename , execFresh } = this;
+          const that = this;
+          this.$confirm({
+              title: "温馨提示",
+              content: "您确定执行禁用操作?",
+              onOk: async() => {
+                    const result = await Betools.manage.patchTableData(tablename, elem.id, {status:'已作废'}); // 向表单提交form对象数据
+                    if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
+                        return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
+                    }
+                    await execFresh();
+                    vant.Dialog.alert({  title: '温馨提示',  message: `已执行禁用操作！`, }); 
+                }
+            });
       },
 
       // 案件记录导出功能
       async execExport(){
-        const { $router } = this;
-        this.$refs.grid.exportTable('xlsx', false, '案件台账数据');
+          const { $router } = this;
+          this.$refs.grid.exportTable('xlsx', false, '案件台账数据');
       },
 
-      // 案件列表执行刷新操作
+      // 案件列表执行刷新操作45
       async execFresh(){
         const tableName = this.tablename;
         const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
-        this.data = await this.handleList(tableName , '结案闭单', userinfo, '' , 0 , 10000);
+        this.data = await this.handleList(tableName , '待处理,处理中,审批中,已完成,已结案,已驳回', userinfo, '' , 0 , 10000);
       },
 
       // 案件列表执行搜索功能
       async execSearch(value){
         const tableName = this.tablename;
+        const { legal } = this;
         const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
-        const searchSql = `~and((firm_name,like,~${value}~)~or(address,like,~${value}~)~or(brief,like,~${value}~)~or(team_brief,like,~${value}~)~or(phone,like,~${value}~)~or(scale,like,~${value}~))`;
-        this.data = await this.handleList(tableName , '结案闭单', userinfo, searchSql , 0 , 10000);
+        let searchSql = typeof legal.value == 'string' ? `~and((title,like,~${legal.value}~)~or(create_by,like,~${legal.value}~)~or(fstPlan,like,~${legal.value}~)~or(legalType,like,~${legal.value}~)~or(plate,like,~${legal.value}~)~or(firm,like,~${legal.value}~)~or(legalTname,like,~${legal.value}~)~or(zone,like,~${legal.value}~)~or(zoneProject,like,~${legal.value}~)~or(caseID,like,~${legal.value}~)~or(caseType,like,~${legal.value}~)~or(caseSType,like,~${legal.value}~)~or(stage,like,~${legal.value}~)~or(accuser,like,~${legal.value}~)~or(defendant,like,~${legal.value}~)~or(court,like,~${legal.value}~)~or(judge,like,~${legal.value}~)~or(judgeMobile,like,~${legal.value}~)~or(inHouseLawyers,like,~${legal.value}~)~or(disclosure,like,~${legal.value}~)~or(lawcase,like,~${legal.value}~)~or(thirdParty,like,~${legal.value}~)~or(lawOffice,like,~${legal.value}~)~or(lawyer,like,~${legal.value}~)~or(lawyerMobile,like,~${legal.value}~)~or(claims,like,~${legal.value}~))` : '';
+        let stageSql = Betools.tools.isNull(legal.stage) || legal.stage == '全部' ? '' : `~and(stage,in,${legal.stage})`;
+        let caseSTypeSQL = Betools.tools.isNull(legal.caseSType) || legal.caseSType == '全部' ? '':`~and(caseSType,eq,${legal.caseSType})`;
+        let legalTypeSQL = Betools.tools.isNull(legal.legalType) || legal.legalType == '全部' ? '':`~and(legalType,eq,${legal.legalType})`;
+        this.data = await this.handleList(tableName , '待处理,处理中,审批中,已完成,已结案,已驳回', userinfo, stageSql + caseSTypeSQL + legalTypeSQL + searchSql , 0 , 10000);
       },
 
   },
