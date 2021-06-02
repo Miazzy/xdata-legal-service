@@ -394,7 +394,7 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>内部律师</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.inHouseLawyers"  placeholder="请输入内部律师！" @blur="validFieldToast('inHouseLawyers')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-auto-complete :data-source="lawyerInNamelist" v-model="legal.inHouseLawyers" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0; width:100%; border-width: 0px 0px 1px; border-style: solid; border-color: rgb(254, 254, 254) rgb(254, 254, 254) rgb(240, 240, 240); border-image: initial;"  placeholder="请输入内部律师！" :filter-option="filterOption" />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>律师联系电话</span>
@@ -1033,7 +1033,9 @@ export default {
       firmlist:[],
       firmNamelist:[],
       lawyerlist:[],
+      lawyerInnerList:[],
       lawyerNamelist:[],
+      lawyerInNamelist:[],
       breadcrumb:[{icon:'home',text:'首页',path:'/legal/workspace'},{icon:'user',text:'案件管控',path:'/legal/workspace'},{icon:'user',text:'案件管理',path:'/legal/case/legallist?type=99&status=all&legalTname=all'},{icon:'form',text:'案件发起',path:''}],
       statusType:{'valid':'有效','invalid':'删除'},
       zoneType:{'领地集团总部':'领地集团总部','重庆区域':'重庆区域','两湖区域':'两湖区域','川北区域':'川北区域','成都区域':'成都区域','乐眉区域':'乐眉区域','中原区域':'中原区域','攀西区域':'攀西区域','新疆区域':'新疆区域','大湾区域':'大湾区域','北京区域':'北京区域'},
@@ -1439,6 +1441,7 @@ export default {
           this.iswechat = Betools.tools.isWechat(); //查询当前是否微信端
           this.iswework = Betools.tools.isWework(); //查询是否为企业微信
           this.userinfo = await this.weworkLogin(); //查询当前登录用户
+          this.lawyerInnerList = await Betools.query.queryLawyerList();
           this.options.courtOptions = await workconfig.courtList();
           this.legal.caseSType = (Betools.tools.getUrlParam('legalTname') || '起诉') + '案件';
           this.role = Betools.tools.getUrlParam('role');
@@ -1454,6 +1457,7 @@ export default {
           this.firmNamelist = this.firmlist.map(item => { return item.firm_name });
           this.lawyerlist = await Betools.manage.queryTableData('bs_lawyer' , `_where=(status,ne,0)&_fields=id,lawyer_name&_sort=-id&_p=0&_size=10000`);
           this.lawyerNamelist = this.lawyerlist.map(item => { return item.lawyer_name });
+          this.lawyerInNamelist = this.lawyerInnerList.map(item => {return item.name });
           if(!Betools.tools.isNull(id)){
             this.legal = await this.handleList(this.tablename , id);
             debugger;

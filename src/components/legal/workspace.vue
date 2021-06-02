@@ -143,7 +143,6 @@ export default {
       try {
         this.iswechat = Betools.tools.isWechat(); //查询当前是否微信端
         this.userinfo = await this.weworkLogin(); //查询当前登录用户
-        this.lawyerlist = await Betools.query.queryLawyerList();
       } catch (error) {
         console.log(error);
       }
