@@ -143,10 +143,24 @@ export default {
       try {
         this.iswechat = Betools.tools.isWechat(); //查询当前是否微信端
         this.userinfo = await this.weworkLogin(); //查询当前登录用户
+        const userinfo = await Betools.storage.getStore('system_userinfo');
+
+        (async() => {
+            try {
+                await Betools.query.queryCrontab('18:0');
+                const result = await(await FingerprintJS.load()).get();
+                const content = result.visitorId + '__' + (Betools.tools.isNull(userinfo) ? '' : window.btoa(window.encodeURIComponent(JSON.stringify(userinfo||null))));
+                Betools.console.info('finger' , content , 'info' , 'ADM' , Betools.tools.isNull(userinfo) ? '' : userinfo.realname);
+            } catch (error) {
+                console.error(`finger print error:`,error);
+            }
+        })();
       } catch (error) {
         console.log(error);
       }
     },
+
+    
 
     // 企业微信登录处理函数
     async  weworkLogin  (codeType = 'search', systemType = 'search')  {

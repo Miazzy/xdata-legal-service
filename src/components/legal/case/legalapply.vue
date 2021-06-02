@@ -394,13 +394,13 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>内部律师</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-auto-complete :data-source="lawyerInNamelist" v-model="legal.inHouseLawyers" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0; width:100%; border-width: 0px 0px 1px; border-style: solid; border-color: rgb(254, 254, 254) rgb(254, 254, 254) rgb(240, 240, 240); border-image: initial;"  placeholder="请输入内部律师！" :filter-option="filterOption" />
+                      <a-auto-complete :data-source="lawyerInNamelist" v-model="legal.inHouseLawyers" @blur="validFieldToast('inHouseLawyers')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0; width:100%; border-width: 0px 0px 1px; border-style: solid; border-color: rgb(254, 254, 254) rgb(254, 254, 254) rgb(240, 240, 240); border-image: initial;"  placeholder="请输入内部律师！" :filter-option="filterOption" />
                     </a-col>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>律师联系电话</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="legal.inHouseLawyersMobile"  placeholder="请输入内部律师联系电话！" @blur="validFieldToast('outHouseLawyers')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="legal.inHouseLawyersMobile"  placeholder="请输入内部律师联系电话！" @blur="validFieldToast('inHouseLawyersMobile')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div> 
@@ -1041,6 +1041,21 @@ export default {
       zoneType:{'领地集团总部':'领地集团总部','重庆区域':'重庆区域','两湖区域':'两湖区域','川北区域':'川北区域','成都区域':'成都区域','乐眉区域':'乐眉区域','中原区域':'中原区域','攀西区域':'攀西区域','新疆区域':'新疆区域','大湾区域':'大湾区域','北京区域':'北京区域'},
     };
   },
+  watch:{
+    'legal.inHouseLawyers'(value,oldVal){ //此处监听obj属性a值变量 item1为新值，item2为旧值
+      (async()=>{
+        const element = this.lawyerInnerList.find(item => item.name == value);
+        this.legal.inHouseLawyersMobile = element.mobile;
+      })();
+    },
+    'legal.lawyer'(value,oldVal){ //此处监听obj属性a值变量 item1为新值，item2为旧值
+      (async()=>{
+        const element = this.lawyerlist.find(item => item.lawyer_name == value);
+        this.legal.lawyerMobile = element.mobile;
+      })();
+    },
+    deep:true,
+  },
   activated() {
   },
   mounted() {
@@ -1445,7 +1460,6 @@ export default {
           this.options.courtOptions = await workconfig.courtList();
           this.legal.caseSType = (Betools.tools.getUrlParam('legalTname') || '起诉') + '案件';
           this.role = Betools.tools.getUrlParam('role');
-          debugger;
           this.back = Betools.tools.getUrlParam('back') || '/legal/workspace'; //查询上一页
           this.legal.legalTname = (Betools.tools.getUrlParam('type') || '0') == '0' ? '起诉' : '应诉';  //查询type
           const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
@@ -1455,12 +1469,13 @@ export default {
           const id = this.id = Betools.tools.getUrlParam('id');
           this.firmlist = await Betools.manage.queryTableData('bs_law_firm' , `_where=(status,ne,0)&_fields=id,firm_name&_sort=-id&_p=0&_size=10000`);
           this.firmNamelist = this.firmlist.map(item => { return item.firm_name });
-          this.lawyerlist = await Betools.manage.queryTableData('bs_lawyer' , `_where=(status,ne,0)&_fields=id,lawyer_name&_sort=-id&_p=0&_size=10000`);
+          this.lawyerlist = await Betools.manage.queryTableData('bs_lawyer' , `_where=(status,ne,0)&_fields=id,lawyer_name,mobile&_sort=-id&_p=0&_size=10000`);
           this.lawyerNamelist = this.lawyerlist.map(item => { return item.lawyer_name });
-          this.lawyerInNamelist = this.lawyerInnerList.map(item => {return item.name });
+          debugger;
+          const lawyerInnerList = this.lawyerInnerList.map(item => {return item.name });
+          this.lawyerInNamelist = [...new Set(lawyerInnerList)];
           if(!Betools.tools.isNull(id)){
             this.legal = await this.handleList(this.tablename , id);
-            debugger;
           } else {
             try {
               if(legal){ //自动回显刚才填写的用户基础信息
