@@ -143,8 +143,7 @@ export default {
       try {
         this.iswechat = Betools.tools.isWechat(); //查询当前是否微信端
         this.userinfo = await this.weworkLogin(); //查询当前登录用户
-        this.lawyerlist = await this.queryLawyerList();
-        debugger;
+        this.lawyerlist = await Betools.query.queryLawyerList();
       } catch (error) {
         console.log(error);
       }
@@ -152,7 +151,7 @@ export default {
 
     // 企业微信登录处理函数
     async  weworkLogin  (codeType = 'search', systemType = 'search')  {
-      const userinfo_work = await Betools.query.queryWeworkUser(codeType, systemType,'v5');
+        const userinfo_work = await Betools.query.queryWeworkUser(codeType, systemType,'v5');
         const userinfo = await Betools.storage.getStore('system_userinfo');
         this.usertitle = (userinfo && userinfo.parent_company && userinfo.parent_company.name ? userinfo.parent_company.name + ' > ' :'')  + (userinfo ? userinfo.realname || userinfo.name || userinfo.lastname : '');
         return userinfo;
@@ -162,12 +161,7 @@ export default {
     async redirectView(path) {
         Betools.tools.isNull(path) ? null: this.$router.push(path);
     },
-
-    //查询不同状态的领用数据
-    async queryLawyerList(tableName = 'v_hrmresource' , departKey = '法务', page = 0 , size = 10000){
-      let list = await Betools.manage.queryTableData(tableName , `_where=(company,like,~${departKey}~)&_fields=id,userid,loginid,mobile,name,position,gender,cname,company&_sort=-id&_p=${page}&_size=${size}`);
-      return list;
-    },
+    
   },
 };
 </script>
