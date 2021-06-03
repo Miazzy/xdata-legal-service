@@ -1854,6 +1854,80 @@ export default {
           });
       },
 
+      // 案件过程管理
+      async handleStage(){
+        
+        this.loading = true; // 显示加载状态
+        const userinfo = await Betools.storage.getStore('system_userinfo'); // 获取用户基础信息
+        const id = Betools.tools.getUrlParam('id'); // 表单ID
+        const stage = Betools.tools.getUrlParam('stage'); // 表单ID
+        const { legal } = this;
+        let content = null;
+
+        // 验证数据是否已经填写
+        const keys = Object.keys({ title: '' });
+        const invalidKey =  keys.find(key => {
+          const flag = this.validField(key);
+          return !flag;
+        });
+
+        if(invalidKey != '' && invalidKey != null){
+          return await vant.Dialog.alert({
+            title: '温馨提示',
+            message: `请确认内容是否填写完整，错误：请输入[${invalidKey}]信息！`,
+          });
+        }
+
+        const fstLegal = {fstEvidence , fstCourtDate , fstPlan , fstReason , fstConform , fstUnConformReasom , fstDetractionSum , fstValid , fstAppeal , fstAppealTime ,} = legal;
+        const secLegal = {secEvidence , secCourtDate , secPlan , secReason , secConform , secUnConformReasom , secDetractionSum , secValid , secAppeal ,secAppealTime ,} = legal;
+        const reviewLegal = {reviewEvidence , reviewCourtDate , reviewPlan , reviewReason , reviewConform , reviewUnConformReasom , reviewDetractionSum , reviewValid , reviewAppeal , reviewAppealTime ,} = legal;
+        const forceLegal = {enforce , enforce_time , enforce_fee , close_flag , closeDate, } = legal;
+
+        if(stage == '一审阶段'){
+          content = {...fstLegal};
+        } else if(stage == '二审阶段'){
+          content = {...fstLegal, ...secLegal};
+        } else if(stage == '再审阶段'){
+          content = {...fstLegal, ...secLegal, ...reviewLegal};
+        } else if(stage == '执行阶段'){
+          content = {...fstLegal, ...secLegal, ...reviewLegal, ...forceLegal};
+        } else if(stage == '结案闭单'){
+          content = {...fstLegal, ...secLegal, ...reviewLegal, ...forceLegal};
+        }
+
+        //是否确认提交此自由流程?
+        this.$confirm({
+            title: "确认操作",
+            content: "是否确认修改此案件信息?",
+            onOk: async(result) => {
+
+                  legal.zone = JSON.stringify(legal.zone); //进行序列化
+                  legal.caseType = JSON.stringify(legal.caseType); //进行序列化
+                  legal.court = JSON.stringify(legal.court); //进行序列化
+                  
+                  try {
+                    result = await Betools.manage.patchTableData(this.tablename, id, content); // 向表单提交form对象数据
+                  } catch (error) {
+                    console.error(error);
+                  }
+
+                  legal.zone = JSON.parse(legal.zone); //进行序列化
+                  legal.caseType = JSON.parse(legal.caseType); //进行序列化
+                  legal.court = JSON.parse(legal.court); //进行序列化
+
+                  if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
+                      return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
+                  }
+
+                  this.loading = false; //设置状态
+                  this.readonly = true;
+                  this.role = 'view';
+                  vant.Dialog.alert({  title: '温馨提示',  message: `案件信息修改成功！`, }); 
+                  await this.handleList(this.tablename , id);
+               }
+          });
+      },
+
       // 追加案件进展信息
       async handleProcess(){
         this.loading = true; // 显示加载状态
