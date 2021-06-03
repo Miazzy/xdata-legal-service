@@ -452,9 +452,9 @@ export default {
 
           const preStage = this.stageVal[elem.stage];
           const curStage = this.stageVal[stage];
-          
+
           if(curStage < preStage){ // 检查案件阶段是否以正常周期流程
-            return vant.Dialog.alert({  title: '温馨提示',  message: `您好，不能从${elem.stage}进行到${stage}`, });
+            return vant.Dialog.alert({  title: '温馨提示',  message: `您好，不能从‘${elem.stage}’进行到‘${stage}’`, });
           }
 
           this.$confirm({
