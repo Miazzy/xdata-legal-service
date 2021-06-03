@@ -139,22 +139,22 @@
                                       管理<a-icon type="down" />
                                     </a>
                                     <a-menu slot="overlay" >
-                                      <a-menu-item key="0" @click="execProcess(item)">
+                                      <a-menu-item key="0" @click="execProcess(item , '案件进展')">
                                         录入案件进展
                                       </a-menu-item>
-                                      <a-menu-item key="1">
+                                      <a-menu-item key="1" @click="execHear(item , '一审阶段')">
                                         进入一审阶段
                                       </a-menu-item>
-                                      <a-menu-item key="2">
+                                      <a-menu-item key="2" @click="execHear(item , '二审阶段')">
                                         进入二审阶段
                                       </a-menu-item>
-                                      <a-menu-item key="3">
+                                      <a-menu-item key="3" @click="execHear(item , '执行阶段')">
                                         进入执行阶段
                                       </a-menu-item>
-                                      <a-menu-item key="4">
+                                      <a-menu-item key="4" @click="execHear(item , '再审阶段')">
                                         进入再审阶段
                                       </a-menu-item>
-                                      <a-menu-item key="100">
+                                      <a-menu-item key="100" @click="execHear(item , '结案闭单')">
                                         结案闭单
                                       </a-menu-item>
                                     </a-menu>
@@ -164,13 +164,13 @@
                                       评价<a-icon type="down" />
                                     </a>
                                     <a-menu slot="overlay" >
-                                      <a-menu-item key="200">
+                                      <a-menu-item key="200" @click="execEvaluate(item,'案件评价')">
                                         案件评价
                                       </a-menu-item>
-                                      <a-menu-item key="201">
+                                      <a-menu-item key="201" @click="execEvaluate(item,'律师评价')">
                                         律师评价
                                       </a-menu-item>
-                                      <a-menu-item key="299">
+                                      <a-menu-item key="299" @click="execEvaluate(item,'view')">
                                         查看评价
                                       </a-menu-item>
                                     </a-menu>
@@ -432,6 +432,29 @@ export default {
             });
       },
 
+      // 案件周期管理
+      async execHear(elem, stage){
+          const { $router , data , tablename , execFresh } = this;
+          const that = this;
+          this.$confirm({
+              title: "温馨提示",
+              content: `您确定进行${stage}操作?`,
+              onOk: async() => {
+                    const result = await Betools.manage.patchTableData(tablename, elem.id, {stage}); // 向表单提交form对象数据
+                    if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
+                        return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
+                    }
+                    await execFresh();
+                    vant.Dialog.alert({  title: '温馨提示',  message: `已完成进入${stage}操作！`, }); 
+                }
+            });
+      },
+
+      // 案件评价管理
+      async execEvaluate(elem , status){
+
+      },
+
       // 案件记录导出功能
       async execExport(){
           const { $router } = this;
@@ -440,9 +463,7 @@ export default {
 
       // 案件列表执行刷新操作45
       async execFresh(){
-        const tableName = this.tablename;
-        const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
-        this.data = await this.handleList(tableName , '待处理,处理中,审批中,已完成,已结案,已驳回', userinfo, '' , 0 , 10000);
+        this.execSearch();
       },
 
       // 案件列表执行搜索功能
