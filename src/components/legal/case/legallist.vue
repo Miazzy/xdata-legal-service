@@ -176,7 +176,7 @@
                                     </a-menu>
                                   </a-dropdown>
                                   <a-list-item-meta :index="index" :description="`${item.caseID} 受理法院：${item.court}，承办法官：${item.judge}，案件状态：${item.legalStatus}`" >
-                                    <a slot="title" >{{ `序号: ${item.rowid} ${item.caseID} ${item.caseType} 程序阶段：${item.stage}，原告：${item.accuser}，被告：${item.defendant}` }}</a>
+                                    <a slot="title" >{{ `序号: ${item.serialID} ${item.caseID} ${item.caseType} 程序阶段：${item.stage}，原告：${item.accuser}，被告：${item.defendant}` }}</a>
                                   </a-list-item-meta>
                                 </a-list-item>
                               </a-list>
@@ -279,7 +279,7 @@ export default {
       acceptType:'*/*',
       uploadURL:'',
       tablename:'bs_legal',
-      viewname:'v_legal',
+      viewname:'bs_legal',
       size: 0,
       options:{},
       legal:{
