@@ -454,10 +454,10 @@ export default {
                     }
                     await execFresh('view');
                     vant.Dialog.alert({  title: '温馨提示',  message: `已完成进入${stage}操作！`, }); 
-                    
                     //获取到本地缓存数据，然后将缓存数据的列表中的此数据的状态改为stage
                     await Betools.tools.sleep(300);
                     this.data.map(item => { (item.id == elem.id) ? item.stage = stage : null; });
+                    $router.push(`/legal/case/legalapply?id=${elem.id}&type=1&tname=一审阶段&apply=stage&role=stage`);
                 }
             });
       },
