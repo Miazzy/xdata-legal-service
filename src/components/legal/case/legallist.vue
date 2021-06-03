@@ -176,7 +176,7 @@
                                     </a-menu>
                                   </a-dropdown>
                                   <a-list-item-meta :index="index" :description="`${item.caseID} 受理法院：${item.court}，承办法官：${item.judge}，案件状态：${item.legalStatus}`" >
-                                    <a slot="title" >{{ `序号: ${item.serialID} ${item.caseID} ${item.caseType} 程序阶段：${item.stage}，原告：${item.accuser}，被告：${item.defendant}` }}</a>
+                                    <a slot="title" >{{ `序号: ${item.rowid} ${item.caseID} ${item.caseType} 程序阶段：${item.stage}，原告：${item.accuser}，被告：${item.defendant}` }}</a>
                                   </a-list-item-meta>
                                 </a-list-item>
                               </a-list>
@@ -279,6 +279,7 @@ export default {
       acceptType:'*/*',
       uploadURL:'',
       tablename:'bs_legal',
+      viewname:'v_legal',
       size: 0,
       options:{},
       legal:{
@@ -497,7 +498,7 @@ export default {
       // 案件列表执行搜索功能
       async execSearch(value = ''){
         console.log(`exec search ...` , dayjs().format('HH:mm:ss'));
-        const tableName = this.tablename;
+        const tableName = this.viewname;
         const cacheRandomKey = value == 'view' ? ',' + Math.random().toString().slice(2,6) : '';
         const toast = value == 'view' ? vant.Toast.loading({ duration: 0,  forbidClick: true,  message: '刷新中...', }):null;
         const { legal } = this;
