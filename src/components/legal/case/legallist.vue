@@ -178,8 +178,8 @@
                                   </a-dropdown>
 
 
-                                  <a-list-item-meta :index="index" :description="`${item.caseID} 受理法院：${item.court}，承办法官：${item.judge}，案件状态：${item.legalStatus}`" >
-                                    <a slot="title" >{{ `序号: ${item.serialID} ${item.caseID} ${item.caseType} 程序阶段：${item.stage}，原告：${item.accuser}，被告：${item.defendant.slice(0,15) + (item.defendant.length>15?'...':'') }` }}</a>
+                                  <a-list-item-meta :index="index" :description="`${item.caseID} 法院：${item.court}，法官：${item.judge}，程序：${item.stage}`" >
+                                    <a slot="title" >{{ `序号: ${item.serialID} ${item.caseID} 程序：${item.stage} ，案由：${ item.caseType } ，原告：${item.accuser}，被告：${item.defendant.slice(0,15) + (item.defendant.length>15?'...':'') }` }}</a>
                                   </a-list-item-meta>
 
                                   <a-badge style="float:left;z-index:1000000;right:-10px;position:absolute;top:35px;">
@@ -385,6 +385,10 @@ export default {
             item.lawRTime = dayjs(item.lawRTime).format('YYYY-MM-DD') == 'Invalid Date' ? '/' : dayjs(item.lawRTime).format('YYYY-MM-DD');
             item.handledTime = dayjs(item.handledTime).format('YYYY-MM-DD') == 'Invalid Date' ? '/' : dayjs(item.handledTime).format('YYYY-MM-DD');
             item.legalStatus = Betools.tools.isNull(item.legalStatus) ? '开庭举证' : item.legalStatus;
+            item.caseType = JSON.parse(item.caseType);
+            item.court = JSON.parse(item.court);
+            Betools.tools.isNull(item.court[item.court.length-1]) ? item.court = item.court.slice(0,item.court.length-1) : null;
+            item.court = Betools.tools.deNull(item.court[item.court.length-1],'') ;
         });
         return list;
       },
