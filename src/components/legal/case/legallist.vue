@@ -41,7 +41,7 @@
                     <div class="reward-top-button" style="margin-top:20px;margin-bottom:20px; margin-left:20px;">
                         <a-input-search v-model="legal.value" placeholder="输入搜索关键字、案件名称、相关信息等" style="width:450px;" enter-button @search="execSearch('view')" />
                         
-                        <div style="display:inline;margin-left:15px;font-size:14px;margin-right:10px;">
+                        <div v-if="getUrlParam('stage') == '全部' " style="display:inline;margin-left:15px;font-size:14px;margin-right:10px;">
                           <span>案件阶段</span>
                           <a-select  v-model="legal.stage" default-value="一审阶段" placeholder="选择案件程序阶段" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
                             <a-select-option value="全部">
@@ -112,7 +112,7 @@
                           <a-empty v-if="data.length == 0" style="margin-top:10%;height:580px;"/>
                           <div v-if="data.length > 0" class="reward-content-table" style="margin-left:0px; width:98%;"> 
                               <a-list item-layout="horizontal" :data-source="data">
-                                <a-list-item v-show=" item.status != '已删除' && item.status != '已作废' " slot="renderItem" slot-scope="item, index">
+                                <a-list-item v-show=" item.status != '已删除' && item.status != '已作废' " slot="renderItem" slot-scope="item, index" style="position:relative;">
 
                                   <a-dropdown slot="actions">
                                     <a class="ant-dropdown-link" @click="e => e.preventDefault()">
@@ -122,19 +122,19 @@
                                       <a-menu-item key="200" @click="execView(item)">
                                         查看案件
                                       </a-menu-item>
-                                      <a-menu-item key="201" @click="execPatch(item)">
+                                      <a-menu-item v-if=" item.stage != '结案闭单'" key="201" @click="execPatch(item)">
                                         修改案件
                                       </a-menu-item>
-                                      <a-menu-item key="101" @click="execDelete(item)">
+                                      <a-menu-item v-if=" item.stage != '结案闭单' && item.status == '待处理' " key="101" @click="execDelete(item)">
                                         删除案件
                                       </a-menu-item>
-                                      <a-menu-item key="99" @click="execBan(item)">
+                                      <a-menu-item v-if=" item.stage != '结案闭单' && item.status == '待处理' " key="99" @click="execBan(item)">
                                         禁用案件
                                       </a-menu-item>
                                     </a-menu>
                                   </a-dropdown>
                                   
-                                  <a-dropdown slot="actions">
+                                  <a-dropdown slot="actions" v-if=" item.stage != '结案闭单'">
                                     <a class="ant-dropdown-link" @click="e => e.preventDefault()">
                                       管理<a-icon type="down" />
                                     </a>
@@ -159,7 +159,8 @@
                                       </a-menu-item>
                                     </a-menu>
                                   </a-dropdown>
-                                  <a-dropdown slot="actions">
+
+                                  <a-dropdown slot="actions" v-if=" item.stage == '结案闭单'" >
                                     <a class="ant-dropdown-link" @click="e => e.preventDefault()">
                                       评价<a-icon type="down" />
                                     </a>
@@ -175,9 +176,15 @@
                                       </a-menu-item>
                                     </a-menu>
                                   </a-dropdown>
+
+
                                   <a-list-item-meta :index="index" :description="`${item.caseID} 受理法院：${item.court}，承办法官：${item.judge}，案件状态：${item.legalStatus}`" >
-                                    <a slot="title" >{{ `序号: ${item.serialID} ${item.caseID} ${item.caseType} 程序阶段：${item.stage}，原告：${item.accuser}，被告：${item.defendant}` }}</a>
+                                    <a slot="title" >{{ `序号: ${item.serialID} ${item.caseID} ${item.caseType} 程序阶段：${item.stage}，原告：${item.accuser}，被告：${item.defendant.slice(0,15) + (item.defendant.length>15?'...':'') }` }}</a>
                                   </a-list-item-meta>
+
+                                  <a-badge style="float:left;z-index:1000000;right:-10px;position:absolute;top:35px;">
+                                    <a-icon slot="count" :type="item.stage == '结案闭单' ? 'check-circle' : item.stage == '一审阶段' ? 'question-circle':'clock-circle'" :style="item.stage == '结案闭单' ? `color:DodgerBlue;`: item.stage == '一审阶段' ? `color:Chocolate;`:`color: #f5222d;`" />
+                                  </a-badge>
                                 </a-list-item>
                               </a-list>
                           </div>
@@ -271,6 +278,7 @@ export default {
   mixins: [window.mixin],
   data() {
     return {
+      getUrlParam:Betools.tools.getUrlParam,
       iswechat:false,
       iswework:false,
       pageName: "案件管理",
@@ -357,6 +365,7 @@ export default {
           this.iswework = Betools.tools.isWework(); //查询是否为企业微信
           this.userinfo = await this.weworkLogin(); //查询当前登录用户
           this.back = Betools.tools.getUrlParam('back') || '/legal/workspace'; //查询上一页
+          this.legal.stage = Betools.tools.getUrlParam('stage') || '全部';
           const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
           this.execSearch('view');
         } catch (error) {

@@ -165,7 +165,7 @@ export const reward = ($router) => {
             href: "/account/donelist",
             description: '查看/管理案件列表信息',
             click: () => {
-                $router.push(`/legal/case/legallist?type=99&&status=all&legalTname=all`, '_blank');
+                $router.push(`/legal/case/legallist?type=99&&status=all&legalTname=all&stage=全部`, '_blank');
             }
         }, {
             name: "结案记录",
@@ -173,7 +173,7 @@ export const reward = ($router) => {
             href: "/account/myanalyse",
             description: '查看已结案案件列表信息',
             click: () => {
-                $router.push(`/legal/course/lawsuitlist?&type=99&status=finish&legalTname=all`, '_blank');
+                $router.push(`/legal/course/lawsuitlist?&type=99&status=finish&legalTname=all&stage=结案闭单`, '_blank');
             },
         }, {
             name: "一审管理",
@@ -181,7 +181,7 @@ export const reward = ($router) => {
             href: "/account/myrewards",
             description: '对案件进展处于一审阶段的案件进行管理',
             click: () => {
-                $router.push(`/legal/case/firstlist?type=99&&status=all&legalTname=all`, '_blank');
+                $router.push(`/legal/case/firstlist?type=99&&status=all&legalTname=all&stage=一审阶段`, '_blank');
             },
         }, {
             name: "二审管理",
@@ -189,7 +189,7 @@ export const reward = ($router) => {
             href: "/account/myanalyse",
             description: '对案件进展处于二审阶段的案件进行管理',
             click: () => {
-                $router.push(`/legal/case/secondlist?type=99&&status=all&legalTname=all`, '_blank');
+                $router.push(`/legal/case/secondlist?type=99&&status=all&legalTname=all&stage=二审阶段`, '_blank');
             },
         }, {
             name: "执行管理",
@@ -197,7 +197,7 @@ export const reward = ($router) => {
             href: "/account/myanalyse",
             description: '对案件进展处于执行阶段的案件进行管理',
             click: () => {
-                $router.push(`/legal/case/executelist?type=99&&status=all&legalTname=all`, '_blank');
+                $router.push(`/legal/case/executelist?type=99&&status=all&legalTname=all&stage=执行阶段`, '_blank');
             },
         }, {
             name: "再审管理",
@@ -205,7 +205,7 @@ export const reward = ($router) => {
             href: "/account/myanalyse",
             description: '对案件进展处于再审阶段的案件进行管理',
             click: () => {
-                $router.push(`/legal/case/thirdlist?type=99&&status=all&legalTname=all`, '_blank');
+                $router.push(`/legal/case/thirdlist?type=99&&status=all&legalTname=all&stage=再审阶段`, '_blank');
             },
         }],
     }, {

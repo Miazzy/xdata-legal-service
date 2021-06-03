@@ -183,3 +183,10 @@
 #legal-apply-content .reward-apply-content-lawcase {
     pointer-events: all;
 }
+
+#legal-apply-content .child {
+    width: 40px;
+    height: 40px;
+    background: #f9f9f9;
+    border-radius: 4px;
+}

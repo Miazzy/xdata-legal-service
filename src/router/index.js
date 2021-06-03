@@ -90,35 +90,35 @@ const routes = [{
     name: "结案记录",
     components: {
         "default": resolve => require(["../components/legal/home.vue"], resolve),
-        "subPage": resolve => require(["../components/legal/course/lawsuitlist.vue"], resolve)
+        "subPage": resolve => require(["../components/legal/case/legallist.vue"], resolve)
     }
 }, {
     path: '/legal/case/firstlist',
     name: "一审管理",
     components: {
         "default": resolve => require(["../components/legal/home.vue"], resolve),
-        "subPage": resolve => require(["../components/legal/case/firstlist.vue"], resolve)
+        "subPage": resolve => require(["../components/legal/case/legallist.vue"], resolve)
     }
 }, {
     path: '/legal/case/secondlist',
     name: "二审管理",
     components: {
         "default": resolve => require(["../components/legal/home.vue"], resolve),
-        "subPage": resolve => require(["../components/legal/case/secondlist.vue"], resolve)
+        "subPage": resolve => require(["../components/legal/case/legallist.vue"], resolve)
     }
 }, {
     path: '/legal/case/executelist',
     name: "执行管理",
     components: {
         "default": resolve => require(["../components/legal/home.vue"], resolve),
-        "subPage": resolve => require(["../components/legal/case/executelist.vue"], resolve)
+        "subPage": resolve => require(["../components/legal/case/legallist.vue"], resolve)
     }
 }, {
     path: '/legal/case/thirdlist',
     name: "再审管理",
     components: {
         "default": resolve => require(["../components/legal/home.vue"], resolve),
-        "subPage": resolve => require(["../components/legal/case/thirdlist.vue"], resolve)
+        "subPage": resolve => require(["../components/legal/case/legallist.vue"], resolve)
     }
 }, {
     path: '/legal/court/courtapply',
