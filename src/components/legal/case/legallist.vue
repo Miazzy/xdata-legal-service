@@ -410,6 +410,7 @@ export default {
                     }
                     await execFresh();
                     vant.Dialog.alert({  title: '温馨提示',  message: `已执行删除操作！`, }); 
+                    await execFresh();
                 }
             });
       },
@@ -428,6 +429,7 @@ export default {
                     }
                     await execFresh();
                     vant.Dialog.alert({  title: '温馨提示',  message: `已执行禁用操作！`, }); 
+                    await execFresh();
                 }
             });
       },
@@ -446,6 +448,7 @@ export default {
                     }
                     await execFresh();
                     vant.Dialog.alert({  title: '温馨提示',  message: `已完成进入${stage}操作！`, }); 
+                    await execFresh();
                 }
             });
       },
