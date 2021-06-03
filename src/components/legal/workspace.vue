@@ -34,8 +34,20 @@
             </div>
 
             <div style="position:absolute; left:80px; width:900px;" >
+
+              <div id="" class="" style="padding-left:0.75rem;padding-top:0.25rem;padding-bottom:0.25rem;background-color:#fefefe;" >
+                <a-breadcrumb>
+                  <template v-for="(elem,index) in breadcrumb">
+                    <a-breadcrumb-item :key="elem.icon" :index="index" >
+                      <a-icon :type="elem.icon" />
+                      <span @click="redirectFunc(elem.text)">{{ elem.text }}</span>
+                    </a-breadcrumb-item>
+                  </template>
+                </a-breadcrumb>
+              </div>
+
               <template v-for="(pane,index) in paneflows"  >
-                <a-card  :key="pane.id"  :title="pane.title"  class="pane-flow-card" >
+                <a-card v-show="pane.display" :key="pane.id"  :title="pane.title"  class="pane-flow-card" >
                   <template v-for="item in pane.taskflows"  >
                     <a-card-grid :key="item.href" style="width:25%;textAlign:'center'">
                       <a-card-meta>
@@ -52,7 +64,7 @@
                     </a-card-grid>
                   </template>
                 </a-card>
-                <a-card v-if="index <= 1000" :key="pane.id + pane.title" :title="' '" class="pane-flow-card-middle" >
+                <a-card v-show="pane.display" v-if="index <= 1000" :key="pane.id + pane.title" :title="' '" class="pane-flow-card-middle" >
                 </a-card>
               </template>
             </div>
@@ -128,6 +140,7 @@ export default {
       userinfo: '',
       usertitle:'',
       lawyerlist:[],
+      breadcrumb:[{icon:'',text:'所有功能',path:'/legal/workspace'},{icon:'',text:'任务面板',path:'/legal/workspace'},{icon:'',text:'案件管控',path:'/legal/workspace'},{icon:'',text:'律所律师',path:'/legal/workspace'},{icon:'',text:'法院法官',path:'/legal/workspace'}],
     };
   },
   activated() {
@@ -173,6 +186,14 @@ export default {
     // 执行页面跳转
     async redirectView(path) {
         Betools.tools.isNull(path) ? null: this.$router.push(path);
+    },
+
+    // 执行页面跳转
+    async redirectFunc(text) {
+        this.paneflows.map(elem => {
+          text != '所有功能' ? (elem.title == text ? elem.display = true : elem.display = false) : elem.display = true;
+          debugger;
+        });
     },
     
   },

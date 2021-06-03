@@ -105,6 +105,7 @@ export const reward = ($router) => {
     return [{
         id: 'task-pane',
         title: '任务面板',
+        display: true,
         taskflows: [{
             name: "我的知会",
             avatar: `//cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/liebiao_jy.png`,
@@ -141,6 +142,7 @@ export const reward = ($router) => {
     }, {
         id: 'task-pane',
         title: '案件管控',
+        display: true,
         taskflows: [{
             name: "起诉案件发起",
             avatar: `https://cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/qiandao_jy.png`,
@@ -209,6 +211,7 @@ export const reward = ($router) => {
     }, {
         id: 'common-pane',
         title: '律所律师',
+        display: true,
         taskflows: [{
             name: "律所录入",
             avatar: `//cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/xinwen_jy.png`,
@@ -245,6 +248,7 @@ export const reward = ($router) => {
     }, {
         id: 'law-pane',
         title: '法院法官',
+        display: true,
         taskflows: [{
             name: "法院录入",
             avatar: `https://cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/anqiantiaojie.png`,
