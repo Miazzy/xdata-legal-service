@@ -39,7 +39,7 @@
                 <div style="width:100%;margin-left:0px;margin-right:0px;background:#fbf9fe;">
 
                     <div class="reward-top-button" style="margin-top:20px;margin-bottom:20px; margin-left:20px;">
-                        <a-input-search v-model="legal.value" placeholder="输入搜索关键字、案件名称、相关信息等" style="width:450px;" enter-button @search="execSearch" />
+                        <a-input-search v-model="legal.value" placeholder="输入搜索关键字、案件名称、相关信息等" style="width:450px;" enter-button @search="execSearch('view')" />
                         
                         <div style="display:inline;margin-left:15px;font-size:14px;margin-right:10px;">
                           <span>案件阶段</span>
@@ -100,7 +100,7 @@
                             </a-select-option>
                           </a-select>
                         </div>
-                        <a-button type="primary" @click="execSearch" >查询</a-button>
+                        <a-button type="primary" @click="execSearch('view')" >查询</a-button>
                         <a-button type="primary" @click="execFresh" style="display:none;">刷新</a-button>
                         <a-button type="primary" @click="execApply" style="display:none;">新增</a-button>
                         <a-button type="primary" @click="execExport" >导出</a-button>
@@ -112,7 +112,7 @@
                           <a-empty v-if="data.length == 0" style="margin-top:10%;height:580px;"/>
                           <div v-if="data.length > 0" class="reward-content-table" style="margin-left:0px; width:98%;"> 
                               <a-list item-layout="horizontal" :data-source="data">
-                                <a-list-item slot="renderItem" slot-scope="item, index">
+                                <a-list-item v-show=" item.status != '已删除' && item.status != '已作废' " slot="renderItem" slot-scope="item, index">
 
                                   <a-dropdown slot="actions">
                                     <a class="ant-dropdown-link" @click="e => e.preventDefault()">
@@ -176,7 +176,7 @@
                                     </a-menu>
                                   </a-dropdown>
                                   <a-list-item-meta :index="index" :description="`${item.caseID} 受理法院：${item.court}，承办法官：${item.judge}，案件状态：${item.legalStatus}`" >
-                                    <a slot="title" >{{ `${item.caseID} ${item.caseType} 程序阶段：${item.stage}，原告：${item.accuser}，被告：${item.defendant}` }}</a>
+                                    <a slot="title" >{{ `序号: ${item.serialID} ${item.caseID} ${item.caseType} 程序阶段：${item.stage}，原告：${item.accuser}，被告：${item.defendant}` }}</a>
                                   </a-list-item-meta>
                                 </a-list-item>
                               </a-list>
@@ -350,7 +350,7 @@ export default {
           this.userinfo = await this.weworkLogin(); //查询当前登录用户
           this.back = Betools.tools.getUrlParam('back') || '/legal/workspace'; //查询上一页
           const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
-          this.data = await this.handleList(tableName , '待处理,处理中,审批中,已完成,已结案,已驳回', userinfo, '' , 0 , 10000);
+          this.execSearch('view');
         } catch (error) {
           console.log(error);
         }
@@ -404,12 +404,15 @@ export default {
               title: "温馨提示",
               content: "您好，删除案件记录后不可恢复，您确定执行删除操作?",
               onOk: async() => {
+                    Betools.manage.patchTableData(tablename, elem.id, {status:'已删除'})
                     const result = await Betools.manage.patchTableData(tablename, elem.id, {status:'已删除'}); // 向表单提交form对象数据
                     if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                         return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                     }
-                    execFresh().then(()=>{execFresh()})
+                    await execFresh('view');
                     vant.Dialog.alert({  title: '温馨提示',  message: `已执行删除操作！`, }); 
+                    await Betools.tools.sleep(300);
+                    this.data.map(item => { (item.id == elem.id) ? item.status = '已删除' : null; });
                 }
             });
       },
@@ -422,12 +425,16 @@ export default {
               title: "温馨提示",
               content: "您确定执行禁用操作?",
               onOk: async() => {
+                    Betools.manage.patchTableData(tablename, elem.id, {status:'已作废'});
                     const result = await Betools.manage.patchTableData(tablename, elem.id, {status:'已作废'}); // 向表单提交form对象数据
                     if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                         return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                     }
-                    execFresh().then(()=>{execFresh()})
+                    await execFresh('view');
                     vant.Dialog.alert({  title: '温馨提示',  message: `已执行禁用操作！`, }); 
+                    //获取到本地缓存数据，然后将缓存数据的列表中的此数据的状态改为stage
+                    await Betools.tools.sleep(300);
+                    this.data.map(item => { (item.id == elem.id) ? item.status = '已作废' : null; });
                 }
             });
       },
@@ -440,15 +447,17 @@ export default {
               title: "温馨提示",
               content: `您确定进行${stage}操作?`,
               onOk: async() => {
+                    Betools.manage.patchTableData(tablename, elem.id, {stage}); // 向表单提交form对象数据
                     const result = await Betools.manage.patchTableData(tablename, elem.id, {stage}); // 向表单提交form对象数据
                     if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                         return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                     }
-
-                    //获取到本地缓存数据，然后将缓存数据的列表中的此数据的状态改为stage
-
-                    execFresh().then(()=>{execFresh()})
+                    await execFresh('view');
                     vant.Dialog.alert({  title: '温馨提示',  message: `已完成进入${stage}操作！`, }); 
+                    
+                    //获取到本地缓存数据，然后将缓存数据的列表中的此数据的状态改为stage
+                    await Betools.tools.sleep(300);
+                    this.data.map(item => { (item.id == elem.id) ? item.stage = stage : null; });
                 }
             });
       },
@@ -465,20 +474,29 @@ export default {
       },
 
       // 案件列表执行刷新操作45
-      async execFresh(){
-        this.execSearch();
+      async execFresh(value = ''){
+        await this.execSearch(value);
       },
 
+
+
       // 案件列表执行搜索功能
-      async execSearch(value){
+      async execSearch(value = ''){
+        console.log(`exec search ...` , dayjs().format('HH:mm:ss'));
         const tableName = this.tablename;
+        const cacheRandomKey = value == 'view' ? ',' + Math.random().toString().slice(2,6) : '';
+        const toast = value == 'view' ? vant.Toast.loading({ duration: 0,  forbidClick: true,  message: '刷新中...', }):null;
         const { legal } = this;
         const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
         let searchSql = typeof legal.value == 'string' ? `~and((title,like,~${legal.value}~)~or(create_by,like,~${legal.value}~)~or(fstPlan,like,~${legal.value}~)~or(legalType,like,~${legal.value}~)~or(plate,like,~${legal.value}~)~or(firm,like,~${legal.value}~)~or(legalTname,like,~${legal.value}~)~or(zone,like,~${legal.value}~)~or(zoneProject,like,~${legal.value}~)~or(caseID,like,~${legal.value}~)~or(caseType,like,~${legal.value}~)~or(caseSType,like,~${legal.value}~)~or(stage,like,~${legal.value}~)~or(accuser,like,~${legal.value}~)~or(defendant,like,~${legal.value}~)~or(court,like,~${legal.value}~)~or(judge,like,~${legal.value}~)~or(judgeMobile,like,~${legal.value}~)~or(inHouseLawyers,like,~${legal.value}~)~or(disclosure,like,~${legal.value}~)~or(lawcase,like,~${legal.value}~)~or(thirdParty,like,~${legal.value}~)~or(lawOffice,like,~${legal.value}~)~or(lawyer,like,~${legal.value}~)~or(lawyerMobile,like,~${legal.value}~)~or(claims,like,~${legal.value}~))` : '';
         let stageSql = Betools.tools.isNull(legal.stage) || legal.stage == '全部' ? '' : `~and(stage,in,${legal.stage})`;
         let caseSTypeSQL = Betools.tools.isNull(legal.caseSType) || legal.caseSType == '全部' ? '':`~and(caseSType,eq,${legal.caseSType})`;
         let legalTypeSQL = Betools.tools.isNull(legal.legalType) || legal.legalType == '全部' ? '':`~and(legalType,eq,${legal.legalType})`;
-        this.data = await this.handleList(tableName , '待处理,处理中,审批中,已完成,已结案,已驳回', userinfo, stageSql + caseSTypeSQL + legalTypeSQL + searchSql , 0 , 10000);
+        const data = await this.handleList(tableName , `待处理,处理中,审批中,已完成,已结案,已驳回${cacheRandomKey}`, userinfo, stageSql + caseSTypeSQL + legalTypeSQL + searchSql , 0 , 10000);
+        value == 'view' ? (this.data = data)  : null;
+        await Betools.tools.sleep(300);
+        value == 'view' ? (vant.Toast.clear()) : null;
+        return data; 
       },
 
   },
