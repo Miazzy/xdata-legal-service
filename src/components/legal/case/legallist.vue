@@ -408,9 +408,8 @@ export default {
                     if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                         return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                     }
-                    await execFresh();
+                    execFresh().then(()=>{execFresh()})
                     vant.Dialog.alert({  title: '温馨提示',  message: `已执行删除操作！`, }); 
-                    await execFresh();
                 }
             });
       },
@@ -427,9 +426,8 @@ export default {
                     if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                         return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                     }
-                    await execFresh();
+                    execFresh().then(()=>{execFresh()})
                     vant.Dialog.alert({  title: '温馨提示',  message: `已执行禁用操作！`, }); 
-                    await execFresh();
                 }
             });
       },
@@ -446,9 +444,11 @@ export default {
                     if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                         return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                     }
-                    await execFresh();
+
+                    //获取到本地缓存数据，然后将缓存数据的列表中的此数据的状态改为stage
+
+                    execFresh().then(()=>{execFresh()})
                     vant.Dialog.alert({  title: '温馨提示',  message: `已完成进入${stage}操作！`, }); 
-                    await execFresh();
                 }
             });
       },

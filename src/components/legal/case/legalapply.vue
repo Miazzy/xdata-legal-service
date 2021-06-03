@@ -1453,32 +1453,36 @@ export default {
       // 查询基础信息
       async queryInfo() {
         try {
+          const id = this.id = Betools.tools.getUrlParam('id');
+          const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
           this.iswechat = Betools.tools.isWechat(); //查询当前是否微信端
           this.iswework = Betools.tools.isWework(); //查询是否为企业微信
           this.userinfo = await this.weworkLogin(); //查询当前登录用户
-          this.lawyerInnerList = await Betools.query.queryLawyerList();
-          this.options.courtOptions = await workconfig.courtList();
+
           this.legal.caseSType = (Betools.tools.getUrlParam('legalTname') || '起诉') + '案件';
           this.role = Betools.tools.getUrlParam('role');
           this.back = Betools.tools.getUrlParam('back') || '/legal/workspace'; //查询上一页
           this.legal.legalTname = (Betools.tools.getUrlParam('type') || '0') == '0' ? '起诉' : '应诉';  //查询type
-          const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
           this.legal.apply_realname = userinfo.realname;
           this.legal.apply_username = userinfo.username;
-          const legal = Betools.storage.getStore(`system_${this.tablename}_item#${this.legal.type}#@${userinfo.realname}`); //获取缓存信息
-          const id = this.id = Betools.tools.getUrlParam('id');
+
+          if(!Betools.tools.isNull(id)){
+            this.legal = await this.handleList(this.tablename , id);
+          } 
+          
+          this.lawyerInnerList = await Betools.query.queryLawyerList();
+          this.options.courtOptions = await workconfig.courtList();
           this.firmlist = await Betools.manage.queryTableData('bs_law_firm' , `_where=(status,ne,0)&_fields=id,firm_name&_sort=-id&_p=0&_size=10000`);
           this.firmNamelist = this.firmlist.map(item => { return item.firm_name });
           this.lawyerlist = await Betools.manage.queryTableData('bs_lawyer' , `_where=(status,ne,0)&_fields=id,lawyer_name,mobile&_sort=-id&_p=0&_size=10000`);
           this.lawyerNamelist = this.lawyerlist.map(item => { return item.lawyer_name });
-          debugger;
           const lawyerInnerList = this.lawyerInnerList.map(item => {return item.name });
           this.lawyerInNamelist = [...new Set(lawyerInnerList)];
-          if(!Betools.tools.isNull(id)){
-            this.legal = await this.handleList(this.tablename , id);
-          } else {
+          
+          if(Betools.tools.isNull(id)){ //自动回显刚才填写的用户基础信息
             try {
-              if(legal){ //自动回显刚才填写的用户基础信息
+              const legal = Betools.storage.getStore(`system_${this.tablename}_item#${this.legal.type}#@${userinfo.realname}`); //获取缓存信息
+              if(legal){
                 this.legal.create_by = legal.create_by || this.legal.create_by;
                 this.legal.remark = legal.remark || this.legal.remark;
                 this.legal.status = legal.status || this.legal.status;
@@ -1496,6 +1500,7 @@ export default {
               console.log(error);
             }
           }
+          
         } catch (error) {
           console.log(error);
         }
@@ -1504,7 +1509,8 @@ export default {
       // 查询不同状态的律所数据
       async handleList(tableName , id){
         const nowdate = dayjs().format('YYYY-MM-DD')
-        let list = await Betools.manage.queryTableData(tableName , `_where=(id,eq,${id})&_sort=-id&_p=0&_size=1`);
+        let elem = await Betools.query.queryTableData(tableName , id);
+        let list = [elem];
         list.map((item)=>{ 
           try {
             item.create_time = dayjs(item.create_time).format('YYYY-MM-DD'); 
