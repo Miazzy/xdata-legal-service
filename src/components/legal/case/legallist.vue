@@ -312,6 +312,13 @@ export default {
       ],
       data:[],
       rowSelection:[],
+      stageVal:{
+        '一审阶段': 1,
+        '二审阶段': 2,
+        '执行阶段': 2,
+        '再审阶段': 2,
+        '结案闭单': 100,
+      },
       breadcrumb:[{icon:'home',text:'首页',path:'/legal/workspace'},{icon:'user',text:'案件管控',path:'/legal/workspace'},{icon:'form',text:'案件管理',path:''}],
       statusType:{'valid':'有效','invalid':'删除'},
       zoneType:{'领地集团总部':'领地集团总部','重庆区域':'重庆区域','两湖区域':'两湖区域','川北区域':'川北区域','成都区域':'成都区域','乐眉区域':'乐眉区域','中原区域':'中原区域','攀西区域':'攀西区域','新疆区域':'新疆区域','大湾区域':'大湾区域','北京区域':'北京区域'},
@@ -432,7 +439,6 @@ export default {
                     }
                     await execFresh('view');
                     vant.Dialog.alert({  title: '温馨提示',  message: `已执行禁用操作！`, }); 
-                    //获取到本地缓存数据，然后将缓存数据的列表中的此数据的状态改为stage
                     await Betools.tools.sleep(300);
                     this.data.map(item => { (item.id == elem.id) ? item.status = '已作废' : null; });
                 }
@@ -443,6 +449,14 @@ export default {
       async execHear(elem, stage){
           const { $router , data , tablename , execFresh } = this;
           const that = this;
+
+          const preStage = this.stageVal[elem.stage];
+          const curStage = this.stageVal[stage];
+          
+          if(curStage < preStage){ // 检查案件阶段是否以正常周期流程
+            return vant.Dialog.alert({  title: '温馨提示',  message: `您好，不能从${elem.stage}进行到${stage}`, });
+          }
+
           this.$confirm({
               title: "温馨提示",
               content: `您确定进行${stage}操作?`,
@@ -452,12 +466,12 @@ export default {
                     if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                         return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                     }
-                    await execFresh('view');
-                    vant.Dialog.alert({  title: '温馨提示',  message: `已完成进入${stage}操作！`, }); 
-                    //获取到本地缓存数据，然后将缓存数据的列表中的此数据的状态改为stage
-                    await Betools.tools.sleep(300);
-                    this.data.map(item => { (item.id == elem.id) ? item.stage = stage : null; });
-                    $router.push(`/legal/case/legalapply?id=${elem.id}&type=1&tname=一审阶段&apply=stage&role=stage`);
+                    await execFresh('view'); // vant.Dialog.alert({  title: '温馨提示',  message: `已完成进入${stage}操作！`, });  // 获取到本地缓存数据，然后将缓存数据的列表中的此数据的状态改为stage
+                    this.data.map(item => { 
+                      (item.id == elem.id) ? item.stage = stage : null; 
+                      (item.id == elem.id) ? Betools.query.cacheTableDataByID(tablename, item.id , item) : null ;
+                    });
+                    $router.push(`/legal/case/legalapply?id=${elem.id}&type=1&stage=${stage}&tname=${stage}&apply=stage&role=stage`);
                 }
             });
       },
