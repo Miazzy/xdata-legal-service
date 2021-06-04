@@ -154,6 +154,7 @@ export default {
     // 查询初始化信息
     async queryInfo() {
       try {
+        const { $router } = this;
         this.iswechat = Betools.tools.isWechat(); //查询当前是否微信端
         this.userinfo = await this.weworkLogin(); //查询当前登录用户
         const userinfo = await Betools.storage.getStore('system_userinfo');
@@ -171,7 +172,16 @@ export default {
 
         (async() => {
             try {
-              
+              if(window.location.href.includes('/evaluate/')){
+                const path = window.location.href.split(window.location.host)[1];
+                const arr = path.slice(1).split('/');
+                const apply = arr[0];
+                if(apply == 'evaluate') {
+                  const id = arr[1];
+                  const username = arr[2];
+                  $router.push(`/legal/case/legalapply?id=${id}&type=1&tname=案件详情&apply=${apply}&role=notify&rem=${username}`);
+                }
+              }
             } catch (error) {
               
             }
