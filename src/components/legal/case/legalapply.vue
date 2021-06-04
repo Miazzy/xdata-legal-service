@@ -1588,7 +1588,20 @@ export default {
 
       // 执行知会批注操作
       async handleRemark(){
-
+        const userinfo = await Betools.storage.getStore('system_userinfo'); // 获取用户基础信息
+        try {
+          this.$confirm({
+              title: "确认操作",
+              content: `您好，是否提交案件批注?`,
+              onOk: async(result) => {
+                  const { legal } = this;
+                  const rem = Betools.tools.getUrlParam('rem');
+                  this.handleLog(this.tablename , legal , '批注', '案件知会批注' , `${userinfo.realname || rem } 批注：${this.remark}，案号：${legal.caseID}`);
+                  vant.Dialog.alert({  title: '温馨提示',  message: `案件批注提交成功！`, });
+              }});
+        } catch (error) {
+          console.log(error);
+        }
       },
 
       // 执行知会操作
@@ -1612,7 +1625,9 @@ export default {
               title: "确认操作",
               content: `您好，是否确认向${user_group_names}推送案件知会通知?`,
               onOk: async(result) => {
+                  const {legal} = this;
                   const url = `${window.BECONFIG.domain.replace('www','legal')}/evaluate/${this.legal.id}/${userinfo.username}/#/`;
+                  this.handleLog(this.tablename , legal , '知会', '案件知会流程' , `${userinfo.realname} 向${user_group_names}推送了知会流程，案号：${legal.caseID}`);
                   await superagent.get(`${window.BECONFIG['restAPI']}/api/v1/weappms/${user_group_ids}/您好，您有一份案件知会通知(${userinfo.realname})，案号:${this.legal.caseID}！?url=${url}`).set('accept', 'json');
                   vant.Dialog.alert({  title: '温馨提示',  message: `案件知会通知推送成功！`, });
               }});
