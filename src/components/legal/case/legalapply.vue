@@ -1426,7 +1426,6 @@ export default {
         userlist = this.release_userlist.concat(userlist);
         userlist = userlist.filter( (item , index) => { const findex = userlist.findIndex( elem => { return item.cert == elem.cert });  return findex == index;});
         this.release_userlist = userlist; 
-        debugger;
       },
 
       // 用户提交入职登记表函数

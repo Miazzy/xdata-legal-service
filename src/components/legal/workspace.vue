@@ -201,7 +201,6 @@ export default {
     async redirectFunc(text) {
         this.paneflows.map(elem => {
           text != '所有功能' ? (elem.title == text ? elem.display = true : elem.display = false) : elem.display = true;
-          debugger;
         });
     },
     
