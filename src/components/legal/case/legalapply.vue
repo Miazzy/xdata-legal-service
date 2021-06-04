@@ -467,14 +467,16 @@
                 <div class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
                     <a-col class="reward-apply-content-title-text" :span="4" style="font-size:1.1rem;">
-                      案件周期
+                      {{ stage == 'evaluate' ? '案件评价' : '案件周期'}}
                     </a-col>
                    </a-row>
                 </div>
 
                 <div class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;padding-left:70px;" >
                       <a-tabs default-active-key="1" @change="callback">
-                        <a-tab-pane key="1" tab="一审管理" style="margin-left:-35px;">
+
+                        <template v-if="stage != 'evaluate' ">
+                        <a-tab-pane v-if="stage != 'evaluate' " key="1" tab="一审管理" style="margin-left:-35px;">
 
                           <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px;margin-right:10px;">
                             <a-row>
@@ -563,7 +565,7 @@
 
 
                         </a-tab-pane>
-                        <a-tab-pane key="2" tab="二审管理">
+                        <a-tab-pane v-if="stage != 'evaluate' " key="2" tab="二审管理">
 
                           <div v-show=" '|二审阶段|再审阶段|执行阶段|结案闭单|'.includes(legal.stage) ">
                           <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px;margin-right:10px;">
@@ -653,7 +655,7 @@
                           </div>
 
                         </a-tab-pane>
-                        <a-tab-pane key="3" tab="再审管理" >
+                        <a-tab-pane v-if="stage != 'evaluate' " key="3" tab="再审管理" >
 
                           <div v-show=" '|再审阶段|执行阶段|结案闭单|'.includes(legal.stage) ">
                           <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px;margin-right:10px;">
@@ -725,8 +727,7 @@
                           </div>
                           </div>
                         </a-tab-pane>
-
-                        <a-tab-pane key="4" tab="执行管理">
+                        <a-tab-pane v-if="stage != 'evaluate' " key="4" tab="执行管理">
 
                           <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                             <a-row>
@@ -764,8 +765,7 @@
                           </div>
 
                         </a-tab-pane>
-
-                        <a-tab-pane key="5" tab="结案管理">
+                        <a-tab-pane v-if="stage != 'evaluate' " key="5" tab="结案管理">
 
                           <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                             <a-row>
@@ -792,8 +792,7 @@
                           </div>
 
                         </a-tab-pane>
-
-                        <a-tab-pane key="100" tab="案件进展">
+                        <a-tab-pane v-if="stage != 'evaluate' " key="100" tab="案件进展">
 
                           <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                             <a-row>
@@ -812,9 +811,10 @@
                           </div>
 
                         </a-tab-pane>
+                        </template>
 
-                        <template v-if="legal.stage == '结案闭单' ">
-                        <a-tab-pane v-if="legal.stage == '结案闭单' " key="200" tab="案件评价">
+                        <template v-if="stage == 'evaluate' ">
+                        <a-tab-pane v-if="stage == 'evaluate' " key="200" tab="案件评价">
 
                           <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                             <a-row>
@@ -933,6 +933,20 @@
                     <a-col class="reward-apply-content-title-text" :span="4" style="margin-left:100px;">
                       <a-button type="primary" style="width: 120px;color:c0c0c0;" @click="handleProcess();"  >
                         追加进展
+                      </a-button>
+                    </a-col>
+                    <a-col :span="8">
+                    </a-col>
+                   </a-row>
+                </div>
+
+                 <div v-show="role == 'evaluate' && !isNull(id)  " class="reward-apply-content-item" style="margin-top:35px;margin-bottom:5px; margin-right:10px;">
+                   <a-row style="border-top: 1px dash #f0f0f0;" >
+                    <a-col :span="8">
+                    </a-col>
+                    <a-col class="reward-apply-content-title-text" :span="4" style="margin-left:100px;">
+                      <a-button type="primary" style="width: 120px;color:c0c0c0;" @click="handleEvaluate();"  >
+                        提交评价
                       </a-button>
                     </a-col>
                     <a-col :span="8">
@@ -1096,6 +1110,7 @@ export default {
       approve_userlist:[],
       approve_executelist:[],
       role:'',
+      stage:'',
       file:'',
       uploadURL:'https://upload.yunwisdom.club:30443/sys/common/upload',
       message: workconfig.compValidation.legalapply.message,
@@ -1535,15 +1550,17 @@ export default {
       async queryInfo() {
         try {
           const id = this.id = Betools.tools.getUrlParam('id');
+          this.legal.caseSType = (Betools.tools.getUrlParam('legalTname') || '起诉') + '案件';
+          this.role = Betools.tools.getUrlParam('role');
+          this.stage = Betools.tools.getUrlParam('stage');
+          this.back = Betools.tools.getUrlParam('back') || '/legal/workspace'; //查询上一页
+          this.legal.legalTname = (Betools.tools.getUrlParam('type') || '0') == '0' ? '起诉' : '应诉';  //查询type
+          
           const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
           this.iswechat = Betools.tools.isWechat(); //查询当前是否微信端
           this.iswework = Betools.tools.isWework(); //查询是否为企业微信
           this.userinfo = await this.weworkLogin(); //查询当前登录用户
 
-          this.legal.caseSType = (Betools.tools.getUrlParam('legalTname') || '起诉') + '案件';
-          this.role = Betools.tools.getUrlParam('role');
-          this.back = Betools.tools.getUrlParam('back') || '/legal/workspace'; //查询上一页
-          this.legal.legalTname = (Betools.tools.getUrlParam('type') || '0') == '0' ? '起诉' : '应诉';  //查询type
           this.legal.apply_realname = userinfo.realname;
           this.legal.apply_username = userinfo.username;
 
@@ -1990,6 +2007,36 @@ export default {
                   this.readonly = true;
                   this.role = 'view';
                   vant.Dialog.alert({  title: '温馨提示',  message: `案件信息修改成功！`, }); 
+                  await this.handleList(this.tablename , id);
+               }
+          });
+      },
+
+      // 执行案件评价
+      async handleEvaluate(){
+        this.loading = true; // 显示加载状态
+        const userinfo = await Betools.storage.getStore('system_userinfo'); // 获取用户基础信息
+        const id = Betools.tools.getUrlParam('id'); // 表单ID
+
+        // 验证数据是否已经填写
+        if(Betools.tools.isNull(this.legal.case_remark) || Betools.tools.isNull(this.legal.lawyer_remark)){
+          return await vant.Dialog.alert({ title: '温馨提示', message: `请注意案件评价及律师评价信息不能为空，请填写后提交！`,});
+        }
+
+        //是否确认提交此自由流程?
+        this.$confirm({
+            title: "确认操作",
+            content: "是否提交案件评价信息?",
+            onOk: async() => {
+                  const evaluate = { case_score , lawyer_score, case_remark , lawyer_remark} = this.legal;
+                  const result = await Betools.manage.patchTableData(this.tablename, id, evaluate); // 向表单提交form对象数据
+                  if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
+                      return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
+                  }
+                  this.loading = false; //设置状态
+                  this.readonly = true;
+                  this.role = 'view';
+                  vant.Dialog.alert({  title: '温馨提示',  message: `已提交案件评价信息！`, }); 
                   await this.handleList(this.tablename , id);
                }
           });
