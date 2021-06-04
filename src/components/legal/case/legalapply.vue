@@ -4,10 +4,10 @@
 
       <div style="background-color:#f0f0f0;">
 
-      <a-menu mode="horizontal">
+      <a-menu v-if="userinfo" mode="horizontal">
         <a-sub-menu>
             <span slot="title" class="submenu-title-wrapper" >
-              <a-avatar :src="userinfo.avatar" style="margin-left:0.25rem; margin-right:0.55rem;" />
+              <a-avatar :src="userinfo && userinfo.avatar ? userinfo.avatar : '' " style="margin-left:0.25rem; margin-right:0.55rem;" />
               {{ usertitle }} 
             </span>
             <a-menu-item-group title="应用中心">
@@ -985,7 +985,7 @@
                    </a-row>
                 </div>
 
-                <div v-show="role == 'notify' && !isNull(id)  " class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                <div v-show="role == 'notify' && !isNull(id) && apply == 'view' " class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>知会人员</span>
@@ -1003,13 +1003,43 @@
                   </a-row>
                 </div>    
 
-                <div v-show="role == 'notify' && !isNull(id)  " class="reward-apply-content-item" style="margin-top:35px;margin-bottom:5px; margin-right:10px;">
+                <div v-show="role == 'notify' && !isNull(id) && apply == 'view' " class="reward-apply-content-item" style="margin-top:35px;margin-bottom:5px; margin-right:10px;">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
                     <a-col :span="8">
                     </a-col>
                     <a-col class="reward-apply-content-title-text" :span="4" style="margin-left:100px;">
-                      <a-button type="primary" style="width: 120px;color:c0c0c0;" @click="handleEvaluate();"  >
+                      <a-button type="primary" style="width: 120px;color:c0c0c0;" @click="handleNotify();"  >
                         知会
+                      </a-button>
+                    </a-col>
+                    <a-col :span="8">
+                    </a-col>
+                   </a-row>
+                </div>
+
+                <div v-show="role == 'notify' && !isNull(id) && apply == 'evaluate' " class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                  <a-row>
+                    <a-col :span="4" style="height:auto; font-size:1.0rem; margin-top:5px; text-align: center;">
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>知会批注</span>
+                    </a-col>
+                    <a-col :span="20">
+                      <a-textarea
+                        v-model="remark"
+                        placeholder="请输入本知会通知的批注内容！"
+                        :auto-size="{ minRows: 5, maxRows: 100 }"
+                        style="height:80px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"
+                      />
+                    </a-col>
+                  </a-row>
+                </div>
+
+                <div v-show="role == 'notify' && !isNull(id) && apply == 'evaluate' " class="reward-apply-content-item" style="margin-top:35px;margin-bottom:5px; margin-right:10px;">
+                   <a-row style="border-top: 1px dash #f0f0f0;" >
+                    <a-col :span="8">
+                    </a-col>
+                    <a-col class="reward-apply-content-title-text" :span="4" style="margin-left:100px;">
+                      <a-button type="primary" style="width: 120px;color:c0c0c0;" @click="handleRemark();"  >
+                        批注
                       </a-button>
                     </a-col>
                     <a-col :span="8">
@@ -1162,6 +1192,8 @@ export default {
       approve_executelist:[],
       role:'',
       stage:'',
+      apply:'',
+      remark:'',
       file:'',
       uploadURL:'https://upload.yunwisdom.club:30443/sys/common/upload',
       message: workconfig.compValidation.legalapply.message,
@@ -1305,6 +1337,7 @@ export default {
           this.legal.caseSType = (Betools.tools.getUrlParam('legalTname') || '起诉') + '案件';
           this.role = Betools.tools.getUrlParam('role');
           this.stage = Betools.tools.getUrlParam('stage');
+          this.apply = Betools.tools.getUrlParam('apply') || 'view';
           this.back = Betools.tools.getUrlParam('back') || '/legal/workspace'; //查询上一页
           this.legal.legalTname = (Betools.tools.getUrlParam('type') || '0') == '0' ? '起诉' : '应诉';  //查询type
           
@@ -1313,8 +1346,8 @@ export default {
           this.iswework = Betools.tools.isWework(); //查询是否为企业微信
           this.userinfo = await this.weworkLogin(); //查询当前登录用户
 
-          this.legal.apply_realname = userinfo.realname;
-          this.legal.apply_username = userinfo.username;
+          this.legal.apply_realname = userinfo && userinfo.realname ? userinfo.realname : '';
+          this.legal.apply_username = userinfo && userinfo.username ? userinfo.username : '';
 
           if(!Betools.tools.isNull(id)){
             this.legal = await this.handleList(this.tablename , id);
@@ -1338,10 +1371,10 @@ export default {
                 this.legal.remark = legal.remark || this.legal.remark;
                 this.legal.status = legal.status || this.legal.status;
               }
-              if(userinfo.department && userinfo.department.name){
+              if(userinfo && userinfo.department && userinfo.department.name){
                 this.legal.department = userinfo.department.name;
                 this.legal.company = userinfo.parent_company.name;
-              } else if(userinfo.systemuserinfo && userinfo.systemuserinfo.textfield1){
+              } else if(userinfo && userinfo.systemuserinfo && userinfo.systemuserinfo.textfield1){
                 let temp = userinfo.systemuserinfo.textfield1.split('||')[0];
                 this.legal.company = temp.split('>')[temp.split('>').length - 1];
                 temp = userinfo.systemuserinfo.textfield1.split('||')[1];
@@ -1505,7 +1538,6 @@ export default {
            //记录当前流程已经提交，短时间内无法再次提交
            Betools.storage.setStore(`start_free_process_@table_name#${curTableName}@id#${curItemID}`,  "true", 60 );
 
-
            // 此处推送消息至第一个审批处
            try {
               const receiveURL = encodeURIComponent(`${window.requestAPIConfig.vuechatdomain}/#/legal/case/legalview?id=${curItemID}&pid=${node.id}&tname=bs_reward_apply&panename=mytodolist&typename=wflow_todo&bpm_status=2&proponents=${firstWflowUser}`);
@@ -1555,11 +1587,38 @@ export default {
 
       },
 
+      // 执行知会批注操作
+      async handleRemark(){
+
+      },
+
       // 执行知会操作
-      async handleNotifyHR(user_group_ids , userinfo ,  value , receiveURL){
+      async handleNotify(user_group_ids = '', user_group_names = ''){
+
+        const userinfo = await Betools.storage.getStore('system_userinfo'); // 获取用户基础信息
+
+        if(Betools.tools.isNull(this.release_userlist)){
+          return await vant.Dialog.alert({
+            title: '温馨提示',
+            message: `请先选择知会人员！`,
+          });
+        }
+
+        user_group_ids = this.release_userlist.map(item=>item.loginid);
+        user_group_names = this.release_userlist.map(item=>item.realname);
+        user_group_ids = Betools.tools.isNull(user_group_ids) ? '' : user_group_ids.toString();
+        
         try {
-          await superagent.get(`${window.requestAPIConfig.restapi}/api/v1/weappms/${user_group_ids}/亲爱的同事，员工‘${userinfo.realname}(${userinfo.department.name})’提交了案件发起申请，请在流程审批完成后及时进行知会确认操作！?type=reward&rurl=${receiveURL}`)
-                          .set('accept', 'json');
+          // 是否确认提交此自由流程?
+          this.$confirm({
+              title: "确认操作",
+              content: `您好，是否确认向${user_group_names}推送案件知会通知?`,
+              onOk: async(result) => {
+                  const url = `${window.BECONFIG.domain.replace('www','legal')}/#/legal/case/legalapply?id=${this.legal.id}&type=1&tname=%E6%A1%88%E4%BB%B6%E8%AF%A6%E6%83%85&apply=evaluate&role=notify&rem=${userinfo.realname}`;
+                  await superagent.get(`${window.BECONFIG['restAPI']}/api/v1/weappms/${user_group_ids}/您好，您有一份案件知会通知(${userinfo.realname})，案号:${this.legal.caseID}！?rurl=${url}`)
+                              .set('accept', 'json');
+                  vant.Dialog.alert({  title: '温馨提示',  message: `案件知会通知推送成功！`, });
+              }});
         } catch (error) {
           console.log(error);
         }
