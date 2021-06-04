@@ -165,10 +165,10 @@
                                       评价<a-icon type="down" />
                                     </a>
                                     <a-menu slot="overlay" >
-                                      <a-menu-item key="200" @click="execEvaluate(item,'evaluate')">
+                                      <a-menu-item key="200" v-if=" item.evaluate == 'N' " @click="execEvaluate(item,'evaluate')">
                                         案件评价
                                       </a-menu-item>
-                                      <a-menu-item key="299" @click="execEvaluate(item,'view')">
+                                      <a-menu-item key="299" v-if=" item.evaluate == 'Y' " @click="execEvaluate(item,'view')">
                                         查看评价
                                       </a-menu-item>
                                     </a-menu>
