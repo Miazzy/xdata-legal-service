@@ -879,22 +879,6 @@
                       </a-tabs>
                 </div>
 
-                <div class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
-                <van-cell-group style="margin-top:10px;" v-show="processLogList.length > 0">
-                  <van-cell value="处理记录" style="margin-left:0px;margin-left:-3px;font-size: 0.95rem;" />
-                  <div>
-                    <van-steps direction="vertical" :active="processLogList.length - 1">
-                      <template v-for="value in processLogList">
-                        <van-step :key="value.id">
-                          <h3>{{ value.action + ' ' + value.employee + ' ' + value.action_opinion }}</h3>
-                          <p>{{ value.create_time }}</p>
-                        </van-step>
-                      </template>
-                    </van-steps>
-                  </div>
-                </van-cell-group>
-                </div>
-
                 <div v-show="role != 'view' && isNull(id) " class="reward-apply-content-item" style="margin-top:35px;margin-bottom:5px; margin-right:10px;">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
                     <a-col :span="8">
@@ -968,6 +952,29 @@
                     <a-col :span="8">
                     </a-col>
                    </a-row>
+                </div>
+
+                <div v-show="role == 'view' && processLogList.length > 0 " class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
+                   <a-row style="border-top: 1px dash #f0f0f0;" >
+                    <a-col class="reward-apply-content-title-text" :span="4" style="font-size:1.1rem;">
+                      处理记录
+                    </a-col>
+                   </a-row>
+                </div>
+
+                <div v-show="role == 'view' && processLogList.length > 0 " class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;margin-left:75px;">
+                  <van-cell-group style="margin-top:0px;" v-show="processLogList.length > 0">
+                    <div>
+                      <van-steps direction="vertical" :active="processLogList.length - 1">
+                        <template v-for="value in processLogList">
+                          <van-step :key="value.id">
+                            <h3>{{ value.action + ' ' + value.employee + ' ' + value.action_opinion }}</h3>
+                            <p>{{ value.create_time }}</p>
+                          </van-step>
+                        </template>
+                      </van-steps>
+                    </div>
+                  </van-cell-group>
                 </div>
 
                 <div style="height:100px;">
@@ -1233,6 +1240,7 @@ export default {
           this.$toast.success('文件上传失败，请稍后重试！');
         }
       },
+
       // 上传文件成功后回调函数
       async uploadSuccess(file , res){
         vant.Toast.clear();
@@ -1241,40 +1249,7 @@ export default {
         this.$toast.success('上传成功');
       },
 
-      // 获取处理日志
-      async queryProcessLog(){
-        const id = Betools.tools.getUrlParam('id');
-        try {
-          this.processLogList = await workflow.queryPRLogHistoryByDataID(id);
-          this.processLogList.map(item => { legal.create_time = dayjs(legal.create_time).format('YYYY-MM-DD HH:mm') });
-          this.processLogList.sort();
-        } catch (error) {
-          console.log(error);
-        }
-      },
-
-      // 删除处理日志
-      async deleteProcessLog(){
-        const id = Betools.tools.getUrlParam('id');
-        const pid = Betools.tools.getUrlParam('pid');
-        //查询业务编号，如果不存在，则直接返回
-        if(Betools.tools.isNull(id) || Betools.tools.isNull(pid)){
-          return ;
-        }
-        //获取用户基础信息
-        const userinfo = await Betools.storage.getStore('system_userinfo');
-        //如果最后一条是已完成，或者已驳回，则删除待办记录 //查询当前所有待办记录
-        let tlist = await task.queryProcessLogWaitSeal(userinfo.username , userinfo.realname , 0 , 1000);
-        //过滤出只关联当前流程的待办数据
-        tlist = tlist.filter(item => {
-          return legal.id == id && legal.pid == pid;
-        });
-        if(tlist.length > 0){
-          //同时删除本条待办记录当前(印章管理员)
-          await workflow.deleteViewProcessLog(tlist);
-        }
-      },
-
+      // 验证字段有效性
       validField(fieldName){
         const userinfo = Betools.storage.getStore('system_userinfo'); // 获取用户基础信息
         const regMail = workconfig.system.config.regexp.mail; // 邮箱验证正则表达式
@@ -1286,281 +1261,13 @@ export default {
         return Betools.tools.isNull(this.message[fieldName]);
       },
 
+      // 验证字段有效性并提示错误信息
       validFieldToast(fieldName){
         const flag = !this.validField(fieldName);
         if(flag){
           this.$toast.fail(`${this.message[fieldName]}！` );
           return false;
         }
-      },
-
-      //用户选择知会人员
-      async queryNotifyMan(){
-        //获取盖章人信息
-        const user_admin_name = this.legal.hr_name;
-        if(!user_admin_name || user_admin_name.length <= 1){
-          return;
-        }
-        try {
-          if(!!user_admin_name){
-            //从用户表数据中获取填报人资料
-            let user = await Betools.manage.queryUserByNameReward(user_admin_name.trim(),200);
-            if(!!user){
-              //如果是用户数组列表，则展示列表，让用户自己选择
-              if(Array.isArray(user)){
-                try {
-                  user.map((elem,index) => {
-                    let company = elem.textfield1.split('||')[0];
-                    company = company.slice(company.lastIndexOf('>')+1);
-                    let department = elem.textfield1.split('||')[1];
-                    department = department.slice(department.lastIndexOf('>')+1);
-                    this.userList.push({id:elem.loginid , name:elem.lastname , tel:'' , address: company + "||" + elem.textfield1.split('||')[1] , company: company , department:department , mail: elem.email , isDefault: !index });
-                  })
-                  //获取盖印人姓名
-                  this.legal.hr_name = user[0].lastname;
-                  //当前盖印人编号
-                  this.legal.hr_id = this.userid = user[0].loginid;
-                } catch (error) {
-                  console.log(error);
-                }
-              } else { //如果只有一个用户数据，则直接设置
-                try {
-                  let company = user.textfield1.split('||')[0];
-                  company = company.slice(company.lastIndexOf('>')+1);
-                  let department = user.textfield1.split('||')[1];
-                  department = department.slice(department.lastIndexOf('>')+1);
-                  //将用户数据推送至对方数组
-                  this.userList.push({id:user.loginid , name:user.lastname , tel:user.mobile , address: company + "||" + user.textfield1.split('||')[1] , company: company , department:department , mail: this.legal.dealMail, isDefault: !this.userList.length });
-                  //获取盖印人姓名
-                  this.legal.hr_name = user.lastname;
-                  //当前盖印人编号
-                  this.legal.hr_id = this.userid = user.loginid;
-                } catch (error) {
-                  console.log(error);
-                }
-              }
-              //遍历去重
-              try {
-                this.userList = this.userList.filter((item,index) => {
-                  legal.isDefault = index == 0 ? true : false;
-                  let findex = this.userList.findIndex((subitem,index) => { return sublegal.id == legal.id });
-                  return index == findex;
-                })
-              } catch (error) {
-                console.log(error);
-              }
-            }
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      },
-
-      //选中当前知会人员
-      async selectNotifyUser(value){
-        const user = this.userList.find((item,index) => {return this.legal.hr_id == legal.id});
-        this.legal.hr_name = user.name;
-      },
-
-      async queryReleaseMan(){
-
-        //获取盖章人信息
-        const user_admin_name = this.release_username;
-
-        //输入的用户
-        if(!user_admin_name || user_admin_name.length <= 1){
-          return;
-        }
-        try {
-          if(!!user_admin_name){
-            //从用户表数据中获取填报人资料
-            let user = await Betools.manage.queryUserByNameReward(user_admin_name.trim(),200);
-            if(!!user){
-              //如果是用户数组列表，则展示列表，让用户自己选择
-              if(Array.isArray(user)){
-                try {
-                  user.map((elem,index) => {
-                    let company = elem.textfield1.split('||')[0];
-                    let department = elem.textfield1.split('||')[1];
-                    let mobile = elem.mobile ? `${elem.mobile.slice(0,3)}****${elem.mobile.slice(-4)}` : '';
-                    let temp = Betools.tools.queryZoneProjectAll(elem.textfield1.split('||')[0], ['领地集团有限公司','领悦服务','宝瑞商管','医疗健康板块', '金融板块' ,'邛崃创达公司'], department);
-                    this.release_userlist.push({id:elem.loginid , name:elem.lastname , mobile:elem.mobile, tel: mobile , zone: temp.zone , project: temp.project , address: company + "||" + elem.textfield1.split('||')[1] , company: temp.company , department: temp.department , mail: elem.email , isDefault: !index });
-                  })
-                  this.release_username = user[0].lastname; //获取盖印人姓名
-                  this.release_userid = this.userid = user[0].loginid; //当前盖印人编号
-                  this.selectReleaseUser();
-                } catch (error) {
-                  console.log(error);
-                }
-              } else { //如果只有一个用户数据，则直接设置
-                try {
-                  let company = user.textfield1.split('||')[0];
-                  let department = user.textfield1.split('||')[1];
-                  let mobile = elem.mobile ? `${elem.mobile.slice(0,3)}****${elem.mobile.slice(-4)}` : '';
-                  let temp = Betools.tools.queryZoneProjectAll(user.textfield1.split('||')[0], ['领地集团有限公司','领悦服务','宝瑞商管','医疗健康板块', '金融板块' ,'邛崃创达公司'], department);
-                  this.release_userlist.push({id:user.loginid , name:user.lastname , mobile:elem.mobile, tel:mobile , zone: temp.zone , project: temp.project , address: company + "||" + user.textfield1.split('||')[1] , company: temp.company , department: temp.department , mail: this.legal.dealMail, isDefault: !this.release_userlist.length }); //将用户数据推送至对方数组
-                  this.release_username = user.lastname; //获取盖印人姓名
-                  this.release_userid = this.userid = user.loginid; //当前盖印人编号
-                  this.selectReleaseUser();
-                } catch (error) {
-                  console.log(error);
-                }
-              }
-              //遍历去重
-              try {
-                this.release_userlist = this.release_userlist.filter((item,index) => {
-                  legal.isDefault = index == 0 ? true : false;
-                  let findex = this.release_userlist.findIndex((subitem,index) => { return sublegal.id == legal.id });
-                  return index == findex;
-                })
-              } catch (error) {
-                console.log(error);
-              }
-            }
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      },
-
-      //选中当前知会人员
-      async selectReleaseUser(record , value){
-
-        try {
-          if(Betools.tools.isNull(record)){
-            const user = this.release_userlist.find((item,index) => {return this.release_userid == legal.id}); //获取员工基本信息
-            this.release_username = user.name;  //设置员工
-            this.release_company = user.company;
-            this.release_department = user.department;
-            this.release_mobile = user.mobile;
-            this.release_zone = user.zone;
-            this.release_project = user.project;
-            const temp = await query.queryUserInfoByMobile(user.mobile); //查询员工职务
-            console.log(`temp: ${JSON.stringify(temp)}`);
-            this.release_position = temp ? temp.position : ''; //设置员工职务
-          } else {
-            this.release_username = record.name;
-            this.release_userid = record.id;
-            this.release_company = record.company;
-            this.release_department = record.department;
-            this.release_mobile = record.mobile;
-            this.release_zone = record.zone;
-            this.release_project = record.project;
-            const temp = await query.queryUserInfoByMobile(record.mobile); //查询员工职务
-            console.log(`temp: ${JSON.stringify(temp)}`);
-            this.release_position = temp ? temp.position : ''; //设置员工职务
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      },
-
-      async queryApproveMan(){
-
-        //获取盖章人信息
-        const user_admin_name = this.approve_username;
-
-        //输入的用户
-        if(!user_admin_name || user_admin_name.length <= 1){
-          return;
-        }
-
-        try {
-          if(!!user_admin_name){
-
-            //从用户表数据中获取填报人资料
-            let user = await Betools.manage.queryUserByNameReward(user_admin_name.trim(),200);
-
-            if(!!user){
-
-              //如果是用户数组列表，则展示列表，让用户自己选择
-              if(Array.isArray(user)){
-
-                try {
-                  user.map((elem,index) => {
-                    let company = elem.textfield1.split('||')[0];
-                    company = company.slice(company.lastIndexOf('>')+1);
-                    let department = elem.textfield1.split('||')[1];
-                    department = department.slice(department.lastIndexOf('>')+1);
-                    let mobile = elem.mobile ? `${elem.mobile.slice(0,3)}****${elem.mobile.slice(-4)}` : '';
-                    this.approve_userlist.push({id:elem.loginid , name:elem.lastname , mobile:elem.mobile, tel: mobile , address: company + "||" + elem.textfield1.split('||')[1] , company: company , department:department , mail: elem.email , isDefault: !index });
-                  })
-
-                  //获取盖印人姓名
-                  this.approve_username = user[0].lastname;
-                  //当前盖印人编号
-                  this.approve_userid = this.userid = user[0].loginid;
-
-                  try {
-                    this.selectApproveUser();
-                  } catch (error) {
-                    console.log(error);
-                  }
-
-                } catch (error) {
-                  console.log(error);
-                }
-
-              } else { //如果只有一个用户数据，则直接设置
-
-                try {
-                  let company = user.textfield1.split('||')[0];
-                  company = company.slice(company.lastIndexOf('>')+1);
-                  let department = user.textfield1.split('||')[1];
-                  department = department.slice(department.lastIndexOf('>')+1);
-                  let mobile = elem.mobile ? `${elem.mobile.slice(0,3)}****${elem.mobile.slice(-4)}` : '';
-                  //将用户数据推送至对方数组
-                  this.approve_userlist.push({id:user.loginid , name:user.lastname , mobile:elem.mobile, tel:mobile , address: company + "||" + user.textfield1.split('||')[1] , company: company , department:department , mail: this.legal.dealMail, isDefault: !this.release_userlist.length });
-
-                  //获取盖印人姓名
-                  this.approve_username = user.lastname;
-                  //当前盖印人编号
-                  this.approve_userid = this.userid = user.loginid;
-
-                  try {
-                    this.selectApproveUser();
-                  } catch (error) {
-                    console.log(error);
-                  }
-
-                } catch (error) {
-                  console.log(error);
-                }
-
-              }
-
-              //遍历去重
-              try {
-                this.approve_userlist = this.approve_userlist.filter((item,index) => {
-                  legal.isDefault = index == 0 ? true : false;
-                  let findex = this.approve_userlist.findIndex((subitem,index) => { return sublegal.id == legal.id });
-                  return index == findex;
-                })
-              } catch (error) {
-                console.log(error);
-              }
-
-            }
-          }
-        } catch (error) {
-          console.log(error);
-        }
-
-      },
-
-      //选中当前知会人员
-      async selectApproveUser(value){
-        //获取员工基本信息
-        const user = this.approve_userlist.find((item,index) => {return this.approve_userid == legal.id});
-        //设置员工
-        this.approve_username = user.name;
-        this.approve_mobile = user.mobile;
-        this.approve_company = user.company;
-        this.approve_department = user.department;
-        //查询员工职务
-        const temp = await query.queryUserInfoByMobile(user.mobile);
-        //设置员工职务
-        this.approve_position = temp.position;
       },
 
       // 查询基础信息
@@ -1583,6 +1290,7 @@ export default {
 
           if(!Betools.tools.isNull(id)){
             this.legal = await this.handleList(this.tablename , id);
+            this.queryProcessLog();
           } 
           
           this.lawyerInnerList = await Betools.query.queryLawyerList();
@@ -1649,6 +1357,7 @@ export default {
       caculateSum(){
        
       },
+
       // 用户提交入职登记表函数
       async handleApply() {
         await this.handleSave(); //先执行保存操作，保存完毕后执行流程跳转功能
@@ -1813,31 +1522,6 @@ export default {
         try {
           await superagent.get(`${window.requestAPIConfig.restapi}/api/v1/weappms/${user_group_ids}/亲爱的同事，员工‘${userinfo.realname}(${userinfo.department.name})’提交了案件发起申请，请在流程审批完成后及时进行知会确认操作！?type=reward&rurl=${receiveURL}`)
                           .set('accept', 'json');
-        } catch (error) {
-          console.log(error);
-        }
-      },
-
-      // 审批人员添加函数
-      async rewardApproveAdd(){
-        if(!this.approve_userid){
-          return this.$toast.success('请选择审批人员处下拉列表中的待选审批人员！');
-        }
-        const index = this.approve_executelist.findIndex( item => {
-          return item.userid == this.approve_userid;
-        })
-        if(index >= 0){
-          return this.$toast.success('该审批人员已经添加，请重新输入！');
-        }
-        try {
-          const mobile = this.approve_mobile ? `${this.approve_mobile.slice(0,3)}****${this.approve_mobile.slice(-4)}` : '';
-          const user = {key: this.approve_executelist.length + 1 , id:Betools.tools.queryUniqueID(),username:this.approve_username , userid: this.approve_userid , mobile , company: this.approve_company , department : this.approve_department , position : this.approve_position};
-          this.approve_executelist.push(JSON.parse(JSON.stringify(user)));
-          this.approve_userid = '';
-          this.approve_username = '';
-          this.approve_mobile = '';
-          this.approve_position = '';
-          this.approve_userlist = [];
         } catch (error) {
           console.log(error);
         }
@@ -2078,11 +1762,12 @@ export default {
             title: "确认操作",
             content: "是否提交案件评价信息?",
             onOk: async() => {
+                  const {legal} = this;
                   const result = await Betools.manage.patchTableData(this.tablename, id, { case_score , lawyer_score, case_remark , lawyer_remark, evaluate_flag}); // 向表单提交form对象数据
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
-                  this.handleLog(this.tablename , this.legal , '案件评价操作' , `${userinfo.realname} 进行了案号为：${legal.caseID}的案件评价，案件评分：${case_score}，律师评分：${lawyer_score}。`);
+                  this.handleLog(this.tablename , legal , '案件评价操作' , `${userinfo.realname} 进行了案号为：${legal.caseID}的案件评价，案件评分：${case_score}，律师评分：${lawyer_score}。`);
                   this.loading = false; //设置状态
                   this.readonly = true;
                   this.role = 'view';
@@ -2108,12 +1793,13 @@ export default {
             title: "确认操作",
             content: "是否确认追加此案件进展信息?",
             onOk: async() => {
+                  const {legal} = this;
                   const { lawcase } = this.legal;
                   const result = await Betools.manage.patchTableData(this.tablename, id, {lawcase}); // 向表单提交form对象数据
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
-                  this.handleLog(this.tablename , this.legal , '案件进展管理' , `${userinfo.realname} 追加了案号为：${legal.caseID}的案件进展，内容：${lawcase}。`);
+                  this.handleLog(this.tablename , legal , '案件进展管理' , `${userinfo.realname} 追加了案号为：${legal.caseID}的案件进展，内容：${lawcase}。`);
                   this.loading = false; //设置状态
                   this.readonly = true;
                   this.role = 'view';
