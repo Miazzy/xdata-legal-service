@@ -1614,8 +1614,8 @@ export default {
               title: "确认操作",
               content: `您好，是否确认向${user_group_names}推送案件知会通知?`,
               onOk: async(result) => {
-                  const url = `${window.BECONFIG.domain.replace('www','legal')}/#/legal/case/legalapply?id=${this.legal.id}&type=1&tname=%E6%A1%88%E4%BB%B6%E8%AF%A6%E6%83%85&apply=evaluate&role=notify&rem=${userinfo.realname}`;
-                  await superagent.get(`${window.BECONFIG['restAPI']}/api/v1/weappms/${user_group_ids}/您好，您有一份案件知会通知(${userinfo.realname})，案号:${this.legal.caseID}！?rurl=${url}`)
+                  const url = `${window.BECONFIG.domain.replace('www','legal')}/evaluate/${this.legal.id}/${userinfo.username}/#/`;
+                  await superagent.get(`${window.BECONFIG['restAPI']}/api/v1/weappms/${user_group_ids}/您好，您有一份案件知会通知(${userinfo.realname})，案号:${this.legal.caseID}！?url=${url}`)
                               .set('accept', 'json');
                   vant.Dialog.alert({  title: '温馨提示',  message: `案件知会通知推送成功！`, });
               }});
