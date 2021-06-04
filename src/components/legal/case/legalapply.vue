@@ -1826,6 +1826,35 @@ export default {
         }
       },
 
+      // 记录操作日志
+      async handleLog(tableName , element , opinion , content){
+
+          const userinfo = await Betools.storage.getStore('system_userinfo'); // 获取用户基础信息
+          const prLogHisNode = {
+            id: Betools.tools.queryUniqueID(),
+            table_name: tableName,
+            main_value: element.id,
+            proponents: userinfo.username,
+            business_data_id : element.id , 
+            business_code  : '000000000' ,  
+            process_name   : '案件流程审批',  
+            employee       : userinfo.realname , 
+            approve_user   : userinfo.username , 
+            action         : '发起'    , 
+            action_opinion : opinion , 
+            operate_time   : dayjs().format('YYYY-MM-DD HH:mm:ss') , 
+            functions_station : userinfo.position , 
+            process_station   : '案件审批[法务诉讼]',
+            business_data     : JSON.stringify(this.item), 
+            content           : content ,
+            process_audit     : element.id  , 
+            create_time       : dayjs().format('YYYY-MM-DD HH:mm:ss'),
+            relate_data       : '',    
+            origin_data       : JSON.stringify(element),
+          }
+          await Betools.workflow.approveViewProcessLog(prLogHisNode);
+      },
+
       // 保存用户数据但是不提交
       async handleSave(){
         
@@ -1874,7 +1903,7 @@ export default {
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
-
+                  this.handleLog(this.tablename , legal , '案件流程审批' , `${userinfo.realname} 发起${legal.caseSType}流程，案号：${legal.caseID}`);
                   this.loading = false; //设置状态
                   this.readonly = true;
                   this.role = 'view';
