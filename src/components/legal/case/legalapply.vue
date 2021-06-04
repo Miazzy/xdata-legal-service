@@ -968,7 +968,7 @@
                       <van-steps direction="vertical" :active="processLogList.length - 1">
                         <template v-for="value in processLogList">
                           <van-step :key="value.id">
-                            <h3>{{ value.action + ' ' + value.employee + ' ' + value.action_opinion }}</h3>
+                            <h3>{{ value.employee + ' ' + value.action + ' ' + value.action_opinion + ' ' + value.content }}</h3>
                             <p>{{ value.create_time }}</p>
                           </van-step>
                         </template>
@@ -1528,7 +1528,7 @@ export default {
       },
 
       // 记录操作日志
-      async handleLog(tableName , element , opinion , content){
+      async handleLog(tableName , element , action = '发起' , opinion , content){
 
           const userinfo = await Betools.storage.getStore('system_userinfo'); // 获取用户基础信息
           const prLogHisNode = {
@@ -1541,7 +1541,7 @@ export default {
             process_name   : '案件流程审批',  
             employee       : userinfo.realname , 
             approve_user   : userinfo.username , 
-            action         : '发起'    , 
+            action         : action , 
             action_opinion : opinion , 
             operate_time   : dayjs().format('YYYY-MM-DD HH:mm:ss') , 
             functions_station : userinfo.position , 
@@ -1604,7 +1604,7 @@ export default {
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
-                  this.handleLog(this.tablename , legal , '案件流程审批' , `${userinfo.realname} 发起${legal.caseSType}流程，案号：${legal.caseID}`);
+                  this.handleLog(this.tablename , legal , '发起', '案件流程审批' , `${userinfo.realname} 发起${legal.caseSType}流程，案号：${legal.caseID}`);
                   this.loading = false; //设置状态
                   this.readonly = true;
                   this.role = 'view';
@@ -1659,7 +1659,7 @@ export default {
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
 
-                  this.handleLog(this.tablename , legal , '案件信息修改' , `${userinfo.realname} 修改了案号为：${legal.caseID}的案件信息。`);
+                  this.handleLog(this.tablename , legal , '修改' , '案件信息修改' , `${userinfo.realname} 修改了案号为：${legal.caseID}的案件信息。`);
                   this.loading = false; //设置状态
                   this.readonly = true;
                   this.role = 'view';
@@ -1734,7 +1734,7 @@ export default {
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
 
-                  this.handleLog(this.tablename , legal , '案件过程管理' , `${userinfo.realname} 进行了案号为：${legal.caseID}的案件过程管理，案件阶段：${stage}。`);
+                  this.handleLog(this.tablename , legal , stage , '案件过程管理' , `${userinfo.realname} 进行了案号为：${legal.caseID}的案件过程管理，案件阶段：${stage}。`);
                   this.loading = false; //设置状态
                   this.readonly = true;
                   this.role = 'view';
@@ -1767,7 +1767,7 @@ export default {
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
-                  this.handleLog(this.tablename , legal , '案件评价操作' , `${userinfo.realname} 进行了案号为：${legal.caseID}的案件评价，案件评分：${case_score}，律师评分：${lawyer_score}。`);
+                  this.handleLog(this.tablename , legal , '评价' , '案件评价操作' , `${userinfo.realname} 进行了案号为：${legal.caseID}的案件评价，案件评分：${case_score}，律师评分：${lawyer_score}。`);
                   this.loading = false; //设置状态
                   this.readonly = true;
                   this.role = 'view';
@@ -1799,7 +1799,7 @@ export default {
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
-                  this.handleLog(this.tablename , legal , '案件进展管理' , `${userinfo.realname} 追加了案号为：${legal.caseID}的案件进展，内容：${lawcase}。`);
+                  this.handleLog(this.tablename , legal , '进展' , '案件进展管理' , `${userinfo.realname} 追加了案号为：${legal.caseID}的案件进展，内容：${lawcase}。`);
                   this.loading = false; //设置状态
                   this.readonly = true;
                   this.role = 'view';
