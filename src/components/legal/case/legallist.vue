@@ -168,9 +168,6 @@
                                       <a-menu-item key="200" @click="execEvaluate(item,'案件评价')">
                                         案件评价
                                       </a-menu-item>
-                                      <a-menu-item key="201" @click="execEvaluate(item,'律师评价')">
-                                        律师评价
-                                      </a-menu-item>
                                       <a-menu-item key="299" @click="execEvaluate(item,'view')">
                                         查看评价
                                       </a-menu-item>
@@ -492,7 +489,8 @@ export default {
 
       // 案件评价管理
       async execEvaluate(elem , status){
-
+        const { $router } = this;
+        $router.push(`/legal/case/legalapply?id=${elem.id}&type=1&tname=案件评价&stage=${status}&apply=case&role=case`);
       },
 
       // 案件记录导出功能
