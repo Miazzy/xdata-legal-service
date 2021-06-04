@@ -968,7 +968,7 @@
                       <van-steps direction="vertical" :active="processLogList.length - 1">
                         <template v-for="value in processLogList">
                           <van-step :key="value.id">
-                            <h3>{{ value.employee + ' ' + value.action + ' ' + value.action_opinion + ' ' + value.content }}</h3>
+                            <h3>{{ deNull(value.employee,'') + ' ' + deNull(value.action,'') + ' ' + deNull(value.action_opinion,'') + ' ' + value.content.replace(/null/g,'') }}</h3>
                             <p>{{ value.create_time }}</p>
                           </van-step>
                         </template>
@@ -1596,7 +1596,7 @@ export default {
               onOk: async(result) => {
                   const { legal } = this;
                   const rem = Betools.tools.getUrlParam('rem');
-                  this.handleLog(this.tablename , legal , '批注', '案件知会批注' , `${userinfo.realname || rem } 批注：${this.remark}，案号：${legal.caseID}`);
+                  this.handleLog(this.tablename , legal , '批注', '案件知会批注' , `${ Betools.tools.deNull((userinfo.realname || rem),'') } 批注：${this.remark}`);
                   vant.Dialog.alert({  title: '温馨提示',  message: `案件批注提交成功！`, });
               }});
         } catch (error) {
@@ -1626,9 +1626,11 @@ export default {
               content: `您好，是否确认向${user_group_names}推送案件知会通知?`,
               onOk: async(result) => {
                   const {legal} = this;
-                  const url = `${window.BECONFIG.domain.replace('www','legal')}/evaluate/${this.legal.id}/${userinfo.username}/#/`;
                   this.handleLog(this.tablename , legal , '知会', '案件知会流程' , `${userinfo.realname} 向${user_group_names}推送了知会流程，案号：${legal.caseID}`);
-                  await superagent.get(`${window.BECONFIG['restAPI']}/api/v1/weappms/${user_group_ids}/您好，您有一份案件知会通知(${userinfo.realname})，案号:${this.legal.caseID}！?url=${url}`).set('accept', 'json');
+                  for await (const user of this.release_userlist){
+                    const url = `${window.BECONFIG.domain.replace('www','legal')}/evaluate/${this.legal.id}/${user.realname}/#/`;
+                    await superagent.get(`${window.BECONFIG['restAPI']}/api/v1/weappms/${user.loginid}/您好，您有一份案件知会通知(${userinfo.realname})，案号:${this.legal.caseID}！?url=${url}`).set('accept', 'json');
+                  }
                   vant.Dialog.alert({  title: '温馨提示',  message: `案件知会通知推送成功！`, });
               }});
         } catch (error) {
