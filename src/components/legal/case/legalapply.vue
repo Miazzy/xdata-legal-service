@@ -812,6 +812,70 @@
                           </div>
 
                         </a-tab-pane>
+
+                        <template v-if="legal.stage == '结案闭单' ">
+                        <a-tab-pane v-if="legal.stage == '结案闭单' " key="200" tab="案件评价">
+
+                          <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                            <a-row>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>案件评分</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-rate v-model="legal.case_score" :allow-clear="true" />
+                              </a-col>
+                            </a-row>
+                          </div>
+
+
+                          <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                            <a-row>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>案件评价</span>
+                              </a-col>
+                              <a-col :span="20">
+                                <a-textarea
+                                  v-model="legal.case_remark"
+                                  placeholder="请输入本次办理案件的整体案件评价！"
+                                  :auto-size="{ minRows: 5, maxRows: 50 }"
+                                  style="height:80px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"
+                                />
+                              </a-col>
+                            </a-row>
+                          </div>
+
+                          <a-divider type="vertical" /><a-divider type="vertical" />
+
+                          <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                            <a-row>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>律师评分</span>
+                              </a-col>
+                              <a-col :span="8">
+                                <a-rate v-model="legal.lawyer_score" :allow-clear="true" />
+                              </a-col>
+                            </a-row>
+                          </div>
+
+                          <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                            <a-row>
+                              <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>律师评价</span>
+                              </a-col>
+                              <a-col :span="20">
+                                <a-textarea
+                                  v-model="legal.lawyer_remark"
+                                  placeholder="请输入本此办理案件的律师评价！"
+                                  :auto-size="{ minRows: 5, maxRows: 50 }"
+                                  style="height:80px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"
+                                />
+                              </a-col>
+                            </a-row>
+                          </div>
+
+                        </a-tab-pane>
+                        </template>
+
                       </a-tabs>
                 </div>
 
@@ -1002,6 +1066,11 @@ export default {
         closeDate :'', // varchar(32)  default '' not null comment '结案日期',
         archiveDate :'', // varchar(32)  default '' not null comment '归档日期',
         progress :'', // text not null comment '办理进展'
+
+        case_score:0,
+        lawyer_score:0,
+        case_remark:'',
+        lawyer_remark:'',
       },
       columns: workconfig.columns.reward.items,
       wfcolumns: workconfig.columns.reward.wfcolumns,
