@@ -988,10 +988,17 @@
                 <div v-show="role == 'notify' && !isNull(id)  " class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>承办法官</span>
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>知会人员</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-input v-model="release_userid"  placeholder="请输入知会人员！" @blur="validFieldToast('judge')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-model="release_userid"  placeholder="请输入知会人员！" @blur="validNotify()" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                    </a-col>
+                    <a-col :span="12">
+                      <div style="margin-left:50px;margin-top:-15px;">
+                        <a-avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                        <a-avatar style="color: #f56a00; backgroundColor: #fde3cf"> U </a-avatar>
+                        <a-avatar style="backgroundColor:#87d068" icon="user" />
+                      </div>
                     </a-col>
                   </a-row>
                 </div>    
@@ -1022,10 +1029,10 @@
   </div>
 </template>
 <script>
-import * as task from '@/request/task';
-import * as query from '@/request/query';
+
 import * as workflow from '@/request/workflow';
 import * as workconfig from '@/request/workconfig';
+
 try {
   Vue.component("downloadExcel", JsonExcel);
   Vue.component("excelImport", PikazJsExcel.ExcelImport);
@@ -1379,6 +1386,12 @@ export default {
        
       },
 
+      async validNotify(){
+        const username = this.release_userid;
+        const userlist = await Betools.query.queryUserByNameVHRM(username);
+        debugger;
+      },
+
       // 用户提交入职登记表函数
       async handleApply() {
         await this.handleSave(); //先执行保存操作，保存完毕后执行流程跳转功能
@@ -1553,26 +1566,26 @@ export default {
 
           const userinfo = await Betools.storage.getStore('system_userinfo'); // 获取用户基础信息
           const prLogHisNode = {
-            id: Betools.tools.queryUniqueID(),
-            table_name: tableName,
-            main_value: element.id,
-            proponents: userinfo.username,
+            id: Betools.tools.queryUniqueID() , 
+            table_name: tableName ,
+            main_value: element.id , 
+            proponents: userinfo.username , 
             business_data_id : element.id , 
             business_code  : '000000000' ,  
-            process_name   : '案件流程审批',  
+            process_name   : '案件流程审批' ,  
             employee       : userinfo.realname , 
             approve_user   : userinfo.username , 
             action         : action , 
             action_opinion : opinion , 
             operate_time   : dayjs().format('YYYY-MM-DD HH:mm:ss') , 
-            functions_station : userinfo.position , 
-            process_station   : '案件审批[法务诉讼]',
-            business_data     : JSON.stringify(this.item), 
-            content           : content ,
-            process_audit     : element.id  , 
-            create_time       : dayjs().format('YYYY-MM-DD HH:mm:ss'),
-            relate_data       : '',    
-            origin_data       : JSON.stringify(element),
+            functions_station : userinfo.position ,  
+            process_station   : '案件审批[法务诉讼]' ,
+            business_data     : JSON.stringify(this.item) ,  
+            content           : content , 
+            process_audit     : element.id , 
+            create_time       : dayjs().format('YYYY-MM-DD HH:mm:ss') , 
+            relate_data       : '' , 
+            origin_data       : JSON.stringify(element) , 
           }
           await Betools.workflow.approveViewProcessLog(prLogHisNode);
       },

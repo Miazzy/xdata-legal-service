@@ -131,6 +131,9 @@
                                       <a-menu-item v-if=" item.stage != '结案闭单' && item.status == '待处理' " key="99" @click="execBan(item)">
                                         禁用案件
                                       </a-menu-item>
+                                      <a-menu-item key="300" @click="execNotify(item)">
+                                        发起知会
+                                      </a-menu-item>
                                     </a-menu>
                                   </a-dropdown>
                                   
@@ -412,6 +415,12 @@ export default {
       async execView(elem){
           const { $router } = this;
           $router.push(`/legal/case/legalapply?id=${elem.id}&type=1&tname=案件详情&apply=view&role=view`);
+      },
+
+      // 案件记录发起知会
+      async execNotify(elem){
+          const { $router } = this;
+          $router.push(`/legal/case/legalapply?id=${elem.id}&type=1&tname=案件详情&apply=view&role=notify`);
       },
 
       // 案件记录删除信息

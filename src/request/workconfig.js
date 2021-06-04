@@ -481,7 +481,6 @@ export const getLawWebsiteflow = ($router) => {
 
 export const courtList = async() => {
     const courtData = await Betools.query.queryNacosConfig('system.legal.config', 'courtData');
-    debugger;
     return courtData[0].children;
 };
 
