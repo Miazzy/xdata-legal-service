@@ -995,9 +995,9 @@
                     </a-col>
                     <a-col :span="12">
                       <div style="margin-left:50px;margin-top:-15px;">
-                        <a-avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                        <a-avatar style="color: #f56a00; backgroundColor: #fde3cf"> U </a-avatar>
-                        <a-avatar style="backgroundColor:#87d068" icon="user" />
+                        <template v-for="(item , index) in release_userlist ">
+                          <a-avatar size="large" :index="index" :key="item.avatar" :src="item.avatar"  style="margin:2px 4px 2px 2px;" />
+                        </template>
                       </div>
                     </a-col>
                   </a-row>
@@ -1388,7 +1388,11 @@ export default {
 
       async validNotify(){
         const username = this.release_userid;
-        const userlist = await Betools.query.queryUserByNameVHRM(username);
+        let userlist = await Betools.manage.queryUserByNameVHRM(username);
+        userlist = userlist.filter( (item , index) => { const findex = userlist.findIndex( elem => { return item.cert == elem.cert });  return findex == index;});
+        userlist = this.release_userlist.concat(userlist);
+        userlist = userlist.filter( (item , index) => { const findex = userlist.findIndex( elem => { return item.cert == elem.cert });  return findex == index;});
+        this.release_userlist = userlist; 
         debugger;
       },
 
