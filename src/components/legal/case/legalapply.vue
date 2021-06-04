@@ -2022,14 +2022,15 @@ export default {
         if(Betools.tools.isNull(this.legal.case_remark) || Betools.tools.isNull(this.legal.lawyer_remark)){
           return await vant.Dialog.alert({ title: '温馨提示', message: `请注意案件评价及律师评价信息不能为空，请填写后提交！`,});
         }
+        const evaluate_flag = 'Y';
+        const { case_score , lawyer_score, case_remark , lawyer_remark} = this.legal;
 
         //是否确认提交此自由流程?
         this.$confirm({
             title: "确认操作",
             content: "是否提交案件评价信息?",
             onOk: async() => {
-                  const evaluate = { case_score , lawyer_score, case_remark , lawyer_remark} = this.legal;
-                  const result = await Betools.manage.patchTableData(this.tablename, id, evaluate); // 向表单提交form对象数据
+                  const result = await Betools.manage.patchTableData(this.tablename, id, { case_score , lawyer_score, case_remark , lawyer_remark, evaluate_flag}); // 向表单提交form对象数据
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
