@@ -879,6 +879,22 @@
                       </a-tabs>
                 </div>
 
+                <div class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
+                <van-cell-group style="margin-top:10px;" v-show="processLogList.length > 0">
+                  <van-cell value="处理记录" style="margin-left:0px;margin-left:-3px;font-size: 0.95rem;" />
+                  <div>
+                    <van-steps direction="vertical" :active="processLogList.length - 1">
+                      <template v-for="value in processLogList">
+                        <van-step :key="value.id">
+                          <h3>{{ value.action + ' ' + value.employee + ' ' + value.action_opinion }}</h3>
+                          <p>{{ value.create_time }}</p>
+                        </van-step>
+                      </template>
+                    </van-steps>
+                  </div>
+                </van-cell-group>
+                </div>
+
                 <div v-show="role != 'view' && isNull(id) " class="reward-apply-content-item" style="margin-top:35px;margin-bottom:5px; margin-right:10px;">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
                     <a-col :span="8">
@@ -1132,6 +1148,7 @@ export default {
       lawyerInnerList:[],
       lawyerNamelist:[],
       lawyerInNamelist:[],
+      processLogList:[],
       breadcrumb:[{icon:'home',text:'首页',path:'/legal/workspace'},{icon:'user',text:'案件管控',path:'/legal/workspace'},{icon:'user',text:'案件管理',path:'/legal/case/legallist?type=99&status=all&legalTname=all'},{icon:'form',text:'案件发起',path:''}],
       statusType:{'valid':'有效','invalid':'删除'},
       zoneType:{'领地集团总部':'领地集团总部','重庆区域':'重庆区域','两湖区域':'两湖区域','川北区域':'川北区域','成都区域':'成都区域','乐眉区域':'乐眉区域','中原区域':'中原区域','攀西区域':'攀西区域','新疆区域':'新疆区域','大湾区域':'大湾区域','北京区域':'北京区域'},
@@ -1958,6 +1975,7 @@ export default {
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
 
+                  this.handleLog(this.tablename , legal , '案件信息修改' , `${userinfo.realname} 修改了案号为：${legal.caseID}的案件信息。`);
                   this.loading = false; //设置状态
                   this.readonly = true;
                   this.role = 'view';
@@ -2032,6 +2050,7 @@ export default {
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
 
+                  this.handleLog(this.tablename , legal , '案件过程管理' , `${userinfo.realname} 进行了案号为：${legal.caseID}的案件过程管理，案件阶段：${stage}。`);
                   this.loading = false; //设置状态
                   this.readonly = true;
                   this.role = 'view';
@@ -2063,6 +2082,7 @@ export default {
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
+                  this.handleLog(this.tablename , this.legal , '案件评价操作' , `${userinfo.realname} 进行了案号为：${legal.caseID}的案件评价，案件评分：${case_score}，律师评分：${lawyer_score}。`);
                   this.loading = false; //设置状态
                   this.readonly = true;
                   this.role = 'view';
@@ -2093,6 +2113,7 @@ export default {
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
+                  this.handleLog(this.tablename , this.legal , '案件进展管理' , `${userinfo.realname} 追加了案号为：${legal.caseID}的案件进展，内容：${lawcase}。`);
                   this.loading = false; //设置状态
                   this.readonly = true;
                   this.role = 'view';
@@ -2100,6 +2121,22 @@ export default {
                   await this.handleList(this.tablename , id);
                }
           });
+      },
+
+      // 获取处理日志
+      async queryProcessLog(){
+        const id = Betools.tools.getUrlParam('id');
+        try {
+          this.processLogList = await Betools.workflow.queryPRLogHistoryByDataID(id);
+          //如果查询出出来记录，则将处理记录排序
+          if(this.processLogList && this.processLogList.length > 0){
+            this.processLogList.map(item => { item.create_time = dayjs(item.create_time).format('YYYY-MM-DD HH:mm'); item.unique = `${item.employee} ${item.action} ${item.action_opinion} ${item.create_time} ` ;  });
+            this.processLogList =  this.processLogList.filter( (item , index) => { const findex = this.processLogList.findIndex( elem => { return item.unique == elem.unique });  return findex == index;});
+            this.processLogList.sort();
+          }
+        } catch (error) {
+          console.log(error);
+        }
       },
 
   },
