@@ -168,6 +168,15 @@ export default {
                 console.error(`finger print error:`,error);
             }
         })();
+
+        (async() => {
+            try {
+              
+            } catch (error) {
+              
+            }
+        })();
+
       } catch (error) {
         console.log(error);
       }
