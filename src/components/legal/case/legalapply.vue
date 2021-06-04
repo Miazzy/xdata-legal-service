@@ -1608,14 +1608,12 @@ export default {
         user_group_ids = Betools.tools.isNull(user_group_ids) ? '' : user_group_ids.toString();
         
         try {
-          // 是否确认提交此自由流程?
           this.$confirm({
               title: "确认操作",
               content: `您好，是否确认向${user_group_names}推送案件知会通知?`,
               onOk: async(result) => {
                   const url = `${window.BECONFIG.domain.replace('www','legal')}/evaluate/${this.legal.id}/${userinfo.username}/#/`;
-                  await superagent.get(`${window.BECONFIG['restAPI']}/api/v1/weappms/${user_group_ids}/您好，您有一份案件知会通知(${userinfo.realname})，案号:${this.legal.caseID}！?url=${url}`)
-                              .set('accept', 'json');
+                  await superagent.get(`${window.BECONFIG['restAPI']}/api/v1/weappms/${user_group_ids}/您好，您有一份案件知会通知(${userinfo.realname})，案号:${this.legal.caseID}！?url=${url}`).set('accept', 'json');
                   vant.Dialog.alert({  title: '温馨提示',  message: `案件知会通知推送成功！`, });
               }});
         } catch (error) {
