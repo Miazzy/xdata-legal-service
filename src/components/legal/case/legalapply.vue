@@ -940,7 +940,7 @@
                    </a-row>
                 </div>
 
-                 <div v-show="role == 'evaluate' && !isNull(id)  " class="reward-apply-content-item" style="margin-top:35px;margin-bottom:5px; margin-right:10px;">
+                <div v-show="role == 'evaluate' && !isNull(id)  " class="reward-apply-content-item" style="margin-top:35px;margin-bottom:5px; margin-right:10px;">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
                     <a-col :span="8">
                     </a-col>
@@ -954,7 +954,7 @@
                    </a-row>
                 </div>
 
-                <div v-show="role == 'view' && processLogList.length > 0 " class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
+                <div v-show="(role == 'view' || role == 'notify' ) && processLogList.length > 0 " class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
                     <a-col class="reward-apply-content-title-text" :span="4" style="font-size:1.1rem;">
                       处理记录
@@ -962,7 +962,7 @@
                    </a-row>
                 </div>
 
-                <div v-show="role == 'view' && processLogList.length > 0 " class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;margin-left:75px;">
+                <div v-show="(role == 'view' || role == 'notify' ) && processLogList.length > 0 " class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;margin-left:75px;">
                   <van-cell-group style="margin-top:0px;" v-show="processLogList.length > 0">
                     <div>
                       <van-steps direction="vertical" :active="processLogList.length - 1">
@@ -977,8 +977,42 @@
                   </van-cell-group>
                 </div>
 
+                <div v-show="role == 'notify' && !isNull(id)  " class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
+                   <a-row style="border-top: 1px dash #f0f0f0;" >
+                    <a-col class="reward-apply-content-title-text" :span="4" style="font-size:1.1rem;">
+                      知会流程
+                    </a-col>
+                   </a-row>
+                </div>
+
+                <div v-show="role == 'notify' && !isNull(id)  " class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                  <a-row>
+                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>承办法官</span>
+                    </a-col>
+                    <a-col :span="8">
+                      <a-input v-model="release_userid"  placeholder="请输入知会人员！" @blur="validFieldToast('judge')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                    </a-col>
+                  </a-row>
+                </div>    
+
+                <div v-show="role == 'notify' && !isNull(id)  " class="reward-apply-content-item" style="margin-top:35px;margin-bottom:5px; margin-right:10px;">
+                   <a-row style="border-top: 1px dash #f0f0f0;" >
+                    <a-col :span="8">
+                    </a-col>
+                    <a-col class="reward-apply-content-title-text" :span="4" style="margin-left:100px;">
+                      <a-button type="primary" style="width: 120px;color:c0c0c0;" @click="handleEvaluate();"  >
+                        知会
+                      </a-button>
+                    </a-col>
+                    <a-col :span="8">
+                    </a-col>
+                   </a-row>
+                </div>
+
                 <div style="height:100px;">
                 </div>
+
               </div>
             </div>
           </a-col>
@@ -1115,21 +1149,8 @@ export default {
       readonly: false,
       userList:[],
       release_userid:'',
-      release_username:'',
-      release_company:'',
-      release_department:'',
-      release_position:'',
-      release_amount:'',
-      release_mobile:'',
       release_userlist:[],
-      release_zone:'',
-      release_project:'',
       approve_userid:'',
-      approve_username:'',
-      approve_mobile:'',
-      approve_department:'',
-      approve_company:'',
-      approve_position:'',
       approve_userlist:[],
       approve_executelist:[],
       role:'',
