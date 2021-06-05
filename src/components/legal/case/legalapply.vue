@@ -1628,7 +1628,7 @@ export default {
                   const {legal} = this;
                   this.handleLog(this.tablename , legal , '知会', '案件知会流程' , `${userinfo.realname} 向${user_group_names}推送了知会流程，案号：${legal.caseID}`);
                   for await (const user of this.release_userlist){
-                    const url = `${window.BECONFIG.domain.replace('www','legal')}/evaluate/${this.legal.id}/${user.name || item.realname}/#/`;
+                    const url = `${window.BECONFIG.domain.replace('www','legal')}/evaluate/${this.legal.id}/${user.loginid || item.name}/#/`;
                     await superagent.get(`${window.BECONFIG['restAPI']}/api/v1/weappms/${user.loginid}/您好，您有一份案件知会通知(${userinfo.realname})，案号:${this.legal.caseID}！?url=${url}`).set('accept', 'json');
                   }
                   vant.Dialog.alert({  title: '温馨提示',  message: `案件知会通知推送成功！`, });
