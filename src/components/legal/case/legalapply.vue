@@ -1617,9 +1617,9 @@ export default {
         }
 
         user_group_ids = this.release_userlist.map(item=>item.loginid);
-        user_group_names = this.release_userlist.map(item=>item.realname);
+        user_group_names = this.release_userlist.map(item=> item.name || item.realname);
         user_group_ids = Betools.tools.isNull(user_group_ids) ? '' : user_group_ids.toString();
-        
+
         try {
           this.$confirm({
               title: "确认操作",
@@ -1628,7 +1628,7 @@ export default {
                   const {legal} = this;
                   this.handleLog(this.tablename , legal , '知会', '案件知会流程' , `${userinfo.realname} 向${user_group_names}推送了知会流程，案号：${legal.caseID}`);
                   for await (const user of this.release_userlist){
-                    const url = `${window.BECONFIG.domain.replace('www','legal')}/evaluate/${this.legal.id}/${user.realname}/#/`;
+                    const url = `${window.BECONFIG.domain.replace('www','legal')}/evaluate/${this.legal.id}/${user.name || item.realname}/#/`;
                     await superagent.get(`${window.BECONFIG['restAPI']}/api/v1/weappms/${user.loginid}/您好，您有一份案件知会通知(${userinfo.realname})，案号:${this.legal.caseID}！?url=${url}`).set('accept', 'json');
                   }
                   vant.Dialog.alert({  title: '温馨提示',  message: `案件知会通知推送成功！`, });
