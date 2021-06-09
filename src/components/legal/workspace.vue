@@ -22,7 +22,7 @@
         <keep-alive>
           <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24" style="position:relative;">
 
-            <div v-show="role.includes('LEGAL_ADMIN')" style="position:absolute;left:0px width:80px;" >
+            <div style="position:absolute;left:0px width:80px;" >
               <van-sidebar v-model="activeTabKey">
                 <van-sidebar-item style="display:block;" title="审批" :to="`/legal/message`" />
                 <van-sidebar-item style="display:none;" title="云文档" :to="`/legal/netdisk`" />
@@ -164,7 +164,12 @@ export default {
           try {
             this.role = await Betools.query.queryRoleInfo();
             if(!this.role.includes('LEGAL_ADMIN')){
+              Betools.storage.clearStore('system_role_rights_v1');
+              this.role = await Betools.query.queryRoleInfo();
+            }
+            if(!this.role.includes('LEGAL_ADMIN')){
               this.paneflows.map(item=>{ item.display=false; });
+              console.log(`query permission no rights...`);
             }
           } catch (error) {
             console.error(`query permission error:`,error);
