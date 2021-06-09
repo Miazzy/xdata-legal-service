@@ -151,7 +151,8 @@ export default {
     this.queryInfo();
   },
   methods: {
-
+    isNull:Betools.tools.isNull,
+    deNull:Betools.tools.deNull,
     // 查询初始化信息
     async queryInfo() {
       try {
@@ -160,11 +161,23 @@ export default {
         this.userinfo = await this.weworkLogin(); //查询当前登录用户
         const userinfo = await Betools.storage.getStore('system_userinfo');
 
-        (async() => { //获取操作权限信息
+        (async() => { //获取操作权限信息,权限管控功能
           try {
             this.role = await Betools.query.queryRoleInfo();
+            this.role = this.deNull(this.role,'');
+            if(!this.role.includes('LEGAL_ADMIN')){
+              Betools.storage.clearStore('system_role_rights_v1');
+              this.role = await Betools.query.queryRoleInfo();
+              this.role = this.deNull(this.role,'');
+            }
+            if(!this.role.includes('LEGAL_ADMIN')){
+              const pname = this.userinfo.systemuserinfo.textfield1;
+              pname.includes('法务') ? this.role += 'LEGAL_ADMIN' : null;
+              this.role = this.deNull(this.role,'');
+            }
             if(!this.role.includes('LEGAL_ADMIN')){
               this.paneflows.map(item=>{ item.display=false; });
+              vant.Dialog.alert({  title: '温馨提示',  message: `您没有法务诉讼系统的操作权限！`, });
               console.log(`query permission no rights...`);
             } else {
               Betools.storage.clearStore('system_role_rights_v1');
