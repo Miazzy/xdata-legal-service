@@ -159,7 +159,15 @@ export default {
         this.userinfo = await this.weworkLogin(); //查询当前登录用户
         const userinfo = await Betools.storage.getStore('system_userinfo');
 
-        (async() => {
+        (async() => { //获取操作权限信息
+          try {
+            
+          } catch (error) {
+            console.error(`query permission error:`,error);
+          }
+        })();
+
+        (async() => { //打印指纹信息
             try {
                 await Betools.query.queryCrontab('18:0');
                 const result = await(await FingerprintJS.load()).get();
@@ -170,7 +178,7 @@ export default {
             }
         })();
 
-        (async() => {
+        (async() => { //根据URL信息跳转到相应详情页面
             try {
               if(window.location.href.includes('/evaluate/')){
                 const path = window.location.href.split(window.location.host)[1];
@@ -183,7 +191,7 @@ export default {
                 }
               }
             } catch (error) {
-              
+              console.error(`redirect url error:`,error);
             }
         })();
 
