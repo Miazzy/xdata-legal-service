@@ -22,7 +22,7 @@
         <keep-alive>
           <a-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24" style="position:relative;">
 
-            <div style="position:absolute;left:0px width:80px;" >
+            <div v-show="role.includes('LEGAL_ADMIN')" style="position:absolute;left:0px width:80px;" >
               <van-sidebar v-model="activeTabKey">
                 <van-sidebar-item style="display:block;" title="审批" :to="`/legal/message`" />
                 <van-sidebar-item style="display:none;" title="云文档" :to="`/legal/netdisk`" />
@@ -35,7 +35,7 @@
 
             <div style="position:absolute; left:80px; width:900px;" >
 
-              <div id="" class="" style="padding-left:0.75rem;padding-top:0.25rem;padding-bottom:0.25rem;background-color:#fefefe;" >
+              <div v-show="role.includes('LEGAL_ADMIN')" id="" class="" style="padding-left:0.75rem;padding-top:0.25rem;padding-bottom:0.25rem;background-color:#fefefe;" >
                 <a-breadcrumb>
                   <template v-for="(elem,index) in breadcrumb">
                     <a-breadcrumb-item :key="elem.icon" :index="index" >
@@ -69,7 +69,7 @@
               </template>
             </div>
 
-            <div style="position:absolute; left:1000px; width: 300px;">
+            <div v-show="role.includes('LEGAL_ADMIN')" style="position:absolute; left:1000px; width: 300px;">
                 <a-card title="便捷导航" style="margin-bottom: 10px" :bordered="false" :body-style="{padding: 0}" >
                   <div class="item-group">
                     <div class="pane-right-item-group" >
@@ -140,6 +140,7 @@ export default {
       userinfo: '',
       usertitle:'',
       lawyerlist:[],
+      role:'',
       breadcrumb:[{icon:'',text:'所有功能',path:'/legal/workspace'},{icon:'',text:'任务面板',path:'/legal/workspace'},{icon:'',text:'案件管控',path:'/legal/workspace'},{icon:'',text:'律所律师',path:'/legal/workspace'},{icon:'',text:'法院法官',path:'/legal/workspace'}],
     };
   },
@@ -161,7 +162,10 @@ export default {
 
         (async() => { //获取操作权限信息
           try {
-            
+            this.role = await Betools.query.queryRoleInfo();
+            if(!this.role.includes('LEGAL_ADMIN')){
+              this.paneflows.map(item=>{ item.display=false; });
+            }
           } catch (error) {
             console.error(`query permission error:`,error);
           }
