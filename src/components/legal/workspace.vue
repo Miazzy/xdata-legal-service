@@ -164,12 +164,11 @@ export default {
           try {
             this.role = await Betools.query.queryRoleInfo();
             if(!this.role.includes('LEGAL_ADMIN')){
-              Betools.storage.clearStore('system_role_rights_v1');
-              this.role = await Betools.query.queryRoleInfo();
-            }
-            if(!this.role.includes('LEGAL_ADMIN')){
               this.paneflows.map(item=>{ item.display=false; });
               console.log(`query permission no rights...`);
+            } else {
+              Betools.storage.clearStore('system_role_rights_v1');
+              Betools.query.queryRoleInfo();
             }
           } catch (error) {
             console.error(`query permission error:`,error);
