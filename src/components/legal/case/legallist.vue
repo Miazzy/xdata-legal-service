@@ -345,7 +345,7 @@ export default {
 
       // 企业微信登录处理函数
       async  weworkLogin  (codeType = 'search', systemType = 'search')  {
-        const userinfo_work = await Betools.query.queryWeworkUser(codeType, systemType,'v5');
+        //const userinfo_work = await Betools.query.queryWeworkUser(codeType, systemType,'v5');
         const userinfo = await Betools.storage.getStore('system_userinfo');
         this.legal.create_by = (userinfo ? userinfo.realname || userinfo.name || userinfo.lastname : '');
         this.usertitle = (userinfo && userinfo.parent_company && userinfo.parent_company.name ? userinfo.parent_company.name + ' > ' :'')  + (userinfo ? userinfo.realname || userinfo.name || userinfo.lastname : '');
@@ -361,12 +361,12 @@ export default {
       async queryInfo() {
         try {
           const tableName = this.tablename;
+          const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
           this.iswechat = Betools.tools.isWechat(); //查询当前是否微信端
           this.iswework = Betools.tools.isWework(); //查询是否为企业微信
           this.userinfo = await this.weworkLogin(); //查询当前登录用户
           this.back = Betools.tools.getUrlParam('back') || '/legal/workspace'; //查询上一页
           this.legal.stage = Betools.tools.getUrlParam('stage') || '全部';
-          const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
           this.execSearch('view');
         } catch (error) {
           console.log(error);
@@ -379,7 +379,8 @@ export default {
             return [];
         }
         let list = await Betools.manage.queryTableData(tableName , `_where=(status,in,${status})${searchSql}&_sort=-id&_p=${page}&_size=${size}`);
-        list.map((item)=>{ 
+        list.map((element)=>{ 
+            const item = JSON.parse(JSON.stringify(element));
             item.create_time = dayjs(item.create_time).format('YYYY-MM-DD'); 
             item.receiveTime = dayjs(item.receiveTime).format('YYYY-MM-DD') == 'Invalid Date' ? '/' : dayjs(item.receiveTime).format('YYYY-MM-DD');
             item.lawRTime = dayjs(item.lawRTime).format('YYYY-MM-DD') == 'Invalid Date' ? '/' : dayjs(item.lawRTime).format('YYYY-MM-DD');
@@ -622,10 +623,20 @@ export default {
         let stageSql = Betools.tools.isNull(legal.stage) || legal.stage == '全部' ? '' : `~and(stage,in,${legal.stage})`;
         let caseSTypeSQL = Betools.tools.isNull(legal.caseSType) || legal.caseSType == '全部' ? '':`~and(caseSType,eq,${legal.caseSType})`;
         let legalTypeSQL = Betools.tools.isNull(legal.legalType) || legal.legalType == '全部' ? '':`~and(legalType,eq,${legal.legalType})`;
-        const data = await this.handleList(tableName , `待处理,处理中,审批中,已完成,已结案,已驳回${cacheRandomKey}`, userinfo, stageSql + permissionSQL + caseSTypeSQL + legalTypeSQL + searchSql , 0 , 10000);
-        value == 'view' ? (this.data = data)  : null;
-        await Betools.tools.sleep(300);
-        value == 'view' ? (vant.Toast.clear()) : null;
+        this.data = [];
+        
+        (async()=>{
+          const data = await this.handleList(tableName , `待处理,处理中,审批中,已完成,已结案,已驳回${cacheRandomKey}`, userinfo, stageSql + permissionSQL + caseSTypeSQL + legalTypeSQL + searchSql , 0 , 10000);
+          value == 'view' && data && data.length > 0 && this.data.length == 0 ? (this.data = data) : null ;
+          vant.Toast.clear();
+        })();
+
+        (async()=>{
+          const data = await this.handleList(tableName , `待处理,处理中,审批中,已完成,已结案,已驳回${cacheRandomKey}`, userinfo, stageSql + permissionSQL + caseSTypeSQL + legalTypeSQL + searchSql , 0 , 10000);
+          value == 'view' && data && data.length > 0 && this.data.length == 0 ? (this.data = data) : null ;
+          vant.Toast.clear();
+        })();
+
         return data; 
       },
 

@@ -1256,7 +1256,7 @@ export default {
 
       // 企业微信登录处理函数
       async  weworkLogin  (codeType = 'search', systemType = 'search')  {
-        const userinfo_work = await Betools.query.queryWeworkUser(codeType, systemType,'v5');
+          // const userinfo_work = await Betools.query.queryWeworkUser(codeType, systemType,'v5');
           const userinfo = await Betools.storage.getStore('system_userinfo');
           this.legal.create_by = (userinfo ? userinfo.realname || userinfo.name || userinfo.lastname : '');
           this.usertitle = (userinfo && userinfo.parent_company && userinfo.parent_company.name ? userinfo.parent_company.name + ' > ' :'')  + (userinfo ? userinfo.realname || userinfo.name || userinfo.lastname : '');
