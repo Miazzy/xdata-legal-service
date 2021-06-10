@@ -1225,14 +1225,18 @@ export default {
   watch:{
     'legal.inHouseLawyers'(value,oldVal){ //此处监听obj属性a值变量 item1为新值，item2为旧值
       (async()=>{
-        const element = this.lawyerInnerList.find(item => item.name == value);
-        this.legal.inHouseLawyersMobile = Betools.tools.isNull(element) ? '' : element.mobile;
+        if(this.lawyerInnerList && this.lawyerInnerList.length > 0){
+          const element = this.lawyerInnerList.find(item => item.name == value);
+          this.legal.inHouseLawyersMobile = Betools.tools.isNull(element) ? '' : element.mobile;
+        }
       })();
     },
     'legal.lawyer'(value,oldVal){ //此处监听obj属性a值变量 item1为新值，item2为旧值
       (async()=>{
-        const element = this.lawyerlist.find(item => item.lawyer_name == value);
-        this.legal.lawyerMobile = Betools.tools.isNull(element) ? '' : element.mobile;
+        if(this.lawyerlist && this.lawyerlist.length > 0){
+          const element = this.lawyerlist.find(item => item.lawyer_name == value);
+          this.legal.lawyerMobile = Betools.tools.isNull(element) ? '' : element.mobile;
+        }
       })();
     },
     deep:true,
@@ -1656,7 +1660,9 @@ export default {
                   this.handleLog(this.tablename , legal , '知会', '案件知会流程' , `${userinfo.realname} 向${user_group_names}推送了知会流程，案号：${legal.caseID}`);
                   for await (const user of this.release_userlist){
                     const url = `${window.BECONFIG.domain.replace('www','legal')}/evaluate/${this.legal.id}/${user.loginid || item.name}/#/`;
-                    await superagent.get(`${window.BECONFIG['restAPI']}/api/v1/weappms/${user.loginid}/您好，您有一份案件知会通知(${userinfo.realname})，案号:${this.legal.caseID}！?url=${url}`).set('accept', 'json');
+                    const content = window.encodeURIComponent(`您好，您有一份案件知会通知(${userinfo.realname})，案号:${this.legal.caseID}！`.replace(/\//g,''));
+                    debugger;
+                    await superagent.get(`${window.BECONFIG['restAPI']}/api/v1/weappms/${user.loginid}/${content}?type=legal&url=${url}`).set('accept', 'json');
                   }
                   vant.Dialog.alert({  title: '温馨提示',  message: `案件知会通知推送成功！`, });
               }});
