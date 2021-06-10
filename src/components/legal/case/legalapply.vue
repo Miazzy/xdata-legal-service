@@ -1362,10 +1362,6 @@ export default {
               const elem = await this.handleList(this.tablename , id);
               Betools.tools.isNull(this.legal)?this.legal = elem:null;
             })();
-            (async()=>{
-              const elem = await this.handleList(this.tablename , id);
-              Betools.tools.isNull(this.legal)?this.legal = elem:null;
-            })();
             this.queryProcessLog();
           } 
           
@@ -1410,7 +1406,7 @@ export default {
         const nowdate = dayjs().format('YYYY-MM-DD')
         const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
         const role = Betools.tools.getUrlParam('role');
-        let elem = await Betools.query.queryTableDataDB(tableName , id);
+        let elem = await Betools.query.queryTableData(tableName , id);
         let list = [elem];
         list.map((item)=>{ 
           try {
