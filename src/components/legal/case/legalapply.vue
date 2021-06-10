@@ -1353,7 +1353,15 @@ export default {
           this.options.courtOptions = await workconfig.courtList();
 
           if(!Betools.tools.isNull(id)){
-            this.legal = await this.handleList(this.tablename , id);
+            this.legal = null;
+            (async()=>{
+              const elem = await this.handleList(this.tablename , id);
+              Betools.tools.isNull(this.legal)?this.legal = elem:null;
+            })();
+            (async()=>{
+              const elem = await this.handleList(this.tablename , id);
+              Betools.tools.isNull(this.legal)?this.legal = elem:null;
+            })();
             this.queryProcessLog();
           } 
           
