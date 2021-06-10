@@ -630,7 +630,6 @@ export default {
           value == 'view' && data && data.length > 0 && this.data.length == 0 ? (this.data = data) : null ;
           vant.Toast.clear();
         })();
-
         (async()=>{
           const data = await this.handleList(tableName , `待处理,处理中,审批中,已完成,已结案,已驳回${cacheRandomKey}`, userinfo, stageSql + permissionSQL + caseSTypeSQL + legalTypeSQL + searchSql , 0 , 10000);
           value == 'view' && data && data.length > 0 && this.data.length == 0 ? (this.data = data) : null ;
