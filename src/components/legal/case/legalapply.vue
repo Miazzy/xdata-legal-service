@@ -417,7 +417,8 @@
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>受理法院</span>
                     </a-col>
                     <a-col :span="20">
-                      <a-cascader id="legal-apply-content-court-cascader"  v-model="legal.court" :options="options.courtOptions" placeholder="请输入受理法院！" @blur="validFieldToast('court')"  style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      <a-cascader v-if="role != 'view' " id="legal-apply-content-court-cascader"  v-model="legal.court" :options="options.courtOptions" placeholder="请输入受理法院！" @blur="validFieldToast('court')"  style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      <a-input v-if="role != 'edit' " v-model="legal.court" readonly placeholder="请输入受理法院！" @blur="validFieldToast('court')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
@@ -1225,13 +1226,13 @@ export default {
     'legal.inHouseLawyers'(value,oldVal){ //此处监听obj属性a值变量 item1为新值，item2为旧值
       (async()=>{
         const element = this.lawyerInnerList.find(item => item.name == value);
-        this.legal.inHouseLawyersMobile = element.mobile;
+        this.legal.inHouseLawyersMobile = Betools.tools.isNull(element) ? '' : element.mobile;
       })();
     },
     'legal.lawyer'(value,oldVal){ //此处监听obj属性a值变量 item1为新值，item2为旧值
       (async()=>{
         const element = this.lawyerlist.find(item => item.lawyer_name == value);
-        this.legal.lawyerMobile = element.mobile;
+        this.legal.lawyerMobile = Betools.tools.isNull(element) ? '' : element.mobile;
       })();
     },
     deep:true,
@@ -1333,6 +1334,7 @@ export default {
       // 查询基础信息
       async queryInfo() {
         try {
+          vant.Toast.loading({ duration: 0,  forbidClick: true,  message: '刷新中...', });
           const id = this.id = Betools.tools.getUrlParam('id');
           this.legal.caseSType = (Betools.tools.getUrlParam('legalTname') || '起诉') + '案件';
           this.role = Betools.tools.getUrlParam('role');
@@ -1348,6 +1350,7 @@ export default {
 
           this.legal.apply_realname = userinfo && userinfo.realname ? userinfo.realname : '';
           this.legal.apply_username = userinfo && userinfo.username ? userinfo.username : '';
+          this.options.courtOptions = await workconfig.courtList();
 
           if(!Betools.tools.isNull(id)){
             this.legal = await this.handleList(this.tablename , id);
@@ -1355,13 +1358,13 @@ export default {
           } 
           
           this.lawyerInnerList = await Betools.query.queryLawyerList();
-          this.options.courtOptions = await workconfig.courtList();
           this.firmlist = await Betools.manage.queryTableData('bs_law_firm' , `_where=(status,ne,0)&_fields=id,firm_name&_sort=-id&_p=0&_size=10000`);
           this.firmNamelist = this.firmlist.map(item => { return item.firm_name });
           this.lawyerlist = await Betools.manage.queryTableData('bs_lawyer' , `_where=(status,ne,0)&_fields=id,lawyer_name,mobile&_sort=-id&_p=0&_size=10000`);
           this.lawyerNamelist = this.lawyerlist.map(item => { return item.lawyer_name });
           const lawyerInnerList = this.lawyerInnerList.map(item => {return item.name });
           this.lawyerInNamelist = [...new Set(lawyerInnerList)];
+          vant.Toast.clear();
           
           if(Betools.tools.isNull(id)){ //自动回显刚才填写的用户基础信息
             try {
@@ -1393,19 +1396,35 @@ export default {
       // 查询不同状态的律所数据
       async handleList(tableName , id){
         const nowdate = dayjs().format('YYYY-MM-DD')
-        let elem = await Betools.query.queryTableData(tableName , id);
+        const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
+        const role = Betools.tools.getUrlParam('role');
+        let elem = await Betools.query.queryTableDataDB(tableName , id);
         let list = [elem];
         list.map((item)=>{ 
           try {
+            const cloneItem = JSON.parse(JSON.stringify(item));
             item.create_time = dayjs(item.create_time).format('YYYY-MM-DD'); 
             item.receiveTime = dayjs(item.receiveTime).format('YYYY-MM-DD') == 'Invalid Date' ? nowdate : dayjs(item.receiveTime).format('YYYY-MM-DD');
             item.lawRTime = dayjs(item.lawRTime).format('YYYY-MM-DD') == 'Invalid Date' ? nowdate : dayjs(item.lawRTime).format('YYYY-MM-DD');
             item.handledTime = dayjs(item.handledTime).format('YYYY-MM-DD') == 'Invalid Date' ? nowdate : dayjs(item.handledTime).format('YYYY-MM-DD');
             item.legalStatus = Betools.tools.isNull(item.legalStatus) ? '开庭举证' : item.legalStatus;
+            try{
+              if(role == 'view'){
+                item.court = JSON.parse(item.court);
+                Betools.tools.isNull(item.court[item.court.length-1]) ? item.court = item.court.slice(0,item.court.length-1) : null;
+                item.court = Betools.tools.deNull(item.court[item.court.length-1],'') ;
+              } else {
+                Betools.console.info('legal' , item.court , 'error' , 'ADM' , Betools.tools.isNull(userinfo) ? '' : userinfo.realname);
+                item.court = JSON.parse(item.court);
+                console.error(`parse court success:`, item.court);
+              }
+            } catch(e){
+              console.error(`parse court error:`, e);
+            }
             try {
-              item.caseType = JSON.parse(item.caseType),item.zone = JSON.parse(item.zone),item.court = JSON.parse(item.court);
+              item.caseType = JSON.parse(item.caseType); item.zone = JSON.parse(item.zone);
             } catch (error) {
-              item.zone = JSON.parse(item.zone),item.caseType = JSON.parse(item.caseType),item.court = JSON.parse(item.court);
+              item.caseType = JSON.parse(cloneItem.caseType); item.zone = JSON.parse(cloneItem.zone);
             }
           } catch (error) {
             console.log(`error:`, error);
