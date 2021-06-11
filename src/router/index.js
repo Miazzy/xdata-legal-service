@@ -87,7 +87,7 @@ const routes = [{
     }
 }, {
     path: '/legal/course/lawsuitlist',
-    name: "结案记录",
+    name: "归档闭单",
     components: {
         "default": resolve => require(["../components/legal/home.vue"], resolve),
         "subPage": resolve => require(["../components/legal/case/legallist.vue"], resolve)

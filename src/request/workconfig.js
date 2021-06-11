@@ -160,22 +160,6 @@ export const reward = ($router) => {
                 $router.push(`/legal/case/legalapply?type=1&legalTname=应诉&role=add&apply=add`, '_blank');
             }
         }, {
-            name: "案件管理",
-            avatar: `https://cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/yanglaodaiyuzigerenzheng.png`,
-            href: "/account/donelist",
-            description: '查看/管理案件列表信息',
-            click: () => {
-                $router.push(`/legal/case/legallist?type=99&&status=all&legalTname=all&stage=全部`, '_blank');
-            }
-        }, {
-            name: "结案记录",
-            avatar: `//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/shenpi.png`,
-            href: "/account/myanalyse",
-            description: '查看已结案案件列表信息',
-            click: () => {
-                $router.push(`/legal/course/lawsuitlist?&type=99&status=finish&legalTname=all&stage=结案闭单`, '_blank');
-            },
-        }, {
             name: "一审管理",
             avatar: `https://cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/fenbufenxiang_jy.png`,
             href: "/account/myrewards",
@@ -192,6 +176,14 @@ export const reward = ($router) => {
                 $router.push(`/legal/case/secondlist?type=99&&status=all&legalTname=all&stage=二审阶段`, '_blank');
             },
         }, {
+            name: "再审管理",
+            avatar: `https://cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/jungongyanshou_jy.png`,
+            href: "/account/myanalyse",
+            description: '对案件进展处于再审阶段的案件进行管理',
+            click: () => {
+                $router.push(`/legal/case/thirdlist?type=99&&status=all&legalTname=all&stage=再审阶段`, '_blank');
+            },
+        }, {
             name: "执行管理",
             avatar: `https://cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/paimai.png`,
             href: "/account/myanalyse",
@@ -200,13 +192,21 @@ export const reward = ($router) => {
                 $router.push(`/legal/case/executelist?type=99&&status=all&legalTname=all&stage=执行阶段`, '_blank');
             },
         }, {
-            name: "再审管理",
-            avatar: `https://cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/jungongyanshou_jy.png`,
+            name: "归档闭单",
+            avatar: `//cdn.jsdelivr.net/gh/Miazzy/yunwisdom_cdn@v1.0.0/images/shenpi.png`,
             href: "/account/myanalyse",
-            description: '对案件进展处于再审阶段的案件进行管理',
+            description: '查看已结案案件列表信息',
             click: () => {
-                $router.push(`/legal/case/thirdlist?type=99&&status=all&legalTname=all&stage=再审阶段`, '_blank');
+                $router.push(`/legal/course/lawsuitlist?&type=99&status=finish&legalTname=all&stage=结案闭单`, '_blank');
             },
+        }, {
+            name: "案件管理",
+            avatar: `https://cdn.jsdelivr.net/gh/Miazzy/xdata-stock-service@v1.0.5/src/assets/img/yanglaodaiyuzigerenzheng.png`,
+            href: "/account/donelist",
+            description: '查看/管理案件列表信息',
+            click: () => {
+                $router.push(`/legal/case/legallist?type=99&&status=all&legalTname=all&stage=全部`, '_blank');
+            }
         }],
     }, {
         id: 'common-pane',
