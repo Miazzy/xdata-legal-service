@@ -420,7 +420,14 @@ export default {
             this.role += ',LEGAL_OPERATE_ADMIN';
             $router.push(`/legal/case/legalapply?id=${elem.id}&type=1&tname=案件修改&apply=edit&role=edit`);
           } else {
-            vant.Dialog.alert({  title: '温馨提示',  message: `您好，案件只能由同部门的同事进行修改操作！`, }); 
+            const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
+            const response = await Betools.query.queryRoleGroupList('LEGAL_OPERATE_ADMIN', userinfo.username); // 如果是修改或者追加或者是知会，需要检查是否是同部门，如果是同部门，则可以进行修改或追加或者知会操作
+            const permission = (response && response.length > 0 && (JSON.stringify(response).includes('领地集团总部')||JSON.stringify(response).includes('所有权限')));
+            if(!permission){
+              return vant.Dialog.alert({  title: '温馨提示',  message: `您好，案件只能由同部门的同事进行修改操作！`, }); 
+            } else {
+              $router.push(`/legal/case/legalapply?id=${elem.id}&type=1&tname=案件修改&apply=edit&role=edit`);
+            }
           }
       },
 
@@ -435,7 +442,14 @@ export default {
             this.role += ',LEGAL_OPERATE_ADMIN';
             $router.push(`/legal/case/legalapply?id=${elem.id}&type=1&tname=案件进展&apply=process&role=process`);
           } else {
-            vant.Dialog.alert({  title: '温馨提示',  message: `您好，案件只能由同部门的同事进行案件进展追加操作！`, }); 
+            const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
+            const response = await Betools.query.queryRoleGroupList('LEGAL_OPERATE_ADMIN', userinfo.username); // 如果是修改或者追加或者是知会，需要检查是否是同部门，如果是同部门，则可以进行修改或追加或者知会操作
+            const permission = (response && response.length > 0 && (JSON.stringify(response).includes('领地集团总部')||JSON.stringify(response).includes('所有权限')));
+            if(!permission){
+              return vant.Dialog.alert({  title: '温馨提示',  message: `您好，案件只能由同部门的同事进行案件进展追加操作！`, }); 
+            } else {
+              $router.push(`/legal/case/legalapply?id=${elem.id}&type=1&tname=案件进展&apply=process&role=process`);
+            }
           }
       },
 
@@ -465,7 +479,14 @@ export default {
             this.role += ',LEGAL_OPERATE_ADMIN';
             $router.push(`/legal/case/legalapply?id=${elem.id}&type=1&tname=案件详情&apply=view&role=notify`);
           } else {
-            vant.Dialog.alert({  title: '温馨提示',  message: `您好，案件只能由同部门的同事进行知会操作！`, }); 
+            const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
+            const response = await Betools.query.queryRoleGroupList('LEGAL_OPERATE_ADMIN', userinfo.username); // 如果是修改或者追加或者是知会，需要检查是否是同部门，如果是同部门，则可以进行修改或追加或者知会操作
+            const permission = (response && response.length > 0 && (JSON.stringify(response).includes('领地集团总部')||JSON.stringify(response).includes('所有权限')));
+            if(!permission){
+              return vant.Dialog.alert({  title: '温馨提示',  message: `您好，案件只能由同部门的同事进行知会操作！`, }); 
+            } else {
+              $router.push(`/legal/case/legalapply?id=${elem.id}&type=1&tname=案件详情&apply=view&role=notify`);
+            }
           }
       },
 
@@ -480,7 +501,14 @@ export default {
             this.role += ',LEGAL_OPERATE_ADMIN';
             $router.push(`/legal/case/legalapply?id=${elem.id}&type=1&tname=案件评价&stage=evaluate&apply=case&role=${status}`);
           } else {
-            vant.Dialog.alert({  title: '温馨提示',  message: `您好，案件只能由同部门的同事进行评价操作！`, }); 
+            const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
+            const response = await Betools.query.queryRoleGroupList('LEGAL_OPERATE_ADMIN', userinfo.username); // 如果是修改或者追加或者是知会，需要检查是否是同部门，如果是同部门，则可以进行修改或追加或者知会操作
+            const permission = (response && response.length > 0 && (JSON.stringify(response).includes('领地集团总部')||JSON.stringify(response).includes('所有权限')));
+            if(!permission){
+              return vant.Dialog.alert({  title: '温馨提示',  message: `您好，案件只能由同部门的同事进行评价操作！`, }); 
+            } else {
+              $router.push(`/legal/case/legalapply?id=${elem.id}&type=1&tname=案件评价&stage=evaluate&apply=case&role=${status}`);
+            }
           }
       },
 
@@ -582,7 +610,12 @@ export default {
           if (resp && resp.length > 0 && resp[0].userlist.includes(userinfo.username)) {
             this.role += ',LEGAL_OPERATE_ADMIN';
           } else {
-            return vant.Dialog.alert({  title: '温馨提示',  message: `您好，此案件只能由同部门同事操作，您没有操作权限！`, });
+            const response = await Betools.query.queryRoleGroupList('LEGAL_OPERATE_ADMIN', userinfo.username); // 如果是修改或者追加或者是知会，需要检查是否是同部门，如果是同部门，则可以进行修改或追加或者知会操作
+            debugger;
+            const permission = (response && response.length > 0 && (JSON.stringify(response).includes('领地集团总部')||JSON.stringify(response).includes('所有权限')));
+            if (!permission) {
+              return vant.Dialog.alert({  title: '温馨提示',  message: `您好，此案件只能由同部门同事操作，您没有操作权限！`, });
+            }
           }
 
           this.$confirm({
@@ -594,7 +627,7 @@ export default {
                     if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                         return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                     }
-                    await execFresh('view'); // vant.Dialog.alert({  title: '温馨提示',  message: `已完成进入${stage}操作！`, });  // 获取到本地缓存数据，然后将缓存数据的列表中的此数据的状态改为stage
+                    // await execFresh('view'); // vant.Dialog.alert({  title: '温馨提示',  message: `已完成进入${stage}操作！`, });  // 获取到本地缓存数据，然后将缓存数据的列表中的此数据的状态改为stage
                     this.data.map(item => { 
                       (item.id == elem.id) ? item.stage = stage : null; 
                       (item.id == elem.id) ? Betools.query.cacheTableDataByID(tablename, item.id , item) : null ;
