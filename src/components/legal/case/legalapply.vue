@@ -1627,7 +1627,7 @@ export default {
               onOk: async(result) => {
                   const { legal } = this;
                   const rem = Betools.tools.getUrlParam('rem');
-                  this.handleLog(this.tablename , legal , '批注', '案件知会批注' , `${ Betools.tools.deNull((userinfo.realname || rem),'') } 批注：${this.remark}`);
+                  Betools.manage.handleLog(this.tablename , legal , '批注', '案件知会批注' , `${ Betools.tools.deNull((userinfo.realname || rem),'') } 批注：${this.remark}`);
                   vant.Dialog.alert({  title: '温馨提示',  message: `案件批注提交成功！`, });
               }});
         } catch (error) {
@@ -1657,7 +1657,7 @@ export default {
               content: `您好，是否确认向${user_group_names}推送案件知会通知?`,
               onOk: async(result) => {
                   const {legal} = this;
-                  this.handleLog(this.tablename , legal , '知会', '案件知会流程' , `${userinfo.realname} 向${user_group_names}推送了知会流程，案号：${legal.caseID}`);
+                  Betools.manage.handleLog(this.tablename , legal , '知会', '案件知会流程' , `${userinfo.realname} 向${user_group_names}推送了知会流程，案号：${legal.caseID}`);
                   for await (const user of this.release_userlist){
                     const url = `${window.BECONFIG.domain.replace('www','legal')}/evaluate/${this.legal.id}/${user.loginid || item.name}/#/`;
                     const content = window.encodeURIComponent(`您好，您有一份案件知会通知(${userinfo.realname})，案号:${this.legal.caseID}！`.replace(/\//g,''));
@@ -1707,7 +1707,7 @@ export default {
         const id = Betools.tools.queryUniqueID(); // 表单ID
 
         // 验证数据是否已经填写
-        const keys = Object.keys({ title: '' })
+        const keys = Object.keys({ title: '' });
 
         const invalidKey =  keys.find(key => {
           const flag = this.validField(key);
@@ -1730,9 +1730,14 @@ export default {
 
                   const { legal } = this;
                   legal.id = id;
-                  legal.zone = JSON.stringify(legal.zone); //进行序列化
-                  legal.caseType = JSON.stringify(legal.caseType); //进行序列化
-                  legal.court = JSON.stringify(legal.court); //进行序列化
+
+                  try {
+                    legal.zone = JSON.stringify(legal.zone); //进行序列化
+                    legal.caseType = JSON.stringify(legal.caseType); //进行序列化
+                    legal.court = JSON.stringify(legal.court); //进行序列化
+                  } catch (error) {
+                    console.error(error);
+                  }
                   
                   try { // TRY CATCH 不要移除，如果报错可能导致异常
                     result = await Betools.manage.postTableData(this.tablename , legal); // 向表单提交form对象数据
@@ -1744,14 +1749,19 @@ export default {
                     console.error(error);
                   }
 
-                  legal.zone = JSON.parse(legal.zone); //进行序列化
-                  legal.caseType = JSON.parse(legal.caseType); //进行序列化
-                  legal.court = JSON.parse(legal.court); //进行序列化
+                  try {
+                    legal.zone = JSON.parse(legal.zone); //进行序列化
+                    legal.caseType = JSON.parse(legal.caseType); //进行序列化
+                    legal.court = JSON.parse(legal.court); //进行序列化
+                  } catch (error) {
+                    console.error(error);
+                  }
                   
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
-                  this.handleLog(this.tablename , legal , '发起', '案件流程审批' , `${userinfo.realname} 发起${legal.caseSType}流程，案号：${legal.caseID}`);
+
+                  Betools.manage.handleLog(this.tablename , legal , '发起', '案件流程审批' , `${userinfo.realname} 发起${legal.caseSType}流程，案号：${legal.caseID}`);
                   this.loading = false; //设置状态
                   this.readonly = true;
                   this.role = 'view';
@@ -1788,9 +1798,13 @@ export default {
             onOk: async(result) => {
                   const { legal } = this;
 
-                  legal.zone = JSON.stringify(legal.zone); //进行序列化
-                  legal.caseType = JSON.stringify(legal.caseType); //进行序列化
-                  legal.court = JSON.stringify(legal.court); //进行序列化
+                  try {
+                    legal.zone = JSON.stringify(legal.zone); //进行序列化
+                    legal.caseType = JSON.stringify(legal.caseType); //进行序列化
+                    legal.court = JSON.stringify(legal.court); //进行序列化
+                  } catch (error) {
+                    console.error(error);
+                  }
                   
                   try {
                     result = await Betools.manage.patchTableData(this.tablename, id, legal); // 向表单提交form对象数据
@@ -1798,15 +1812,19 @@ export default {
                     console.error(error);
                   }
 
-                  legal.zone = JSON.parse(legal.zone); //进行序列化
-                  legal.caseType = JSON.parse(legal.caseType); //进行序列化
-                  legal.court = JSON.parse(legal.court); //进行序列化
+                  try {
+                    legal.zone = JSON.parse(legal.zone); //进行序列化
+                    legal.caseType = JSON.parse(legal.caseType); //进行序列化
+                    legal.court = JSON.parse(legal.court); //进行序列化
+                  } catch (error) {
+                    console.error(error);
+                  }
 
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
 
-                  this.handleLog(this.tablename , legal , '执行' , '案件信息修改' , `${userinfo.realname} 修改了案号为：${legal.caseID}的案件信息。`);
+                  Betools.manage.handleLog(this.tablename , legal , '执行' , '案件信息修改' , `${userinfo.realname} 修改了案号为：${legal.caseID}的案件信息。`);
                   this.loading = false; //设置状态
                   this.readonly = true;
                   this.role = 'view';
@@ -1863,9 +1881,13 @@ export default {
             content: "是否确认修改此案件信息?",
             onOk: async(result) => {
 
-                  legal.zone = JSON.stringify(legal.zone); //进行序列化
-                  legal.caseType = JSON.stringify(legal.caseType); //进行序列化
-                  legal.court = JSON.stringify(legal.court); //进行序列化
+                  try {
+                    legal.zone = JSON.stringify(legal.zone); //进行序列化
+                    legal.caseType = JSON.stringify(legal.caseType); //进行序列化
+                    legal.court = JSON.stringify(legal.court); //进行序列化
+                  } catch (error) {
+                    console.error(error);
+                  }
                   
                   try {
                     result = await Betools.manage.patchTableData(this.tablename, id, content); // 向表单提交form对象数据
@@ -1873,15 +1895,19 @@ export default {
                     console.error(error);
                   }
 
-                  legal.zone = JSON.parse(legal.zone); //进行序列化
-                  legal.caseType = JSON.parse(legal.caseType); //进行序列化
-                  legal.court = JSON.parse(legal.court); //进行序列化
+                  try {
+                    legal.zone = JSON.parse(legal.zone); //进行序列化
+                    legal.caseType = JSON.parse(legal.caseType); //进行序列化
+                    legal.court = JSON.parse(legal.court); //进行序列化
+                  } catch (error) {
+                    console.error(error);
+                  }
 
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
 
-                  this.handleLog(this.tablename , legal , '执行' , '案件过程管理' , `${userinfo.realname} 进行了案号为：${legal.caseID}的案件过程管理，案件阶段：${stage}。`);
+                  Betools.manage.handleLog(this.tablename , legal , '执行' , '案件过程管理' , `${userinfo.realname} 进行了案号为：${legal.caseID}的案件过程管理，案件阶段：${stage}。`);
                   this.loading = false; //设置状态
                   this.readonly = true;
                   this.role = 'view';
@@ -1914,7 +1940,7 @@ export default {
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
-                  this.handleLog(this.tablename , legal , '进行' , '案件评价操作' , `${userinfo.realname} 进行了案号为：${legal.caseID}的案件评价，案件评分：${case_score}，律师评分：${lawyer_score}。`);
+                  Betools.manage.handleLog(this.tablename , legal , '进行' , '案件评价操作' , `${userinfo.realname} 进行了案号为：${legal.caseID}的案件评价，案件评分：${case_score}，律师评分：${lawyer_score}。`);
                   this.loading = false; //设置状态
                   this.readonly = true;
                   this.role = 'view';
@@ -1946,7 +1972,7 @@ export default {
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
-                  this.handleLog(this.tablename , legal , '执行' , '案件进展管理' , `${userinfo.realname} 追加了案号为：${legal.caseID}的案件进展，内容：${lawcase}。`);
+                  Betools.manage.handleLog(this.tablename , legal , '执行' , '案件进展管理' , `${userinfo.realname} 追加了案号为：${legal.caseID}的案件进展，内容：${lawcase}。`);
                   this.loading = false; //设置状态
                   this.readonly = true;
                   this.role = 'view';
