@@ -1661,7 +1661,6 @@ export default {
                   for await (const user of this.release_userlist){
                     const url = `${window.BECONFIG.domain.replace('www','legal')}/evaluate/${this.legal.id}/${user.loginid || item.name}/#/`;
                     const content = window.encodeURIComponent(`您好，您有一份案件知会通知(${userinfo.realname})，案号:${this.legal.caseID}！`.replace(/\//g,''));
-                    debugger;
                     await superagent.get(`${window.BECONFIG['restAPI']}/api/v1/weappms/${user.loginid}/${content}?type=legal&url=${url}`).set('accept', 'json');
                   }
                   vant.Dialog.alert({  title: '温馨提示',  message: `案件知会通知推送成功！`, });
@@ -1737,7 +1736,11 @@ export default {
                   
                   try { // TRY CATCH 不要移除，如果报错可能导致异常
                     result = await Betools.manage.postTableData(this.tablename , legal); // 向表单提交form对象数据
+                    const url =  window.encodeURIComponent(`${window.BECONFIG.domain.replace('www','legal')}/#/legal/case/legalapply?id=${legal.id}&type=1&tname=案件详情&apply=view&role=view`);
+                    Betools.console.info('legal' , JSON.stringify(legal) , 'record' , 'ADM' , Betools.tools.isNull(userinfo) ? '' : userinfo.realname);
+                    Betools.manage.sendMessage('legal', JSON.stringify(legal) , 'zhaozy1028', url);
                   } catch (error) {
+                    result = await Betools.manage.postTableData(this.tablename , legal); // 向表单提交form对象数据
                     console.error(error);
                   }
 
