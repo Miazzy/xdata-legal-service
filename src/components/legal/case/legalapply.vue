@@ -899,6 +899,20 @@
                    </a-row>
                 </div>
 
+                <div v-show="role == 'record' && !isNull(id) " class="reward-apply-content-item" style="margin-top:35px;margin-bottom:5px; margin-right:10px;">
+                   <a-row style="border-top: 1px dash #f0f0f0;" >
+                    <a-col :span="8">
+                    </a-col>
+                    <a-col class="reward-apply-content-title-text" :span="4" style="">
+                      <a-button type="primary" style="width: 120px;color:c0c0c0;" @click="handleSave();"  >
+                        补录
+                      </a-button>
+                    </a-col>
+                    <a-col :span="8">
+                    </a-col>
+                   </a-row>
+                </div>
+
                 <div v-show="role == 'edit' && !isNull(id)  " class="reward-apply-content-item" style="margin-top:35px;margin-bottom:5px; margin-right:10px;">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
                     <a-col :span="8">
@@ -1366,7 +1380,9 @@ export default {
               const elem = await this.handleList(this.tablename , id);
               Betools.tools.isNull(this.legal)?this.legal = elem:null;
             })();
-            this.queryProcessLog();
+            (async()=>{
+              this.processLogList = await Betools.query.queryProcessLog();
+            })();
           } 
           
           this.lawyerInnerList = await Betools.query.queryLawyerList();
@@ -1410,7 +1426,13 @@ export default {
         const nowdate = dayjs().format('YYYY-MM-DD')
         const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
         const role = Betools.tools.getUrlParam('role');
-        let elem = await Betools.query.queryTableData(tableName , id);
+        let elem = null;
+        if(role == 'record'){ //如果是record表示从日志中恢复数据
+          elem = await Betools.query.queryTableData('bs_async_log' , id);
+          elem = JSON.parse(elem.content);
+        } else {
+          elem = await Betools.query.queryTableData(tableName , id);
+        }
         let list = [elem];
         list.map((item)=>{ 
           try {
@@ -1450,6 +1472,7 @@ export default {
        
       },
 
+      // 检测知会人员，并加入知会列表
       async validNotify(){
         const username = this.release_userid;
         let userlist = await Betools.manage.queryUserByNameVHRM(username);
@@ -1620,14 +1643,14 @@ export default {
       // 执行知会批注操作
       async handleRemark(){
         const userinfo = await Betools.storage.getStore('system_userinfo'); // 获取用户基础信息
+        const { legal, tablename , remark} = this;
         try {
           this.$confirm({
               title: "确认操作",
               content: `您好，是否提交案件批注?`,
               onOk: async(result) => {
-                  const { legal } = this;
                   const rem = Betools.tools.getUrlParam('rem');
-                  Betools.manage.handleLog(this.tablename , legal , '批注', '案件知会批注' , `${ Betools.tools.deNull((userinfo.realname || rem),'') } 批注：${this.remark}`);
+                  Betools.manage.handleLog(tablename , legal , '批注', '案件知会批注' , `${ Betools.tools.deNull((userinfo.realname || rem),'') } 批注：${remark}`);
                   vant.Dialog.alert({  title: '温馨提示',  message: `案件批注提交成功！`, });
               }});
         } catch (error) {
@@ -1668,35 +1691,6 @@ export default {
         } catch (error) {
           console.log(error);
         }
-      },
-
-      // 记录操作日志
-      async handleLog(tableName , element , action = '发起' , opinion , content){
-
-          const userinfo = await Betools.storage.getStore('system_userinfo'); // 获取用户基础信息
-          const prLogHisNode = {
-            id: Betools.tools.queryUniqueID() , 
-            table_name: tableName ,
-            main_value: element.id , 
-            proponents: userinfo.username , 
-            business_data_id : element.id , 
-            business_code  : '000000000' ,  
-            process_name   : '案件流程审批' ,  
-            employee       : userinfo.realname , 
-            approve_user   : userinfo.username , 
-            action         : action , 
-            action_opinion : opinion , 
-            operate_time   : dayjs().format('YYYY-MM-DD HH:mm:ss') , 
-            functions_station : userinfo.position ,  
-            process_station   : '案件审批[法务诉讼]' ,
-            business_data     : JSON.stringify(this.item) ,  
-            content           : content , 
-            process_audit     : element.id , 
-            create_time       : dayjs().format('YYYY-MM-DD HH:mm:ss') , 
-            relate_data       : '' , 
-            origin_data       : JSON.stringify(element) , 
-          }
-          await Betools.workflow.approveViewProcessLog(prLogHisNode);
       },
 
       // 保存用户数据但是不提交
@@ -1982,22 +1976,6 @@ export default {
                   await this.handleList(this.tablename , id);
                }
           });
-      },
-
-      // 获取处理日志
-      async queryProcessLog(){
-        const id = Betools.tools.getUrlParam('id');
-        try {
-          this.processLogList = await Betools.workflow.queryPRLogHistoryByDataID(id);
-          //如果查询出出来记录，则将处理记录排序
-          if(this.processLogList && this.processLogList.length > 0){
-            this.processLogList.map(item => { item.create_time = dayjs(item.create_time).format('YYYY-MM-DD HH:mm'); item.unique = `${item.employee} ${item.action} ${item.action_opinion} ${item.create_time} ` ;  });
-            this.processLogList =  this.processLogList.filter( (item , index) => { const findex = this.processLogList.findIndex( elem => { return item.unique == elem.unique });  return findex == index;});
-            this.processLogList.sort();
-          }
-        } catch (error) {
-          console.log(error);
-        }
       },
 
   },
