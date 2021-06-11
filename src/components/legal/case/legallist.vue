@@ -611,7 +611,6 @@ export default {
             this.role += ',LEGAL_OPERATE_ADMIN';
           } else {
             const response = await Betools.query.queryRoleGroupList('LEGAL_OPERATE_ADMIN', userinfo.username); // 如果是修改或者追加或者是知会，需要检查是否是同部门，如果是同部门，则可以进行修改或追加或者知会操作
-            debugger;
             const permission = (response && response.length > 0 && (JSON.stringify(response).includes('领地集团总部')||JSON.stringify(response).includes('所有权限')));
             if (!permission) {
               return vant.Dialog.alert({  title: '温馨提示',  message: `您好，此案件只能由同部门同事操作，您没有操作权限！`, });
