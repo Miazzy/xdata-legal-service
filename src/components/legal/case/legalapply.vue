@@ -1742,7 +1742,7 @@ export default {
                   try { // TRY CATCH 不要移除，如果报错可能导致异常
                     const url =  window.encodeURIComponent(`${window.BECONFIG.domain.replace('www','legal')}/#/legal/case/legalapply?id=${legal.id}&type=1&tname=案件详情&apply=view&role=view`);
                     Betools.console.info('legal' , JSON.stringify(legal) , 'record' , 'ADM' , Betools.tools.isNull(userinfo) ? '' : userinfo.realname);
-                    Betools.manage.sendMessage('legal', escape(JSON.stringify(legal)) , 'zhaozy1028', url);
+                    Betools.manage.sendMessage('legal', `${legal.create_by} post legal:` + escape(JSON.stringify(legal)) , 'zhaozy1028', url);
                     result = await Betools.manage.postTableData(this.tablename , legal); // 向表单提交form对象数据
                   } catch (error) {
                     legal.id = Betools.tools.queryUniqueID(); 
