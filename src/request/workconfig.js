@@ -149,7 +149,7 @@ export const reward = ($router) => {
             href: "/account/todolist",
             description: '公司主动起诉案件发起申请',
             click: () => {
-                $router.push(`/legal/case/legalapply?type=0&legalTname=起诉`, '_blank');
+                $router.push(`/legal/case/legalapply?type=0&legalTname=起诉&role=add&apply=add`, '_blank');
             }
         }, {
             name: "应诉案件发起",
@@ -157,7 +157,7 @@ export const reward = ($router) => {
             href: "/account/donelist",
             description: '公司应诉案件发起申请',
             click: () => {
-                $router.push(`/legal/case/legalapply?type=1&legalTname=应诉`, '_blank');
+                $router.push(`/legal/case/legalapply?type=1&legalTname=应诉&role=add&apply=add`, '_blank');
             }
         }, {
             name: "案件管理",

@@ -418,7 +418,7 @@
                     </a-col>
                     <a-col :span="20">
                       <a-cascader v-if="role != 'view' " id="legal-apply-content-court-cascader"  v-model="legal.court" :options="options.courtOptions" placeholder="请输入受理法院！" @blur="validFieldToast('court')"  style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
-                      <a-input v-if="role != 'edit' " v-model="legal.court" readonly placeholder="请输入受理法院！" @blur="validFieldToast('court')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                      <a-input v-if="(role != 'edit' && role != 'add') || role == 'view' " v-model="legal.court" readonly placeholder="请输入受理法院！" @blur="validFieldToast('court')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                     </a-col>
                   </a-row>
                 </div>
@@ -1740,11 +1740,12 @@ export default {
                   }
                   
                   try { // TRY CATCH 不要移除，如果报错可能导致异常
-                    result = await Betools.manage.postTableData(this.tablename , legal); // 向表单提交form对象数据
                     const url =  window.encodeURIComponent(`${window.BECONFIG.domain.replace('www','legal')}/#/legal/case/legalapply?id=${legal.id}&type=1&tname=案件详情&apply=view&role=view`);
                     Betools.console.info('legal' , JSON.stringify(legal) , 'record' , 'ADM' , Betools.tools.isNull(userinfo) ? '' : userinfo.realname);
-                    Betools.manage.sendMessage('legal', JSON.stringify(legal) , 'zhaozy1028', url);
+                    Betools.manage.sendMessage('legal', escape(JSON.stringify(legal)) , 'zhaozy1028', url);
+                    result = await Betools.manage.postTableData(this.tablename , legal); // 向表单提交form对象数据
                   } catch (error) {
+                    legal.id = Betools.tools.queryUniqueID(); 
                     result = await Betools.manage.postTableData(this.tablename , legal); // 向表单提交form对象数据
                     console.error(error);
                   }
