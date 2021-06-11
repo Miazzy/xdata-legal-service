@@ -1746,6 +1746,7 @@ export default {
                     result = await Betools.manage.postTableData(this.tablename , legal); // 向表单提交form对象数据
                   } catch (error) {
                     legal.id = Betools.tools.queryUniqueID(); 
+                    Betools.console.info('legal' , JSON.stringify(legal) , 'record' , 'ADM' , Betools.tools.isNull(userinfo) ? '' : userinfo.realname);
                     result = await Betools.manage.postTableData(this.tablename , legal); // 向表单提交form对象数据
                     console.error(error);
                   }
