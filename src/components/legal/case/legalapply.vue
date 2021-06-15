@@ -1722,7 +1722,7 @@ export default {
             content: "是否确认保存此案件发起申请单?",
             onOk: async(result) => {
 
-                  const { legal } = this;
+                  const legal = JSON.parse(JSON.stringify(this.legal));
                   legal.id = id;
 
                   try {
@@ -1792,7 +1792,8 @@ export default {
             title: "确认操作",
             content: "是否确认修改此案件信息?",
             onOk: async(result) => {
-                  const { legal } = this;
+
+                  const legal = JSON.parse(JSON.stringify(this.legal));
 
                   try {
                     legal.zone = JSON.stringify(legal.zone); //进行序列化
@@ -1878,23 +1879,7 @@ export default {
             onOk: async(result) => {
 
                   try {
-                    legal.zone = JSON.stringify(legal.zone); //进行序列化
-                    legal.caseType = JSON.stringify(legal.caseType); //进行序列化
-                    legal.court = JSON.stringify(legal.court); //进行序列化
-                  } catch (error) {
-                    console.error(error);
-                  }
-                  
-                  try {
                     result = await Betools.manage.patchTableData(this.tablename, id, content); // 向表单提交form对象数据
-                  } catch (error) {
-                    console.error(error);
-                  }
-
-                  try {
-                    legal.zone = JSON.parse(legal.zone); //进行序列化
-                    legal.caseType = JSON.parse(legal.caseType); //进行序列化
-                    legal.court = JSON.parse(legal.court); //进行序列化
                   } catch (error) {
                     console.error(error);
                   }

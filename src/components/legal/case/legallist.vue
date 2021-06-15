@@ -39,9 +39,8 @@
                 <div style="width:100%;margin-left:0px;margin-right:0px;background:#fbf9fe;">
 
                     <div class="reward-top-button" style="margin-top:20px;margin-bottom:20px; margin-left:20px;">
-                        <a-input-search v-model="legal.value" placeholder="输入搜索关键字、案件名称、相关信息等" style="width:450px;" enter-button @search="execSearch('view')" />
                         
-                        <div v-if="getUrlParam('stage') == '全部' " style="display:inline;margin-left:15px;font-size:14px;margin-right:10px;">
+                        <div v-if="getUrlParam('stage') == '全部' " style="display:inline;margin-left:0px;font-size:14px;margin-right:10px;">
                           <span>案件阶段</span>
                           <a-select  v-model="legal.stage" default-value="一审阶段" placeholder="选择案件程序阶段" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
                             <a-select-option value="全部">
@@ -100,10 +99,59 @@
                             </a-select-option>
                           </a-select>
                         </div>
+
+                        <a-input-search v-model="legal.value" placeholder="输入搜索关键字、案件名称、相关信息等" style="width:350px;" enter-button @search="execSearch('view')" />
+
                         <a-button type="primary" @click="execSearch('view')" >查询</a-button>
                         <a-button type="primary" @click="execFresh" style="display:none;">刷新</a-button>
                         <a-button type="primary" @click="execApply" style="display:none;">新增</a-button>
                         <a-button type="primary" @click="execExport" >导出</a-button>
+                    </div>
+
+                    <div class="reward-top-button" style="margin-top:20px;margin-bottom:20px; margin-left:20px;">
+                      <div style="display:inline;margin-left:0px;font-size:14px;margin-right:10px;">
+                        <span>所属区域</span>
+                        <a-input v-model="legal.zone" placeholder="请选择所属区域" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      </div>
+                      <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
+                        <span>法院名称</span>
+                        <a-input v-model="legal.court" placeholder="请输入法院关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      </div>
+                      <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
+                        <span>原告名称</span>
+                        <a-input v-model="legal.accuser" placeholder="请输入原告关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      </div>
+                      <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
+                        <span>被告名称</span>
+                        <a-input v-model="legal.defendant" placeholder="请输入被告关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      </div>
+                      <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
+                        <span>案由信息</span>
+                        <a-input v-model="legal.caseType" placeholder="请输入案由关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      </div>
+                    </div>
+
+                    <div class="reward-top-button" style="margin-top:20px;margin-bottom:20px; margin-left:20px;">
+                      <div style="display:inline;margin-left:0px;font-size:14px;margin-right:10px;">
+                        <span>律所名称</span>
+                        <a-input v-model="legal.lawOffice" placeholder="请选择所属区域" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      </div>
+                      <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
+                        <span>律师名称</span>
+                        <a-input v-model="legal.lawyer" placeholder="请输入法院关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      </div>
+                      <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
+                        <span>法官名称</span>
+                        <a-input v-model="legal.judge" placeholder="请输入原告关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      </div>
+                      <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
+                        <span>诉讼请求</span>
+                        <a-input v-model="legal.claims" placeholder="请输入被告关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      </div>
+                      <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
+                        <span>事项披露</span>
+                        <a-input v-model="legal.disclosure" placeholder="请输入案由关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      </div>
                     </div>
 
                     <div style="margin-left:20px;">
@@ -289,9 +337,22 @@ export default {
       tablename:'bs_legal',
       viewname:'bs_legal',
       size: 0,
-      options:{},
+      options:{
+        causeOptions:JSON.parse(`[{"label":"人格权纠纷","value":"人格权纠纷","children":[{"label":"名誉权纠纷","value":"名誉权纠纷"},{"label":"其他人格权纠纷","value":"其他人格权纠纷"}]},{"label":"物权纠纷","value":"物权纠纷","children":[{"label":"物权确认纠纷","value":"物权确认纠纷"},{"label":"排除妨害纠纷","value":"排除妨害纠纷"},{"label":"恢复原状纠纷","value":"恢复原状纠纷"},{"label":"返还原物纠纷","value":"返还原物纠纷"},{"label":"业主知情权纠纷","value":"业主知情权纠纷"},{"label":"相邻关系纠纷","value":"相邻关系纠纷"},{"label":"业主共有权纠纷","value":"业主共有权纠纷"},{"label":"建设用地使用权纠纷","value":"建设用地使用权纠纷"},{"label":"抵押权纠纷","value":"抵押权纠纷"}]},{"label":"合同纠纷、准合同纠纷","value":"合同纠纷、准合同纠纷","children":[{"label":"确认合同效力纠纷","value":"确认合同效力纠纷"},{"label":"房屋买卖合同纠纷","value":"房屋买卖合同纠纷"},{"label":"其他买卖合同纠纷","value":"其他买卖合同纠纷"},{"label":"租赁合同纠纷","value":"租赁合同纠纷"},{"label":"建设工程合同纠纷","value":"建设工程合同纠纷"},{"label":"物业服务合同纠纷-公共收益返还","value":"物业服务合同纠纷-公共收益返还"},{"label":"物业服务合同纠纷-返水纠纷","value":"物业服务合同纠纷-返水纠纷"},{"label":"物业服务合同纠纷-进退场纠纷","value":"物业服务合同纠纷-进退场纠纷"},{"label":"物业服务合同纠纷-物业服务费纠纷","value":"物业服务合同纠纷-物业服务费纠纷"},{"label":"物业服务合同纠纷-其他","value":"物业服务合同纠纷-其他"},{"label":"中介合同纠纷","value":"中介合同纠纷"},{"label":"劳务合同纠纷","value":"劳务合同纠纷"},{"label":"无因管理、不当得利纠纷","value":"无因管理、不当得利纠纷"},{"label":"追偿权纠纷","value":"追偿权纠纷"},{"label":"其他合同纠纷","value":"其他合同纠纷"},{"label":"缔约过失责任纠纷","value":"缔约过失责任纠纷"},{"label":"预约合同纠纷","value":"预约合同纠纷"},{"label":"建设用地使用权合同纠纷","value":"建设用地使用权合同纠纷"},{"label":"股权合作合同纠纷","value":"股权合作合同纠纷"},{"label":"委托开发合同纠纷","value":"委托开发合同纠纷"},{"label":"其他投资合同纠纷","value":"其他投资合同纠纷"},{"label":"商品房预约合同纠纷","value":"商品房预约合同纠纷"},{"label":"商品房销/预售合同纠纷-逾期交房纠纷","value":"商品房销/预售合同纠纷-逾期交房纠纷"},{"label":"商品房销/预售合同纠纷-逾期整改纠纷","value":"商品房销/预售合同纠纷-逾期整改纠纷"},{"label":"商品房销/预售合同纠纷-逾期办证纠纷","value":"商品房销/预售合同纠纷-逾期办证纠纷"},{"label":"商品房销/预售合同纠纷-退房纠纷","value":"商品房销/预售合同纠纷-退房纠纷"},{"label":"商品房销/预售合同纠纷-交付不符纠纷","value":"商品房销/预售合同纠纷-交付不符纠纷"},{"label":"商品房销/预售合同纠纷-房屋质量纠纷","value":"商品房销/预售合同纠纷-房屋质量纠纷"},{"label":"商品房销/预售合同纠纷-分包销合同纠纷","value":"商品房销/预售合同纠纷-分包销合同纠纷"},{"label":"商品房销/预售合同纠纷-用益物权纠纷（使用权转让）","value":"商品房销/预售合同纠纷-用益物权纠纷（使用权转让）"},{"label":"商品房销/预售合同纠纷-断供纠纷","value":"商品房销/预售合同纠纷-断供纠纷"},{"label":"商品房销/预售合同纠纷-其他纠纷","value":"商品房销/预售合同纠纷-其他纠纷"},{"label":"销售代理（中介)合同纠纷","value":"销售代理（中介)合同纠纷"},{"label":"营销广告合同纠纷","value":"营销广告合同纠纷"},{"label":"借款（民间借贷）/金融贷款合同纠纷","value":"借款（民间借贷）/金融贷款合同纠纷"},{"label":"建设工程合同纠纷-工程质量纠纷","value":"建设工程合同纠纷-工程质量纠纷"},{"label":"建设工程合同纠纷-欠付工程款纠纷","value":"建设工程合同纠纷-欠付工程款纠纷"},{"label":"建设工程合同纠纷-工程结算纠纷","value":"建设工程合同纠纷-工程结算纠纷"},{"label":"建设工程合同纠纷-质保金纠纷","value":"建设工程合同纠纷-质保金纠纷"},{"label":"建设工程合同纠纷-其他纠纷","value":"建设工程合同纠纷-其他纠纷"},{"label":"演出合同纠纷","value":"演出合同纠纷"},{"label":"无因管理纠纷","value":"无因管理纠纷"},{"label":"不当得利纠纷","value":"不当得利纠纷"}]},{"label":"劳动争议","value":"劳动争议","children":[{"label":"解除劳动合同纠纷","value":"解除劳动合同纠纷"},{"label":"确认劳动关系纠纷","value":"确认劳动关系纠纷"},{"label":"追索劳动报酬纠纷","value":"追索劳动报酬纠纷"},{"label":"竞业限制纠纷","value":"竞业限制纠纷"},{"label":"社会保险纠纷","value":"社会保险纠纷"},{"label":"工伤工亡纠纷","value":"工伤工亡纠纷"},{"label":"劳务派遣合同纠纷","value":"劳务派遣合同纠纷"},{"label":"其他劳动争议","value":"其他劳动争议"}]},{"label":"与公司、证券、保险、票据等有关的民事纠纷","value":"与公司、证券、保险、票据等有关的民事纠纷","children":[{"label":"请求变更公司登记纠纷","value":"请求变更公司登记纠纷"},{"label":"股权转让纠纷","value":"股权转让纠纷"},{"label":"股东知情权纠纷","value":"股东知情权纠纷"},{"label":"公司决议纠纷","value":"公司决议纠纷"},{"label":"公司盈余分配纠纷","value":"公司盈余分配纠纷"},{"label":"损害股东利益责任纠纷","value":"损害股东利益责任纠纷"},{"label":"损害公司利益责任纠纷","value":"损害公司利益责任纠纷"},{"label":"股东出资纠纷","value":"股东出资纠纷"},{"label":"股权激励纠纷","value":"股权激励纠纷"},{"label":"公司解散纠纷","value":"公司解散纠纷"},{"label":"其他与公司有关的纠纷","value":"其他与公司有关的纠纷"},{"label":"证券纠纷","value":"证券纠纷"},{"label":"保险合同纠纷","value":"保险合同纠纷"},{"label":"保险人代位求偿权纠纷","value":"保险人代位求偿权纠纷"}]},{"label":"著作权侵权纠纷","value":"著作权侵权纠纷","children":[{"label":"著作权侵权纠纷","value":"著作权侵权纠纷"}]},{"label":"侵权责任纠纷","value":"侵权责任纠纷","children":[{"label":"提供劳务致侵权纠纷","value":"提供劳务致侵权纠纷"},{"label":"网络侵权责任纠纷","value":"网络侵权责任纠纷"},{"label":"违反安全保障义务责任纠纷","value":"违反安全保障义务责任纠纷"},{"label":"生命权、身体权、健康权纠纷","value":"生命权、身体权、健康权纠纷"},{"label":"高空抛物、坠物致人身或财产损害责任纠纷","value":"高空抛物、坠物致人身或财产损害责任纠纷"},{"label":"其他致人或致财物损害的侵权责任纠纷","value":"其他致人或致财物损害的侵权责任纠纷"}]},{"label":"知识产权与竞争纠纷","value":"知识产权与竞争纠纷","children":[{"label":"知识产权与竞争纠纷","value":"知识产权与竞争纠纷"}]},{"label":"非讼程序案件案由","value":"非讼程序案件案由","children":[{"label":"公司清算案件","value":"公司清算案件"},{"label":"第三人撤销之诉","value":"第三人撤销之诉"},{"label":"执行程序中的异议之诉","value":"执行程序中的异议之诉"}]}]`),
+        zoneOptions:JSON.parse(`[{"label":"融量集团","value":"融量集团","children":[{"label":"融量集团总部","value":"融量集团总部"},{"label":"地产板块","value":"地产板块","children":[{"label":"领地集团总部","value":"领地集团总部"},{"label":"成渝区域","value":"成渝区域"},{"label":"两湖区域","value":"两湖区域"},{"label":"川北区域","value":"川北区域"},{"label":"成渝区域","value":"成渝区域"},{"label":"川南区域","value":"川南区域"},{"label":"中原区域","value":"中原区域"},{"label":"攀西区域","value":"攀西区域"},{"label":"新疆区域","value":"新疆区域"},{"label":"大湾区域","value":"大湾区域"},{"label":"北京区域","value":"北京区域"},{"label":"园林公司","value":"园林公司"}]},{"label":"金融板块","value":"金融板块","children":[{"label":"量石投资","value":"量石投资"}]},{"label":"物业板块","value":"物业板块","children":[{"label":"领悦集团总部","value":"领悦集团总部"},{"label":"川南区域","value":"川南区域"},{"label":"商写事业部","value":"商写事业部"},{"label":"川北区域","value":"川北区域"},{"label":"新疆区域","value":"新疆区域"},{"label":"攀西区域","value":"攀西区域"},{"label":"长春区域","value":"长春区域"},{"label":"大湾区域","value":"大湾区域"},{"label":"郑州荆州区域","value":"郑州荆州区域"},{"label":"贵阳区域","value":"贵阳区域"},{"label":"佳美物业公司","value":"佳美物业公司"}]},{"label":"医疗健康板块","value":"医疗健康板块","children":[{"label":"健康事业部","value":"健康事业部"},{"label":"至诚和爱健管中心","value":"至诚和爱健管中心"},{"label":"高康国际医院","value":"高康国际医院"}]},{"label":"商业板块","value":"商业板块","children":[{"label":"宝瑞商管","value":"宝瑞商管"}]},{"label":"合作方财务公司","value":"合作方财务公司","children":[{"label":"共享财务中心","value":"共享财务中心"}]}]}]`),
+      },
       legal:{
         value:'',
+        zone:'',
+        court:'',
+        accuser:'',
+        defendant:'',
+        caseType:'',
+        lawOffice:'',
+        lawyer:'',
+        judge:'',
+        claims:'',
+        disclosure:'',
         stage:'全部',
         caseSType:'全部',
         legalType:'全部',
@@ -655,6 +716,17 @@ export default {
         let stageSql = Betools.tools.isNull(legal.stage) || legal.stage == '全部' ? '' : `~and(stage,in,${legal.stage})`;
         let caseSTypeSQL = Betools.tools.isNull(legal.caseSType) || legal.caseSType == '全部' ? '':`~and(caseSType,eq,${legal.caseSType})`;
         let legalTypeSQL = Betools.tools.isNull(legal.legalType) || legal.legalType == '全部' ? '':`~and(legalType,eq,${legal.legalType})`;
+        let zoneSQL = Betools.tools.isNull(legal.zone) ? '':`~and(zone,like,~${legal.zone}~)`;
+        let courtSQL = Betools.tools.isNull(legal.court) ? '':`~and(court,like,~${legal.court}~)`;
+        let accuserSQL = Betools.tools.isNull(legal.accuser) ? '':`~and(accuser,like,~${legal.accuser}~)`;
+        let defendantSQL = Betools.tools.isNull(legal.defendant) ? '':`~and(defendant,like,~${legal.defendant}~)`;
+        let caseTypeSQL = Betools.tools.isNull(legal.caseType) ? '':`~and(caseType,like,~${legal.caseType}~)`;
+        let lawOfficeSQL = Betools.tools.isNull(legal.lawOffice) ? '':`~and(lawOffice,like,~${legal.lawOffice}~)`;
+        let lawyerSQL = Betools.tools.isNull(legal.lawyer) ? '':`~and(lawyer,like,~${legal.lawyer}~)`;
+        let judgeSQL = Betools.tools.isNull(legal.judge) ? '':`~and(judge,like,~${legal.judge}~)`;
+        let claimsSQL = Betools.tools.isNull(legal.claims) ? '':`~and(claims,like,~${legal.claims}~)`;
+        let disclosureSQL = Betools.tools.isNull(legal.disclosure) ? '':`~and(claims,like,~${legal.disclosure}~)`;
+        searchSql = zoneSQL + courtSQL + accuserSQL + defendantSQL + caseTypeSQL + lawOfficeSQL + lawyerSQL + judgeSQL + claimsSQL + disclosureSQL + searchSql;
         this.data = [];
         
         (async()=>{
