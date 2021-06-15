@@ -1744,14 +1744,6 @@ export default {
                     result = await Betools.manage.postTableData(this.tablename , legal); // 向表单提交form对象数据
                     console.error(error);
                   }
-
-                  try {
-                    legal.zone = JSON.parse(legal.zone); //进行序列化
-                    legal.caseType = JSON.parse(legal.caseType); //进行序列化
-                    legal.court = JSON.parse(legal.court); //进行序列化
-                  } catch (error) {
-                    console.error(error);
-                  }
                   
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
@@ -1805,14 +1797,6 @@ export default {
                   
                   try {
                     result = await Betools.manage.patchTableData(this.tablename, id, legal); // 向表单提交form对象数据
-                  } catch (error) {
-                    console.error(error);
-                  }
-
-                  try {
-                    legal.zone = JSON.parse(legal.zone); //进行序列化
-                    legal.caseType = JSON.parse(legal.caseType); //进行序列化
-                    legal.court = JSON.parse(legal.court); //进行序列化
                   } catch (error) {
                     console.error(error);
                   }
