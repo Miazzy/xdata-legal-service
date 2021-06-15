@@ -1748,8 +1748,10 @@ export default {
                   if(result && result.error && result.error.errno){ //提交数据如果出现错误，请提示错误信息
                       return await vant.Dialog.alert({  title: '温馨提示',  message: `系统错误，请联系管理人员，错误编码：[${result.error.code}]. `, });
                   }
-
-                  Betools.manage.handleLog(this.tablename , legal , '发起', '案件流程审批' , `${userinfo.realname} 发起${legal.caseSType}流程，案号：${legal.caseID}`);
+                  (async()=>{
+                    Betools.manage.sortTableData(this.tablename , 'serialID');
+                    Betools.manage.handleLog(this.tablename , legal , '发起', '案件流程审批' , `${userinfo.realname} 发起${legal.caseSType}流程，案号：${legal.caseID}`);
+                  })();
                   this.loading = false; //设置状态
                   this.readonly = true;
                   this.role = 'view';
