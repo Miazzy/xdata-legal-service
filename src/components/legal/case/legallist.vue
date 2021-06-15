@@ -740,7 +740,7 @@ export default {
           vant.Toast.clear();
         })();
 
-        return data; 
+        return this.data; 
       },
 
   },
