@@ -197,7 +197,7 @@ export const reward = ($router) => {
             href: "/account/myanalyse",
             description: '查看已结案案件列表信息',
             click: () => {
-                $router.push(`/legal/course/lawsuitlist?&type=99&status=finish&legalTname=all&stage=结案闭单`, '_blank');
+                $router.push(`/legal/course/lawsuitlist?&type=99&status=finish&legalTname=all&stage=归档闭单`, '_blank');
             },
         }, {
             name: "案件管理",

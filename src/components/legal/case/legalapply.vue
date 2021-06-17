@@ -215,8 +215,8 @@
                         <a-select-option value="劳动仲裁">
                           劳动仲裁
                         </a-select-option>
-                        <a-select-option value="结案闭单">
-                          结案闭单
+                        <a-select-option value="归档闭单">
+                          归档闭单
                         </a-select-option>
                       </a-select>
                     </a-col>
@@ -568,7 +568,7 @@
                         </a-tab-pane>
                         <a-tab-pane v-if="stage != 'evaluate' " key="2" tab="二审管理">
 
-                          <div v-show=" '|二审阶段|再审阶段|执行阶段|结案闭单|'.includes(legal.stage) ">
+                          <div v-show=" '|二审阶段|再审阶段|执行阶段|归档闭单|'.includes(legal.stage) ">
                           <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px;margin-right:10px;">
                             <a-row>
                               <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
@@ -658,7 +658,7 @@
                         </a-tab-pane>
                         <a-tab-pane v-if="stage != 'evaluate' " key="3" tab="再审管理" >
 
-                          <div v-show=" '|再审阶段|执行阶段|结案闭单|'.includes(legal.stage) ">
+                          <div v-show=" '|再审阶段|执行阶段|归档闭单|'.includes(legal.stage) ">
                           <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px;margin-right:10px;">
                             <a-row>
                               <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
@@ -1860,7 +1860,7 @@ export default {
           content = {...fstLegal, ...secLegal, ...reviewLegal};
         } else if(stage == '执行阶段'){
           content = {...fstLegal, ...secLegal, ...reviewLegal, ...forceLegal};
-        } else if(stage == '结案闭单'){
+        } else if(stage == '归档闭单'){
           content = {...fstLegal, ...secLegal, ...reviewLegal, ...forceLegal};
         }
 

@@ -64,8 +64,8 @@
                             <a-select-option value="劳动仲裁">
                               劳动仲裁
                             </a-select-option>
-                            <a-select-option value="结案闭单">
-                              结案闭单
+                            <a-select-option value="归档闭单">
+                              归档闭单
                             </a-select-option>
                           </a-select>
                         </div>
@@ -106,6 +106,61 @@
                         <a-button type="primary" @click="execFresh" style="display:none;">刷新</a-button>
                         <a-button type="primary" @click="execApply" style="display:none;">新增</a-button>
                         <a-button type="primary" @click="execExport" >导出</a-button>
+                    </div>
+
+                    <div class="reward-top-button" style="margin-top:20px;margin-bottom:20px; margin-left:20px;">
+                      <div style="display:inline;margin-left:0px;font-size:14px;margin-right:10px;">
+                        <span>案件范围</span>
+                        <a-select  v-model="legal.scope" default-value="本部门" placeholder="请选择案件范围！" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                          <a-select-option value="全集团">
+                            全集团
+                          </a-select-option>
+                          <a-select-option value="本部门">
+                            本部门
+                          </a-select-option>
+                        </a-select>
+                      </div>
+                      <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
+                        <span>业务板块</span>
+                        <a-select  v-model="legal.plate" default-value="地产板块" placeholder="请选择业务板块！" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                          <a-select-option value="">
+                            所有板块
+                          </a-select-option>
+                          <a-select-option value="融量集团总部">
+                            融量集团总部
+                          </a-select-option>
+                          <a-select-option value="地产板块">
+                            地产板块
+                          </a-select-option>
+                          <a-select-option value="金融板块">
+                            金融板块
+                          </a-select-option>
+                          <a-select-option value="物业板块">
+                            物业板块
+                          </a-select-option>
+                          <a-select-option value="医疗健康板块">
+                            医疗健康板块
+                          </a-select-option>
+                          <a-select-option value="商业板块">
+                            商业板块
+                          </a-select-option>
+                          <a-select-option value="合作方财务公司">
+                            合作方财务公司
+                          </a-select-option>
+                        </a-select>
+                      </div>
+                      <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
+                        <span>项目名称</span>
+                        <a-input v-model="legal.zoneProject" placeholder="请输入项目名称" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      </div>
+                      <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
+                        <span>填报人员</span>
+                        <a-input v-model="legal.create_by" placeholder="请输入填报人员" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      </div>
+                      <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
+                        <span>案件进展</span>
+                        <a-input v-model="legal.progress" placeholder="请输入案件进展关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      </div>
                     </div>
 
                     <div class="reward-top-button" style="margin-top:20px;margin-bottom:20px; margin-left:20px;">
@@ -170,13 +225,13 @@
                                       <a-menu-item key="200" @click="execView(item)">
                                         查看案件
                                       </a-menu-item>
-                                      <a-menu-item v-if=" item.stage != '结案闭单'" key="201" @click="execPatch(item)">
+                                      <a-menu-item v-if=" item.stage != '归档闭单'" key="201" @click="execPatch(item)">
                                         修改案件
                                       </a-menu-item>
-                                      <a-menu-item v-if=" item.stage != '结案闭单' && item.status == '待处理' " key="101" @click="execDelete(item)">
+                                      <a-menu-item v-if=" item.stage != '归档闭单' && item.status == '待处理' " key="101" @click="execDelete(item)">
                                         删除案件
                                       </a-menu-item>
-                                      <a-menu-item v-if=" item.stage != '结案闭单' && item.status == '待处理' " key="99" @click="execBan(item)">
+                                      <a-menu-item v-if=" item.stage != '归档闭单' && item.status == '待处理' " key="99" @click="execBan(item)">
                                         禁用案件
                                       </a-menu-item>
                                       <a-menu-item key="300" @click="execNotify(item)">
@@ -185,7 +240,7 @@
                                     </a-menu>
                                   </a-dropdown>
                                   
-                                  <a-dropdown slot="actions" v-if=" item.stage != '结案闭单'">
+                                  <a-dropdown slot="actions" v-if=" item.stage != '归档闭单'">
                                     <a class="ant-dropdown-link" @click="e => e.preventDefault()">
                                       管理<a-icon type="down" />
                                     </a>
@@ -205,13 +260,13 @@
                                       <a-menu-item key="4" @click="execHear(item , '再审阶段')">
                                         进入再审阶段
                                       </a-menu-item>
-                                      <a-menu-item key="100" @click="execHear(item , '结案闭单')">
-                                        结案闭单
+                                      <a-menu-item key="100" @click="execHear(item , '归档闭单')">
+                                        归档闭单
                                       </a-menu-item>
                                     </a-menu>
                                   </a-dropdown>
 
-                                  <a-dropdown slot="actions" v-if=" item.stage == '结案闭单'" >
+                                  <a-dropdown slot="actions" v-if=" item.stage == '归档闭单'" >
                                     <a class="ant-dropdown-link" @click="e => e.preventDefault()">
                                       评价<a-icon type="down" />
                                     </a>
@@ -231,7 +286,7 @@
                                   </a-list-item-meta>
 
                                   <a-badge style="float:left;z-index:1000000;right:-10px;position:absolute;top:35px;">
-                                    <a-icon slot="count" :type="item.stage == '结案闭单' ? 'check-circle' : item.stage == '一审阶段' ? 'question-circle':'clock-circle'" :style="item.stage == '结案闭单' ? `color:DodgerBlue;`: item.stage == '一审阶段' ? `color:Chocolate;`:`color: #f5222d;`" />
+                                    <a-icon slot="count" :type="item.stage == '归档闭单' ? 'check-circle' : item.stage == '一审阶段' ? 'question-circle':'clock-circle'" :style="item.stage == '归档闭单' ? `color:DodgerBlue;`: item.stage == '一审阶段' ? `color:Chocolate;`:`color: #f5222d;`" />
                                   </a-badge>
                                 </a-list-item>
                               </a-list>
@@ -343,6 +398,11 @@ export default {
       },
       legal:{
         value:'',
+        scope:'本部门',
+        plate:'',
+        zoneProject:'',
+        create_by:'',
+        progress:'',
         zone:'',
         court:'',
         accuser:'',
@@ -378,7 +438,7 @@ export default {
         { title: '受理法院', dataIndex: 'court', key: 'court', },
         { title: '承办法官', dataIndex: 'judge', key: 'judge', },
         { title: '内部律师(承)', dataIndex: 'inHouseLawyers', key: 'inHouseLawyers', },
-        { title: '案件状态', dataIndex: 'legalStatus', key: 'legalStatus', }, // { title: '流程标题', dataIndex: 'title', key: 'title', }, // { title: '填报日期', dataIndex: 'create_time', key: 'create_time', }, // { title: '填报人员', dataIndex: 'create_by', key: 'create_by', }, // { title: '案件类别', dataIndex: 'legalType', key: 'legalType', }, // { title: '所属板块', dataIndex: 'plate', key: 'plate', }, // { title: '公司名称', dataIndex: 'firm', key: 'firm', }, // { title: '所属区域', dataIndex: 'zone', key: 'zone', }, // { title: '项目名称', dataIndex: 'zoneProject', key: 'zoneProject', }, // { title: '第三人', dataIndex: 'thirdParty', key: 'thirdParty', }, // { title: '外聘律所', dataIndex: 'externalFlag', key: 'externalFlag', }, // { title: '外聘律所名称', dataIndex: 'lawOffice', key: 'lawOffice', }, // { title: '委托时间', dataIndex: 'lawOfficeTime', key: 'lawOfficeTime', }, // { title: '外聘律师', dataIndex: 'lawyer', key: 'lawyer', }, // { title: '律师电话', dataIndex: 'lawyerMobile', key: 'lawyerMobile', }, // { title: '诉讼请求', dataIndex: 'claims', key: 'claims', }, // { title: '诉讼本金', dataIndex: 'claimsCapital', key: 'claimsCapital', }, // { title: '诉讼违约金', dataIndex: 'claimsDedit', key: 'claimsDedit', }, // { title: '诉讼标的额', dataIndex: 'claimsBidSum', key: 'claimsBidSum', }, // { title: '法官电话', dataIndex: 'judgeMobile', key: 'judgeMobile', }, // { title: '外部律师(承办)', dataIndex: 'outHouseLawyers', key: 'outHouseLawyers', }, // { title: '事项披露', dataIndex: 'disclosure', key: 'disclosure', }, // { title: '案件进展', dataIndex: 'lawcase', key: 'lawcase', }, // { title: '最后修改时间', dataIndex: 'lastTime', key: 'lastTime', }, // { title: '最后修改人员', dataIndex: 'lastModifier', key: 'lastModifier', }, // { title: '结案日期', dataIndex: 'closeDate', key: 'closeDate', }, // { title: '归档日期', dataIndex: 'archiveDate', key: 'archiveDate', }, // { title: '办理进展', dataIndex: 'progress', key: 'progress', }, // { title: '申请人姓名', dataIndex: 'apply_realname', key: 'apply_realname', }, // { title: '申请人账号', dataIndex: 'apply_username', key: 'apply_username', }, // { title: '案件类型', dataIndex: 'legalTname', key: 'legalTname', },
+        { title: '案件状态', dataIndex: 'legalStatus', key: 'legalStatus', }, 
       ],
       data:[],
       rowSelection:[],
@@ -387,7 +447,7 @@ export default {
         '二审阶段': 2,
         '执行阶段': 2,
         '再审阶段': 2,
-        '结案闭单': 100,
+        '归档闭单': 100,
       },
       breadcrumb:[{icon:'home',text:'首页',path:'/legal/workspace'},{icon:'user',text:'案件管控',path:'/legal/workspace'},{icon:'form',text:'案件管理',path:''}],
       statusType:{'valid':'有效','invalid':'删除'},
@@ -406,9 +466,8 @@ export default {
 
       // 企业微信登录处理函数
       async  weworkLogin  (codeType = 'search', systemType = 'search')  {
-        //const userinfo_work = await Betools.query.queryWeworkUser(codeType, systemType,'v5');
         const userinfo = await Betools.storage.getStore('system_userinfo');
-        this.legal.create_by = (userinfo ? userinfo.realname || userinfo.name || userinfo.lastname : '');
+        // this.legal.create_by = (userinfo ? userinfo.realname || userinfo.name || userinfo.lastname : '');
         this.usertitle = (userinfo && userinfo.parent_company && userinfo.parent_company.name ? userinfo.parent_company.name + ' > ' :'')  + (userinfo ? userinfo.realname || userinfo.name || userinfo.lastname : '');
         return userinfo;
       },
@@ -712,6 +771,7 @@ export default {
         const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
         const resp = await Betools.query.queryRoleGroupList('LEGAL_OPERATE_ADMIN', userinfo.username); // 如果是修改或者追加或者是知会，需要检查是否是同部门，如果是同部门，则可以进行修改或追加或者知会操作
         let permissionSQL = (resp && resp.length > 0 && (JSON.stringify(resp).includes('领地集团总部')||JSON.stringify(resp).includes('所有权限'))) ? '':`~and(apply_username,in,${resp[0].userlist})`;
+        let scopeSQL = this.legal.scope.includes('全集团') ? '':`~and(apply_username,in,${resp[0].userlist})`;
         let searchSql = typeof legal.value == 'string' ? `~and((title,like,~${legal.value}~)~or(create_by,like,~${legal.value}~)~or(fstPlan,like,~${legal.value}~)~or(legalType,like,~${legal.value}~)~or(plate,like,~${legal.value}~)~or(firm,like,~${legal.value}~)~or(legalTname,like,~${legal.value}~)~or(zone,like,~${legal.value}~)~or(zoneProject,like,~${legal.value}~)~or(caseID,like,~${legal.value}~)~or(caseType,like,~${legal.value}~)~or(caseSType,like,~${legal.value}~)~or(stage,like,~${legal.value}~)~or(accuser,like,~${legal.value}~)~or(defendant,like,~${legal.value}~)~or(court,like,~${legal.value}~)~or(judge,like,~${legal.value}~)~or(judgeMobile,like,~${legal.value}~)~or(inHouseLawyers,like,~${legal.value}~)~or(disclosure,like,~${legal.value}~)~or(lawcase,like,~${legal.value}~)~or(thirdParty,like,~${legal.value}~)~or(lawOffice,like,~${legal.value}~)~or(lawyer,like,~${legal.value}~)~or(lawyerMobile,like,~${legal.value}~)~or(claims,like,~${legal.value}~))` : '';
         let stageSql = Betools.tools.isNull(legal.stage) || legal.stage == '全部' ? '' : `~and(stage,in,${legal.stage})`;
         let caseSTypeSQL = Betools.tools.isNull(legal.caseSType) || legal.caseSType == '全部' ? '':`~and(caseSType,eq,${legal.caseSType})`;
@@ -726,7 +786,11 @@ export default {
         let judgeSQL = Betools.tools.isNull(legal.judge) ? '':`~and(judge,like,~${legal.judge}~)`;
         let claimsSQL = Betools.tools.isNull(legal.claims) ? '':`~and(claims,like,~${legal.claims}~)`;
         let disclosureSQL = Betools.tools.isNull(legal.disclosure) ? '':`~and(claims,like,~${legal.disclosure}~)`;
-        searchSql = zoneSQL + courtSQL + accuserSQL + defendantSQL + caseTypeSQL + lawOfficeSQL + lawyerSQL + judgeSQL + claimsSQL + disclosureSQL + searchSql;
+        let plateSQL = Betools.tools.isNull(legal.plate) ? '': `~and(plate,like,~${legal.plate}~)`;
+        let zoneProjectSQL = Betools.tools.isNull(legal.zoneProject) ? '': `~and(zoneProject,like,~${legal.zoneProject}~)`;
+        let createbySQL = Betools.tools.isNull(legal.create_by) ? '': `~and(create_by,like,~${legal.create_by}~)`;
+        let progressSQL = Betools.tools.isNull(legal.progress) ? '': `~and(progress,like,~${legal.progress}~)`;
+        searchSql = plateSQL + zoneProjectSQL + createbySQL + progressSQL + scopeSQL + zoneSQL + courtSQL + accuserSQL + defendantSQL + caseTypeSQL + lawOfficeSQL + lawyerSQL + judgeSQL + claimsSQL + disclosureSQL + searchSql;
         this.data = [];
         
         (async()=>{
@@ -734,6 +798,7 @@ export default {
           value == 'view' && data && data.length > 0 && this.data.length == 0 ? (this.data = data) : null ;
           vant.Toast.clear();
         })();
+
         (async()=>{
           const data = await this.handleList(tableName , `待处理,处理中,审批中,已完成,已结案,已驳回${cacheRandomKey}`, userinfo, stageSql + permissionSQL + caseSTypeSQL + legalTypeSQL + searchSql , 0 , 10000);
           value == 'view' && data && data.length > 0 && this.data.length == 0 ? (this.data = data) : null ;
