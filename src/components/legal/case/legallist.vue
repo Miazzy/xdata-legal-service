@@ -293,10 +293,12 @@
                           </div>
                         </a-tab-pane>
 
-                        <a-tab-pane key="2" tab="表格" force-render>
+                        <!--
+                        <a-tab-pane key="2" tab="表格" force-render style="display:none;">
                           <a-empty v-if="data.length == 0" style="margin-top:10%;height:580px;"/>
                           <a-table v-if="data.length > 0 " style="width:105%;" size="middle" tableLayout="column.ellipsis" :bordered="false" :columns="columns" :data-source="data"  />
                         </a-tab-pane>
+                        !-->
 
                         <a-tab-pane key="3" tab="表单">
                           <a-empty v-if="data.length == 0" style="margin-top:10%;height:580px;"/>
