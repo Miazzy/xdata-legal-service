@@ -302,7 +302,7 @@
 
                         <a-tab-pane key="3" tab="表单">
                           <a-empty v-if="data.length == 0" style="margin-top:10%;height:580px;"/>
-                          <vue-excel-editor v-if="data.length > 0" v-model="data" ref="grid" width="100%" filter-row autocomplete >
+                          <vue-excel-editor v-if="data.length > 0" v-model="data" ref="grid" width="100%" autocomplete >
                                 <vue-excel-column field="caseID"      label="案件编号"          width="120px" />
                                 <vue-excel-column field="create_time"    label="填报日期"       width="120px" />
                                 <vue-excel-column field="create_by"    label="填报人员"       width="120px" />
