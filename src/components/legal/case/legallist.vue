@@ -292,7 +292,6 @@
                               </a-list>
                           </div>
                         </a-tab-pane>
-
                         <a-tab-pane key="3" tab="表单">
                           <a-empty v-if="data.length == 0" style="margin-top:10%;height:580px;"/>
                           <vue-excel-editor v-if="data.length > 0" v-model="data" ref="grid" width="100%" autocomplete >
