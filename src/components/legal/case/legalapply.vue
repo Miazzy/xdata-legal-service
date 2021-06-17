@@ -223,7 +223,7 @@
                   </a-row>
                 </div>
 
-                <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
+                <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px; display:none;">
                   <a-row>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
                       <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>业务接收时间</span>
@@ -337,7 +337,7 @@
                 <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>外部律所</span>
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>是否委外</span>
                     </a-col>
                     <a-col :span="8">
                       <a-select  v-model="legal.externalFlag" default-value="是" @blur="validFieldToast('externalFlag')"  placeholder="请选择是否聘用外部律所" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
@@ -1120,8 +1120,8 @@ export default {
         caseType :'', // varchar(64)  default '' not null comment '一级案由',
         caseSType :'起诉案件', // varchar(64)  default '' not null comment '二级案由',
         stage :'一审阶段', // varchar(64)  default '' not null comment '程序阶段',
-        receiveTime: '', // timestamp    default CURRENT_TIMESTAMP not null comment '业务部门接收时间',
-        lawRTime: '', // timestamp    default CURRENT_TIMESTAMP not null comment '法律部门接收时间',
+        receiveTime: dayjs().format('YYYY-MM-DD'), // timestamp    default CURRENT_TIMESTAMP not null comment '业务部门接收时间',
+        lawRTime: dayjs().format('YYYY-MM-DD'), // timestamp    default CURRENT_TIMESTAMP not null comment '法律部门接收时间',
         accuser :'', // varchar(64)  default '' not null comment '诉讼发起人(原告/上诉人)',
         defendant :'', // varchar(64)  default '' not null comment '应诉人(被告/被上诉人)',
         thirdParty :'', // varchar(64)  default '' not null comment '第三人 third_party',
