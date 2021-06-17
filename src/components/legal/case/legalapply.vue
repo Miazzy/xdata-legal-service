@@ -42,7 +42,7 @@
               <div id="legal-apply-content" class="reward-apply-content" style="height:auto; background-color:#fefefe; margin-top:0px; margin-left: 2.5rem; margin-right: 2.5rem; margin-bottom: 5rem; border: 1px solid #f0f0f0; front-size: 1rem;" >
 
                 <div class="reward-apply-header" style="height:80px; width:100%; text-align:center; margin-top:20px; font-size: 1.5rem; ">
-                  {{ legal.legalTname }}案件发起申请
+                  {{ legal.caseSType }}发起申请
                 </div>
 
                 <div class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
@@ -465,7 +465,7 @@
                   </a-row>
                 </div>
                 
-                <div class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
+                <div v-if="!(role == 'add' && legal.caseSType == '起诉案件')" class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
                     <a-col class="reward-apply-content-title-text" :span="4" style="font-size:1.1rem;">
                       {{ stage == 'evaluate' ? '案件评价' : '案件周期'}}
@@ -473,7 +473,7 @@
                    </a-row>
                 </div>
 
-                <div class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;padding-left:70px;" >
+                <div v-if="!(role == 'add' && legal.caseSType == '起诉案件')" class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;padding-left:70px;" >
                       <a-tabs default-active-key="1" @change="callback">
 
                         <template v-if="stage != 'evaluate' ">
