@@ -364,10 +364,8 @@
                                 <vue-excel-column field="reviewAppealTime" label="再审上诉期"            width="120px" />
                           </vue-excel-editor>
                         </a-tab-pane>
-
                       </a-tabs>
                     </div>
-
                 </div>
                 </div>
               </div>
