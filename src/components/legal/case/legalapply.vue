@@ -465,7 +465,7 @@
                   </a-row>
                 </div>
                 
-                <div v-if="!(role == 'add' && (legal.caseSType == '起诉案件' || legal.caseSType == '应诉案件') )" class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
+                <div v-if="!(role == 'add' && legal.stage == '一审阶段' && (legal.caseSType == '起诉案件' || legal.caseSType == '应诉案件') )" class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
                    <a-row style="border-top: 1px dash #f0f0f0;" >
                     <a-col class="reward-apply-content-title-text" :span="4" style="font-size:1.1rem;">
                       {{ stage == 'evaluate' ? '案件评价' : '案件周期'}}
@@ -473,7 +473,7 @@
                    </a-row>
                 </div>
 
-                <div v-if="!(role == 'add' && legal.caseSType == '起诉案件' || legal.caseSType == '应诉案件')" class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;padding-left:70px;" >
+                <div v-if="!(role == 'add' && legal.stage == '一审阶段' && legal.caseSType == '起诉案件' || legal.caseSType == '应诉案件')" class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;padding-left:70px;" >
                       <a-tabs default-active-key="1" @change="callback">
 
                         <template v-if="stage != 'evaluate' ">
