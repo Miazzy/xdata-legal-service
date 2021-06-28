@@ -1867,7 +1867,7 @@ export default {
         const forceLegal = {enforce , enforce_time , enforce_fee , close_flag , closeDate, } = legal;
 
         if(stage == '一审阶段'){
-          content = {...fstLegal};
+          content = {...fstLegal, ...secLegal};
         } else if(stage == '二审阶段'){
           content = {...fstLegal, ...secLegal};
         } else if(stage == '再审阶段'){
