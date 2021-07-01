@@ -230,7 +230,7 @@ export default {
         const userinfo_work = await Betools.query.queryWeworkUser(codeType, systemType,'v5');
         const userinfo = await Betools.storage.getStore('system_userinfo');
         this.usertitle = (userinfo && userinfo.parent_company && userinfo.parent_company.name ? userinfo.parent_company.name + ' > ' :'')  + (userinfo ? userinfo.realname || userinfo.name || userinfo.lastname : '');
-        if(Betools.tools.isNull(this.usertitle)){
+        if(Betools.tools.isNull(this.usertitle)){ // 未获取到用户信息，直接根据浏览器记录获取用户信息
           const finger = await(await FingerprintJS.load()).get();
           const condition = `_where=(info,in,finger)~and(type,in,info)~and(content,like,~${finger.visitorId}__~)&_sort=-id&_p=0&_size=1`;
           let list = await Betools.manage.queryTableData('bs_async_log' , condition);
