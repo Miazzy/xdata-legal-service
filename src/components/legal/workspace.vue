@@ -172,7 +172,6 @@ export default {
             }
             if(!this.role.includes('LEGAL_ADMIN')){
               const pname = this.userinfo.systemuserinfo.textfield1;
-              debugger;
               pname.includes('法务') ? this.role += 'LEGAL_ADMIN' : null;
               this.role = this.deNull(this.role,'');
             }
