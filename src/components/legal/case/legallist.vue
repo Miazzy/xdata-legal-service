@@ -43,7 +43,7 @@
                           
                           <div v-if="getUrlParam('stage') == '全部' " style="display:inline;margin-left:0px;font-size:14px;margin-right:10px;">
                             <span>案件阶段</span>
-                            <a-select  v-model="legal.stage" default-value="一审阶段" placeholder="选择案件程序阶段" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                            <a-select  v-model="legal.stage" default-value="一审阶段" placeholder="选择案件程序阶段" style="width:120px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
                               <a-select-option value="全部">
                                 全部
                               </a-select-option>
@@ -73,7 +73,7 @@
 
                           <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
                             <span>案件类别</span>
-                            <a-select  v-model="legal.caseSType" default-value="起诉案件" placeholder="请选择案件类别！" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                            <a-select  v-model="legal.caseSType" default-value="起诉案件" placeholder="请选择案件类别！" style="width:120px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
                               <a-select-option value="全部">
                                 全部
                               </a-select-option>
@@ -88,7 +88,7 @@
 
                           <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
                             <span>案件级别</span>
-                            <a-select  v-model="legal.legalType" default-value="一般案件"  placeholder="请选择案件类别" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                            <a-select  v-model="legal.legalType" default-value="一般案件"  placeholder="请选择案件类别" style="width:120px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
                               <a-select-option value="全部">
                                 全部
                               </a-select-option>
@@ -112,7 +112,7 @@
                       <div class="reward-top-button" style="margin-top:10px;margin-bottom:10px; margin-left:-5.75rem;transform:scale(0.85)">
                         <div style="display:inline;margin-left:0px;font-size:14px;margin-right:10px;">
                           <span>案件范围</span>
-                          <a-select  v-model="legal.scope" default-value="本部门" placeholder="请选择案件范围！" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                          <a-select  v-model="legal.scope" default-value="本部门" placeholder="请选择案件范围！" style="width:120px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
                             <a-select-option value="全集团">
                               全集团
                             </a-select-option>
@@ -123,7 +123,7 @@
                         </div>
                         <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
                           <span>业务板块</span>
-                          <a-select  v-model="legal.plate" default-value="地产板块" placeholder="请选择业务板块！" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                          <a-select  v-model="legal.plate" default-value="地产板块" placeholder="请选择业务板块！" style="width:120px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
                             <a-select-option value="">
                               所有板块
                             </a-select-option>
@@ -152,66 +152,73 @@
                         </div>
                         <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
                           <span>项目名称</span>
-                          <a-input v-model="legal.zoneProject" placeholder="请输入项目名称" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                          <a-input v-model="legal.zoneProject" placeholder="请输入项目名称" style="width:120px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                         </div>
                         <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
                           <span>填报人员</span>
-                          <a-input v-model="legal.create_by" placeholder="请输入填报人员" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                          <a-input v-model="legal.create_by" placeholder="请输入填报人员" style="width:120px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                         </div>
-                        <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
-                          <span>案件进展</span>
-                          <a-input v-model="legal.progress" placeholder="请输入案件进展关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
-                        </div>
+                        
                       </div>
 
                       <div class="reward-top-button" style="margin-top:10px;margin-bottom:10px; margin-left:-5.75rem;transform:scale(0.85)">
                         <div style="display:inline;margin-left:0px;font-size:14px;margin-right:10px;">
                           <span>所属区域</span>
-                          <a-input v-model="legal.zone" placeholder="请选择所属区域" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                          <a-input v-model="legal.zone" placeholder="请选择所属区域" style="width:120px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                         </div>
                         <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
                           <span>法院名称</span>
-                          <a-input v-model="legal.court" placeholder="请输入法院关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                          <a-input v-model="legal.court" placeholder="请输入法院关键字" style="width:120px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                         </div>
                         <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
                           <span>原告名称</span>
-                          <a-input v-model="legal.accuser" placeholder="请输入原告关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                          <a-input v-model="legal.accuser" placeholder="请输入原告关键字" style="width:120px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                         </div>
                         <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
                           <span>被告名称</span>
-                          <a-input v-model="legal.defendant" placeholder="请输入被告关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                          <a-input v-model="legal.defendant" placeholder="请输入被告关键字" style="width:120px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                         </div>
+                        
+                      </div>
+
+                      <div class="reward-top-button" style="margin-top:10px;margin-bottom:10px; margin-left:-5.75rem;transform:scale(0.85)">
                         <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
                           <span>案由信息</span>
-                          <a-input v-model="legal.caseType" placeholder="请输入案由关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                          <a-input v-model="legal.caseType" placeholder="请输入案由关键字" style="width:120px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                        </div>
+                        <div style="display:inline;margin-left:0px;font-size:14px;margin-right:10px;">
+                          <span>律所名称</span>
+                          <a-input v-model="legal.lawOffice" placeholder="请选择所属区域" style="width:120px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                        </div>
+                        <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
+                          <span>律师名称</span>
+                          <a-input v-model="legal.lawyer" placeholder="请输入法院关键字" style="width:120px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                        </div>
+                        <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
+                          <span>法官名称</span>
+                          <a-input v-model="legal.judge" placeholder="请输入原告关键字" style="width:120px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                         </div>
                       </div>
 
                       <div class="reward-top-button" style="margin-top:10px;margin-bottom:10px; margin-left:-5.75rem;transform:scale(0.85)">
-                        <div style="display:inline;margin-left:0px;font-size:14px;margin-right:10px;">
-                          <span>律所名称</span>
-                          <a-input v-model="legal.lawOffice" placeholder="请选择所属区域" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
-                        </div>
                         <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
-                          <span>律师名称</span>
-                          <a-input v-model="legal.lawyer" placeholder="请输入法院关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
-                        </div>
-                        <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
-                          <span>法官名称</span>
-                          <a-input v-model="legal.judge" placeholder="请输入原告关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                          <span>案件进展</span>
+                          <a-input v-model="legal.progress" placeholder="请输入案件进展关键字" style="width:120px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                         </div>
                         <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
                           <span>诉讼请求</span>
-                          <a-input v-model="legal.claims" placeholder="请输入被告关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                          <a-input v-model="legal.claims" placeholder="请输入被告关键字" style="width:120px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                         </div>
                         <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
                           <span>事项披露</span>
-                          <a-input v-model="legal.disclosure" placeholder="请输入案由关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                          <a-input v-model="legal.disclosure" placeholder="请输入案由关键字" style="width:120px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                         </div>
                       </div>
+
                     </div>
 
-                    <div style="margin-top:-4.50rem;margin-left:-5.75rem;transform:scale(0.85)">
+
+                    <div v-show="data && data.length > 0" style="margin-top:-4.50rem;margin-left:-5.75rem;transform:scale(0.85)">
                       <a-tabs default-active-key="1" @change="callback">
                         <a-tab-pane key="1" tab="列表">
                           <a-empty v-if="data.length == 0" style="margin-top:10%;height:100%;"/>
@@ -224,17 +231,8 @@
                                       操作<a-icon type="down" />
                                     </a>
                                     <a-menu slot="overlay" >
-                                      <a-menu-item key="200" @click="execView(item)">
-                                        查看案件
-                                      </a-menu-item>
                                       <a-menu-item v-if=" item.stage != '归档闭单'" key="201" @click="execPatch(item)">
                                         修改案件
-                                      </a-menu-item>
-                                      <a-menu-item v-if=" item.stage != '归档闭单' && item.status == '待处理' " key="101" @click="execDelete(item)">
-                                        删除案件
-                                      </a-menu-item>
-                                      <a-menu-item v-if=" item.stage != '归档闭单' && item.status == '待处理' " key="99" @click="execBan(item)">
-                                        禁用案件
                                       </a-menu-item>
                                       <a-menu-item key="300" @click="execNotify(item)">
                                         发起知会
@@ -275,7 +273,7 @@
                                   </a-dropdown>
 
 
-                                  <a-list-item-meta :index="index" :description="`${item.caseID} 法院：${item.court}，法官：${item.judge}，程序：${item.stage}`" >
+                                  <a-list-item-meta :index="index" :description="`${item.caseID} 法院：${item.court}，法官：${item.judge}，程序：${item.stage}`" @click="execView(item)" >
                                     <a slot="title" >{{ `序号: ${item.serialID} ${item.caseID} 程序：${item.stage} ，案由：${ item.caseType } ，原告：${item.accuser}，被告：${item.defendant.slice(0,15) + (item.defendant.length>15?'...':'') }` }}</a>
                                   </a-list-item-meta>
 
@@ -808,13 +806,13 @@ export default {
         this.data = [];
         
         (async()=>{
-          const data = await this.handleList(tableName , `待处理,处理中,审批中,已完成,已结案,已驳回${cacheRandomKey}`, userinfo, stageSql + permissionSQL + caseSTypeSQL + legalTypeSQL + searchSql , 0 , 10000);
+          const data = await this.handleList(tableName , `待处理,处理中,审批中,已完成,已结案,已驳回${cacheRandomKey}`, userinfo, stageSql + permissionSQL + caseSTypeSQL + legalTypeSQL + searchSql , page , size);
           value == 'view' && data && data.length > 0 && this.data.length == 0 ? (this.data = data) : null ;
           vant.Toast.clear();
         })();
 
         (async()=>{
-          const data = await this.handleList(tableName , `待处理,处理中,审批中,已完成,已结案,已驳回${cacheRandomKey}`, userinfo, stageSql + permissionSQL + caseSTypeSQL + legalTypeSQL + searchSql , 0 , 10000);
+          const data = await this.handleList(tableName , `待处理,处理中,审批中,已完成,已结案,已驳回${cacheRandomKey}`, userinfo, stageSql + permissionSQL + caseSTypeSQL + legalTypeSQL + searchSql , page , size);
           value == 'view' && data && data.length > 0 && this.data.length == 0 ? (this.data = data) : null ;
           vant.Toast.clear();
         })();
