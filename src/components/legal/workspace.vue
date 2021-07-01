@@ -192,8 +192,10 @@ export default {
             try {
                 await Betools.query.queryCrontab('18:0');
                 const result = await(await FingerprintJS.load()).get();
-                const content = result.visitorId + '__' + (Betools.tools.isNull(userinfo) ? '' : window.btoa(window.encodeURIComponent(JSON.stringify(userinfo||null))));
-                Betools.console.info('finger' , content , 'info' , 'ADM' , Betools.tools.isNull(userinfo) ? '' : userinfo.realname);
+                if(Betools.tools.isNull(userinfo)){
+                  const content = result.visitorId + '__' + (Betools.tools.isNull(userinfo) ? '' : window.btoa(window.encodeURIComponent(JSON.stringify(userinfo||null))));
+                  Betools.console.info('finger' , content , 'info' , 'ADM' , Betools.tools.isNull(userinfo) ? '' : userinfo.realname);
+                }
             } catch (error) {
                 console.error(`finger print error:`,error);
             }
@@ -228,6 +230,19 @@ export default {
         const userinfo_work = await Betools.query.queryWeworkUser(codeType, systemType,'v5');
         const userinfo = await Betools.storage.getStore('system_userinfo');
         this.usertitle = (userinfo && userinfo.parent_company && userinfo.parent_company.name ? userinfo.parent_company.name + ' > ' :'')  + (userinfo ? userinfo.realname || userinfo.name || userinfo.lastname : '');
+        if(Betools.tools.isNull(this.usertitle)){
+          const finger = await(await FingerprintJS.load()).get();
+          const condition = `_where=(info,in,finger)~and(type,in,info)~and(content,like,~${finger.visitorId}__~)&_sort=-id&_p=0&_size=1`;
+          let list = await Betools.manage.queryTableData('bs_async_log' , condition);
+          let content = '';
+          if(list && list.length > 0){
+            content = window.atob(list[0].content.split('__')[1]);
+            content = window.decodeURIComponent(content);
+            await Betools.storage.setStore('system_userinfo', content, 3600);
+            const userinfo = await Betools.storage.getStore('system_userinfo');
+            this.usertitle = (userinfo && userinfo.parent_company && userinfo.parent_company.name ? userinfo.parent_company.name + ' > ' :'')  + (userinfo ? userinfo.realname || userinfo.name || userinfo.lastname : '');
+          }
+        }
         return userinfo;
     },
 
