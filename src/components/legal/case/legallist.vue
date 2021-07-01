@@ -216,14 +216,6 @@
                           <div v-if="data.length > 0" class="reward-content-table" style="margin-left:0px; width:98%; height:100%; margin-bottom:20px;"> 
                               <a-list item-layout="horizontal" :data-source="data">
                                 <a-list-item v-show=" item.status != '已删除' && item.status != '已作废' " slot="renderItem" slot-scope="item, index" style="position:relative;">
-
-                                  <a-dropdown slot="actions" v-if=" false ">
-                                    <a class="ant-dropdown-link" @click="e => e.preventDefault()">
-                                      操作<a-icon type="down" />
-                                    </a>
-                                    <a-menu slot="overlay" >
-                                    </a-menu>
-                                  </a-dropdown>
                                   
                                   <a-dropdown slot="actions" >
                                     <a class="ant-dropdown-link" @click="e => e.preventDefault()">
