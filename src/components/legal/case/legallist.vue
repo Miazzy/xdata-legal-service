@@ -388,7 +388,7 @@ export default {
       },
       legal:{
         value:'',
-        scope:'本部门',
+        scope:'全集团',
         plate:'',
         zoneProject:'',
         create_by:'',
@@ -780,7 +780,7 @@ export default {
         const { legal } = this;
         const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
         const resp = await Betools.query.queryRoleGroupList('LEGAL_OPERATE_ADMIN', userinfo.username); // 如果是修改或者追加或者是知会，需要检查是否是同部门，如果是同部门，则可以进行修改或追加或者知会操作
-        let permissionSQL = (resp && resp.length > 0 && (JSON.stringify(resp).includes('领地集团总部')||JSON.stringify(resp).includes('所有权限'))) ? '':`~and(apply_username,in,${resp[0].userlist})`;
+        let permissionSQL = (resp && resp.length > 0 && (JSON.stringify(resp).includes('领地集团总部')||JSON.stringify(resp).includes('ALL_PERMISSION'))) ? '':`~and(apply_username,in,${resp[0].userlist})`;
         let scopeSQL = this.legal.scope.includes('全集团') ? '':`~and(apply_username,in,${resp[0].userlist})`;
         let searchSql = typeof legal.value == 'string' ? `~and((title,like,~${legal.value}~)~or(create_by,like,~${legal.value}~)~or(fstPlan,like,~${legal.value}~)~or(legalType,like,~${legal.value}~)~or(plate,like,~${legal.value}~)~or(firm,like,~${legal.value}~)~or(legalTname,like,~${legal.value}~)~or(zone,like,~${legal.value}~)~or(zoneProject,like,~${legal.value}~)~or(caseID,like,~${legal.value}~)~or(caseType,like,~${legal.value}~)~or(caseSType,like,~${legal.value}~)~or(stage,like,~${legal.value}~)~or(accuser,like,~${legal.value}~)~or(defendant,like,~${legal.value}~)~or(court,like,~${legal.value}~)~or(judge,like,~${legal.value}~)~or(judgeMobile,like,~${legal.value}~)~or(inHouseLawyers,like,~${legal.value}~)~or(disclosure,like,~${legal.value}~)~or(lawcase,like,~${legal.value}~)~or(thirdParty,like,~${legal.value}~)~or(lawOffice,like,~${legal.value}~)~or(lawyer,like,~${legal.value}~)~or(lawyerMobile,like,~${legal.value}~)~or(claims,like,~${legal.value}~))` : '';
         let stageSql = Betools.tools.isNull(legal.stage) || legal.stage == '全部' ? '' : `~and(stage,in,${legal.stage})`;
