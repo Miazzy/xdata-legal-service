@@ -213,7 +213,7 @@
                       <a-tabs default-active-key="1" @change="callback">
                         <a-tab-pane key="1" tab="列表">
                           <a-empty v-if="data.length == 0" style="margin-top:10%;height:580px;"/>
-                          <div v-if="data.length > 0" class="reward-content-table" style="margin-left:0px; width:98%;"> 
+                          <div v-if="data.length > 0" class="reward-content-table" style="margin-left:0px; width:98%; height: 900px;"> 
                               <a-list item-layout="horizontal" :data-source="data">
                                 <a-list-item v-show=" item.status != '已删除' && item.status != '已作废' " slot="renderItem" slot-scope="item, index" style="position:relative;">
 
@@ -289,6 +289,12 @@
                                     <a-icon slot="count" :type="item.stage == '归档闭单' ? 'check-circle' : item.stage == '一审阶段' ? 'question-circle':'clock-circle'" :style="item.stage == '归档闭单' ? `color:DodgerBlue;`: item.stage == '一审阶段' ? `color:Chocolate;`:`color: #f5222d;`" />
                                   </a-badge>
                                 </a-list-item>
+                                <a-divider type="horizontal" />
+                                <a-pagination show-size-changer :default-current="1" :showQuickJumper="true" :total="search.total" @showSizeChange="paginationView" @change="paginationView" :pageSizeOptions="['10', '20', '30', '40', '50', '100', '1000', '10000']" > 
+                                  <template slot="buildOptionText" slot-scope="props">
+                                    <span >{{ props.value }}条/页</span>
+                                  </template>
+                                </a-pagination>
                               </a-list>
                           </div>
                         </a-tab-pane>
@@ -432,6 +438,11 @@ export default {
         { title: '内部律师(承)', dataIndex: 'inHouseLawyers', key: 'inHouseLawyers', },
         { title: '案件状态', dataIndex: 'legalStatus', key: 'legalStatus', }, 
       ],
+      search:{
+        total:'500',
+        startEtime:'',
+        endEtime:'',
+      },
       data:[],
       rowSelection:[],
       stageVal:{
@@ -490,7 +501,9 @@ export default {
         if(Betools.tools.isNull(userinfo) || Betools.tools.isNull(userinfo.username)){
             return [];
         }
-        let list = await Betools.manage.queryTableData(tableName , `_where=(status,in,${status})${searchSql}&_sort=-id&_p=${page}&_size=${size}`);
+        const condition = `_where=(status,in,${status})${searchSql}&_sort=-id&_p=${page}&_size=${size}`;
+        let list = await Betools.manage.queryTableData(tableName , condition);
+        this.search.total = await Betools.manage.queryTableDataCount(tableName, condition);
         list.map((element)=>{ 
             const item = JSON.parse(JSON.stringify(element));
             item.create_time = dayjs(item.create_time).format('YYYY-MM-DD'); 
@@ -753,8 +766,13 @@ export default {
         await this.execSearch(value);
       },
 
+      // 执行分页查询
+      async paginationView(page = 0, size = 10){
+        this.execSearch('view', page -1 , size);
+      },
+
       // 案件列表执行搜索功能
-      async execSearch(value = ''){
+      async execSearch(value = '' , page = 0 , size = 10){
         console.log(`exec search ...` , dayjs().format('HH:mm:ss'));
         const tableName = this.viewname;
         const cacheRandomKey = value == 'view' ? ',' + Math.random().toString().slice(2,6) : '';
@@ -786,13 +804,13 @@ export default {
         this.data = [];
         
         (async()=>{
-          const data = await this.handleList(tableName , `待处理,处理中,审批中,已完成,已结案,已驳回${cacheRandomKey}`, userinfo, stageSql + permissionSQL + caseSTypeSQL + legalTypeSQL + searchSql , 0 , 10000);
+          const data = await this.handleList(tableName , `待处理,处理中,审批中,已完成,已结案,已驳回${cacheRandomKey}`, userinfo, stageSql + permissionSQL + caseSTypeSQL + legalTypeSQL + searchSql , page , size);
           value == 'view' && data && data.length > 0 && this.data.length == 0 ? (this.data = data) : null ;
           vant.Toast.clear();
         })();
 
         (async()=>{
-          const data = await this.handleList(tableName , `待处理,处理中,审批中,已完成,已结案,已驳回${cacheRandomKey}`, userinfo, stageSql + permissionSQL + caseSTypeSQL + legalTypeSQL + searchSql , 0 , 10000);
+          const data = await this.handleList(tableName , `待处理,处理中,审批中,已完成,已结案,已驳回${cacheRandomKey}`, userinfo, stageSql + permissionSQL + caseSTypeSQL + legalTypeSQL + searchSql , page , size);
           value == 'view' && data && data.length > 0 && this.data.length == 0 ? (this.data = data) : null ;
           vant.Toast.clear();
         })();
