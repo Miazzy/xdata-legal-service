@@ -477,7 +477,7 @@ export default {
         if(Betools.tools.isNull(userinfo) || Betools.tools.isNull(userinfo.username)){
             return [];
         }
-        const condition = `_where=(status,in,${status})${searchSql}&_sort=-id&_p=${page}&_size=${size}`;
+        const condition = `_where=(status,in,${status})${searchSql}&_fields=id,create_time,receiveTime,lawRTime,handledTime,legalStatus,caseType,court,caseID,judge,stage,serialID,caseType,accuser,defendant&_sort=-id&_p=${page}&_size=${size}`;
         let list = await Betools.manage.queryTableData(tableName , condition);
         this.search.total = await Betools.manage.queryTableDataCount(tableName, condition);
         list.map((element)=>{ 
@@ -761,7 +761,7 @@ export default {
         console.log(`exec search ...` , dayjs().format('HH:mm:ss'));
         const tableName = this.viewname;
         const cacheRandomKey = value == 'view' ? ',' + Math.random().toString().slice(2,6) : '';
-        const toast = value == 'view' ? vant.Toast.loading({ duration: 0,  forbidClick: true,  message: '刷新中...', }):null;
+        const toast = value == 'view' ? vant.Toast.loading({ duration: 5000,  forbidClick: false,  message: '刷新中...', }):null;
         const { legal } = this;
         const userinfo = await Betools.storage.getStore('system_userinfo');  //获取用户基础信息
         const resp = await Betools.query.queryRoleGroupList('LEGAL_OPERATE_ADMIN', userinfo.username); // 如果是修改或者追加或者是知会，需要检查是否是同部门，如果是同部门，则可以进行修改或追加或者知会操作
