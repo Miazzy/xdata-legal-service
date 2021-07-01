@@ -258,21 +258,6 @@
                                     </a-menu>
                                   </a-dropdown>
 
-                                  <a-dropdown slot="actions" v-if=" item.stage == '归档闭单' && false " >
-                                    <a class="ant-dropdown-link" @click="e => e.preventDefault()">
-                                      评价<a-icon type="down" />
-                                    </a>
-                                    <a-menu slot="overlay" >
-                                      <a-menu-item key="200" v-if=" item.evaluate_flag == 'N' " @click="execEvaluate(item,'evaluate')">
-                                        案件评价
-                                      </a-menu-item>
-                                      <a-menu-item key="299" v-if=" item.evaluate_flag == 'Y' " @click="execEvaluate(item,'view')">
-                                        查看评价
-                                      </a-menu-item>
-                                    </a-menu>
-                                  </a-dropdown>
-
-
                                   <a-list-item-meta :index="index" :description="`${item.caseID} 法院：${item.court}，法官：${item.judge}，程序：${item.stage}`" @click="execView(item)" >
                                     <a slot="title" >{{ `序号: ${item.serialID} ${item.caseID} 程序：${item.stage} ，案由：${ item.caseType } ，原告：${item.accuser}，被告：${item.defendant.slice(0,15) + (item.defendant.length>15?'...':'') }` }}</a>
                                   </a-list-item-meta>
