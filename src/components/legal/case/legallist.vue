@@ -35,7 +35,7 @@
               </div>
 
               <div style="background-color:#f0f0f0;">
-                <div id="legal-apply-content" class="reward-apply-content" style="height:auto; background-color:#fefefe; margin-top:0px; margin-left: 2.5rem; margin-right: 2.5rem; margin-bottom: 5rem; border: 1px solid #f0f0f0; front-size: 1rem;" >
+                <div id="legal-apply-content" class="reward-apply-content" style="height:auto; background-color:#fefefe; margin-top:0px; margin-left: 0.55rem; margin-right: 2.5rem; margin-bottom: 5rem; border: 1px solid #f0f0f0; front-size: 1rem;" >
                 <div style="width:100%;margin-left:0px;margin-right:0px;background:#fbf9fe;position:absolute;">
 
                     <div style="position:relative; ">
@@ -214,9 +214,7 @@
                           <a-input v-model="legal.disclosure" placeholder="请输入案由关键字" style="width:120px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                         </div>
                       </div>
-
                     </div>
-
 
                     <div v-show="data && data.length > 0" style="margin-top:-4.50rem;margin-left:-5.75rem;transform:scale(0.85)">
                       <a-tabs default-active-key="1" @change="callback">
