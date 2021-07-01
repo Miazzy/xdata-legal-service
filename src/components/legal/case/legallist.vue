@@ -1,6 +1,6 @@
 <template>
   
-  <div id="reward-home" style="zoom:75%;">
+  <div id="reward-home" style="">
       <div style="background-color:#f0f0f0;">
       <a-menu mode="horizontal">
         <a-sub-menu>
@@ -36,180 +36,182 @@
 
               <div style="background-color:#f0f0f0;">
                 <div id="legal-apply-content" class="reward-apply-content" style="height:auto; background-color:#fefefe; margin-top:0px; margin-left: 2.5rem; margin-right: 2.5rem; margin-bottom: 5rem; border: 1px solid #f0f0f0; front-size: 1rem;" >
-                <div style="width:100%;margin-left:0px;margin-right:0px;background:#fbf9fe;">
+                <div style="width:100%;margin-left:0px;margin-right:0px;background:#fbf9fe;position:absolute;">
 
-                    <div class="reward-top-button" style="margin-top:20px;margin-bottom:20px; margin-left:20px;">
-                        
-                        <div v-if="getUrlParam('stage') == '全部' " style="display:inline;margin-left:0px;font-size:14px;margin-right:10px;">
-                          <span>案件阶段</span>
-                          <a-select  v-model="legal.stage" default-value="一审阶段" placeholder="选择案件程序阶段" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
-                            <a-select-option value="全部">
-                              全部
+                    <div style="position:relative; ">
+                      <div class="reward-top-button" style="margin-top:10px;margin-bottom:10px; margin-left:-5.75rem;transform:scale(0.85)">
+                          
+                          <div v-if="getUrlParam('stage') == '全部' " style="display:inline;margin-left:0px;font-size:14px;margin-right:10px;">
+                            <span>案件阶段</span>
+                            <a-select  v-model="legal.stage" default-value="一审阶段" placeholder="选择案件程序阶段" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                              <a-select-option value="全部">
+                                全部
+                              </a-select-option>
+                              <a-select-option value="一审阶段">
+                                一审阶段
+                              </a-select-option>
+                              <a-select-option value="二审阶段">
+                                二审阶段
+                              </a-select-option>
+                              <a-select-option value="执行阶段">
+                                执行阶段
+                              </a-select-option>
+                              <a-select-option value="再审阶段">
+                                再审阶段
+                              </a-select-option>
+                              <a-select-option value="行政复议">
+                                行政复议
+                              </a-select-option>
+                              <a-select-option value="劳动仲裁">
+                                劳动仲裁
+                              </a-select-option>
+                              <a-select-option value="归档闭单">
+                                归档闭单
+                              </a-select-option>
+                            </a-select>
+                          </div>
+
+                          <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
+                            <span>案件类别</span>
+                            <a-select  v-model="legal.caseSType" default-value="起诉案件" placeholder="请选择案件类别！" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                              <a-select-option value="全部">
+                                全部
+                              </a-select-option>
+                              <a-select-option value="起诉案件">
+                                起诉案件
+                              </a-select-option>
+                              <a-select-option value="应诉案件">
+                                应诉案件
+                              </a-select-option>
+                            </a-select>
+                          </div>
+
+                          <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
+                            <span>案件级别</span>
+                            <a-select  v-model="legal.legalType" default-value="一般案件"  placeholder="请选择案件类别" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                              <a-select-option value="全部">
+                                全部
+                              </a-select-option>
+                              <a-select-option value="一般案件">
+                                一般案件
+                              </a-select-option>
+                              <a-select-option value="重大案件">
+                                重大案件
+                              </a-select-option>
+                            </a-select>
+                          </div>
+
+                          <a-input-search v-model="legal.value" placeholder="输入搜索关键字、案件名称、相关信息等" style="width:350px;" enter-button @search="execSearch('view')" />
+
+                          <a-button type="primary" @click="execSearch('view')" >查询</a-button>
+                          <a-button type="primary" @click="execFresh" style="display:none;">刷新</a-button>
+                          <a-button type="primary" @click="execApply" style="display:none;">新增</a-button>
+                          <a-button type="primary" @click="execExport" >导出</a-button>
+                      </div>
+
+                      <div class="reward-top-button" style="margin-top:10px;margin-bottom:10px; margin-left:-5.75rem;transform:scale(0.85)">
+                        <div style="display:inline;margin-left:0px;font-size:14px;margin-right:10px;">
+                          <span>案件范围</span>
+                          <a-select  v-model="legal.scope" default-value="本部门" placeholder="请选择案件范围！" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                            <a-select-option value="全集团">
+                              全集团
                             </a-select-option>
-                            <a-select-option value="一审阶段">
-                              一审阶段
-                            </a-select-option>
-                            <a-select-option value="二审阶段">
-                              二审阶段
-                            </a-select-option>
-                            <a-select-option value="执行阶段">
-                              执行阶段
-                            </a-select-option>
-                            <a-select-option value="再审阶段">
-                              再审阶段
-                            </a-select-option>
-                            <a-select-option value="行政复议">
-                              行政复议
-                            </a-select-option>
-                            <a-select-option value="劳动仲裁">
-                              劳动仲裁
-                            </a-select-option>
-                            <a-select-option value="归档闭单">
-                              归档闭单
+                            <a-select-option value="本部门">
+                              本部门
                             </a-select-option>
                           </a-select>
                         </div>
-
                         <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
-                          <span>案件类别</span>
-                          <a-select  v-model="legal.caseSType" default-value="起诉案件" placeholder="请选择案件类别！" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
-                            <a-select-option value="全部">
-                              全部
+                          <span>业务板块</span>
+                          <a-select  v-model="legal.plate" default-value="地产板块" placeholder="请选择业务板块！" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                            <a-select-option value="">
+                              所有板块
                             </a-select-option>
-                            <a-select-option value="起诉案件">
-                              起诉案件
+                            <a-select-option value="融量集团总部">
+                              融量集团总部
                             </a-select-option>
-                            <a-select-option value="应诉案件">
-                              应诉案件
+                            <a-select-option value="地产板块">
+                              地产板块
+                            </a-select-option>
+                            <a-select-option value="金融板块">
+                              金融板块
+                            </a-select-option>
+                            <a-select-option value="物业板块">
+                              物业板块
+                            </a-select-option>
+                            <a-select-option value="医疗健康板块">
+                              医疗健康板块
+                            </a-select-option>
+                            <a-select-option value="商业板块">
+                              商业板块
+                            </a-select-option>
+                            <a-select-option value="合作方财务公司">
+                              合作方财务公司
                             </a-select-option>
                           </a-select>
                         </div>
-
                         <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
-                          <span>案件级别</span>
-                          <a-select  v-model="legal.legalType" default-value="一般案件"  placeholder="请选择案件类别" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
-                            <a-select-option value="全部">
-                              全部
-                            </a-select-option>
-                            <a-select-option value="一般案件">
-                              一般案件
-                            </a-select-option>
-                            <a-select-option value="重大案件">
-                              重大案件
-                            </a-select-option>
-                          </a-select>
+                          <span>项目名称</span>
+                          <a-input v-model="legal.zoneProject" placeholder="请输入项目名称" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                         </div>
+                        <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
+                          <span>填报人员</span>
+                          <a-input v-model="legal.create_by" placeholder="请输入填报人员" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                        </div>
+                        <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
+                          <span>案件进展</span>
+                          <a-input v-model="legal.progress" placeholder="请输入案件进展关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                        </div>
+                      </div>
 
-                        <a-input-search v-model="legal.value" placeholder="输入搜索关键字、案件名称、相关信息等" style="width:350px;" enter-button @search="execSearch('view')" />
+                      <div class="reward-top-button" style="margin-top:10px;margin-bottom:10px; margin-left:-5.75rem;transform:scale(0.85)">
+                        <div style="display:inline;margin-left:0px;font-size:14px;margin-right:10px;">
+                          <span>所属区域</span>
+                          <a-input v-model="legal.zone" placeholder="请选择所属区域" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                        </div>
+                        <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
+                          <span>法院名称</span>
+                          <a-input v-model="legal.court" placeholder="请输入法院关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                        </div>
+                        <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
+                          <span>原告名称</span>
+                          <a-input v-model="legal.accuser" placeholder="请输入原告关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                        </div>
+                        <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
+                          <span>被告名称</span>
+                          <a-input v-model="legal.defendant" placeholder="请输入被告关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                        </div>
+                        <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
+                          <span>案由信息</span>
+                          <a-input v-model="legal.caseType" placeholder="请输入案由关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                        </div>
+                      </div>
 
-                        <a-button type="primary" @click="execSearch('view')" >查询</a-button>
-                        <a-button type="primary" @click="execFresh" style="display:none;">刷新</a-button>
-                        <a-button type="primary" @click="execApply" style="display:none;">新增</a-button>
-                        <a-button type="primary" @click="execExport" >导出</a-button>
-                    </div>
-
-                    <div class="reward-top-button" style="margin-top:20px;margin-bottom:20px; margin-left:20px;">
-                      <div style="display:inline;margin-left:0px;font-size:14px;margin-right:10px;">
-                        <span>案件范围</span>
-                        <a-select  v-model="legal.scope" default-value="本部门" placeholder="请选择案件范围！" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
-                          <a-select-option value="全集团">
-                            全集团
-                          </a-select-option>
-                          <a-select-option value="本部门">
-                            本部门
-                          </a-select-option>
-                        </a-select>
-                      </div>
-                      <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
-                        <span>业务板块</span>
-                        <a-select  v-model="legal.plate" default-value="地产板块" placeholder="请选择业务板块！" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
-                          <a-select-option value="">
-                            所有板块
-                          </a-select-option>
-                          <a-select-option value="融量集团总部">
-                            融量集团总部
-                          </a-select-option>
-                          <a-select-option value="地产板块">
-                            地产板块
-                          </a-select-option>
-                          <a-select-option value="金融板块">
-                            金融板块
-                          </a-select-option>
-                          <a-select-option value="物业板块">
-                            物业板块
-                          </a-select-option>
-                          <a-select-option value="医疗健康板块">
-                            医疗健康板块
-                          </a-select-option>
-                          <a-select-option value="商业板块">
-                            商业板块
-                          </a-select-option>
-                          <a-select-option value="合作方财务公司">
-                            合作方财务公司
-                          </a-select-option>
-                        </a-select>
-                      </div>
-                      <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
-                        <span>项目名称</span>
-                        <a-input v-model="legal.zoneProject" placeholder="请输入项目名称" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
-                      </div>
-                      <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
-                        <span>填报人员</span>
-                        <a-input v-model="legal.create_by" placeholder="请输入填报人员" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
-                      </div>
-                      <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
-                        <span>案件进展</span>
-                        <a-input v-model="legal.progress" placeholder="请输入案件进展关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                      <div class="reward-top-button" style="margin-top:10px;margin-bottom:10px; margin-left:-5.75rem;transform:scale(0.85)">
+                        <div style="display:inline;margin-left:0px;font-size:14px;margin-right:10px;">
+                          <span>律所名称</span>
+                          <a-input v-model="legal.lawOffice" placeholder="请选择所属区域" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                        </div>
+                        <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
+                          <span>律师名称</span>
+                          <a-input v-model="legal.lawyer" placeholder="请输入法院关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                        </div>
+                        <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
+                          <span>法官名称</span>
+                          <a-input v-model="legal.judge" placeholder="请输入原告关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                        </div>
+                        <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
+                          <span>诉讼请求</span>
+                          <a-input v-model="legal.claims" placeholder="请输入被告关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                        </div>
+                        <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
+                          <span>事项披露</span>
+                          <a-input v-model="legal.disclosure" placeholder="请输入案由关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
+                        </div>
                       </div>
                     </div>
 
-                    <div class="reward-top-button" style="margin-top:20px;margin-bottom:20px; margin-left:20px;">
-                      <div style="display:inline;margin-left:0px;font-size:14px;margin-right:10px;">
-                        <span>所属区域</span>
-                        <a-input v-model="legal.zone" placeholder="请选择所属区域" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
-                      </div>
-                      <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
-                        <span>法院名称</span>
-                        <a-input v-model="legal.court" placeholder="请输入法院关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
-                      </div>
-                      <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
-                        <span>原告名称</span>
-                        <a-input v-model="legal.accuser" placeholder="请输入原告关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
-                      </div>
-                      <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
-                        <span>被告名称</span>
-                        <a-input v-model="legal.defendant" placeholder="请输入被告关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
-                      </div>
-                      <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
-                        <span>案由信息</span>
-                        <a-input v-model="legal.caseType" placeholder="请输入案由关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
-                      </div>
-                    </div>
-
-                    <div class="reward-top-button" style="margin-top:20px;margin-bottom:20px; margin-left:20px;">
-                      <div style="display:inline;margin-left:0px;font-size:14px;margin-right:10px;">
-                        <span>律所名称</span>
-                        <a-input v-model="legal.lawOffice" placeholder="请选择所属区域" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
-                      </div>
-                      <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
-                        <span>律师名称</span>
-                        <a-input v-model="legal.lawyer" placeholder="请输入法院关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
-                      </div>
-                      <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
-                        <span>法官名称</span>
-                        <a-input v-model="legal.judge" placeholder="请输入原告关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
-                      </div>
-                      <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
-                        <span>诉讼请求</span>
-                        <a-input v-model="legal.claims" placeholder="请输入被告关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
-                      </div>
-                      <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
-                        <span>事项披露</span>
-                        <a-input v-model="legal.disclosure" placeholder="请输入案由关键字" style="width:150px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
-                      </div>
-                    </div>
-
-                    <div style="margin-left:20px;">
+                    <div style="margin-top:-4.50rem;margin-left:-5.75rem;transform:scale(0.85)">
                       <a-tabs default-active-key="1" @change="callback">
                         <a-tab-pane key="1" tab="列表">
                           <a-empty v-if="data.length == 0" style="margin-top:10%;height:100%;"/>
@@ -282,7 +284,7 @@
                                   </a-badge>
                                 </a-list-item>
                                 <a-divider type="horizontal" />
-                                <a-pagination show-size-changer :default-current="1" :showQuickJumper="true" :total="search.total" @showSizeChange="paginationView" @change="paginationView" :pageSizeOptions="['10', '20', '30', '40', '50', '100', '1000', '10000']" > 
+                                <a-pagination v-model="search.page" show-size-changer :default-current="1" :showQuickJumper="true" :total="search.total" @showSizeChange="paginationView" @change="paginationView" :pageSizeOptions="['10', '20', '30', '40', '50', '100', '1000', '10000']" > 
                                   <template slot="buildOptionText" slot-scope="props">
                                     <span >{{ props.value }}条/页</span>
                                   </template>
@@ -431,6 +433,7 @@ export default {
         { title: '案件状态', dataIndex: 'legalStatus', key: 'legalStatus', }, 
       ],
       search:{
+        page:1,
         total:'500',
         startEtime:'',
         endEtime:'',
@@ -768,6 +771,7 @@ export default {
 
       // 执行分页查询
       async paginationView(page = 0, size = 10){
+        this.search.page = page;
         this.execSearch('view', page -1 , size);
       },
 
@@ -803,9 +807,17 @@ export default {
         searchSql = plateSQL + zoneProjectSQL + createbySQL + progressSQL + scopeSQL + zoneSQL + courtSQL + accuserSQL + defendantSQL + caseTypeSQL + lawOfficeSQL + lawyerSQL + judgeSQL + claimsSQL + disclosureSQL + searchSql;
         this.data = [];
         
-        const data = await this.handleList(tableName , `待处理,处理中,审批中,已完成,已结案,已驳回${cacheRandomKey}`, userinfo, stageSql + permissionSQL + caseSTypeSQL + legalTypeSQL + searchSql , page , size);
-        value == 'view' && data && data.length > 0 && this.data.length == 0 ? (this.data = data) : null ;
-        vant.Toast.clear();
+        (async()=>{
+          const data = await this.handleList(tableName , `待处理,处理中,审批中,已完成,已结案,已驳回${cacheRandomKey}`, userinfo, stageSql + permissionSQL + caseSTypeSQL + legalTypeSQL + searchSql , 0 , 10000);
+          value == 'view' && data && data.length > 0 && this.data.length == 0 ? (this.data = data) : null ;
+          vant.Toast.clear();
+        })();
+
+        (async()=>{
+          const data = await this.handleList(tableName , `待处理,处理中,审批中,已完成,已结案,已驳回${cacheRandomKey}`, userinfo, stageSql + permissionSQL + caseSTypeSQL + legalTypeSQL + searchSql , 0 , 10000);
+          value == 'view' && data && data.length > 0 && this.data.length == 0 ? (this.data = data) : null ;
+          vant.Toast.clear();
+        })();
 
         return this.data; 
       },
