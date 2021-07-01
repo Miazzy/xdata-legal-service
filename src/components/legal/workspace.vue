@@ -153,6 +153,7 @@ export default {
   methods: {
     isNull:Betools.tools.isNull,
     deNull:Betools.tools.deNull,
+    
     // 查询初始化信息
     async queryInfo() {
       try {
