@@ -1,6 +1,6 @@
 <template>
   
-  <div id="reward-home">
+  <div id="reward-home" style="zoom:75%;">
       <div style="background-color:#f0f0f0;">
       <a-menu mode="horizontal">
         <a-sub-menu>
@@ -803,17 +803,9 @@ export default {
         searchSql = plateSQL + zoneProjectSQL + createbySQL + progressSQL + scopeSQL + zoneSQL + courtSQL + accuserSQL + defendantSQL + caseTypeSQL + lawOfficeSQL + lawyerSQL + judgeSQL + claimsSQL + disclosureSQL + searchSql;
         this.data = [];
         
-        (async()=>{
-          const data = await this.handleList(tableName , `待处理,处理中,审批中,已完成,已结案,已驳回${cacheRandomKey}`, userinfo, stageSql + permissionSQL + caseSTypeSQL + legalTypeSQL + searchSql , page , size);
-          value == 'view' && data && data.length > 0 && this.data.length == 0 ? (this.data = data) : null ;
-          vant.Toast.clear();
-        })();
-
-        (async()=>{
-          const data = await this.handleList(tableName , `待处理,处理中,审批中,已完成,已结案,已驳回${cacheRandomKey}`, userinfo, stageSql + permissionSQL + caseSTypeSQL + legalTypeSQL + searchSql , page , size);
-          value == 'view' && data && data.length > 0 && this.data.length == 0 ? (this.data = data) : null ;
-          vant.Toast.clear();
-        })();
+        const data = await this.handleList(tableName , `待处理,处理中,审批中,已完成,已结案,已驳回${cacheRandomKey}`, userinfo, stageSql + permissionSQL + caseSTypeSQL + legalTypeSQL + searchSql , page , size);
+        value == 'view' && data && data.length > 0 && this.data.length == 0 ? (this.data = data) : null ;
+        vant.Toast.clear();
 
         return this.data; 
       },
