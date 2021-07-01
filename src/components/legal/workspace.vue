@@ -241,6 +241,7 @@ export default {
             await Betools.storage.setStore('system_userinfo', content, 3600);
             const userinfo = await Betools.storage.getStore('system_userinfo');
             this.usertitle = (userinfo && userinfo.parent_company && userinfo.parent_company.name ? userinfo.parent_company.name + ' > ' :'')  + (userinfo ? userinfo.realname || userinfo.name || userinfo.lastname : '');
+            return userinfo;
           }
         }
         return userinfo;
