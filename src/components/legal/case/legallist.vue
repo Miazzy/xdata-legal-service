@@ -212,12 +212,20 @@
                     <div style="margin-left:20px;">
                       <a-tabs default-active-key="1" @change="callback">
                         <a-tab-pane key="1" tab="列表">
-                          <a-empty v-if="data.length == 0" style="margin-top:10%;height:580px;"/>
-                          <div v-if="data.length > 0" class="reward-content-table" style="margin-left:0px; width:98%; height: 900px;"> 
+                          <a-empty v-if="data.length == 0" style="margin-top:10%;height:100%;"/>
+                          <div v-if="data.length > 0" class="reward-content-table" style="margin-left:0px; width:98%; height:100%; margin-bottom:20px;"> 
                               <a-list item-layout="horizontal" :data-source="data">
                                 <a-list-item v-show=" item.status != '已删除' && item.status != '已作废' " slot="renderItem" slot-scope="item, index" style="position:relative;">
 
-                                  <a-dropdown slot="actions">
+                                  <a-dropdown slot="actions" v-if=" false ">
+                                    <a class="ant-dropdown-link" @click="e => e.preventDefault()">
+                                      操作<a-icon type="down" />
+                                    </a>
+                                    <a-menu slot="overlay" >
+                                    </a-menu>
+                                  </a-dropdown>
+                                  
+                                  <a-dropdown slot="actions" >
                                     <a class="ant-dropdown-link" @click="e => e.preventDefault()">
                                       操作<a-icon type="down" />
                                     </a>
@@ -237,14 +245,6 @@
                                       <a-menu-item key="300" @click="execNotify(item)">
                                         发起知会
                                       </a-menu-item>
-                                    </a-menu>
-                                  </a-dropdown>
-                                  
-                                  <a-dropdown slot="actions" v-if=" item.stage != '归档闭单'">
-                                    <a class="ant-dropdown-link" @click="e => e.preventDefault()">
-                                      管理<a-icon type="down" />
-                                    </a>
-                                    <a-menu slot="overlay" >
                                       <a-menu-item key="0" @click="execProcess(item , '案件进展')">
                                         录入案件进展
                                       </a-menu-item>
@@ -266,7 +266,7 @@
                                     </a-menu>
                                   </a-dropdown>
 
-                                  <a-dropdown slot="actions" v-if=" item.stage == '归档闭单'" >
+                                  <a-dropdown slot="actions" v-if=" item.stage == '归档闭单' && false " >
                                     <a class="ant-dropdown-link" @click="e => e.preventDefault()">
                                       评价<a-icon type="down" />
                                     </a>
@@ -511,10 +511,18 @@ export default {
             item.lawRTime = dayjs(item.lawRTime).format('YYYY-MM-DD') == 'Invalid Date' ? '/' : dayjs(item.lawRTime).format('YYYY-MM-DD');
             item.handledTime = dayjs(item.handledTime).format('YYYY-MM-DD') == 'Invalid Date' ? '/' : dayjs(item.handledTime).format('YYYY-MM-DD');
             item.legalStatus = Betools.tools.isNull(item.legalStatus) ? '开庭举证' : item.legalStatus;
-            item.caseType = JSON.parse(item.caseType);
-            item.court = JSON.parse(item.court);
-            Betools.tools.isNull(item.court[item.court.length-1]) ? item.court = item.court.slice(0,item.court.length-1) : null;
-            item.court = Betools.tools.deNull(item.court[item.court.length-1],'') ;
+            try {
+              item.caseType = JSON.parse(item.caseType);
+            } catch (error) {
+              console.error(error);
+            }
+            try {
+              item.court = JSON.parse(item.court);
+              Betools.tools.isNull(item.court[item.court.length-1]) ? item.court = item.court.slice(0,item.court.length-1) : null;
+              item.court = Betools.tools.deNull(item.court[item.court.length-1],'') ;
+            } catch (error) {
+              console.error(error);
+            }
         });
         return list;
       },
