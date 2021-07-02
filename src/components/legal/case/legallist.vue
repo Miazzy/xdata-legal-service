@@ -200,7 +200,7 @@
                         </div>
                       </div>
 
-                      <div class="reward-top-button" style="margin-top:10px;margin-bottom:10px; margin-left:-5.75rem;transform:scale(0.85)">
+                      <div class="reward-top-button" style="margin-top:10px;margin-bottom:10px; margin-left:-5.75rem;transform:scale(0.85);display:none;">
                         <div style="display:inline;margin-left:5px;font-size:14px;margin-right:10px;">
                           <span>案件进展</span>
                           <a-input v-model="legal.progress" placeholder="请输入案件进展关键字" style="width:120px; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
