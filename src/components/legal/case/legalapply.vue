@@ -61,16 +61,32 @@
                     <a-col :span="8">
                       <a-input v-model="legal.title" :readonly='false' placeholder="请填写本案件流程标题！" @blur="validFieldToast('title')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
                     </a-col>
+                    <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>案件类别</span>
+                    </a-col>
+                    <a-col :span="8">
+                      <a-select  v-model="legal.stype" default-value="民商事纠纷" @blur="validFieldToast('stype')"  placeholder="请选择案件(民商事/刑事/行政)类别！" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                        <a-select-option value="民商事纠纷">
+                          民商事纠纷
+                        </a-select-option>
+                        <a-select-option value="刑事纠纷">
+                          刑事纠纷
+                        </a-select-option>
+                        <a-select-option value="行政纠纷">
+                          行政纠纷
+                        </a-select-option>
+                      </a-select>
+                    </a-col>
                   </a-row>
                 </div>
 
                 <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                   <a-row>
                     <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>案件类别</span>
+                      <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;">*</span>起诉/应诉</span>
                     </a-col>
                     <a-col :span="8">
-                      <a-select  v-model="legal.caseSType" default-value="起诉案件" @blur="validFieldToast('caseSType')"  placeholder="请选择案件类别！" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
+                      <a-select  v-model="legal.caseSType" default-value="起诉案件" @blur="validFieldToast('caseSType')"  placeholder="请选择案件(起诉/应诉)类别！" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;">
                         <a-select-option value="起诉案件">
                           起诉案件
                         </a-select-option>
@@ -1122,6 +1138,7 @@ export default {
         xid :'', // varchar(36) default '' not null comment '更新ID',
         create_time: dayjs().format('YYYY-MM-DD'), // timestamp    default CURRENT_TIMESTAMP not null comment '填报日期',
         create_by :'', // varchar(32)  default '' not null comment '填报人员',
+        stype:'民商事纠纷',
         legalType :'一般案件', // varchar(36)  default '一般案件' not null comment '案件类别 100 一般案件 200 重大案件',
         plate :'地产板块', // varchar(32)  default '' not null comment '所属板块',
         firm :'', // varchar(128) default '' not null comment '公司名称',
