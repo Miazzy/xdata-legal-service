@@ -217,7 +217,7 @@
                     </div>
 
                     <div v-show="data && data.length > 0" >
-                      <a-tabs default-active-key="1" @change="callback" style="position:relative; top: 0px ; margin-left:1.750rem; transform:scale(0.85); transform-origin: 0 0;">
+                      <a-tabs default-active-key="1" @change="callback" style="position:relative; top: 10px ; margin-left:1.750rem; transform:scale(0.85); transform-origin: 0 0;">
                         <a-tab-pane key="1" tab="列表">
                           <a-empty v-if="data.length == 0" style="margin-top:10%;height:800px;"/>
                           <div v-if="data.length > 0" class="reward-content-table" style="margin-left:0px; width:98%; height:100%; margin-bottom:20px;"> 
