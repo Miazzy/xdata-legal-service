@@ -38,7 +38,7 @@
                 <div id="legal-apply-content" class="reward-apply-content" style="height:auto; background-color:#fefefe; margin-top:0px; margin-left: 0.55rem; margin-right: 2.5rem; margin-bottom: 5rem; border: 1px solid #f0f0f0; front-size: 1rem;" >
                 <div style="width:100%;margin-left:0px;margin-right:0px;background:#fbf9fe;position:absolute;">
 
-                    <div style="position:relative; ">
+                    <div style="position:relative; height:160px; display:block;">
                       <div class="reward-top-button" style="margin-top:10px;margin-bottom:10px; margin-left:-5.75rem;transform:scale(0.85)">
                           
                           <div v-if="getUrlParam('stage') == '全部' " style="display:inline;margin-left:0px;font-size:14px;margin-right:10px;">
@@ -216,10 +216,10 @@
                       </div>
                     </div>
 
-                    <div v-show="data && data.length > 0" style="margin-top:-4.50rem;margin-left:-5.75rem;transform:scale(0.85)">
-                      <a-tabs default-active-key="1" @change="callback">
+                    <div v-show="data && data.length > 0" >
+                      <a-tabs default-active-key="1" @change="callback" style="position:relative; top: 0px ; margin-left:1.750rem; transform:scale(0.85); transform-origin: 0 0;">
                         <a-tab-pane key="1" tab="列表">
-                          <a-empty v-if="data.length == 0" style="margin-top:10%;height:100%;"/>
+                          <a-empty v-if="data.length == 0" style="margin-top:10%;height:800px;"/>
                           <div v-if="data.length > 0" class="reward-content-table" style="margin-left:0px; width:98%; height:100%; margin-bottom:20px;"> 
                               <a-list item-layout="horizontal" :data-source="data">
                                 <a-list-item v-show=" item.status != '已删除' && item.status != '已作废' " slot="renderItem" slot-scope="item, index" style="position:relative;">
