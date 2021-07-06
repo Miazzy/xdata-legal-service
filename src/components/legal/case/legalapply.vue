@@ -382,12 +382,12 @@
 
                         <template v-if="stage != 'evaluate' ">
 
-                        <a-tab-pane v-if="stage != 'evaluate' " key="1" tab="一审管理" style="margin-left:-35px;">
+                        <a-tab-pane v-if="stage != 'evaluate' " key="0" tab="仲裁管理" style="margin-left:-35px;">
 
                           <div class="reward-apply-content-item reward-apply-content-title" style="padding-top:5px;">
                             <a-row style="border-top: 1px dash #f0f0f0;" >
                               <a-col class="reward-apply-content-title-text" :span="4" style="font-size:1.1rem;">
-                                法院信息
+                                仲裁庭信息
                               </a-col>
                             </a-row>
                           </div>
@@ -395,17 +395,17 @@
                           <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px;margin-right:10px;">
                             <a-row>
                               <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;"></span>受理法院</span>
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;"></span>受理仲裁庭</span>
                               </a-col>
                               <a-col :span="8">
                                 <a-input v-if="role != 'view' " id="legal-apply-content-court-cascader"  v-model="legal.court" :options="options.courtOptions" placeholder="请输入受理法院！" @blur="validFieldToast('court')"  style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;"  />
-                                <a-input v-if="(role != 'edit' && role != 'add') || role == 'view' " v-model="legal.court" readonly placeholder="请输入受理法院！" @blur="validFieldToast('court')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                                <a-input v-if="(role != 'edit' && role != 'add') || role == 'view' " v-model="legal.court" readonly placeholder="请输入受理仲裁庭！" @blur="validFieldToast('court')" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                               </a-col>
                               <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;"></span>法院受理时间</span>
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;"></span>仲裁庭受理时间</span>
                               </a-col>
                               <a-col :span="8">
-                                <a-date-picker v-model="legal.handledTime" placeholder="请输入法院受理时间！" @blur="validFieldToast('handledTime')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                                <a-date-picker v-model="legal.handledTime" placeholder="请输入仲裁庭受理时间！" @blur="validFieldToast('handledTime')" style="width:100%; border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                               </a-col>
                             </a-row>
                           </div>
@@ -413,16 +413,16 @@
                           <div class="reward-apply-content-item" style="margin-top:5px;margin-bottom:5px; margin-right:10px;">
                             <a-row>
                               <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;"></span>法院承办法官</span>
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;"></span>承办仲裁员</span>
                               </a-col>
                               <a-col :span="8">
-                                <a-input v-model="legal.judge"  placeholder="请输入承办法官！" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                                <a-input v-model="legal.judge"  placeholder="请输入承办仲裁员！" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                               </a-col>
                               <a-col :span="4" style="font-size:1.0rem; margin-top:5px; text-align: center;">
-                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;"></span>法官联系方式</span>
+                                <span style="position:relative;" ><span style="color:red;margin-right:0px;position:absolute;left:-10px;top:0px;"></span>仲裁员联系方式</span>
                               </a-col>
                               <a-col :span="8">
-                                <a-input v-model="legal.judgeMobile"  placeholder="请输入承办法官联系方式！" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
+                                <a-input v-model="legal.judgeMobile"  placeholder="请输入仲裁员联系方式！" style="border: 0px solid #fefefe;  border-bottom: 1px solid #f0f0f0;" />
                               </a-col>
                             </a-row>
                           </div>  
