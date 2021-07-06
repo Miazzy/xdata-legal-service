@@ -159,14 +159,15 @@ export default {
     async queryInfo() {
       try {
         const { $router } = this;
+        vant.Toast.loading({ duration: 0,  forbidClick: false,  message: '加载中...', });
         this.iswechat = Betools.tools.isWechat(); //查询当前是否微信端
         this.userinfo = await this.weworkLogin(); //查询当前登录用户
         const userinfo = await Betools.storage.getStore('system_userinfo');
 
         (async() => { //获取操作权限信息,权限管控功能
           try {
-            this.role = await Betools.query.queryRoleInfo();
-            this.role = this.deNull(this.role,'');
+            const role = await Betools.query.queryRoleInfo();
+            this.role = Betools.tools.deNull(role,'');
             if(!this.role.includes('LEGAL_ADMIN')){
               Betools.storage.clearStore('system_role_rights_v1');
               this.role = await Betools.query.queryRoleInfo();
@@ -181,10 +182,9 @@ export default {
               this.paneflows.map(item=>{ item.display=false; });
               vant.Dialog.alert({  title: '温馨提示',  message: `您没有法务诉讼系统的操作权限！`, });
               console.log(`query permission no rights...`);
-            } else {
-              Betools.storage.clearStore('system_role_rights_v1');
-              Betools.query.queryRoleInfo();
-            }
+            } 
+            this.status = 'complete';
+            vant.Toast.clear();
           } catch (error) {
             console.error(`query permission error:`,error);
           }
