@@ -190,3 +190,12 @@
     background: #f9f9f9;
     border-radius: 4px;
 }
+
+#legal-apply-content .ant-upload-list-item-name {
+    display: inline-block;
+    width: 85%;
+    padding-left: 22px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
