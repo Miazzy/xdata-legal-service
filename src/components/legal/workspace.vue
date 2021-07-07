@@ -161,7 +161,9 @@ export default {
         const { $router } = this;
         vant.Toast.loading({ duration: 0,  forbidClick: false,  message: '加载中...', });
         this.iswechat = Betools.tools.isWechat(); //查询当前是否微信端
-        this.userinfo = await this.weworkLogin(); //查询当前登录用户
+        const weworkinfo = await this.weworkLogin('search','search','v5'); //查询当前登录用户
+        this.userinfo = weworkinfo.userinfo;
+        this.usertitle = weworkinfo.usertitle;
         const userinfo = await Betools.storage.getStore('system_userinfo');
 
         (async() => { //获取操作权限信息,权限管控功能
@@ -226,11 +228,11 @@ export default {
     },
 
     // 企业微信登录处理函数
-    async  weworkLogin  (codeType = 'search', systemType = 'search')  {
-        const userinfo_work = await Betools.query.queryWeworkUser(codeType, systemType,'v5');
+    async  weworkLogin  (codeType = 'search', systemType = 'search', version = 'v5')  {
+        const userinfo_work = await Betools.query.queryWeworkUser(codeType, systemType, version);
         const userinfo = await Betools.storage.getStore('system_userinfo');
-        this.usertitle = (userinfo && userinfo.parent_company && userinfo.parent_company.name ? userinfo.parent_company.name + ' > ' :'')  + (userinfo ? userinfo.realname || userinfo.name || userinfo.lastname : '');
-        if(Betools.tools.isNull(this.usertitle)  || userinfo == '\"\"' || Betools.tools.isNull(userinfo) ){ // 未获取到用户信息，直接根据浏览器记录获取用户信息
+        let usertitle = (userinfo && userinfo.parent_company && userinfo.parent_company.name ? userinfo.parent_company.name + ' > ' :'')  + (userinfo ? userinfo.realname || userinfo.name || userinfo.lastname : '');
+        if(Betools.tools.isNull(usertitle)  || userinfo == '\"\"' || Betools.tools.isNull(userinfo) ){ // 未获取到用户信息，直接根据浏览器记录获取用户信息
           const finger = await(await FingerprintJS.load()).get();
           const condition = `_where=(info,in,finger)~and(type,in,info)~and(content,like,~${finger.visitorId}__~)&_sort=-id&_p=0&_size=1`;
           let list = await Betools.manage.queryTableData('bs_async_log' , condition);
@@ -240,11 +242,11 @@ export default {
             content = window.decodeURIComponent(content);
             await Betools.storage.setStore('system_userinfo', content, 3600);
             const userinfo = await Betools.storage.getStore('system_userinfo');
-            this.usertitle = (userinfo && userinfo.parent_company && userinfo.parent_company.name ? userinfo.parent_company.name + ' > ' :'')  + (userinfo ? userinfo.realname || userinfo.name || userinfo.lastname : '');
-            return userinfo;
+            usertitle = (userinfo && userinfo.parent_company && userinfo.parent_company.name ? userinfo.parent_company.name + ' > ' :'')  + (userinfo ? userinfo.realname || userinfo.name || userinfo.lastname : '');
+            return {userinfo, usertitle};
           }
         }
-        return userinfo;
+        return {userinfo, usertitle};
     },
 
     // 执行页面跳转
