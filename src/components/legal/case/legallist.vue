@@ -571,7 +571,7 @@ export default {
           vant.Toast.clear();
           if (resp && resp.length > 0 && resp[0].userlist.includes(userinfo.username)) {
             this.role += ',LEGAL_OPERATE_ADMIN'; // $router.push(`/legal/case/legalapply?id=${elem.id}&type=1&tname=案件详情&apply=view&role=view`);
-            window.open(`${window.location.host}/#/legal/case/legalapply?id=${elem.id}&type=1&tname=案件详情&apply=view&role=view`,'_blank');
+            window.open(`${window.location.protocol}://${window.location.host}/#/legal/case/legalapply?id=${elem.id}&type=1&tname=案件详情&apply=view&role=view`,'_blank');
           } else {
             vant.Dialog.alert({  title: '温馨提示',  message: `您好，您没有案件详情查看权限！`, }); 
           }
